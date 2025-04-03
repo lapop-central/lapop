@@ -12,13 +12,13 @@
 #' @param data  The data that should be analyzed. It requires a survey object from lpr_data() function.
 #' @param outcome Vector of variables be plotted.
 #' @param xvar Character. Outcome variable will be broken down by this variable. Default is NULL
-#' @param filesave Character. Path and file name to save the dataframe as csv.
 #' @param sort Character. On what value the bars are sorted: the x or the y.
 #' Options are "y" (default; for the value of the outcome variable), "xv" (for
 #' the underlying values of the x variable), "xl" (for the labels of the x variable,
 #' i.e., alphabetical).
 #' @param order Character. How the bars should be sorted. Options are "hi-lo"
 #' (default) or "lo-hi".
+#' @param filesave Character. Path and file name to save the dataframe as csv.
 #' @param keep_nr Logical. If TRUE, will convert "don't know" (missing code .a)
 #' and "no response" (missing code .b) into valid data (value = 99) and use them
 #' in the denominator when calculating percentages.  The default is to examine
