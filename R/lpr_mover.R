@@ -91,7 +91,7 @@
 lpr_mover <- function(data,
                       outcome,
                       grouping_vars,
-                      rec = c(1, 1),
+                      rec = list(c(1, 1)),
                       rec2 = c(1, 1),
                       rec3 = c(1, 1),
                       rec4 = c(1, 1),
