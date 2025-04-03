@@ -17,9 +17,9 @@
 #' should be included in the numerator of the percentage.  For example, if the variable
 #' is on a 1-7 scale and rec is c(5, 7), the function will show the percentage who chose
 #' an answer of 5, 6, 7 out of all valid answers.  Default: c(1, 1).
-#' @param rec2 Numeric. Same as rec().
-#' @param rec3 Numeric. Same as rec().
-#' @param rec4 Numeric. Same as rec().
+#' @param rec2 Numeric. Same as rec(). Default: c(1, 1).
+#' @param rec3 Numeric. Same as rec(). Default: c(1, 1).
+#' @param rec4 Numeric. Same as rec(). Default: c(1, 1).
 #' @param ci_level Numeric. Confidence interval level for estimates.  Default: 0.95
 #' @param mean Logical.  If TRUE, will produce the mean of the variable rather than
 #' rescaling to percentage.  Default: FALSE.
@@ -48,12 +48,12 @@
 #'
 #' \dontrun{lpr_cc(data = gms, 
 #' outcome = "ing4", 
-#' num = c(5, 7), 
+#' rec = c(5, 7), 
 #' xvar = "pais_lab")}
 #' 
 #' \dontrun{lpr_cc(data = gms, 
 #' outcome = c("sd2new2", "sd3new2", "sd5new2", "sd6new2"), 
-#' num = c(5, 7))}
+#' rec = c(5, 7))}
 #'
 #'@export
 #'@import dplyr
