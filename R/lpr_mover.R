@@ -10,7 +10,7 @@
 #' comparing means across values of secondary variable(s) using LAPOP formatting.
 #'
 #' @param data A survey object.  The data that should be analyzed.
-#' @param outcome Character. Outcome variable of interest to be plotted across secondary
+#' @param outcome Character. Outcome variable(s) of interest to be plotted across secondary
 #' variable(s).
 #' @param grouping_vars A character vector specifying one or more grouping variables.
 #' For each variable, the function calculates the average of the outcome variable,
@@ -41,46 +41,77 @@
 #'
 #' @examples
 #'
+#' # Single Outcome
 #' \dontrun{lpr_mover(data = gm23,
 #'  outcome = "ing4",
 #'  grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
-#'  num = c(5, 7)}
+#'  rec = c(5, 7)}
+#'
+#'  # Multiple Outcomes
+#'  \dontrun{lpr_mover(data = gm23,
+#'  outcome = "c(ing4", "pn4"),
+#'  grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
+#'  rec = c(5, 7), rec2 = c(1, 2)}
+#'
+#' Single DV X Single IV
+#' \dontrun{lpr_mover(data, 
+#' outcome="ing4", 
+#' grouping_vars="exc7new",  
+#' rec=c(5,7), ttest=T)}
+#'
+#' Multiple DVs X Single IV
+#' \dontrun{lpr_mover(data, 
+#' outcome=c("ing4", "pn4"), 
+#' grouping_vars="exc7new", 
+#' rec=c(5,7), rec2=c(1,2), ttest=T)}
+#'
+#' Single DV X Multiple IVs
+#' \dontrun{lpr_mover(data, 
+#' outcome="ing4", 
+#' grouping_vars=c("edre", "q1tc_r"), 
+#' rec=c(5,7), ttest=T)}
+#'
+#' Multiple DVs X Multiple IVs
+#' \dontrun{lpr_mover(data, 
+#' outcome=c("ing4", "pn4"), 
+#' grouping_vars=c("edre", "q1tc_r"), 
+#' rec=c(5,7), rec2=c(1,2), ttest=T)}
 #'
 #'@export
 #'@import dplyr
 #'@import srvyr
 #'@import purrr
+#'@import haven
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 lpr_mover <- function(data,
                       outcome,
                       grouping_vars,
                       rec = c(1, 1),
+                      rec2 = rec,
+                      rec3 = rec,
+                      rec4 = rec,
                       ci_level = 0.95,
                       mean = FALSE,
                       filesave = "",
                       cfmt = "",
                       ttest = FALSE,
-                      keep_nr = FALSE
-) {
+                      keep_nr = FALSE) {
 
-  # If keep_nr is TRUE, convert don't knows (NA(a)) and no answers (NA(b)) to
-  # non-NA data (a value of 99).
   if (keep_nr) {
     data <- data %>%
-      mutate(!!outcome := case_when(
-        na_tag(.data[[outcome]]) == "a" | na_tag(.data[[outcome]]) == "b" ~ 99,
-        TRUE ~ as.numeric(.data[[outcome]])
-      ))
+      mutate(across(all_of(outcome), ~ case_when(
+        na_tag(.) == "a" | na_tag(.) == "b" ~ 99,
+        TRUE ~ as.numeric(.)
+      )))
   }
 
-  if (length(rec) == 1) {
-    rec = c(rec, rec)
-  }
+  rec_list <- list(rec, rec2, rec3, rec4)
+  rec_list <- rec_list[seq_along(outcome)] # Ensure only as many rec values as outcomes
 
-  # Calculate means for each individual breakdown variable
-  calculate_means <- function(data, grouping_var, outcome_var) {
+  # Function to calculate means/proportions for a single outcome and grouping variable
+  calculate_means <- function(data, outcome_var, grouping_var, rec_range, single_outcome) {
     data %>%
       drop_na(.data[[grouping_var]]) %>%
       group_by(vallabel = as_factor(.data[[grouping_var]])) %>%
@@ -92,47 +123,56 @@ lpr_mover <- function(data,
                                        vartype = "ci",
                                        level = ci_level)
           ) %>%
-            mutate(
-              proplabel = case_when(cfmt != "" ~ sprintf("%.1f", prop),
-                                    TRUE ~ sprintf("%.1f", prop))
-            )
+            mutate(proplabel = sprintf("%.1f", prop))
         } else {
           summarize(.,
-                    prop = survey_mean(between(.data[[outcome_var]], rec[1], rec[2]),
+                    prop = survey_mean(between(.data[[outcome_var]], rec_range[1], rec_range[2]),
                                        na.rm = TRUE,
                                        vartype = "ci",
                                        level = ci_level) * 100
           ) %>%
-            mutate(
-              proplabel = case_when(cfmt != "" ~ sprintf("%.0f%%", round(prop)),
-                                    TRUE ~ sprintf("%.0f%%", round(prop)))
-            )
+            mutate(proplabel = sprintf("%.0f%%", round(prop)))
         }
       } %>%
       mutate(
-        varlabel = if (!is.null(attributes(data$variables[[grouping_var]])$label)) {
-          attributes(data$variables[[grouping_var]])$label
+        outcome = if (!is.null(attributes(data$variables[[outcome_var]])$label)) {
+          attributes(data$variables[[outcome_var]])$label
         } else {
-          grouping_var # Use the variable name as a fallback
+          outcome_var
+        },
+        varlabel = if (single_outcome) {
+          if (!is.null(attributes(data$variables[[grouping_var]])$label)) {
+            attributes(data$variables[[grouping_var]])$label
+          } else {
+            grouping_var
+          }
+        } else {
+          paste(grouping_var, outcome_var, sep = " x ")
         },
         vallabel = as.character(vallabel)
       ) %>%
       rename(lb = prop_low, ub = prop_upp) %>%
-      select(varlabel, vallabel, prop, proplabel, lb, ub)
+      select(outcome, varlabel, vallabel, prop, proplabel, lb, ub)
   }
 
-  mover <- map_dfr(grouping_vars, ~ calculate_means(data, .x, outcome))
+  single_outcome <- length(outcome) == 1
+
+  # Apply function to each combination of outcome and grouping variable
+  mover <- map_dfr(grouping_vars, function(gvar) {
+    map2_dfr(outcome, rec_list, ~ calculate_means(data, .x, gvar, .y, single_outcome))
+  })
 
   if (filesave != "") {
     write.csv(mover, filesave)
   }
 
-  # conduct pairwise t-tests if requested
+  # Conduct pairwise t-tests if requested
   if (ttest) {
     mover <- mover %>%
       mutate(se = (ub - lb) / (2 * 1.96))
 
     t_test_results <- data.frame(
+      outcome = character(),
       varlabel = character(),
       test = character(),
       diff = numeric(),
@@ -141,41 +181,41 @@ lpr_mover <- function(data,
       stringsAsFactors = FALSE
     )
 
-    varlabels <- unique(mover$varlabel)
-    for (vl in varlabels) {
-      mover_subset <- mover %>% filter(varlabel == vl)
+    outcomes <- unique(mover$outcome)
+    for (oc in outcomes) {
+      mover_subset <- mover %>% filter(outcome == oc)
 
-      for (i in 1:(nrow(mover_subset) - 1)) {
-        for (j in (i + 1):nrow(mover_subset)) {
-          prop1 <- mover_subset$prop[i]
-          se1 <- mover_subset$se[i]
-          prop2 <- mover_subset$prop[j]
-          se2 <- mover_subset$se[j]
+      varlabels <- unique(mover_subset$varlabel)
+      for (vl in varlabels) {
+        group_subset <- mover_subset %>% filter(varlabel == vl)
 
-          diff <- prop1 - prop2
-          t_stat <- diff / sqrt(se1^2 + se2^2)
-          df <- (se1^2 + se2^2)^2 / ((se1^2)^2 / (nrow(data) - 1) + (se2^2)^2 / (nrow(data) - 1))
+        for (i in 1:(nrow(group_subset) - 1)) {
+          for (j in (i + 1):nrow(group_subset)) {
+            prop1 <- group_subset$prop[i]
+            se1 <- group_subset$se[i]
+            prop2 <- group_subset$prop[j]
+            se2 <- group_subset$se[j]
 
-          p_value <- 2 * pt(-abs(t_stat), df)
+            diff <- prop1 - prop2
+            t_stat <- diff / sqrt(se1^2 + se2^2)
+            df <- (se1^2 + se2^2)^2 / ((se1^2)^2 / (nrow(data) - 1) + (se2^2)^2 / (nrow(data) - 1))
 
-          t_test_results <- rbind(t_test_results,
-                                  data.frame(varlabel = vl,
-                                             test = paste(mover_subset$vallabel[i], "vs", mover_subset$vallabel[j]),
-                                             diff = round(diff, 3),
-                                             ttest = round(t_stat, 3),
-                                             pval = round(p_value, 3)))
+            p_value <- 2 * pt(-abs(t_stat), df)
+
+            t_test_results <- rbind(t_test_results,
+                                    data.frame(outcome = oc,
+                                               varlabel = vl,
+                                               test = paste(group_subset$vallabel[i], "vs", group_subset$vallabel[j]),
+                                               diff = round(diff, 3),
+                                               ttest = round(t_stat, 3),
+                                               pval = round(p_value, 3)))
+          }
         }
       }
     }
 
-    # Attach t-test results as an attribute
     attr(mover, "t_test_results") <- t_test_results
   }
 
   return(mover)
 }
-
-
-
-
-
