@@ -22,19 +22,29 @@
 #'
 #' @return Returns a data frame, with data formatted for visualization by lapop_coef
 #'
-#' @examples
+#' \examples{
+#' ## Not run: 
+#' # Example 1: Linear model
+#' svyglm_linear <- survey::svyglm(
+#'  fs2 ~ it1 + idio2 + edad, 
+#'  data = dataLAPOP, 
+#'  family = "gaussian")
 #'
-#' \dontrun{dataLAPOP<-lpr_data(dataset)}
-#' \dontrun{svyglm_object<-survey::svyglm(formula, desig, family)}
-#' \dontrun{Example 1: svyglm_linear<-survey::svyglm(fs2~it1+idio2+edad, 
-#' data=dataLAPOP, family="gaussian")}
-#' \dontrun{lpr_coef(outcome="fs2", 
-#' xvar="it1+idio2+edad", 
-#' data=dataLAPOP, est="coef")}
-#' \dontrun{Example 2: svyglm_logit<-survey::svyglm(fs2~it1+idio2+edad, 
-#' data=dataLAPOP, family="binomial")}
-#' \dontrun{lpr_coef(outcome="fs2", xvar="it1+idio2+edad", data=dataLAPOP, 
-#' model="binomial", est="contrast")}
+#' # Example 2: Logit model  
+#' svyglm_logit <- survey::svyglm(
+#'  fs2 ~ it1 + idio2 + edad,
+#'  data = dataLAPOP,
+#'  family = "binomial")
+#'
+#' # Example 3: Using lpr_coef
+#' lpr_coef(
+#'  outcome = "fs2",
+#'  xvar = "it1+idio2+edad", 
+#'  data = dataLAPOP,
+#'  model = "binomial",
+#'  est = "contrast")
+#' ## End(Not run)
+#' }
 #'
 #'@export
 #'@import dplyr
