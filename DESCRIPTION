@@ -3,16 +3,11 @@ Type: Package
 Title: Creates Visualizations Using LAPOP Styles 
 Version: 2.0.3
 Authors@R: 
-    person(given = "Luke",
-           family = "Plutowski",
-           role = c("aut", "cre"),
-           email = "Luke.Plutowski@vanderbilt.edu",
-           comment = c(ORCID = "0000-0001-8240-6722")),
-      person(given = "Robert",
-             family = "Vidigal",
-             role = "aut",
-             email = "robert.vidigal@vanderbilt.edu",
-             comment = c(ORCID = "https://orcid.org/0000-0001-5713-119X"))) 
+    person(given = c("Luke", "Robert"),
+           family = c("Plutowski", "Vidigal"),
+           role = list(c("aut", "cre"), "aut),
+           email = c("Luke.Plutowski@vanderbilt.edu", "Robert.Vidigal@vanderbilt.edu),
+           comment = list(c(ORCID = "0000-0001-8240-6722", "0000-0001-5713-119X")),
 Maintainer: Robert Vidigal <robert.vidigal@vanderbilt.edu>
 Description: LAPOP Lab (formerly the Latin American Public Opinion Project) at Vanderbilt University is a world leader in public survey research and is best known for for the biennial AmericasBarometer project.  This package creates visualizations that follow LAPOP's custom style guidelines and formatting for use in reports, presentations, and social media posts.  The visualizations are designed to be used with AmericasBarometer survey data.  You may find more information about the AmericasBarometer here: <https://www.vanderbilt.edu/lapop/about-americasbarometer.php>.  The data can be downloaded here: <https://www.vanderbilt.edu/lapop/data-access.php>. 
     IMPORTANT: Run lapop_fonts() before creating any graphs in order to use LAPOP-standard fonts.
