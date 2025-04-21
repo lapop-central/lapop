@@ -68,6 +68,8 @@ beginning or end of the series, the function will omit those waves from the grap
 the x-axis will range from the earliest wave for which data is supplied to the latest).  If there are
 waves missing in the middle of the series, those waves will be displayed on the x-axis, but no data will be
 shown.
+}
+\details{
 The input data must have a specific format to produce a graph.  It must include columns for
 the survey wave (wave), the outcome variable (prop), the lower bound of the estimate (lb),
 the upper bound of the estimate (ub), and a string for the outcome variable label (proplabel).

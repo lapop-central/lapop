@@ -7,30 +7,27 @@
 lpr_stack(
   data,
   outcome,
-  by = NULL,
-  sort = "xv",
-  order = "lo-hi",
+  xvar = NULL,
+  sort = "y",
+  order = "hi-lo",
   filesave = "",
   keep_nr = FALSE
 )
 }
 \arguments{
-\item{data}{The data that should be analyzed. It requires a survey object
-from lpr_data() function.}
+\item{data}{The data that should be analyzed. It requires a survey object from lpr_data() function.}
 
-\item{outcome}{Character vector. Vector of variable(s) be plotted.}
+\item{outcome}{Vector of variables be plotted.}
 
-\item{by}{Character. Grouping variable.  If by is provided, function will break
-down the outcome variable by distinct values of the "by" variable (instead of
-showing distribution of multiple outcome variables).}
+\item{xvar}{Character. Outcome variable will be broken down by this variable. Default is NULL}
 
-\item{sort}{Character. On what value the bars are sorted. Options are "xv"
-(default; sort on the underlying values of the value labels), "xl" (on the value
-labels themselves, i.e. alphabetically), or "y" (on the proportions of the
-outcome variable(s)).}
+\item{sort}{Character. On what value the bars are sorted: the x or the y.
+Options are "y" (default; for the value of the outcome variable), "xv" (for
+the underlying values of the x variable), "xl" (for the labels of the x variable,
+i.e., alphabetical).}
 
-\item{order}{Character. How the bars should be sorted. Options are "lo-hi"
-(default) or "hi-lo".}
+\item{order}{Character. How the bars should be sorted. Options are "hi-lo"
+(default) or "lo-hi".}
 
 \item{filesave}{Character. Path and file name to save the dataframe as csv.}
 
@@ -45,13 +42,11 @@ Returns a data frame, with data formatted for visualization by lapop_stack
 \description{
 This function creates dataframes which can then be input in lapop_stack() for
 plotting variables categories with a stacked bar graph using LAPOP formatting.
-If "by" is specified, the function shows the distribution of the outcome variable
-by distinct values of a secondary variable.  If "by" is not provided, it will show
-the distribution of all specified outcome variables.
 }
 \examples{
 
-\dontrun{lapop_stack(data = gm, outcome = c("countfair1", "countfair3"))}
+\dontrun{lpr_stack(data = gm, outcome = c("countfair1", "countfair3"))}
+\dontrun{lpr_stack(data = gm, outcome = "pese1", xvar="year")}
 
 }
 \author{
