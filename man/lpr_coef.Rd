@@ -48,7 +48,7 @@ plotting regression coefficients graph using LAPOP formatting.
 \examples{
 ## Not run: 
 # Example 1: Linear regression
-svyglm_linear <- survey::svyglm(
+\dontrun{svyglm_linear <- survey::svyglm(
   fs2 ~ it1 + idio2 + edad, 
   data = dataLAPOP,
   family = "gaussian")
@@ -66,7 +66,7 @@ lpr_coef(
   data = dataLAPOP,
   model = "binomial",
   est = "contrast")
-
+}
 ## End(Not run)
 }
 \author{
