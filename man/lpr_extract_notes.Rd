@@ -33,8 +33,11 @@ and note value.
 }
 \examples{
 # Extract the notes
-\dontrun{notes <- lpr_extract_notes(df)}
-\dontrun{print(notes)}
+
+\dontrun{
+notes <- lpr_extract_notes(df)
+print(notes)
+}
 
 }
 \author{
