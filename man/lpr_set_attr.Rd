@@ -44,9 +44,13 @@ a workflow for managing variable metadata in AmericasBarometer data.
 \dontrun{notes <- lpr_extract_notes(data)}
 
 # Set variable question wording
-\dontrun{data <- lpr_set_attr(data, notes, noteid = "note4", attribute_name = "question_wording")
+\dontrun{
+data <- lpr_set_attr(data, notes, noteid = "note4", attribute_name = "question_wording")
 attr(data$ing4, "question_wording")}
 }
 \seealso{
 \code{\link{lpr_extract_notes}} for extracting notes from AmericasBarometer dataset attributes
+}
+\author{
+Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }
