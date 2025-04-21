@@ -51,15 +51,13 @@ plotting regression coefficients graph using LAPOP formatting.
 svyglm_linear <- survey::svyglm(
   fs2 ~ it1 + idio2 + edad, 
   data = dataLAPOP,
-  family = "gaussian"
-)
+  family = "gaussian")
 
 # Example 2: Logistic regression  
 svyglm_logit <- survey::svyglm(
   fs2 ~ it1 + idio2 + edad,
   data = dataLAPOP,
-  family = "binomial"
-)
+  family = "binomial")
 
 # Example 3: Using lpr_coef()
 lpr_coef(
@@ -67,8 +65,8 @@ lpr_coef(
   xvar = "it1 + idio2 + edad",
   data = dataLAPOP,
   model = "binomial",
-  est = "contrast"
-)
+  est = "contrast")
+
 ## End(Not run)
 }
 \author{
