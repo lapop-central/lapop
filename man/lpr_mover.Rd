@@ -8,7 +8,10 @@ lpr_mover(
   data,
   outcome,
   grouping_vars,
-  rec = c(1, 1),
+  rec = list(c(1, 1)),
+  rec2 = c(1, 1),
+  rec3 = c(1, 1),
+  rec4 = c(1, 1),
   ci_level = 0.95,
   mean = FALSE,
   filesave = "",
@@ -18,21 +21,27 @@ lpr_mover(
 )
 }
 \arguments{
-\item{data}{A survey object.  The data that should be analyzed.}
+\item{data}{A survey object. The data that should be analyzed.}
 
-\item{outcome}{Character. Outcome variable of interest to be plotted across secondary
+\item{outcome}{Character. Outcome variable(s) of interest to be plotted across secondary
 variable(s).}
 
 \item{grouping_vars}{A character vector specifying one or more grouping variables.
 For each variable, the function calculates the average of the outcome variable,
 broken down by the distinct values within the grouping variable(s).}
 
-\item{rec}{Numeric. The minimum and maximum values of the outcome variable that
+\item{rec}{Numeric. The minimum and maximum values of the frst outcome variable that
 should be included in the numerator of the percentage.  For example, if the variable
 is on a 1-7 scale and rec is c(5, 7), the function will show the percentage who chose
 an answer of 5, 6, 7 out of all valid answers.  Can also supply one value only,
 to produce the percentage that chose that value out of all other values.
 Default: c(1, 1).}
+
+\item{rec2}{Numeric. Similar to 'rec' for the second outcome. Default: c(1, 1).}
+
+\item{rec3}{Numeric.  Similar to 'rec' for the third outcome. Default: c(1, 1).}
+
+\item{rec4}{Numeric.  Similar to 'rec' for the fourth outcome. Default: c(1, 1).}
 
 \item{ci_level}{Numeric. Confidence interval level for estimates.  Default: 0.95}
 
@@ -58,17 +67,48 @@ valid responses only.  Default: FALSE.}
 Returns a data frame, with data formatted for visualization by lapop_mover
 }
 \description{
-This function creates dataframes which can then be input in lapop_mover for
+This function creates a dataframe which can then be input in lapop_mover() for
 comparing means across values of secondary variable(s) using LAPOP formatting.
 }
 \examples{
 
+# Single Outcome
 \dontrun{lpr_mover(data = gm23,
  outcome = "ing4",
  grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
- num = c(5, 7)}
+ rec = c(5, 7)}
+
+ # Multiple Outcomes
+ \dontrun{lpr_mover(data = gm23,
+ outcome = "c(ing4", "pn4"),
+ grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
+ rec = c(5, 7), rec2 = c(1, 2)}
+
+Single DV X Single IV
+\dontrun{lpr_mover(data, 
+outcome="ing4", 
+grouping_vars="exc7new",  
+rec=c(5,7), ttest=T)}
+
+Multiple DVs X Single IV
+\dontrun{lpr_mover(data, 
+outcome=c("ing4", "pn4"), 
+grouping_vars="exc7new", 
+rec=c(5,7), rec2=c(1,2), ttest=T)}
+
+Single DV X Multiple IVs
+\dontrun{lpr_mover(data, 
+outcome="ing4", 
+grouping_vars=c("edre", "q1tc_r"), 
+rec=c(5,7), ttest=T)}
+
+Multiple DVs X Multiple IVs
+\dontrun{lpr_mover(data, 
+outcome=c("ing4", "pn4"), 
+grouping_vars=c("edre", "q1tc_r"), 
+rec=c(5,7), rec2=c(1,2), ttest=T)}
 
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }
