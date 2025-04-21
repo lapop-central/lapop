@@ -56,7 +56,7 @@ lpr_set_ros <- function(data, lang_id = "en", attribute_name = "roslabel") {
       prefix <- switch(lang_id,
                        en = "Response Options: ",
                        es = "Opciones de Respuesta: ",
-                       pt = "Opções de Resposta: ",
+                       pt = "Alternativas de Resposta: ",
                        "")  # fallback
       
       attr(data[[VAR]], attribute_name) <- paste0(prefix, paste(formatted, collapse = " "))
