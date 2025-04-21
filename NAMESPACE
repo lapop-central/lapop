@@ -53,3 +53,6 @@ importFrom(stats,reorder)
 importFrom(stats,setNames)
 importFrom(svglite,svglite)
 importFrom(zoo,na.approx)
+importFrom("stats", "as.formula", "coef", "complete.cases", "pt", "qt",
+               "var")
+importFrom("utils", "write.csv")
