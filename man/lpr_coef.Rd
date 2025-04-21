@@ -63,7 +63,7 @@ Returns a data frame, with data formatted for visualization by lapop_coef
  model = "binomial",
  est = "contrast")}
 }
-}
+
 \description{
 This function creates a data frame which can then be input in lapop_coef() for
 plotting regression coefficients graph using LAPOP formatting.
