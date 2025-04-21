@@ -1,3 +1,9 @@
+# lapop 2.0.4
+
+* add lpr_set_attr()
+* add lpr_set_ros()
+* add lpr_extract_notes()
+
 # lapop 2.0.3
 
 * add lpr_resc()
