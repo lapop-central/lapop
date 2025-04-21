@@ -40,7 +40,7 @@ lpr_coef(
 }
 \value{
 Returns a data frame, with data formatted for visualization by lapop_coef
-
+}
 \examples{
 
 # Example 1: Linear model
@@ -68,6 +68,7 @@ Returns a data frame, with data formatted for visualization by lapop_coef
 This function creates a data frame which can then be input in lapop_coef() for
 plotting regression coefficients graph using LAPOP formatting.
 }
+
 \author{
 Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }
