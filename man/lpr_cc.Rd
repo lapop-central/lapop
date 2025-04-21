@@ -8,7 +8,10 @@ lpr_cc(
   data,
   outcome,
   xvar = "pais_lab",
-  rec = c(1, 1),
+  rec = list(c(1, 1)),
+  rec2 = list(c(1, 1)),
+  rec3 = list(c(1, 1)),
+  rec4 = list(c(1, 1)),
   ci_level = 0.95,
   mean = FALSE,
   filesave = "",
@@ -22,18 +25,21 @@ lpr_cc(
 \arguments{
 \item{data}{A survey object.  The data that should be analyzed.}
 
-\item{outcome}{Character string.  Outcome variable of interest to be plotted
-across countries.}
+\item{outcome}{Outcome variable(s) of interest to be plotted across countries.
+It can handle a single variable across countries, or multiple variables instead of multiple countries. See examples below.}
 
-\item{xvar}{Character. Outcome variable will be broken down by this variable.
-Default: pais_lab.}
+\item{xvar}{Grouping variable. Default: pais_lab. It can handle other variables grouping like year/wave.}
 
 \item{rec}{Numeric. The minimum and maximum values of the outcome variable that
 should be included in the numerator of the percentage.  For example, if the variable
 is on a 1-7 scale and rec is c(5, 7), the function will show the percentage who chose
-an answer of 5, 6, 7 out of all valid answers.  Can also supply one value only,
-to produce the percentage that chose that value out of all other values.
-Default: c(1, 1).}
+an answer of 5, 6, 7 out of all valid answers.  Default: c(1, 1).}
+
+\item{rec2}{Numeric. Same as rec(). Default: c(1, 1).}
+
+\item{rec3}{Numeric. Same as rec(). Default: c(1, 1).}
+
+\item{rec4}{Numeric. Same as rec(). Default: c(1, 1).}
 
 \item{ci_level}{Numeric. Confidence interval level for estimates.  Default: 0.95}
 
@@ -42,7 +48,7 @@ rescaling to percentage.  Default: FALSE.}
 
 \item{filesave}{Character.  Path and file name to save the dataframe as csv.}
 
-\item{cfmt}{Character. changes the format of the numbers displayed above the bars.
+\item{cfmt}{changes the format of the numbers displayed above the bars.
 Uses sprintf string formatting syntax. Default is whole numbers for percentages
 and tenths place for means.}
 
@@ -72,9 +78,16 @@ comparing values across countries with a bar graph using LAPOP formatting.
 }
 \examples{
 
-\dontrun{lpr_cc(data = gms, outcome = "ing4", num = c(5, 7))}
+\dontrun{lpr_cc(data = gms, 
+outcome = "ing4", 
+rec = c(5, 7), 
+xvar = "pais_lab")}
+
+\dontrun{lpr_cc(data = gms, 
+outcome = c("sd2new2", "sd3new2", "sd5new2", "sd6new2"), 
+rec = c(5, 7))}
 
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }
