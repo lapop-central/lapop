@@ -42,27 +42,26 @@ lpr_coef(
 Returns a data frame, with data formatted for visualization by lapop_coef
 
 \examples{
-## Not run: 
-# Example 1: Linear model
-svyglm_linear <- survey::svyglm(
- fs2 ~ it1 + idio2 + edad, 
- data = dataLAPOP, 
- family = "gaussian")
 
-# Example 2: Logit model  
-svyglm_logit <- survey::svyglm(
+# Example 1: Linear model
+\dontrun{svyglm_linear <- survey::svyglm(
  fs2 ~ it1 + idio2 + edad,
  data = dataLAPOP,
- family = "binomial")
+ family = "gaussian")}
+
+# Example 2: Logit model
+\dontrun{svyglm_logit <- survey::svyglm(
+ fs2 ~ it1 + idio2 + edad,
+ data = dataLAPOP,
+ family = "binomial")}
 
 # Example 3: Using lpr_coef
-lpr_coef(
+\dontrun{lpr_coef(
  outcome = "fs2",
- xvar = "it1+idio2+edad", 
+ xvar = "it1+idio2+edad",
  data = dataLAPOP,
  model = "binomial",
- est = "contrast")
-## End(Not run)
+ est = "contrast")}
 }
 }
 \description{

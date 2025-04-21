@@ -33,7 +33,7 @@ and note value.
 }
 \examples{
 # Extract the notes
-notes <- lpr_extract_notes(df)
-print(notes)
+\dontrun{notes <- lpr_extract_notes(df)
+print(notes)}
 
 }
