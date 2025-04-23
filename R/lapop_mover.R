@@ -167,8 +167,9 @@ lapop_mover <- function(data,
     scale_y_continuous(limits = c(ymin, ymax),
                        breaks = seq(ymin, ymax, ifelse(ymax - ymin <= 50, 5, 10)),
                        expand = c(0,0)) +
-    scale_x_discrete(labels = setNames(data$vallabel, data$order),
-                     expand=expansion(add=0.5)) +
+   scale_x_discrete(labels = setNames(
+        str_wrap(data$vallabel, width = 3),  data$order),
+        expand = expansion(add = 0.5)) +
     geom_vline(xintercept = seq(0.5, length(data$vallabel), by = 1), color="#dddddf", size = 0.5) +
     labs(title = main_title,
          y = "",
@@ -184,7 +185,7 @@ lapop_mover <- function(data,
           panel.background = element_rect(fill = "white"),
           panel.border = element_rect(linetype = "solid", color = "#dddddf", fill = NA, linewidth = 1),
           axis.text.y = element_blank(),
-          axis.text.x = stringr::str_wrap(element_text(angle = x_lab_angle, vjust = 0.5), width=3),
+          axis.text.x = element_text(angle = x_lab_angle, vjust = 0.5),
           axis.ticks = element_blank(),
           axis.text = element_text(size = 14, family = "roboto", color = "#585860"),
           legend.position = "top",
