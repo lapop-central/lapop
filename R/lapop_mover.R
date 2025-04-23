@@ -104,7 +104,6 @@ NULL
 #'
 #'@export
 #'@import ggplot2
-#'@importFrom stringr str_wrap
 #'@importFrom ggh4x facet_grid2
 #'@importFrom ggh4x strip_themed
 #'@importFrom ggtext element_markdown
@@ -169,7 +168,7 @@ lapop_mover <- function(data,
                        breaks = seq(ymin, ymax, ifelse(ymax - ymin <= 50, 5, 10)),
                        expand = c(0,0)) +
    scale_x_discrete(labels = setNames(
-        str_wrap(data$vallabel, width = 3),  data$order),
+        stringr::str_wrap(data$vallabel, width = 3),  data$order),
         expand = expansion(add = 0.5)) +
     geom_vline(xintercept = seq(0.5, length(data$vallabel), by = 1), color="#dddddf", size = 0.5) +
     labs(title = main_title,
