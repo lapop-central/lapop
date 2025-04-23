@@ -104,6 +104,7 @@ NULL
 #'
 #'@export
 #'@import ggplot2
+#'@import stringr
 #'@importFrom ggh4x facet_grid2
 #'@importFrom ggh4x strip_themed
 #'@importFrom ggtext element_markdown
