@@ -109,6 +109,7 @@ NULL
 #'@importFrom ggtext element_markdown
 #'@importFrom stats setNames
 #'@import showtext
+#'@importFrom stringr str_wrap
 #'
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
 #'
@@ -167,8 +168,10 @@ lapop_mover <- function(data,
     scale_y_continuous(limits = c(ymin, ymax),
                        breaks = seq(ymin, ymax, ifelse(ymax - ymin <= 50, 5, 10)),
                        expand = c(0,0)) +
-    scale_x_discrete(labels = setNames(data$vallabel, data$order),
-                     expand=expansion(add=0.5)) +
+    scale_x_discrete(
+      labels = str_wrap(setNames(data$vallabel, data$order), width = 10),
+      expand = expansion(add = 0.5)
+    ) +
     geom_vline(xintercept = seq(0.5, length(data$vallabel), by = 1), color="#dddddf", size = 0.5) +
     labs(title = main_title,
          y = "",
