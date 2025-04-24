@@ -38,9 +38,6 @@ lapop_demog <- function(data,
   color_scheme = color_scheme)
 }
 
-
-
-
 #' @include lapop_fonts.R
 NULL
 
@@ -166,7 +163,7 @@ lapop_mover <- function(data,
                        breaks = seq(ymin, ymax, ifelse(ymax - ymin <= 50, 5, 10)),
                        expand = c(0,0)) +
     scale_x_discrete(
-      labels = str_wrap(setNames(data$vallabel, data$order), width = 10),
+      labels = stringr::str_wrap(setNames(data$vallabel, data$order), width = 10),
       expand = expansion(add = 0.5)
     ) +
     geom_vline(xintercept = seq(0.5, length(data$vallabel), by = 1), color="#dddddf", size = 0.5) +
