@@ -104,6 +104,7 @@ NULL
 #'
 #'@export
 #'@import ggplot2
+#'@import stringr
 #'@importFrom ggh4x facet_grid2
 #'@importFrom ggh4x strip_themed
 #'@importFrom ggtext element_markdown
@@ -112,10 +113,6 @@ NULL
 #'@importFrom stringr str_wrap
 #'
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
-#'
-
-
-
 
 lapop_mover <- function(data,
                          lang = "en",
