@@ -109,7 +109,7 @@ NULL
 #'@import showtext
 #'@importFrom stringr str_wrap
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 lapop_mover <- function(data,
                          lang = "en",
