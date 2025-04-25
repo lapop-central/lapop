@@ -67,6 +67,7 @@ NULL
 #'
 #'@export
 #'@import ggplot2
+#'@importFrom magrittr :=
 #'@importFrom ggtext element_markdown
 #'@importFrom zoo na.approx
 #'@import showtext
