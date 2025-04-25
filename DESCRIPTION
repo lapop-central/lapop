@@ -52,3 +52,4 @@ Collate:
     'lpr_set_ros.R'
     'lpr_stack.R'
     'lpr_ts.R'
+    'globals.R'
