@@ -15,7 +15,7 @@ lapop_demog <- function(data,
                         lang = "en",
                         main_title = "",
                         subtitle = "",
-                        qword = "",
+                        qword = NULL,
                         source_info = "",
                         rev_values = FALSE,
                         rev_variables = FALSE,
@@ -98,7 +98,7 @@ NULL
 #'             main_title = paste0("More educated, men, and younger individuals",
 #'                                 " in the LAC region are the\nmost likely",
 #'                                   " to be crime victims"),
-#'             subtitle = "% victim of a crime",
+#'             subtitle = "% victim of a crime", qword = "",
 #'             ymin = 0,
 #'             ymax = 40)
 #'
