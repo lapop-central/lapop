@@ -173,17 +173,16 @@ lapop_mover <- function(data,
       expand = expansion(add = 0.5)
     ) +
     geom_vline(xintercept = seq(0.5, length(data$vallabel), by = 1), color="#dddddf", size = 0.5) +
-    labs(title = main_title,
+    labs(title =  paste0("<span style='font-size:14pt'>", main_title, "</span><br>
+             <span style='font-size:10pt; color:grey;'>", qword, "</span>"),
          y = "",
          x = " ",
-         tag = qword,
          caption = paste0(ifelse(lang == "es", "Fuente: LAPOP Lab", "Source: LAPOP Lab"),
                           source_info)) +
     theme(text = element_text(size = 14, family = "roboto"),
           plot.title = element_text(size = 17, family = "nunito", face = "bold"),
           plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "nunito", color="#585860"),
           plot.subtitle = element_text(size = 14, family = "nunito", color="#585860"),
-          plot.tag = element_text(size = 6, family = "nunito", face = "plain", color="#585860"),
           panel.grid.major.x = element_blank(),
           panel.grid.major.y = element_line(size=.5, color="#dddddf"),
           panel.background = element_rect(fill = "white"),
