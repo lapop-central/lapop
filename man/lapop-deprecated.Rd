@@ -48,6 +48,7 @@ lapop_demog(
   lang = "en",
   main_title = "",
   subtitle = "",
+  tag = "",
   source_info = "",
   rev_values = FALSE,
   rev_variables = FALSE,
