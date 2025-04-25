@@ -15,7 +15,6 @@ lapop_demog <- function(data,
                         lang = "en",
                         main_title = "",
                         subtitle = "",
-                        qword = NULL,
                         source_info = "",
                         rev_values = FALSE,
                         rev_variables = FALSE,
@@ -29,6 +28,7 @@ lapop_demog <- function(data,
   lang = lang,
   main_title = main_title,
   subtitle = subtitle,
+  qword = NULL,
   source_info = source_info,
   rev_values = rev_values,
   rev_variables = rev_variables,
@@ -59,7 +59,7 @@ NULL
 #' @param subtitle Character.  Describes the values/data shown in the graph, e.g., "Percent who agree that...".
 #' Default: None.
 #' @param qword Character.  Describes the question wording shown in the graph, e.g., "Do you agree that...".
-#' Default: None.
+#' Default: NULL.
 #' @param lang Character.  Changes default subtitle text and source info to either Spanish or English.
 #' Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
 #' or "es" (Spanish).  Default: "en".
