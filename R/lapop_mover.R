@@ -58,6 +58,8 @@ NULL
 #' Default: None (only "Source: " will be printed).
 #' @param subtitle Character.  Describes the values/data shown in the graph, e.g., "Percent who agree that...".
 #' Default: None.
+#' @param tag Character.  Describes the question wording shown in the graph, e.g., "Do you agree that...".
+#' Default: None.
 #' @param lang Character.  Changes default subtitle text and source info to either Spanish or English.
 #' Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
 #' or "es" (Spanish).  Default: "en".
