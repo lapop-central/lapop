@@ -9,7 +9,7 @@ lapop_mover(
   lang = "en",
   main_title = "",
   subtitle = "",
-  qword = "",
+  qword = NULL,
   source_info = "",
   rev_values = FALSE,
   rev_variables = FALSE,
@@ -34,6 +34,9 @@ or "es" (Spanish).  Default: "en".}
 \item{main_title}{Character.  Title of graph.  Default: None.}
 
 \item{subtitle}{Character.  Describes the values/data shown in the graph, e.g., "Percent who agree that...".
+Default: None.}
+
+\item{qword}{Character.  Describes the values/data shown in the graph, e.g., "Do you agree that...".
 Default: None.}
 
 \item{source_info}{Character.  Information on dataset used (country, years, version, etc.),
