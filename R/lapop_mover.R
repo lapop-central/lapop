@@ -15,7 +15,7 @@ lapop_demog <- function(data,
                         lang = "en",
                         main_title = "",
                         subtitle = "",
-                        tag = "",
+                        qword = "",
                         source_info = "",
                         rev_values = FALSE,
                         rev_variables = FALSE,
@@ -58,7 +58,7 @@ NULL
 #' Default: None (only "Source: " will be printed).
 #' @param subtitle Character.  Describes the values/data shown in the graph, e.g., "Percent who agree that...".
 #' Default: None.
-#' @param tag Character.  Describes the question wording shown in the graph, e.g., "Do you agree that...".
+#' @param qword Character.  Describes the question wording shown in the graph, e.g., "Do you agree that...".
 #' Default: None.
 #' @param lang Character.  Changes default subtitle text and source info to either Spanish or English.
 #' Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
@@ -175,7 +175,7 @@ lapop_mover <- function(data,
     labs(title = main_title,
          y = "",
          x = " ",
-         tag = "",
+         tag = qword,
          caption = paste0(ifelse(lang == "es", "Fuente: LAPOP Lab", "Source: LAPOP Lab"),
                           source_info)) +
     theme(text = element_text(size = 14, family = "roboto"),
