@@ -1,4 +1,4 @@
-### # -----------------------------------------------------------------------
+### -----------------------------------------------------------------------
 ### lapop R package
 ### # -----------------------------------------------------------------------
 ### Authors: Luke Plutowski, Ph.D. & Robert Vidigal, Ph.D. (maintaner)
@@ -8,9 +8,9 @@
 ### To install the package in your machine you need to run in R console
 `devtools::install_github("https://https://github.com/lapop-central/lapop/")`
 
-### # -----------------------------------------------------------------------
+### -----------------------------------------------------------------------
 ### The workflow of visualizations using LAPOP Lab guidelines is as follow
-### # -----------------------------------------------------------------------
+### -----------------------------------------------------------------------
 1) Load lapop package in R `library(lapop)`
 2) Load `lapop_fonts()` function into console
 3) Load AmericasBarometer data with `lpr_data()` function 
@@ -21,7 +21,7 @@ or break down by covariates `lpr_mover` and store it in a R object
 6) You can also export the figure object using `lapop_save()`
 
 ### The workflow to contribute to the lapop R package project is as follows
-### # -----------------------------------------------------------------------
+### -----------------------------------------------------------------------
 1) Clone the repository to your machine
 2) Add the new function to the `\R` folder
 3) Add the .Rd file in the `\man` folder using `roxygen2`
