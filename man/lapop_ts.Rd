@@ -20,7 +20,9 @@ lapop_ts(
   lang = "en",
   color_scheme = "#A43D6A",
   percentages = TRUE,
-  label_vjust = -2.1
+  label_vjust = -2.1,
+  max_years = 15,
+  label_angle = 0
 )
 }
 \arguments{
@@ -57,6 +59,12 @@ means of the raw values, so that the y-axis adjusts accordingly. Default: TRUE.}
 
 \item{label_vjust}{Numeric. Customize vertical space between points and their labels.
 Default: -2.1.}
+
+\item{max_years}{Numeric. Threshold for automatic x-axis label rotation. When the number of unique
+country labels exceeds this value, labels will be smaller and if necessary rotated for better readability. Default: 15 years.}
+
+\item{label_angle}{Numeric. Angle (in degrees) to rotate x-axis labels when max_years is exceeded. Default: 0.}
+
 }
 \value{
 Returns an object of class \code{ggplot}, a ggplot line graph showing
@@ -92,5 +100,6 @@ lapop_ts(df,
 
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}  &
+Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }
