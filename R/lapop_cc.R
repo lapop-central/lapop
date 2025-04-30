@@ -36,6 +36,11 @@ NULL
 #' @param color_scheme Character.  Color of bars.  Takes hex number, beginning with "#".
 #' Default: #784885.
 #' @param label_size Numeric.  Size of text for data labels (percentages above bars).  Default: 5.
+#' @param max_countries Numeric. Threshold for automatic x-axis label rotation. When the number of unique
+#' country labels exceeds this value, labels will be rotated for better readability. Default: 20.
+#' @param label_angle Numeric. Angle (in degrees) to rotate x-axis labels when max_countries is exceeded. Default: 45.
+#' @param label_adjust Numeric. Horizontal adjustment (0-1) for rotated x-axis labels. Higher values move
+#' labels further right. Default: 1.
 #'
 #' @return Returns an object of class \code{ggplot}, a ggplot figure showing
 #' average values of some variables across multiple countries.
@@ -74,8 +79,6 @@ NULL
 
 
 
-
-
 lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, vallabel = data$vallabel,
                      upper_bound = data$ub, label_var = data$proplabel,
                      ymin = 0,
@@ -87,7 +90,14 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                      subtitle = "",
                      sort = "",
                      color_scheme = "#784885",
-                     label_size = 5){
+                     label_size = 5,      # New parameter: size of percentages above bars
+                     max_countries = 20,  # New parameter: threshold for label rotation
+                     label_angle = 90,    # New parameter: angle for rotated labels
+                     label_adjust = 1) {  # New parameter: adjustment for label positioning
+
+  # Check if we need to rotate labels based on number of unique countries
+  rotate_labels <- length(unique(vallabel)) > max_countries
+
   if(all(highlight != "")){
     data$hl_var = factor(ifelse(vallabel %in% highlight, 0, 1), labels = c("hl", "other"))
     fill_values = c(paste0(color_scheme, "47"), paste0(color_scheme, "20"))
@@ -96,6 +106,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
     data$hl_var = factor("other")
     fill_values = paste0(color_scheme, "47")
   }
+
   if(sort == "hi-lo"){
     data = data[order(-data$prop),]
   } else if(sort == "lo-hi"){
@@ -103,13 +114,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
   } else if(sort == "alpha"){
     data = data[order(data$vallabel),]
   }
-  if(sort == "hi-lo"){
-    data = data[order(-data$prop),]
-  } else if(sort == "lo-hi"){
-    data = data[order(data$prop),]
-  } else if(sort == "alpha"){
-    data = data[order(data$vallabel),]
-  }
+
   ci_text = ifelse(lang == "es",
                    paste0(" <span style='color:", color_scheme, "; font-size:18pt'> \u0131\u2014\u0131</span> ",
                           "<span style='color:#585860; font-size:13pt'>95% intervalo de confianza </span>"),
@@ -117,10 +122,13 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                           paste0(" <span style='color:", color_scheme, "; font-size:18pt'> \u0131\u2014\u0131</span> ",
                                  "<span style='color:#585860; font-size:13pt'>Intervalle de confiance de 95% </span>"),
                           paste0(" <span style='color:", color_scheme, "; font-size:18pt'> \u0131\u2014\u0131</span> ",
-                                  "<span style='color:#585860; font-size:13pt'>95% confidence </span>",
-                                  "<span style='color:#585860'>interval</span>")))
-    update_geom_defaults("text", list(family = "roboto"))
-  ggplot(data=data, aes(x=factor(vallabel, levels = vallabel), y=prop, fill = hl_var)) +
+                                 "<span style='color:#585860; font-size:13pt'>95% confidence </span>",
+                                 "<span style='color:#585860'>interval</span>")))
+
+  update_geom_defaults("text", list(family = "roboto"))
+
+  # Create base plot
+  p <- ggplot(data=data, aes(x=factor(vallabel, levels = vallabel), y=prop, fill = hl_var)) +
     geom_bar(stat="identity", color = color_scheme, width = 0.6) +
     geom_text(aes(label=label_var, y = upper_bound), vjust= -0.5,
               size=label_size, fontface = "bold", color = color_scheme) +
@@ -152,5 +160,16 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
           legend.justification='left',
           legend.margin = margin(t=0, b=0, l=0, r=0),
           legend.text = element_markdown(family = "nunito-light"))
-}
 
+  # Apply label rotation if needed
+  if(rotate_labels) {
+    p <- p + theme(axis.text.x = element_text(angle = label_angle,
+                                              hjust = label_adjust,
+                                              vjust = 1))
+
+    # Adjust plot margins to accommodate rotated labels
+    p <- p + theme(plot.margin = margin(t = 10, r = 10, b = max(10, label_size*5), l = 10))
+  }
+
+  return(p)
+}
