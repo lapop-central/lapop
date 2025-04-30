@@ -67,9 +67,9 @@ lpr_stack <- function(data,
       drop_na(!!outcome_sym) %>%
       {
         if (!is.null(xvar)) {
-          group_by(., xvar_label = as_factor(!!sym(xvar)), vallabel = as_factor(!!outcome_sym))
+          group_by(.data, xvar_label = as_factor(!!sym(xvar)), vallabel = as_factor(!!outcome_sym))
         } else {
-          group_by(., vallabel = as_factor(!!outcome_sym))
+          group_by(.data, vallabel = as_factor(!!outcome_sym))
         }
       } %>%
       summarise(
@@ -83,9 +83,9 @@ lpr_stack <- function(data,
       ) %>%
       {
         if (!is.null(xvar)) {
-          select(., varlabel, vallabel, xvar_label, prop, proplabel)
+          select(.data, varlabel, vallabel, xvar_label, prop, proplabel)
         } else {
-          select(., varlabel, vallabel, prop, proplabel)
+          select(.data, varlabel, vallabel, prop, proplabel)
         }
       }
 
@@ -93,29 +93,29 @@ lpr_stack <- function(data,
     stack <- stack %>%
       {
         if (!is.null(xvar)) {
-          arrange(., xvar_label, desc(prop)) # First sort by xvar_label, then by prop
+          arrange(.data, xvar_label, desc(prop)) # First sort by xvar_label, then by prop
         } else {
           if (sort == "y") {
             if (order == "hi-lo") {
-              arrange(., desc(prop))
+              arrange(.data, desc(prop))
             } else if (order == "lo-hi") {
-              arrange(., prop)
+              arrange(.data, prop)
             } else {
               .
             }
           } else if (sort == "xv") {
             if (order == "hi-lo") {
-              arrange(., desc(vallabel))
+              arrange(.data, desc(vallabel))
             } else if (order == "lo-hi") {
-              arrange(., vallabel)
+              arrange(.data, vallabel)
             } else {
               .
             }
           } else if (sort == "xl") {
             if (order == "hi-lo") {
-              arrange(., desc(as.character(vallabel)))
+              arrange(.data, desc(as.character(vallabel)))
             } else if (order == "lo-hi") {
-              arrange(., as.character(vallabel))
+              arrange(.data, as.character(vallabel))
             } else {
               .
             }

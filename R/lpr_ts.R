@@ -63,7 +63,6 @@ lpr_ts <- function(data,
                    ttest = FALSE,
                    keep_nr = FALSE) {
 
-
   # If keep_nr is TRUE, convert don't knows (NA(a)) and no answers (NA(b)) to
   # non-NA data (a value of 99).
   if (keep_nr) {
@@ -83,7 +82,7 @@ lpr_ts <- function(data,
     group_by(wave = if (use_wave) as.character(as_factor(wave)) else as.character(year)) %>%
     {
       if (mean) {
-        summarize(.,
+        summarize(.data,
                   prop = survey_mean(!!sym(outcome),
                                      na.rm = TRUE,
                                      vartype = "ci",
@@ -94,7 +93,7 @@ lpr_ts <- function(data,
             sprintf("%.1f", prop)
           })
       } else {
-        summarize(.,
+        summarize(.data,
                   prop = survey_mean(between(!!sym(outcome), rec[1], rec[2]),
                                      na.rm = TRUE,
                                      vartype = "ci",
