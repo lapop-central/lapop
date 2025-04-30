@@ -39,8 +39,6 @@ NULL
 #' @param max_countries Numeric. Threshold for automatic x-axis label rotation. When the number of unique
 #' country labels exceeds this value, labels will be rotated for better readability. Default: 20.
 #' @param label_angle Numeric. Angle (in degrees) to rotate x-axis labels when max_countries is exceeded. Default: 45.
-#' @param label_adjust Numeric. Horizontal adjustment (0-1) for rotated x-axis labels. Higher values move
-#' labels further right. Default: 1.
 #'
 #' @return Returns an object of class \code{ggplot}, a ggplot figure showing
 #' average values of some variables across multiple countries.
@@ -77,7 +75,6 @@ NULL
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 
-
 lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, vallabel = data$vallabel,
                      upper_bound = data$ub, label_var = data$proplabel,
                      ymin = 0,
@@ -89,13 +86,9 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                      subtitle = "",
                      sort = "",
                      color_scheme = "#784885",
-                     percentage_size = 5,      # New parameter: size of percentages above bars
-                     max_countries = 20,  # New parameter: threshold for label rotation
-                     label_angle = 45,    # New parameter: angle for rotated labels
-                     label_adjust = 1) {  # New parameter: adjustment for label positioning
-
-  # Check if we need to rotate labels based on number of unique countries
-  rotate_labels <- length(unique(vallabel)) > max_countries
+                     label_size = 5,  # Default size
+                     max_countries = 20,
+                     label_angle = 45) {  # Removed label_adjust
 
   if(all(highlight != "")){
     data$hl_var = factor(ifelse(vallabel %in% highlight, 0, 1), labels = c("hl", "other"))
@@ -127,10 +120,10 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
   update_geom_defaults("text", list(family = "roboto"))
 
   # Create base plot
-  p <- ggplot(data=data, aes(x=factor(vallabel, levels = vallabel), y=prop, fill = hl_var)) +
+   cc <- ggplot(data=data, aes(x=factor(vallabel, levels = vallabel), y=prop, fill = hl_var)) +
     geom_bar(stat="identity", color = color_scheme, width = 0.6) +
     geom_text(aes(label=label_var, y = upper_bound), vjust= -0.5,
-              size=percentage_size, fontface = "bold", color = color_scheme) +
+              size=current_label_size, fontface = "bold", color = color_scheme) +
     geom_errorbar(aes(ymin=lower_bound, ymax=upper_bound), width = 0.15, color = color_scheme, linetype = "solid") +
     scale_fill_manual(breaks = "other",
                       values = fill_values,
@@ -151,7 +144,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
           panel.background = element_blank(),
           panel.border = element_blank(),
           axis.line.x = element_line(linewidth = 0.6, linetype = "solid", colour = "#dddddf"),
-          axis.text = element_text(size = 14, color = "#585860", face = "bold"),
+          axis.text = element_text(size = ifelse(rotate_labels, 10, 14), color = "#585860", face = "bold"),
           axis.text.y = element_blank(),
           axis.ticks = element_blank(),
           legend.position = "top",
@@ -160,15 +153,22 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
           legend.margin = margin(t=0, b=0, l=0, r=0),
           legend.text = element_markdown(family = "nunito-light"))
 
+
+   # Check if we need to rotate labels based on number of unique countries
+   rotate_labels <- length(unique(vallabel)) > max_countries
+
+   # Adjust label size if rotation is needed
+   current_label_size <- ifelse(rotate_labels, max(3, label_size * 0.6), label_size)
+
   # Apply label rotation if needed
   if(rotate_labels) {
-    p <- p + theme(axis.text.x = element_text(angle = label_angle,
-                                              hjust = label_adjust,
-                                              vjust = 1))
+   cc <- cc + theme(axis.text.x = element_text(angle = label_angle,
+                                              hjust = 1,  # Fixed hjust when rotated
+                                              vjust = 0.5))
 
     # Adjust plot margins to accommodate rotated labels
-    p <- p + theme(plot.margin = margin(t = 10, r = 10, b = max(10, percentage_size*5), l = 10))
+     cc <-  cc + theme(plot.margin = margin(t = 10, r = 10, b = max(10, current_label_size*5), l = 10))
   }
 
-  return(p)
+  return(cc)
 }

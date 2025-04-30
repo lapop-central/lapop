@@ -22,8 +22,7 @@ lapop_cc(
   color_scheme = "#784885",
   percentage_size = 5,
   max_countries = 20,
-  label_angle = 45,
-  label_adjust = 1
+  label_angle = 45
 )
 }
 \arguments{
@@ -68,7 +67,6 @@ country labels exceeds this value, labels will be rotated for better readability
 
 \item{label_angle}{Numeric. Angle (in degrees) to rotate x-axis labels when max_countries is exceeded. Default: 45.}
 
-\item{label_adjust}{Numeric. Horizontal adjustment (0-1) for rotated x-axis labels. Higher values move labels further right. Default: 1.}
 }
 
 \value{
