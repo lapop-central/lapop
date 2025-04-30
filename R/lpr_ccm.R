@@ -93,8 +93,8 @@ lpr_ccm <- function(data,
   if (keep_nr) {
     data <- data %>%
       mutate(across(all_of(outcome_vars), ~ case_when(
-        na_tag(.) %in% c("a", "b") ~ 99,
-        TRUE ~ as.numeric(.)
+        na_tag(.data) %in% c("a", "b") ~ 99,
+        TRUE ~ as.numeric(.data)
       )))
   }
 
@@ -108,7 +108,7 @@ lpr_ccm <- function(data,
       group_by(pais = as_factor(!!sym(xvar))) %>%
       {
         if (mean) {
-          summarize(. ,
+          summarize(.data,
                     prop = survey_mean(!!sym(outcome),
                                        na.rm = TRUE,
                                        vartype = "ci",
@@ -119,7 +119,7 @@ lpr_ccm <- function(data,
               sprintf("%.1f", prop)
             })
         } else {
-          summarize(. ,
+          summarize(.data,
                     prop = survey_mean(between(!!sym(outcome), rec[1], rec[2]),
                                        na.rm = TRUE,
                                        vartype = "ci",

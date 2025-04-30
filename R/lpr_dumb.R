@@ -185,7 +185,7 @@ lpr_dumb = function(data,
         } else if (order == "lo-hi") {
           arrange(.data, as.character(xvar))
         } else {
-          .  # Return unchanged if no valid sorting option is selected
+          .data  # Return unchanged if no valid sorting option is selected
         }
       }
     }

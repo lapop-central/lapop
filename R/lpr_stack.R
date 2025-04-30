@@ -101,7 +101,7 @@ lpr_stack <- function(data,
             } else if (order == "lo-hi") {
               arrange(.data, prop)
             } else {
-              .
+              .data
             }
           } else if (sort == "xv") {
             if (order == "hi-lo") {
@@ -109,7 +109,7 @@ lpr_stack <- function(data,
             } else if (order == "lo-hi") {
               arrange(.data, vallabel)
             } else {
-              .
+              .data
             }
           } else if (sort == "xl") {
             if (order == "hi-lo") {
@@ -117,10 +117,10 @@ lpr_stack <- function(data,
             } else if (order == "lo-hi") {
               arrange(.data, as.character(vallabel))
             } else {
-              .
+              .data
             }
           } else {
-            .
+            .data
           }
         }
       }
