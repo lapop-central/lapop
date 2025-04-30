@@ -20,7 +20,10 @@ lapop_cc(
   subtitle = "",
   sort = "",
   color_scheme = "#784885",
-  label_size = 5
+  percentage_size = 5,
+  max_countries = 20,
+  label_angle = 45,
+  label_adjust = 1
 )
 }
 \arguments{
