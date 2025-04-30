@@ -45,6 +45,10 @@ NULL
 #' means of the raw values, so that the y-axis adjusts accordingly. Default: TRUE.
 #' @param label_vjust Numeric. Customize vertical space between points and their labels.
 #' Default: -2.1.
+#' @param max_years Numeric. Threshold for automatic x-axis label rotation. When the number of unique
+#' country labels exceeds this value, labels will be smaller and if necessary rotated for better readability.
+#' Default: 15 years.
+#' @param label_angle Numeric. Angle (in degrees) to rotate x-axis labels when max_years is exceeded. Default: 0.
 
 #' @return Returns an object of class \code{ggplot}, a ggplot line graph showing
 #' values of a variable over time.
@@ -67,12 +71,11 @@ NULL
 #'
 #'@export
 #'@import ggplot2
-#'@importFrom magrittr :=
 #'@importFrom ggtext element_markdown
 #'@importFrom zoo na.approx
 #'@import showtext
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 #'
 
 
@@ -88,7 +91,17 @@ lapop_ts <- function(data, outcome_var = data$prop, lower_bound = data$lb,
                      lang = "en",
                      color_scheme = "#A43D6A",
                      percentages = TRUE,
-                     label_vjust = -2.1){
+                     label_vjust = -2.1,
+                     max_years = 15,
+                     label_angle = 0){
+
+
+  # Check if we need to rotate labels based on number of unique countries
+  rotate_labels <- length(unique(data$wave)) > max_years
+
+  # Adjust label size if rotation is needed
+  label_size = 5
+  current_label_size <- ifelse(rotate_labels, (label_size * 0.5), label_size)
 
   #interpolate data for missing waves are still plotted on the x-axis (without data)
   if(sum(is.na(outcome_var)) > 0) {
@@ -108,7 +121,7 @@ lapop_ts <- function(data, outcome_var = data$prop, lower_bound = data$lb,
                                  "<span style='color:#585860'>interval</span>")))
   #and turn to creating the graph
   update_geom_defaults("text", list(family = "roboto"))
-  ggplot(data=data, aes(x=wave_var, y=outcome_var)) +
+  ts <- ggplot(data=data, aes(x=wave_var, y=outcome_var)) +
     geom_line(aes(group = 1), color=color_scheme, linewidth = 1, alpha=0.48) +
     geom_line(aes(group = 1, y =lower_bound), color=color_scheme, linewidth = 1, alpha=0.48, lty="dashed") +
     geom_line(aes(group = 1, y= upper_bound), color=color_scheme, linewidth = 1, alpha=0.48, lty="dashed") +
@@ -145,7 +158,7 @@ lapop_ts <- function(data, outcome_var = data$prop, lower_bound = data$lb,
           plot.title = element_text(size = 18, family = "nunito", face = "bold"),
           plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "nunito", color="#585860"),
           axis.title.y = element_blank(),
-          axis.text = element_text(size = 14, color = "#585860"),
+          axis.text = element_text(size = ifelse(rotate_labels, 10, 14), color = "#585860"),
           panel.grid.major = element_line(color = "#dddddf", linewidth = 0.5),
           panel.grid.minor = element_line(color = "#dddddf", linewidth = 0.5),
           panel.border = element_rect(color = "#dddddf", fill = NA, linewidth = 1.0),
@@ -156,6 +169,17 @@ lapop_ts <- function(data, outcome_var = data$prop, lower_bound = data$lb,
           legend.justification='left',
           legend.margin = margin(t=0, b=0, l=-40, r=0),
           legend.text=element_markdown(family = "nunito-light"))
+
+
+  # Apply label rotation if needed
+  if(rotate_labels) {
+    ts <- ts + theme(axis.text.x = element_text(angle = label_angle,
+                                                hjust = 0.5, vjust = 1))
+
+    # Adjust plot margins to accommodate rotated labels
+    ts <-  ts + theme(plot.margin = margin(t = 10, r = 10, b = max(10, current_label_size*5), l = 10))
+  }
+  return(ts)
 }
 
 

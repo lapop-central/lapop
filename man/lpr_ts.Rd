@@ -14,7 +14,9 @@ lpr_ts(
   filesave = "",
   cfmt = "",
   ttest = FALSE,
-  keep_nr = FALSE
+  keep_nr = FALSE,
+  max_years = 15,
+  label_angle = 0
 )
 }
 \arguments{
@@ -52,6 +54,12 @@ of means between all individual x levels and save them in attr(x,
 and "no response" (missing code .b) into valid data (value = 99) and use them
 in the denominator when calculating percentages.  The default is to examine
 valid responses only.  Default: FALSE.}
+
+\item{max_years}{Numeric. Threshold for automatic x-axis label rotation. When the number of unique
+country labels exceeds this value, labels will be smaller and if necessary rotated for better readability. Default: 15 years.}
+
+\item{label_angle}{Numeric. Angle (in degrees) to rotate x-axis labels when max_years is exceeded. Default: 0.}
+
 }
 \value{
 Returns a data frame, with data formatted for visualization by lapop_ts
@@ -71,5 +79,6 @@ ttest = TRUE)}
 }
 \author{
 Berta Diaz, \email{berta.diaz.martinez@vanderbilt.edu} &
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} &
+Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }
