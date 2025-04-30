@@ -46,13 +46,13 @@
 #'
 #' @examples
 #'
-#' \dontrun{lpr_cc(data = gms, 
-#' outcome = "ing4", 
-#' rec = c(5, 7), 
+#' \dontrun{lpr_cc(data = gms,
+#' outcome = "ing4",
+#' rec = c(5, 7),
 #' xvar = "pais_lab")}
-#' 
-#' \dontrun{lpr_cc(data = gms, 
-#' outcome = c("sd2new2", "sd3new2", "sd5new2", "sd6new2"), 
+#'
+#' \dontrun{lpr_cc(data = gms,
+#' outcome = c("sd2new2", "sd3new2", "sd5new2", "sd6new2"),
 #' rec = c(5, 7))}
 #'
 #'@export
@@ -60,7 +60,6 @@
 #'@import srvyr
 #'
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
-
 lpr_cc <- function(data,
                    outcome,
                    xvar = "pais_lab",
@@ -111,20 +110,20 @@ lpr_cc <- function(data,
       {
         if (!is.null(xvar)) {
           # Use filter and group_by directly
-          filter(., !is.na(!!sym(xvar))) %>%
+          filter(.data, !is.na(!!sym(xvar))) %>%
             group_by(vallabel = as_factor(!!sym(xvar)))
         } else {
-          mutate(., vallabel = outcome[i])  # Assign outcome name when xvar is NULL
+          mutate(.data, vallabel = outcome[i])  # Assign outcome name when xvar is NULL
         }
       } %>%
       group_by(vallabel) %>%  # Ensure grouping happens regardless
       {
         if (mean) { # mean=TRUE calculation
-          summarize(., prop = survey_mean(!!curr_outcome, na.rm = TRUE, vartype = "ci", level = ci_level)) %>%
+          summarize(.data, prop = survey_mean(!!curr_outcome, na.rm = TRUE, vartype = "ci", level = ci_level)) %>%
             mutate(proplabel = case_when(cfmt != "" ~ sprintf("%.1f", prop),
                                          TRUE ~ sprintf("%.1f", prop)))
         } else { # percentages calculation
-          summarize(., prop = survey_mean(between(!!curr_outcome, curr_rec[1], curr_rec[2]),
+          summarize(.data, prop = survey_mean(between(!!curr_outcome, curr_rec[1], curr_rec[2]),
                                           na.rm = TRUE, vartype = "ci", level = ci_level) * 100) %>%
             mutate(proplabel = case_when(cfmt != "" ~ sprintf("%.0f%%", round(prop)),
                                          TRUE ~ sprintf("%.0f%%", round(prop))))

@@ -57,27 +57,27 @@
 #'  rec = c(5, 7), rec2 = c(1, 2)}
 #'
 #' # Single DV X Single IV
-#' \dontrun{lpr_mover(data, 
-#' outcome="ing4", 
-#' grouping_vars="exc7new",  
+#' \dontrun{lpr_mover(data,
+#' outcome="ing4",
+#' grouping_vars="exc7new",
 #' rec=c(5,7), ttest=T)}
 #'
 #' # Multiple DVs X Single IV
-#' \dontrun{lpr_mover(data, 
-#' outcome=c("ing4", "pn4"), 
-#' grouping_vars="exc7new", 
+#' \dontrun{lpr_mover(data,
+#' outcome=c("ing4", "pn4"),
+#' grouping_vars="exc7new",
 #' rec=c(5,7), rec2=c(1,2), ttest=T)}
 #'
 #' # Single DV X Multiple IVs
-#' \dontrun{lpr_mover(data, 
-#' outcome="ing4", 
-#' grouping_vars=c("edre", "q1tc_r"), 
+#' \dontrun{lpr_mover(data,
+#' outcome="ing4",
+#' grouping_vars=c("edre", "q1tc_r"),
 #' rec=c(5,7), ttest=T)}
 #'
 #' # Multiple DVs X Multiple IVs
-#' \dontrun{lpr_mover(data, 
-#' outcome=c("ing4", "pn4"), 
-#' grouping_vars=c("edre", "q1tc_r"), 
+#' \dontrun{lpr_mover(data,
+#' outcome=c("ing4", "pn4"),
+#' grouping_vars=c("edre", "q1tc_r"),
 #' rec=c(5,7), rec2=c(1,2), ttest=T)}
 #'
 #'@export
@@ -105,8 +105,8 @@ lpr_mover <- function(data,
   if (keep_nr) {
     data <- data %>%
       mutate(across(all_of(outcome), ~ case_when(
-        na_tag(.) == "a" | na_tag(.) == "b" ~ 99,
-        TRUE ~ as.numeric(.)
+        na_tag(.data) == "a" | na_tag(.) == "b" ~ 99,
+        TRUE ~ as.numeric(.data)
       )))
   }
 

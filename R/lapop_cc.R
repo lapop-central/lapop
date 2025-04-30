@@ -86,7 +86,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                      subtitle = "",
                      sort = "",
                      color_scheme = "#784885",
-                     label_size = 5,  # Default size
+                     percentage_size = 5,  # Default size
                      max_countries = 20,
                      label_angle = 45) {  # Removed label_adjust
 
@@ -158,7 +158,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
    rotate_labels <- length(unique(vallabel)) > max_countries
 
    # Adjust label size if rotation is needed
-   current_label_size <- ifelse(rotate_labels, max(3, label_size * 0.6), label_size)
+   current_label_size <- ifelse(rotate_labels, max(3, percentage_size * 0.6), label_size)
 
   # Apply label rotation if needed
   if(rotate_labels) {
