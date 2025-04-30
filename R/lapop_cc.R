@@ -38,7 +38,7 @@ NULL
 #' @param label_size Numeric.  Size of text for data labels (percentages above bars).  Default: 5.
 #' @param max_countries Numeric. Threshold for automatic x-axis label rotation. When the number of unique
 #' country labels exceeds this value, labels will be rotated for better readability. Default: 20.
-#' @param label_angle Numeric. Angle (in degrees) to rotate x-axis labels when max_countries is exceeded. Default: 45.
+#' @param label_angle Numeric. Angle (in degrees) to rotate x-axis labels when max_countries is exceeded. Default: 90
 #'
 #' @return Returns an object of class \code{ggplot}, a ggplot figure showing
 #' average values of some variables across multiple countries.
@@ -88,7 +88,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                      color_scheme = "#784885",
                      label_size = 5,  # Default size
                      max_countries = 30,
-                     label_angle = 45) {  # Removed label_adjust
+                     label_angle = 90) {  # Removed label_adjust
 
   # Check if we need to rotate labels based on number of unique countries
   rotate_labels <- length(unique(data$vallabel)) > max_countries
