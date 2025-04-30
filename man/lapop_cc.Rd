@@ -21,7 +21,7 @@ lapop_cc(
   sort = "",
   color_scheme = "#784885",
   label_size = 5,
-  max_countries = 20,
+  max_countries = 30,
   label_angle = 45
 )
 }
@@ -63,7 +63,7 @@ Default: #784885.}
 \item{label_size}{Numeric.  Size of text for data labels (percentages above bars).  Default: 5.}
 
 \item{max_countries}{Numeric. Threshold for automatic x-axis label rotation. When the number of unique
-country labels exceeds this value, labels will be rotated for better readability. Default: 20.}
+country labels exceeds this value, labels will be rotated for better readability. Default: 30.}
 
 \item{label_angle}{Numeric. Angle (in degrees) to rotate x-axis labels when max_countries is exceeded. Default: 45.}
 
