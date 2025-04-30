@@ -152,7 +152,7 @@ lpr_ccm <- function(data,
       } else if (sort == "xv") {
         arrange(.data, if (order == "hi-lo") desc(match(pais, levels(pais))) else match(pais, levels(pais)))
       } else {
-        .
+        .data
       }
     }
 

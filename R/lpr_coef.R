@@ -23,14 +23,14 @@
 #' @return Returns a data frame, with data formatted for visualization by lapop_coef
 #'
 #' \examples{
-#' ## Not run: 
+#' ## Not run:
 #' # Example 1: Linear model
 #' svyglm_linear <- survey::svyglm(
-#'  fs2 ~ it1 + idio2 + edad, 
-#'  data = dataLAPOP, 
+#'  fs2 ~ it1 + idio2 + edad,
+#'  data = dataLAPOP,
 #'  family = "gaussian")
 #'
-#' # Example 2: Logit model  
+#' # Example 2: Logit model
 #' svyglm_logit <- survey::svyglm(
 #'  fs2 ~ it1 + idio2 + edad,
 #'  data = dataLAPOP,
@@ -39,7 +39,7 @@
 #' # Example 3: Using lpr_coef
 #' lpr_coef(
 #'  outcome = "fs2",
-#'  xvar = "it1+idio2+edad", 
+#'  xvar = "it1+idio2+edad",
 #'  data = dataLAPOP,
 #'  model = "binomial",
 #'  est = "contrast")
@@ -147,7 +147,7 @@ lpr_coef <- function(
 
     coef_data <- summary(svyglm_object)$coefficients %>%
       as.data.frame() %>%
-      mutate(Term = rownames(.)) %>%
+      mutate(Term = rownames(.data)) %>%
       select(Term, everything()) %>%  # Move Term to the first column
       mutate(
         lb = as.numeric(Estimate - qt(1 - (1 - level) / 2, df = svyglm_object$df.residual) * `Std. Error`),
