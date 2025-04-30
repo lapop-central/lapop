@@ -84,9 +84,9 @@ lapop_hist <- function(data, outcome_var = data$prop, label_var = data$proplabel
                           source_info),
          subtitle = subtitle) +
     theme(text = element_text(size = 14, family = "roboto"),
-          plot.title = element_markdown(size = 18, family = "nunito", face = "bold"),
-          plot.caption = element_markdown(size = 10.5, hjust = 0, vjust = 2, family = "nunito", color="#585860"),
-          plot.subtitle = element_markdown(size = 13, family = "nunito-light", color="#585860", margin=margin(b = 10)),
+          plot.title = element_text(size = 18, family = "nunito", face = "bold"),
+          plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "nunito", color="#585860"),
+          plot.subtitle = element_text(size = 13, family = "nunito-light", color="#585860", margin=margin(b = 10)),
           axis.title.y = element_blank(),
           axis.ticks = element_blank(),
           plot.title.position = "plot",
