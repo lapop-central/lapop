@@ -150,7 +150,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
           panel.background = element_blank(),
           panel.border = element_blank(),
           axis.line.x = element_line(linewidth = 0.6, linetype = "solid", colour = "#dddddf"),
-          axis.text = element_text(size = ifelse(rotate_labels, 9, 14), color = "#585860", face = "bold"),
+          axis.text = element_text(size = ifelse(rotate_labels, 10, 14), color = "#585860", face = "bold"),
           axis.text.y = element_blank(),
           axis.ticks = element_blank(),
           legend.position = "top",
