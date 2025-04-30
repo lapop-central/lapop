@@ -1,13 +1,32 @@
-# lapop-viz
- These are the templates for creating LAPOP's visualizations of AmericasBarometer data.
+-----------------------------------------------------------------------
+### lapop R package
+-----------------------------------------------------------------------
+### Authors: Luke Plutowski, Ph.D. & Robert Vidigal, Ph.D. (maintaner)
+These are the helper functions to wrangle and produce visualizations of 
+AmericasBarometer data following LAPOP Lab's editorial guidelines
 
-The workflow for visualization projects is as follows:
+### To install the package in your machine you need to run in R console
+`devtools::install_github("https://https://github.com/lapop-central/lapop/")`
 
-1) Create project folder
-2) Create or save .do file into project folder.  Run analyses in this .do file using LAPOP .ado files, with output as .csvs saved to your project folder (see help file on .ados)
-3) Load lapop package in R
-4) Type lapop_fonts() into console
-5) Follow instructions within R help files to load in .csvs and create visualizations in R using pre-defined functions.  Use lapop_save() to save .svg files to project folder. 
+-----------------------------------------------------------------------
+### The workflow of visualizations using LAPOP Lab guidelines 
+-----------------------------------------------------------------------
+
+1) Load lapop package in R `library(lapop)`
+2) Load `lapop_fonts()` function into console
+3) Load AmericasBarometer data with `lpr_data()` function 
+4) Choose the appropriate type of `lpr` graph to represent data. For instance, 
+histograms `lpr_hist`, cross country comparison `lpr_cc`, time series `lpr_ts`, 
+or break down by covariates `lpr_mover` and store it in a R object
+5) Use the correspoding `lapop` ploting function to produce the visualization
+6) You can also export the figure object using `lapop_save()`
+
+### The workflow to contribute to the lapop R package project
+-----------------------------------------------------------------------
+1) Clone the repository to your machine
+2) Add the new function to the `\R` folder
+3) Add the .Rd file in the `\man` folder using `roxygen2`
+4) Collate the new function in the DESCRIPTION file
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/lapop-central/lapop-viz/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lapop-central/lapop-viz/actions/workflows/R-CMD-check.yaml)
