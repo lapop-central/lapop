@@ -162,7 +162,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
   # Apply label rotation if needed
   if(rotate_labels) {
    cc <- cc + theme(axis.text.x = element_text(angle = label_angle,
-                                              hjust = .75, vjust = 0.5))
+                                              hjust = .25, vjust = 0.5))
 
     # Adjust plot margins to accommodate rotated labels
      cc <-  cc + theme(plot.margin = margin(t = 10, r = 10, b = max(10, current_label_size*5), l = 10))
