@@ -60,7 +60,7 @@ Default: None.}
 \item{color_scheme}{Character.  Color of bars.  Takes hex number, beginning with "#".
 Default: #784885.}
 
-\item{percentage_size}{Numeric.  Size of text for data labels (percentages above bars).  Default: 5.}
+\item{label_size}{Numeric.  Size of text for data labels (percentages above bars).  Default: 5.}
 
 \item{max_countries}{Numeric. Threshold for automatic x-axis label rotation. When the number of unique
 country labels exceeds this value, labels will be rotated for better readability. Default: 20.}
