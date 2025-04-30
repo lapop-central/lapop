@@ -93,7 +93,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
   # Check if we need to rotate labels based on number of unique countries
   rotate_labels <- length(unique(data$vallabel)) > max_countries
   # Adjust label size if rotation is needed
-  current_label_size <- ifelse(rotate_labels, (label_size * 0.4), label_size)
+  current_label_size <- ifelse(rotate_labels, (label_size * 0.5), label_size)
 
 
   if(all(highlight != "")){
@@ -162,7 +162,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
   # Apply label rotation if needed
   if(rotate_labels) {
    cc <- cc + theme(axis.text.x = element_text(angle = label_angle,
-                                              hjust = 1, vjust = 0.5))
+                                              hjust = .75, vjust = 0.5))
 
     # Adjust plot margins to accommodate rotated labels
      cc <-  cc + theme(plot.margin = margin(t = 10, r = 10, b = max(10, current_label_size*5), l = 10))
