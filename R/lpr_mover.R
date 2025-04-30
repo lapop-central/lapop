@@ -120,7 +120,7 @@ lpr_mover <- function(data,
       group_by(vallabel = as_factor(.data[[grouping_var]])) %>%
       {
         if (mean) {
-          summarize(.,
+          summarize(.data,
                     prop = survey_mean(.data[[outcome_var]],
                                        na.rm = TRUE,
                                        vartype = "ci",
@@ -128,7 +128,7 @@ lpr_mover <- function(data,
           ) %>%
             mutate(proplabel = sprintf("%.1f", prop))
         } else {
-          summarize(.,
+          summarize(.data,
                     prop = survey_mean(between(.data[[outcome_var]], rec_range[1], rec_range[2]),
                                        na.rm = TRUE,
                                        vartype = "ci",

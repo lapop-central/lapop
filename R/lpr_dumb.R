@@ -101,7 +101,7 @@ lpr_dumb = function(data,
     ) %>%
     {
       if (mean) {
-        summarize(.,
+        summarize(.data,
                   prop1 = survey_mean(!!sym(outcome),
                                      na.rm = TRUE,
                                      vartype = "ci",
@@ -109,7 +109,7 @@ lpr_dumb = function(data,
           mutate(proplabel1 = case_when(cfmt != "" ~ sprintf(cfmt, prop1),
                                        TRUE ~ sprintf("%.1f", prop1)))
       } else {
-        summarize(.,
+        summarize(.data,
                   prop1 = survey_mean(between(!!sym(outcome), rec[1], rec[2]),
                                      na.rm = TRUE,
                                      vartype = "ci",
@@ -119,7 +119,7 @@ lpr_dumb = function(data,
       }
     } %>%
     filter(prop1 != 0) %>%
-    rename(., lb1 = prop1_low, ub1 = prop1_upp)
+    rename(.data, lb1 = prop1_low, ub1 = prop1_upp)
 
   wave2 = data %>%
     drop_na(!!sym(xvar)) %>%
@@ -129,7 +129,7 @@ lpr_dumb = function(data,
     ) %>%
     {
       if (mean) {
-        summarize(.,
+        summarize(.data,
                   prop2 = survey_mean(!!sym(outcome),
                                      na.rm = TRUE,
                                      vartype = "ci",
@@ -137,7 +137,7 @@ lpr_dumb = function(data,
           mutate(proplabel2 = case_when(cfmt != "" ~ sprintf(cfmt, prop2),
                                         TRUE ~ sprintf("%.1f", prop2)))
       } else {
-        summarize(.,
+        summarize(.data,
                   prop2 = survey_mean(between(!!sym(outcome), rec[1], rec[2]),
                                       na.rm = TRUE,
                                       vartype = "ci",
@@ -147,7 +147,7 @@ lpr_dumb = function(data,
       }
     } %>%
     filter(prop2 != 0) %>%
-    rename(., lb2 = prop2_low, ub2 = prop2_upp)
+    rename(.data, lb2 = prop2_low, ub2 = prop2_upp)
 
   dumb = merge(wave1, wave2, by = "pais")
 
@@ -155,35 +155,35 @@ lpr_dumb = function(data,
     {
       if (sort == "prop1") {
         if (order == "hi-lo") {
-          arrange(., desc(prop1))
+          arrange(.data, desc(prop1))
         } else if (order == "lo-hi") {
-          arrange(., prop1)
+          arrange(.data, prop1)
         }
       } else if (sort == "prop2") {
         if (order == "hi-lo") {
-          arrange(., desc(prop2))
+          arrange(.data, desc(prop2))
         } else if (order == "lo-hi") {
-          arrange(., prop2)
+          arrange(.data, prop2)
         }
       } else if (sort == "xv") {
         if (order == "hi-lo") {
-          arrange(., desc(match(pais, levels(pais))))
+          arrange(.data, desc(match(pais, levels(pais))))
         } else if (order == "lo-hi") {
-          arrange(., match(pais, levels(pais)))
+          arrange(.data, match(pais, levels(pais)))
         }
       } else if (sort == "diff") {
         if (order == "hi-lo") {
-          mutate(., diff = prop2 - prop1) %>%
-          arrange(., desc(diff))
+          mutate(.data, diff = prop2 - prop1) %>%
+          arrange(.data, desc(diff))
         } else if (order == "lo-hi") {
-          mutate(., diff = prop2 - prop1) %>%
-          arrange(., diff)
+          mutate(.data, diff = prop2 - prop1) %>%
+          arrange(.data, diff)
         }
       } else if (sort == "xl") {
         if (order == "hi-lo") {
-          arrange(., desc(as.character(xvar)))
+          arrange(.data, desc(as.character(xvar)))
         } else if (order == "lo-hi") {
-          arrange(., as.character(xvar))
+          arrange(.data, as.character(xvar))
         } else {
           .  # Return unchanged if no valid sorting option is selected
         }

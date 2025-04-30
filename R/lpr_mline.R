@@ -154,7 +154,7 @@ lpr_mline <- function(data,
                wave = if (use_wave) as.character(as_factor(wave)) else year) %>%
       {
         if (mean) {
-          summarize(., prop = survey_mean(!!sym(outcome),
+          summarize(.data, prop = survey_mean(!!sym(outcome),
                                           na.rm = TRUE,
                                           vartype = "ci",
                                           level = ci_level)) %>%
@@ -164,7 +164,7 @@ lpr_mline <- function(data,
               sprintf("%.1f", prop)
             })
         } else {
-          summarize(., prop = survey_mean(between(!!sym(outcome), rec[1], rec[2]),
+          summarize(.data, prop = survey_mean(between(!!sym(outcome), rec[1], rec[2]),
                                           na.rm = TRUE,
                                           vartype = "ci",
                                           level = ci_level) * 100) %>%
@@ -176,7 +176,7 @@ lpr_mline <- function(data,
         }
       } %>%
       filter(prop != 0) %>%
-      rename(., lb = prop_low, ub = prop_upp)
+      rename(.data, lb = prop_low, ub = prop_upp)
 
   }
 

@@ -142,15 +142,15 @@ lpr_ccm <- function(data,
   ccm = ccm %>%
     {
       if (sort == "y") {
-        group_by(., var) %>%
+        group_by(.data, var) %>%
           mutate(rank = rank(-prop)) %>%
           arrange(match(var, unique(var)[1]),
                   if (order == "hi-lo") rank else desc(rank)) %>%
           select(-rank)
       } else if (sort == "xl") {
-          arrange(., if (order == "hi-lo") desc(as.character(pais)) else as.character(pais))
+          arrange(.data, if (order == "hi-lo") desc(as.character(pais)) else as.character(pais))
       } else if (sort == "xv") {
-        arrange(., if (order == "hi-lo") desc(match(pais, levels(pais))) else match(pais, levels(pais)))
+        arrange(.data, if (order == "hi-lo") desc(match(pais, levels(pais))) else match(pais, levels(pais)))
       } else {
         .
       }
