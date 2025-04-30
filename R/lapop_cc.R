@@ -35,7 +35,7 @@ NULL
 #' or "es" (Spanish).  Default: "en".
 #' @param color_scheme Character.  Color of bars.  Takes hex number, beginning with "#".
 #' Default: #784885.
-#' @param label_size Numeric.  Size of text for data labels (percentages above bars).  Default: 5.
+#' @param percentage_size Numeric.  Size of text for data labels (percentages above bars).  Default: 5.
 #' @param max_countries Numeric. Threshold for automatic x-axis label rotation. When the number of unique
 #' country labels exceeds this value, labels will be rotated for better readability. Default: 20.
 #' @param label_angle Numeric. Angle (in degrees) to rotate x-axis labels when max_countries is exceeded. Default: 45.
@@ -74,8 +74,7 @@ NULL
 #'@import sysfonts
 #'@import showtext
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
-#'
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 
 
@@ -90,9 +89,9 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                      subtitle = "",
                      sort = "",
                      color_scheme = "#784885",
-                     label_size = 5,      # New parameter: size of percentages above bars
+                     percentage_size = 5,      # New parameter: size of percentages above bars
                      max_countries = 20,  # New parameter: threshold for label rotation
-                     label_angle = 90,    # New parameter: angle for rotated labels
+                     label_angle = 45,    # New parameter: angle for rotated labels
                      label_adjust = 1) {  # New parameter: adjustment for label positioning
 
   # Check if we need to rotate labels based on number of unique countries
@@ -131,7 +130,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
   p <- ggplot(data=data, aes(x=factor(vallabel, levels = vallabel), y=prop, fill = hl_var)) +
     geom_bar(stat="identity", color = color_scheme, width = 0.6) +
     geom_text(aes(label=label_var, y = upper_bound), vjust= -0.5,
-              size=label_size, fontface = "bold", color = color_scheme) +
+              size=percentage_size, fontface = "bold", color = color_scheme) +
     geom_errorbar(aes(ymin=lower_bound, ymax=upper_bound), width = 0.15, color = color_scheme, linetype = "solid") +
     scale_fill_manual(breaks = "other",
                       values = fill_values,
@@ -168,7 +167,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                                               vjust = 1))
 
     # Adjust plot margins to accommodate rotated labels
-    p <- p + theme(plot.margin = margin(t = 10, r = 10, b = max(10, label_size*5), l = 10))
+    p <- p + theme(plot.margin = margin(t = 10, r = 10, b = max(10, percentage_size*5), l = 10))
   }
 
   return(p)
