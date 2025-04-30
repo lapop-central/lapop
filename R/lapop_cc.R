@@ -87,13 +87,13 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                      sort = "",
                      color_scheme = "#784885",
                      label_size = 5,  # Default size
-                     max_countries = 20,
+                     max_countries = 30,
                      label_angle = 45) {  # Removed label_adjust
 
   # Check if we need to rotate labels based on number of unique countries
   rotate_labels <- length(unique(data$vallabel)) > max_countries
   # Adjust label size if rotation is needed
-  current_label_size <- ifelse(rotate_labels, (label_size * 0.4), label_size)
+  current_label_size <- ifelse(rotate_labels, (label_size * 0.25), label_size)
 
 
   if(all(highlight != "")){
@@ -150,7 +150,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
           panel.background = element_blank(),
           panel.border = element_blank(),
           axis.line.x = element_line(linewidth = 0.6, linetype = "solid", colour = "#dddddf"),
-          axis.text = element_text(size = ifelse(rotate_labels, 8, 14), color = "#585860", face = "bold"),
+          axis.text = element_text(size = ifelse(rotate_labels, 6, 14), color = "#585860", face = "bold"),
           axis.text.y = element_blank(),
           axis.ticks = element_blank(),
           legend.position = "top",
