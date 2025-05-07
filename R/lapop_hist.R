@@ -77,7 +77,7 @@ lapop_hist <- function(data, outcome_var = data$prop, label_var = data$proplabel
     geom_bar(stat = "identity", color = color_scheme, fill = paste0(color_scheme, "28"), width = 0.75) +
     geom_text(aes(label=label_var), vjust=-0.5, size = 5, fontface = "bold", color = color_scheme) +
     scale_x_discrete(labels = function(x) {
-      stringr::str_wrap(x, width = 12)
+      stringr::str_wrap(x, width = 10)
     }) +
     scale_y_continuous(limits = c(ymin, ymax), expand = c(0, 0.3), labels = function(x) paste0(x, "%")) +
     labs(title=main_title,
