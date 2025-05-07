@@ -51,8 +51,9 @@ NULL
 #'@export
 #'@import ggplot2
 #'@import ggtext
+#'@importFrom stringr str_wrap
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 #'
 
 lapop_hist <- function(data, outcome_var = data$prop, label_var = data$proplabel,
@@ -62,7 +63,7 @@ lapop_hist <- function(data, outcome_var = data$prop, label_var = data$proplabel
                        lang = "en",
                        main_title = "",
                        subtitle = "",
-                       source_info = "",
+                       source_info = "LAPOP",
                        order = FALSE,
                        color_scheme = "#008381"){
   if(order == TRUE){
@@ -75,13 +76,15 @@ lapop_hist <- function(data, outcome_var = data$prop, label_var = data$proplabel
   ggplot(data, aes(x=factor(cat_var, levels = cat_var), y = outcome_var)) +
     geom_bar(stat = "identity", color = color_scheme, fill = paste0(color_scheme, "28"), width = 0.75) +
     geom_text(aes(label=label_var), vjust=-0.5, size = 5, fontface = "bold", color = color_scheme) +
-    # scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
+    scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 12)) +
     scale_y_continuous(limits = c(ymin, ymax), expand = c(0, 0.3), labels = function(x) paste0(x, "%")) +
     labs(title=main_title,
          y = "",
          x = "",
-         caption = paste0(ifelse(lang == "es", "Fuente: LAPOP Lab", "Source: LAPOP Lab"),
-                          source_info),
+         caption = paste0(ifelse(lang == "es" & source_info == "LAPOP", "Fuente: LAPOP Lab",
+                                 ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
+                                        source_info))
+                          ),
          subtitle = subtitle) +
     theme(text = element_text(size = 14, family = "roboto"),
           plot.title = element_text(size = 18, family = "nunito", face = "bold"),

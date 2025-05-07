@@ -14,7 +14,7 @@ lapop_hist(
   lang = "en",
   main_title = "",
   subtitle = "",
-  source_info = "",
+  source_info = "LAPOP",
   order = FALSE,
   color_scheme = "#008381"
 )
@@ -43,7 +43,7 @@ Default: None.}
 
 \item{source_info}{Character.  Information on dataset used (country, years, version, etc.),
 which is added to the end of "Source: " in the bottom-left corner of the graph.
-Default: None (only "Source: " will be printed).}
+Default: LAPOP (only "Source: LAPOP Lab" will be printed).}
 
 \item{order}{Logical.  Should bars be ordered from most frequent response to least?  Default: FALSE.}
 
@@ -73,5 +73,5 @@ lapop_hist(df,
 
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }
