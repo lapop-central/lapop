@@ -149,8 +149,9 @@ lapop_ts <- function(data, outcome_var = data$prop, lower_bound = data$lb,
       }
     } +
     labs(title = main_title,
-         caption = paste0(ifelse(lang == "es", "Fuente: LAPOP Lab", "Source: LAPOP Lab"),
-                          source_info),
+         caption = paste0(ifelse(lang == "es" & source_info == "LAPOP", "Fuente: LAPOP Lab",
+                                 ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
+                                        source_info))),
          x = " ",
          y = " ") +
     theme_minimal() +

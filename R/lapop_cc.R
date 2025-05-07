@@ -142,8 +142,9 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
     labs(title=main_title,
          y = "",
          x = "",
-         caption = paste0(ifelse(lang == "es", "Fuente: LAPOP Lab", "Source: LAPOP Lab"),
-                          source_info)) +
+         caption = paste0(ifelse(lang == "es" & source_info == "LAPOP", "Fuente: LAPOP Lab",
+                                 ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
+                                        source_info)))) +
     theme(text = element_text(size = 14, family = "roboto"),
           plot.title = element_text(size = 18, family = "nunito", face = "bold"),
           plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "nunito", color="#585860"),
