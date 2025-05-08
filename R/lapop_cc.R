@@ -26,8 +26,7 @@ NULL
 #' "alpha" (alphabetical by vallabel/x-axis label). Default: Order of data frame.
 #' @param main_title Character.  Title of graph.  Default: None.
 #' @param source_info Character.  Information on dataset used (country, years, version, etc.),
-#' which is added to the end of "Source: " in the bottom-left corner of the graph.
-#' Default: None (only "Source: " will be printed).
+#' which is added to the bottom-left corner of the graph. Default: LAPOP ("Source: LAPOP Lab" will be printed).
 #' @param subtitle Character.  Describes the values/data shown in the graph, e.g., "percentage of Mexicans who say...)".
 #' Default: None.
 #' @param lang Character.  Changes default subtitle text and source info to either Spanish or English.
@@ -82,7 +81,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                      lang = "en",
                      highlight = "",
                      main_title = "",
-                     source_info = "",
+                     source_info = "LAPOP",
                      subtitle = "",
                      sort = "",
                      color_scheme = "#784885",

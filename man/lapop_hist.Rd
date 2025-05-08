@@ -42,8 +42,8 @@ or "es" (Spanish).  Default: "en".}
 Default: None.}
 
 \item{source_info}{Character.  Information on dataset used (country, years, version, etc.),
-which is added to the end of "Source: " in the bottom-left corner of the graph.
-Default: LAPOP (only "Source: LAPOP Lab" will be printed).}
+which is added to the bottom-left corner of the graph.
+Default: LAPOP ("Source: LAPOP Lab" will be printed).}
 
 \item{order}{Logical.  Should bars be ordered from most frequent response to least?  Default: FALSE.}
 

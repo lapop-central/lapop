@@ -10,7 +10,7 @@ lapop_mover(
   main_title = "",
   subtitle = "",
   qword = NULL,
-  source_info = "",
+  source_info = "LAPOP",
   rev_values = FALSE,
   rev_variables = FALSE,
   subtitle_h_just = 0,
@@ -40,8 +40,8 @@ Default: None.}
 Default: None.}
 
 \item{source_info}{Character.  Information on dataset used (country, years, version, etc.),
-which is added to the end of "Source: " in the bottom-left corner of the graph.
-Default: None (only "Source: " will be printed).}
+which is added to the bottom-left corner of the graph.
+Default: LAPOP ("Source: LAPOP Lab" will be printed).}
 
 \item{rev_values}{Logical.  Should the order of the values for each variable be reversed?  Default: FALSE.}
 

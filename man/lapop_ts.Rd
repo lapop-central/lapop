@@ -15,7 +15,7 @@ lapop_ts(
   ymin = 0,
   ymax = 100,
   main_title = "",
-  source_info = "",
+  source_info = "LAPOP",
   subtitle = "",
   lang = "en",
   color_scheme = "#A43D6A",
@@ -41,8 +41,8 @@ variable were altered and stored in a new column).}
 \item{main_title}{Character.  Title of graph.  Default: None.}
 
 \item{source_info}{Character.  Information on dataset used (country, years, version, etc.),
-which is added to the end of "Source: " in the bottom-left corner of the graph.
-Default: None (only "Source: " will be printed).}
+which is added to the bottom-left corner of the graph.
+Default: LAPOP ("Source: LAPOP Lab" will be printed).}
 
 \item{subtitle}{Character.  Describes the values/data shown in the graph, e.g., "Percent of Mexicans who agree...".
 Default: None.}

@@ -54,8 +54,7 @@ NULL
 #' @param ymin,ymax Numeric.  Minimum and maximum values for y-axis. Defaults: 0 and 100.
 #' @param main_title Character.  Title of graph.  Default: None.
 #' @param source_info Character.  Information on dataset used (country, years, version, etc.),
-#' which is added to the end of "Source: " in the bottom-left corner of the graph.
-#' Default: None (only "Source: " will be printed).
+#' which is added to the bottom-left corner of the graph. Default: LAPOP ("Source: LAPOP Lab" will be printed).
 #' @param subtitle Character.  Describes the values/data shown in the graph, e.g., "Percent who agree that...".
 #' Default: None.
 #' @param qword Character.  Describes the question wording shown in the graph, e.g., "Do you agree that...".
@@ -121,7 +120,7 @@ lapop_mover <- function(data,
                          main_title = "",
                          subtitle = "",
                          qword = NULL,
-                         source_info = "",
+                         source_info = "LAPOP",
                          rev_values = FALSE,
                          rev_variables = FALSE,
                          subtitle_h_just = 0,
