@@ -14,7 +14,7 @@ lpr_coef(
   omit = NULL,
   filesave = NULL,
   replace = FALSE,
-  level = 0.95
+  level = 95
 )
 }
 \arguments{
