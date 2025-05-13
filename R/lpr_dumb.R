@@ -10,11 +10,11 @@
 #' comparing means of a variable across countries and two waves using LAPOP formatting.
 
 #' @param data A survey object.  The data that should be analyzed.
-#' @param outcome Outcome variable of interest to be plotted across countries
-#' and waves, supplied as a character string.
+#' @param outcome Outcome variable(s) of interest to be plotted across countries
+#' and waves, supplied as a character string or vector of strings.
 #' @param xvar Character. The grouping variable to be plotted
 #' along the x-axis (technically, the vertical axis for lapop_dumb). Usually
-#' country (pais).  Default: "pais".
+#' country (pais). Default: "pais".
 #' @param over Numeric.  A vector of values for "wave" that specify which two
 #' waves should be included in the plot.
 #' @param rec Numeric. The minimum and maximum values of the outcome variable that
@@ -56,136 +56,178 @@
 #' rec = c(5, 7),
 #' over = c(2021, 2023),
 #' sort = "diff",
-#' ttest = TRUE)}
+#' ttest = TRUE)
+#' }
+#'
+#' Multiple
+#'\dontrun{lpr_dumb(YM,
+#' outcome=c("b21", "b13", "b31", "b47a"),
+#' rec=c(5,7),
+#' over=c(2004, 2006))
+#' }
 #'
 #'@export
 #'@import dplyr
+#'@Import tidyr
 #'@import srvyr
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
+lpr_dumb <- function(data,
+                     outcome,
+                     xvar = "pais",
+                     over,
+                     rec = c(1, 1),
+                     ci_level = 0.95,
+                     mean = FALSE,
+                     filesave = "",
+                     cfmt = "",
+                     sort = "prop2",
+                     order = "hi-lo",
+                     ttest = FALSE,
+                     keep_nr = FALSE) {
 
-lpr_dumb = function(data,
-                  outcome,
-                  xvar = "pais",
-                  over,
-                  rec = c(1, 1),
-                  ci_level = 0.95,
-                  mean = FALSE,
-                  filesave = "",
-                  cfmt = "",
-                  sort = "prop2",
-                  order = "hi-lo",
-                  ttest = FALSE,
-                  keep_nr = FALSE) {
+  if (length(rec) == 1) rec <- c(rec, rec)
 
-  # If keep_nr is TRUE, convert don't knows (NA(a)) and no answers (NA(b)) to
-  # non-NA data (a value of 99).
-  if (keep_nr) {
-    data <- data %>%
-      mutate(!!sym(outcome) := case_when(
-        na_tag(!!sym(outcome)) %in% c("a", "b") ~ 99,
-        TRUE ~ as.numeric(!!sym(outcome))
-      ))
-  }
-
-  if (length(rec) == 1) {
-    rec = c(rec, rec)
-  }
-
-    wave1 = data %>%
-    drop_na(!!sym(xvar)) %>%
-    filter(wave == over[1]) %>%
-    group_by(pais = as_factor(!!sym(xvar)),
-             wave1 = as.character(as_factor(wave))
-    ) %>%
-    {
-      if (mean) {
-        summarize(.data,
-                  prop1 = survey_mean(!!sym(outcome),
-                                     na.rm = TRUE,
-                                     vartype = "ci",
-                                     level = ci_level)) %>%
-          mutate(proplabel1 = case_when(cfmt != "" ~ sprintf(cfmt, prop1),
-                                       TRUE ~ sprintf("%.1f", prop1)))
-      } else {
-        summarize(.data,
-                  prop1 = survey_mean(between(!!sym(outcome), rec[1], rec[2]),
-                                     na.rm = TRUE,
-                                     vartype = "ci",
-                                     level = ci_level) * 100) %>%
-          mutate(proplabel1 = case_when(cfmt != "" ~ sprintf(cfmt, round(prop1)),
-                                       TRUE ~ sprintf("%.0f%%", round(prop1))))
+  if (length(outcome) > 1) {
+    results_list <- lapply(outcome, function(out) {
+      tmp <- data
+      if (keep_nr) {
+        tmp <- tmp %>%
+          mutate(!!sym(out) := case_when(
+            na_tag(!!sym(out)) %in% c("a", "b") ~ 99,
+            TRUE ~ as.numeric(!!sym(out))
+          ))
       }
-    } %>%
-    filter(prop1 != 0) %>%
-    rename(.data, lb1 = prop1_low, ub1 = prop1_upp)
 
-  wave2 = data %>%
-    drop_na(!!sym(xvar)) %>%
-    filter(wave == over[2]) %>%
-    group_by(pais = as_factor(!!sym(xvar)),
-             wave2 = as.character(as_factor(wave))
-    ) %>%
-    {
-      if (mean) {
-        summarize(.data,
-                  prop2 = survey_mean(!!sym(outcome),
-                                     na.rm = TRUE,
-                                     vartype = "ci",
-                                     level = ci_level)) %>%
-          mutate(proplabel2 = case_when(cfmt != "" ~ sprintf(cfmt, prop2),
-                                        TRUE ~ sprintf("%.1f", prop2)))
-      } else {
-        summarize(.data,
-                  prop2 = survey_mean(between(!!sym(outcome), rec[1], rec[2]),
-                                      na.rm = TRUE,
-                                      vartype = "ci",
-                                      level = ci_level) * 100) %>%
-          mutate(proplabel2 = case_when(cfmt != "" ~ sprintf(cfmt, round(prop2)),
-                                        TRUE ~ sprintf("%.0f%%", round(prop2))))
-      }
-    } %>%
-    filter(prop2 != 0) %>%
-    rename(.data, lb2 = prop2_low, ub2 = prop2_upp)
+      wave1 <- tmp %>%
+        filter(wave == over[1]) %>%
+        group_by(wave1 = as.character(as_factor(wave))) %>%
+        {
+          if (mean) {
+            summarize(.,
+                      prop1 = survey_mean(!!sym(out), na.rm = TRUE, vartype = "ci", level = ci_level)) %>%
+              mutate(proplabel1 = if (cfmt != "") sprintf(cfmt, prop1) else sprintf("%.1f", prop1))
+          } else {
+            summarize(.,
+                      prop1 = survey_mean(between(!!sym(out), rec[1], rec[2]), na.rm = TRUE,
+                                          vartype = "ci", level = ci_level) * 100) %>%
+              mutate(proplabel1 = if (cfmt != "") sprintf(cfmt, round(prop1)) else sprintf("%.0f%%", round(prop1)))
+          }
+        } %>%
+        rename(lb1 = prop1_low, ub1 = prop1_upp)
 
-  dumb = merge(wave1, wave2, by = "pais")
+      wave2 <- tmp %>%
+        filter(wave == over[2]) %>%
+        group_by(wave2 = as.character(as_factor(wave))) %>%
+        {
+          if (mean) {
+            summarize(.,
+                      prop2 = survey_mean(!!sym(out), na.rm = TRUE, vartype = "ci", level = ci_level)) %>%
+              mutate(proplabel2 = if (cfmt != "") sprintf(cfmt, prop2) else sprintf("%.1f", prop2))
+          } else {
+            summarize(.,
+                      prop2 = survey_mean(between(!!sym(out), rec[1], rec[2]), na.rm = TRUE,
+                                          vartype = "ci", level = ci_level) * 100) %>%
+              mutate(proplabel2 = if (cfmt != "") sprintf(cfmt, round(prop2)) else sprintf("%.0f%%", round(prop2)))
+          }
+        } %>%
+        rename(lb2 = prop2_low, ub2 = prop2_upp)
+
+      full <- merge(wave1, wave2, by = character(0))  # no common vars to merge
+      full$pais <- attr(tmp[[out]], "label") %||% out
+      return(full)
+    })
+
+    dumb <- bind_rows(results_list) %>%
+      relocate(pais, wave1, prop1, proplabel1, wave2, prop2, proplabel2)
+
+  } else {
+    out <- outcome
+    if (keep_nr) {
+      data <- data %>%
+        mutate(!!sym(out) := case_when(
+          na_tag(!!sym(out)) %in% c("a", "b") ~ 99,
+          TRUE ~ as.numeric(!!sym(out))
+        ))
+    }
+
+    wave1 <- data %>%
+      drop_na(!!sym(xvar)) %>%
+      filter(wave == over[1]) %>%
+      group_by(pais = as_factor(!!sym(xvar)),
+               wave1 = as.character(as_factor(wave))) %>%
+      {
+        if (mean) {
+          summarize(.,
+                    prop1 = survey_mean(!!sym(out), na.rm = TRUE, vartype = "ci", level = ci_level)) %>%
+            mutate(proplabel1 = if (cfmt != "") sprintf(cfmt, prop1) else sprintf("%.1f", prop1))
+        } else {
+          summarize(.,
+                    prop1 = survey_mean(between(!!sym(out), rec[1], rec[2]), na.rm = TRUE,
+                                        vartype = "ci", level = ci_level) * 100) %>%
+            mutate(proplabel1 = if (cfmt != "") sprintf(cfmt, round(prop1)) else sprintf("%.0f%%", round(prop1)))
+        }
+      } %>%
+      rename(lb1 = prop1_low, ub1 = prop1_upp)
+
+    wave2 <- data %>%
+      drop_na(!!sym(xvar)) %>%
+      filter(wave == over[2]) %>%
+      group_by(pais = as_factor(!!sym(xvar)),
+               wave2 = as.character(as_factor(wave))) %>%
+      {
+        if (mean) {
+          summarize(.,
+                    prop2 = survey_mean(!!sym(out), na.rm = TRUE, vartype = "ci", level = ci_level)) %>%
+            mutate(proplabel2 = if (cfmt != "") sprintf(cfmt, prop2) else sprintf("%.1f", prop2))
+        } else {
+          summarize(.,
+                    prop2 = survey_mean(between(!!sym(out), rec[1], rec[2]), na.rm = TRUE,
+                                        vartype = "ci", level = ci_level) * 100) %>%
+            mutate(proplabel2 = if (cfmt != "") sprintf(cfmt, round(prop2)) else sprintf("%.0f%%", round(prop2)))
+        }
+      } %>%
+      rename(lb2 = prop2_low, ub2 = prop2_upp)
+
+    dumb <- merge(wave1, wave2, by = "pais")
+  }
 
   dumb = dumb %>%
     {
       if (sort == "prop1") {
         if (order == "hi-lo") {
-          arrange(.data, desc(prop1))
+          arrange(., desc(prop1))
         } else if (order == "lo-hi") {
-          arrange(.data, prop1)
+          arrange(., prop1)
         }
       } else if (sort == "prop2") {
         if (order == "hi-lo") {
-          arrange(.data, desc(prop2))
+          arrange(., desc(prop2))
         } else if (order == "lo-hi") {
-          arrange(.data, prop2)
+          arrange(., prop2)
         }
       } else if (sort == "xv") {
         if (order == "hi-lo") {
-          arrange(.data, desc(match(pais, levels(pais))))
+          arrange(., desc(match(pais, levels(pais))))
         } else if (order == "lo-hi") {
-          arrange(.data, match(pais, levels(pais)))
+          arrange(., match(pais, levels(pais)))
         }
       } else if (sort == "diff") {
         if (order == "hi-lo") {
-          mutate(.data, diff = prop2 - prop1) %>%
-          arrange(.data, desc(diff))
+          mutate(., diff = prop2 - prop1) %>%
+            arrange(., desc(diff))
         } else if (order == "lo-hi") {
-          mutate(.data, diff = prop2 - prop1) %>%
-          arrange(.data, diff)
+          mutate(., diff = prop2 - prop1) %>%
+            arrange(., diff)
         }
       } else if (sort == "xl") {
         if (order == "hi-lo") {
-          arrange(.data, desc(as.character(xvar)))
+          arrange(., desc(as.character(xvar)))
         } else if (order == "lo-hi") {
-          arrange(.data, as.character(xvar))
+          arrange(., as.character(xvar))
         } else {
-          .data  # Return unchanged if no valid sorting option is selected
+          .  # Return unchanged if no valid sorting option is selected
         }
       }
     }
@@ -261,12 +303,6 @@ lpr_dumb = function(data,
   }
 
 
-  if (filesave != "") {
-    write.csv(dumb, filesave)
-  }
-
+  if (filesave != "") write.csv(dumb, filesave, row.names = FALSE)
   return(dumb)
 }
-
-
-
