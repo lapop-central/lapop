@@ -159,11 +159,11 @@ lpr_dumb <- function(data,
                wave1 = as.character(as_factor(wave))) %>%
       {
         if (mean) {
-          summarize(.,
+          summarize(.data,
                     prop1 = survey_mean(!!sym(out), na.rm = TRUE, vartype = "ci", level = ci_level)) %>%
             mutate(proplabel1 = if (cfmt != "") sprintf(cfmt, prop1) else sprintf("%.1f", prop1))
         } else {
-          summarize(.,
+          summarize(.data,
                     prop1 = survey_mean(between(!!sym(out), rec[1], rec[2]), na.rm = TRUE,
                                         vartype = "ci", level = ci_level) * 100) %>%
             mutate(proplabel1 = if (cfmt != "") sprintf(cfmt, round(prop1)) else sprintf("%.0f%%", round(prop1)))
@@ -178,11 +178,11 @@ lpr_dumb <- function(data,
                wave2 = as.character(as_factor(wave))) %>%
       {
         if (mean) {
-          summarize(.,
+          summarize(.data,
                     prop2 = survey_mean(!!sym(out), na.rm = TRUE, vartype = "ci", level = ci_level)) %>%
             mutate(proplabel2 = if (cfmt != "") sprintf(cfmt, prop2) else sprintf("%.1f", prop2))
         } else {
-          summarize(.,
+          summarize(.data,
                     prop2 = survey_mean(between(!!sym(out), rec[1], rec[2]), na.rm = TRUE,
                                         vartype = "ci", level = ci_level) * 100) %>%
             mutate(proplabel2 = if (cfmt != "") sprintf(cfmt, round(prop2)) else sprintf("%.0f%%", round(prop2)))
