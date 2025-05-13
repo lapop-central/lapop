@@ -22,34 +22,18 @@
 #'
 #' @return Returns a data frame, with data formatted for visualization by lapop_coef
 #'
-#' \examples{
-#' ## Not run:
-#' # Example 1: Linear model
-#' svyglm_linear <- survey::svyglm(
-#'  fs2 ~ it1 + idio2 + edad,
-#'  data = dataLAPOP,
-#'  family = "gaussian")
+#' @examples
 #'
-#' # Example 2: Logit model
-#' svyglm_logit <- survey::svyglm(
-#'  fs2 ~ it1 + idio2 + edad,
-#'  data = dataLAPOP,
-#'  family = "binomial")
+#' \dontrun{dataLAPOP<-lpr_data(dataset)}
+#' \dontrun{Example 1: lpr_coef(outcome="fs2", xvar="it1+idio2+q2",
+#' data=dataLAPOP, model="binomial", est="coef")}
 #'
-#' # Example 3: Using lpr_coef
-#' lpr_coef(
-#'  outcome = "fs2",
-#'  xvar = "it1+idio2+edad",
-#'  data = dataLAPOP,
-#'  model = "binomial",
-#'  est = "contrast")
-#' ## End(Not run)
-#' }
+#' #' \dontrun{Example 2: lpr_coef(outcome="fs2", xvar="it1+idio2+q2",
+#' data=dataLAPOP, model="binomial", est="contrast")}
 #'
 #'@export
 #'@import dplyr
 #'@import srvyr
-#'@import survey
 #'@import marginaleffects
 #'
 #'@author Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
@@ -64,7 +48,7 @@ lpr_coef <- function(
     omit = NULL,
     filesave = NULL,
     replace = FALSE,
-    level = 0.95
+    level = 95
 ) {
 
   # Initialize an empty data.frame for output
@@ -144,10 +128,11 @@ lpr_coef <- function(
   } else {
 
     # Extract coefficients and confidence intervals (i.e., estimate="coef")
+    level <- level / 100
 
     coef_data <- summary(svyglm_object)$coefficients %>%
       as.data.frame() %>%
-      mutate(Term = rownames(.data)) %>%
+      mutate(Term = rownames(.)) %>%
       select(Term, everything()) %>%  # Move Term to the first column
       mutate(
         lb = as.numeric(Estimate - qt(1 - (1 - level) / 2, df = svyglm_object$df.residual) * `Std. Error`),
