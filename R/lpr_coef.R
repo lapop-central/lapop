@@ -132,7 +132,7 @@ lpr_coef <- function(
 
     coef_data <- summary(svyglm_object)$coefficients %>%
       as.data.frame() %>%
-      mutate(Term = rownames(.)) %>%
+      mutate(Term = rownames(.data)) %>%
       select(Term, everything()) %>%  # Move Term to the first column
       mutate(
         lb = as.numeric(Estimate - qt(1 - (1 - level) / 2, df = svyglm_object$df.residual) * `Std. Error`),
