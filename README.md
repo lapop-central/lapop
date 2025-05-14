@@ -27,9 +27,9 @@ or break down by covariates `lpr_mover` and store it in a R object
 2) Add the new function to the `\R` folder
 3) Add the .Rd file in the `\man` folder using `roxygen2`
 4) Collate the new function in the DESCRIPTION file
-
+-----------------------------------------------------------------------
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/lapop-central/lapop-viz/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lapop-central/lapop-viz/actions/workflows/R-CMD-check.yaml)
-
+[![GitHub stars](https://img.shields.io/github/stars/lapop-central/lapop.svg?style=social&label=Star&maxAge=3600)](https://github.com/lapop-central/lapop/stargazers)
 [![Tweet](https://cdn.prod.website-files.com/5e0f1144930a8bc8aace526c/65dd9eb5aaca434fac4f1ca4_shields.io.svg)](https://twitter.com/intent/tweet?url=https://github.com/lapop-central/lapop&text=Check%20out%20the%20lapop%20R%20package%20for%20working%20with%20the%20AmericasBarometer%20data!%20%23rstats%20%23lapop%20%23AmericasBarometer%20%23opensource)
 <!-- badges: end -->
