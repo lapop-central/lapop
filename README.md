@@ -6,10 +6,10 @@ These are the helper functions to wrangle and produce visualizations of
 AmericasBarometer data following LAPOP Lab's editorial guidelines
 
 ### To install the package in your machine you need to run in R console
-`devtools::install_github("https://github.com/lapop-central/lapop/")`
+`devtools::install_github("https://github.com/lapop-central/lapop/", force=TRUE)`
 
 -----------------------------------------------------------------------
-### The workflow of visualizations using LAPOP Lab guidelines 
+### Workflow of AmericasBarometer data visualization using LAPOP Lab guidelines 
 -----------------------------------------------------------------------
 
 1) Load lapop package in R `library(lapop)`
@@ -21,6 +21,31 @@ or break down by covariates `lpr_mover` and store it in a R object
 5) Use the correspoding `lapop` ploting function to produce the visualization
 6) You can also export the figure object using `lapop_save()`
 
+-----------------------------------------------------------------------
+### Workflow of AmericasBarometer data variables and values labels
+-----------------------------------------------------------------------
+Please refer to `/inst/LAPOP_Data_Guide_for_R_Users.html` for the full guide.
+
+1) Data Structure: AmericasBarometer datasets are distributed in Stata .dta format with
+multilingual metadata (question wording and response options) embedded
+as attributes. These support cross-national and longitudinal
+comparability.
+
+2) Preferred Loading Method
+Use the readstata13::read.dta13() function to preserve full metadata
+structure. Other methods such as `haven::read_dta()` or
+`rio::import()` often fail to import these critical attributes.
+
+3) Variable Labels (Question Wording): Stored in the “expansion.fields” attribute.
+Use the custom `lpr_extract_notes()` function to convert this into a tidy
+data frame. Next, assign preferred language labels to each variable with
+`lpr_set_attr()` using the appropriate noteid.
+
+5) Value Labels (Response Options): Stored in the “label.table” attribute. 
+Use `lpr_set_ros()` to assign these response labels as attributes
+in English, Spanish, or Portuguese.
+
+-----------------------------------------------------------------------
 ### The workflow to contribute to the lapop R package project
 -----------------------------------------------------------------------
 1) Clone the repository to your machine
