@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------
 ### lapop R package
 -----------------------------------------------------------------------
-### Authors: Luke Plutowski, Ph.D. & Robert Vidigal, Ph.D. (maintaner)
+### Authors: Luke Plutowski, Ph.D. & Robert Vidigal, Ph.D.
 These are the helper functions to wrangle and produce visualizations of 
 AmericasBarometer data following LAPOP Lab's editorial guidelines
 
