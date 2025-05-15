@@ -95,13 +95,13 @@ lpr_mline <- function(data,
                       rec4 = c(1, 1),
                       xvar,
                       use_wave = FALSE,
+                      use_cat = FALSE,
                       ci_level = 0.95,
                       mean = FALSE,
                       filesave = "",
                       cfmt = "",
                       ttest = FALSE,
-                      keep_nr = FALSE,
-                      use_cat = FALSE) {
+                      keep_nr = FALSE) {
 
   # 1. Input validation
   if (!all(outcome %in% names(data$variables))) {
