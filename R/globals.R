@@ -9,13 +9,3 @@ utils::globalVariables(
     "vallabel", "varlabel", "varterm", "weight1500", "xvar_label",
     "year")
 )
-
-# Package startup message
-.onAttach <- function(libname, pkgname) {
-  packageStartupMessage(
-    pkgname, "Version:", utils::packageVersion(pkgname), "loaded successfully\n",
-    "For documentation, run: browseVignettes('", pkgname, "') or ?", pkgname, "\n",
-    "For Americasbarometer datasets, visit https://www.vanderbilt.edu/lapop/", "\n", 
-    "To report issues, visit: https://github.com/lapop-central/lapop/issues"
-  )
-}
