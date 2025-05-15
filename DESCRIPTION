@@ -1,7 +1,7 @@
 Package: lapop
 Type: Package
 Title: Creates Visualizations Using LAPOP Styles along with Helper Functions to work with LAPOP Data
-Version: 2.0.4
+Version: 2.0.5
 Authors@R: 
     person(given = c("Luke", "Robert"),
            family = c("Plutowski", "Vidigal"),
