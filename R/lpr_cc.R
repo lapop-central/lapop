@@ -110,20 +110,20 @@ lpr_cc <- function(data,
       {
         if (!is.null(xvar)) {
           # Use filter and group_by directly
-          filter(.data, !is.na(!!sym(xvar))) %>%
+          filter(., !is.na(!!sym(xvar))) %>%
             group_by(vallabel = as_factor(!!sym(xvar)))
         } else {
-          mutate(.data, vallabel = outcome[i])  # Assign outcome name when xvar is NULL
+          mutate(., vallabel = outcome[i])  # Assign outcome name when xvar is NULL
         }
       } %>%
       group_by(vallabel) %>%  # Ensure grouping happens regardless
       {
         if (mean) { # mean=TRUE calculation
-          summarize(.data, prop = survey_mean(!!curr_outcome, na.rm = TRUE, vartype = "ci", level = ci_level)) %>%
+          summarize(., prop = survey_mean(!!curr_outcome, na.rm = TRUE, vartype = "ci", level = ci_level)) %>%
             mutate(proplabel = case_when(cfmt != "" ~ sprintf("%.1f", prop),
                                          TRUE ~ sprintf("%.1f", prop)))
         } else { # percentages calculation
-          summarize(.data, prop = survey_mean(between(!!curr_outcome, curr_rec[1], curr_rec[2]),
+          summarize(., prop = survey_mean(between(!!curr_outcome, curr_rec[1], curr_rec[2]),
                                           na.rm = TRUE, vartype = "ci", level = ci_level) * 100) %>%
             mutate(proplabel = case_when(cfmt != "" ~ sprintf("%.0f%%", round(prop)),
                                          TRUE ~ sprintf("%.0f%%", round(prop))))
