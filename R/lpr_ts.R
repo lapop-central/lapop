@@ -82,7 +82,7 @@ lpr_ts <- function(data,
     group_by(wave = if (use_wave) as.character(as_factor(wave)) else as.character(year)) %>%
     {
       if (mean) {
-        summarize(.data,
+        summarize(.,
                   prop = survey_mean(!!sym(outcome),
                                      na.rm = TRUE,
                                      vartype = "ci",
@@ -93,7 +93,7 @@ lpr_ts <- function(data,
             sprintf("%.1f", prop)
           })
       } else {
-        summarize(.data,
+        summarize(.,
                   prop = survey_mean(between(!!sym(outcome), rec[1], rec[2]),
                                      na.rm = TRUE,
                                      vartype = "ci",
