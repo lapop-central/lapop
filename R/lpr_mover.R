@@ -105,8 +105,8 @@ lpr_mover <- function(data,
   if (keep_nr) {
     data <- data %>%
       mutate(across(all_of(outcome), ~ case_when(
-        na_tag(.data) == "a" | na_tag(.) == "b" ~ 99,
-        TRUE ~ as.numeric(.data)
+        na_tag(.) == "a" | na_tag(.) == "b" ~ 99,
+        TRUE ~ as.numeric(.)
       )))
   }
 
@@ -116,20 +116,20 @@ lpr_mover <- function(data,
   # Function to calculate means/proportions for a single outcome and grouping variable
   calculate_means <- function(data, outcome_var, grouping_var, rec_range, single_outcome) {
     data %>%
-      drop_na(.data[[grouping_var]]) %>%
-      group_by(vallabel = as_factor(.data[[grouping_var]])) %>%
+      drop_na(.[[grouping_var]]) %>%
+      group_by(vallabel = as_factor(.[[grouping_var]])) %>%
       {
         if (mean) {
-          summarize(.data,
-                    prop = survey_mean(.data[[outcome_var]],
+          summarize(.,
+                    prop = survey_mean(.[[outcome_var]],
                                        na.rm = TRUE,
                                        vartype = "ci",
                                        level = ci_level)
           ) %>%
             mutate(proplabel = sprintf("%.1f", prop))
         } else {
-          summarize(.data,
-                    prop = survey_mean(between(.data[[outcome_var]], rec_range[1], rec_range[2]),
+          summarize(.,
+                    prop = survey_mean(between(.[[outcome_var]], rec_range[1], rec_range[2]),
                                        na.rm = TRUE,
                                        vartype = "ci",
                                        level = ci_level) * 100
