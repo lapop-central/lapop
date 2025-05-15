@@ -93,8 +93,8 @@ lpr_ccm <- function(data,
   if (keep_nr) {
     data <- data %>%
       mutate(across(all_of(outcome_vars), ~ case_when(
-        na_tag(.data) %in% c("a", "b") ~ 99,
-        TRUE ~ as.numeric(.data)
+        na_tag(.) %in% c("a", "b") ~ 99,
+        TRUE ~ as.numeric(.)
       )))
   }
 
@@ -108,7 +108,7 @@ lpr_ccm <- function(data,
       group_by(pais = as_factor(!!sym(xvar))) %>%
       {
         if (mean) {
-          summarize(.data,
+          summarize(.,
                     prop = survey_mean(!!sym(outcome),
                                        na.rm = TRUE,
                                        vartype = "ci",
@@ -119,7 +119,7 @@ lpr_ccm <- function(data,
               sprintf("%.1f", prop)
             })
         } else {
-          summarize(.data,
+          summarize(.,
                     prop = survey_mean(between(!!sym(outcome), rec[1], rec[2]),
                                        na.rm = TRUE,
                                        vartype = "ci",
@@ -142,17 +142,17 @@ lpr_ccm <- function(data,
   ccm = ccm %>%
     {
       if (sort == "y") {
-        group_by(.data, var) %>%
+        group_by(., var) %>%
           mutate(rank = rank(-prop)) %>%
           arrange(match(var, unique(var)[1]),
                   if (order == "hi-lo") rank else desc(rank)) %>%
           select(-rank)
       } else if (sort == "xl") {
-          arrange(.data, if (order == "hi-lo") desc(as.character(pais)) else as.character(pais))
+          arrange(., if (order == "hi-lo") desc(as.character(pais)) else as.character(pais))
       } else if (sort == "xv") {
-        arrange(.data, if (order == "hi-lo") desc(match(pais, levels(pais))) else match(pais, levels(pais)))
+        arrange(., if (order == "hi-lo") desc(match(pais, levels(pais))) else match(pais, levels(pais)))
       } else {
-        .data
+        .
       }
     }
 
