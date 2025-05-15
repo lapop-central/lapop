@@ -1,9 +1,9 @@
 .onAttach <- function(lib, pkg, ...){
-   packageStartupMessage(lapopWelcomeMessage())
+   packageStartupMessage(lapopWelcomeMessage(pkg))
 }
 
 # Package startup message
-lapopWelcomeMessage <- function(){   
+lapopWelcomeMessage <- function(pkg){   
    paste("\n",     
     "LAPOP Lab R package. Version:", utils::packageVersion(pkg), "loaded successfully\n",
     "For documentation, run: browseVignettes('lapop') or ?lapop", "\n",
