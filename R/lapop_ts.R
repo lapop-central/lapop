@@ -90,7 +90,7 @@ lapop_ts <- function(data, outcome_var = data$prop, lower_bound = data$lb,
                      percentages = TRUE,
                      label_vjust = -2.1,
                      max_years = 15,
-                     label_angle = 0){
+                     label_angle = 0) {
 
 
   # Check if we need to rotate labels based on number of unique countries
