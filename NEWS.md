@@ -1,3 +1,6 @@
+# lapop 2.0.5
+* add use_cat parameter for lpr_mline()
+
 # lapop 2.0.4
 
 * add lpr_set_attr()
@@ -19,7 +22,7 @@
 
 # lapop 2.0.0
 
-* add lpr_ data processing functionality for all graph types
+* add lpr_data() processing functionality for all graph types
 
 # lapop 1.3.14
 
