@@ -46,7 +46,7 @@ Use `lpr_set_ros()` to assign these response labels as attributes
 in English, Spanish, or Portuguese.
 
 -----------------------------------------------------------------------
-### The workflow to contribute to the lapop R package project
+### Workflow to contribute to the `lapop` R package
 -----------------------------------------------------------------------
 1) Clone the repository to your machine
 2) Add the new function to the `\R` folder
