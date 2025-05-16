@@ -1,3 +1,6 @@
+# lapop 2.0.6
+* add interact parameter for lpr_coef()
+
 # lapop 2.0.5
 * add use_cat parameter for lpr_mline()
 

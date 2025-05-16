@@ -1,7 +1,7 @@
 Package: lapop
 Type: Package
-Title: Creates Visualizations Using LAPOP Styles along with Helper Functions to work with LAPOP Data
-Version: 2.0.5
+Title: Creates visualizations using LAPOP Lab Styles along with helper functions to work with AmericasBarometer Data
+Version: 2.0.6
 Authors@R: 
     person(given = c("Luke", "Robert"),
            family = c("Plutowski", "Vidigal"),
@@ -10,7 +10,7 @@ Authors@R:
            comment = list(c(ORCID = "0000-0001-8240-6722"), 
                          c(ORCID = "0000-0001-5713-119X")))
 Maintainer: Robert Vidigal <Robert.Vidigal@vanderbilt.edu>
-Description: LAPOP Lab (formerly the Latin American Public Opinion Project) at Vanderbilt University is a world leader in public survey research and is best known for for the biennial AmericasBarometer project.  This package creates visualizations that follow LAPOP's custom style guidelines and formatting for use in reports, presentations, and social media posts.  The visualizations are designed to be used with AmericasBarometer survey data.  You may find more information about the AmericasBarometer here: <https://www.vanderbilt.edu/lapop/about-americasbarometer.php>.  The data can be downloaded here: <https://www.vanderbilt.edu/lapop/data-access.php>. 
+Description: LAPOP Lab (formerly the Latin American Public Opinion Project) at Vanderbilt University is a world leader in public survey research and is best known for for the biennial AmericasBarometer project. This package creates visualizations that follow LAPOP's custom style guidelines and formatting for use in reports, presentations, and social media posts. The visualizations are designed to be used with AmericasBarometer survey data. You may find more information about the AmericasBarometer here: <https://www.vanderbilt.edu/lapop/about-americasbarometer.php>. The data can be downloaded here: <https://www.vanderbilt.edu/lapop/data-access.php>. 
     IMPORTANT: Run lapop_fonts() before creating any graphs in order to use LAPOP-standard fonts.
 URL: <https://github.com/lapop-central/lapop-viz>
 Depends: 
