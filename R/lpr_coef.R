@@ -11,7 +11,8 @@
 #'
 #' @param outcome Dependent variable for the svyglm regression model. (e.g., "outcome_name"). Only one variable allowed.
 #' @param xvar Vector of independent variables for the svyglm regression model (e.g., "xvar1+xvar2+xvar3" and so on). Multiple variables are allowed.
-#' @param model Model family object for glm. Default is linear regression (i.e., "gaussian"). For a logit model, use model="binomial"
+#' @param interact Interaction terms (e.g., "xvar1`*`xvar2 + xvar3`:`xvar4"). Supports `:` and `*` operators for interacting variables. Optional, default is NULL.
+#' @param model Model family object for glm. Default is gaussian regression (i.e., "linear"). For a logit model, use model="binomial"
 #' @param data Survey design data from lpr_data() output.
 #' @param estimate Character. Graph either the coefficients (i.e., `coef`) or the change in probabilities (i.e., `contrast`). Default is "coef."
 #' @param vlabs Character. Rename variable labels to be displayed in the graph produced by lapop_coef(). For instance, vlabs=c("old_varname" = "new_varname").
@@ -24,12 +25,33 @@
 #'
 #' @examples
 #'
-#' \dontrun{dataLAPOP<-lpr_data(dataset)}
-#' \dontrun{Example 1: lpr_coef(outcome="fs2", xvar="it1+idio2+q2",
-#' data=dataLAPOP, model="binomial", est="coef")}
+#' Example 1: Linear model using lpr_coef()
+#' \dontrun{lpr_coef(
+#'  outcome = "l1",
+#'  xvar = "it1+idio2",
+#'  data = dataLAPOP,
+#'  model = "linear",
+#'  est = "coef")}
+
+#' Example 2: Logit model using lpr_coef()
+#' \dontrun{lpr_coef(
+#'  outcome = "fs2",
+#'  xvar = "it1+idio2",
+#'  data = dataLAPOP,
+#'  model = "binomial",
+#'  est = "contrast")}
+#'}
 #'
-#' #' \dontrun{Example 2: lpr_coef(outcome="fs2", xvar="it1+idio2+q2",
-#' data=dataLAPOP, model="binomial", est="contrast")}
+#' Example 3: Interactive model using lpr_coef()
+#' \dontrun{lpr_coef(
+#'  outcome = "fs2",
+#'  xvar = "it1+idio2",
+#'  interact = "it1*idio2",
+#'  data = dataLAPOP,
+#'  model = "linear",
+#'  est = "coef")}
+#'}
+#'
 #'
 #'@export
 #'@import dplyr
@@ -41,7 +63,8 @@
 lpr_coef <- function(
     outcome = NULL,
     xvar = NULL,
-    model = "gaussian",
+    interact = NULL,
+    model = "linear",
     data = NULL,
     estimate = c("coef"),
     vlabs = NULL,
@@ -50,37 +73,51 @@ lpr_coef <- function(
     replace = FALSE,
     level = 95
 ) {
-
-  # Initialize an empty data.frame for output
+  # Initialize an empty data frame
   coef_data <- data.frame()
 
-  # Check if any of the required inputs are NULL
+  # Basic checks
   if (is.null(outcome) || is.null(xvar) || is.null(model) || is.null(data)) {
-    stop("Error: One or more required inputs (outcome, xvar, model) are NULL.")
-  } else {
-    # Run svyglm regression from INPUTS
-    formula <- as.formula(paste(paste(outcome, "~"), xvar))
-    svyglm_object<-survey::svyglm(formula, design=data, family=model)
+    stop("Error: One or more required inputs (outcome, xvar, model, data) are NULL.")
   }
 
+  # Process interaction terms
+  if (!is.null(interact)) {
+    # Normalize interaction syntax: convert * to : to avoid redundancy
+    interact_clean <- gsub("\\*", ":", interact)
+    interact_str <- paste(interact_clean, collapse = "+")
+    full_formula <- paste(outcome, "~", paste(xvar, interact_str, sep = "+"))
+  } else {
+    full_formula <- paste(outcome, "~", xvar)
+  }
+
+  # Fit model
+  formula <- as.formula(full_formula)
+  svyglm_object <- tryCatch({
+    survey::svyglm(formula, design = data, family = model)
+  }, error = function(e) {
+    stop("Error in svyglm: ", e$message)
+  })
+
+  # Estimate type validation
   if (estimate == "") {
     stop("You need to define the type of estimate: `coef` or `contrast`")
   }
 
   if (estimate == "contrast") {
-    # Extract predictors (excluding the dependent variable)
+    # Get predictors from model
     predictors <- attr(svyglm_object$terms, "term.labels")
     if (length(predictors) == 0) {
       stop("No valid predictor variables found in the model.")
     }
 
-    # Run contrasts for every single I.V. in the model
+    # Loop over predictors to compute marginal effects
     for (Term in predictors) {
       dataset <- svyglm_object$data
+      if (!Term %in% colnames(dataset)) {
+        next  # Skip if term isn't in the data directly (e.g., interaction)
+      }
 
-      # Check the class of the variable to determine the comparison type
-      # We are using the marginaleffects package for calculating contrasts
-      # For factor vars we use `reference`, for numeric vars we use `minmax` type
       comparison_type <- if (is.factor(dataset[[Term]])) "reference" else "minmax"
 
       term_data <- tryCatch({
@@ -99,60 +136,62 @@ lpr_coef <- function(
           )
 
         term_result
-
-      }, # error handling...
-      error = function(e) {
+      }, error = function(e) {
         data.frame(varterm = NA, varlabel = NA, coef = NA,
                    lb = NA, ub = NA,
-                   pvalue = NA, proplabel = NA) # return all NA
+                   pvalue = NA, proplabel = NA)
       })
 
       coef_data <- bind_rows(coef_data, term_data)
     }
 
-    # Omit specified independent variables from the output
+    # Clean and relabel
     if (!is.null(omit)) {
-      coef_data <- coef_data %>%
-        filter(!varterm %in% omit)
+      coef_data <- coef_data %>% filter(!varterm %in% omit)
     }
 
-    # Apply custom labels for variables by checking if
-    # names(vlabs) are in Terms from the model (i.e., renaming)
     if (!is.null(vlabs)) {
       coef_data <- coef_data %>%
         mutate(varlabel = ifelse(varterm %in% names(vlabs), vlabs[varterm], varlabel))
     }
 
-    # reordering
     coef_data <- coef_data %>% select(varlabel, coef, lb, ub, pvalue, proplabel)
+
   } else {
-
-    # Extract coefficients and confidence intervals (i.e., estimate="coef")
+    # Coefficient-based summary
     level <- level / 100
+    coef_raw <- summary(svyglm_object)$coefficients
 
-    coef_data <- summary(svyglm_object)$coefficients %>%
-      as.data.frame() %>%
-      mutate(Term = rownames(.data)) %>%
-      select(Term, everything()) %>%  # Move Term to the first column
+    if (nrow(coef_raw) == 0) {
+      stop("No coefficients returned from model. Check for convergence issues or empty formula.")
+    }
+
+    coef_data <- as.data.frame(coef_raw) %>%
+      mutate(Term = rownames(coef_raw)) %>%
+      select(Term, everything()) %>%
       mutate(
-        lb = as.numeric(Estimate - qt(1 - (1 - level) / 2, df = svyglm_object$df.residual) * `Std. Error`),
-        ub = as.numeric(Estimate + qt(1 - (1 - level) / 2, df = svyglm_object$df.residual) * `Std. Error`),
-        `Pr(>|t|)` = as.numeric(format(`Pr(>|t|)`, scientific = FALSE, digits=3)),
+        lb = Estimate - qt(1 - (1 - level) / 2, df = svyglm_object$df.residual) * `Std. Error`,
+        ub = Estimate + qt(1 - (1 - level) / 2, df = svyglm_object$df.residual) * `Std. Error`,
+        `Pr(>|t|)` = as.numeric(format(`Pr(>|t|)`, scientific = FALSE, digits = 3)),
         pvalue = round(`Pr(>|t|)`, 3),
-        proplabel = round(Estimate, digits=3)
+        proplabel = round(Estimate, 3)
       )
 
     if (!is.null(omit)) {
-      coef_data <- coef_data %>%
-        filter(!Term %in% omit)
+      coef_data <- coef_data %>% filter(!Term %in% omit)
     }
 
-    # Return the processed coefficient data as a tibble
-    coef_data<-coef_data %>% rename(varlabel=Term, coef=Estimate) %>%
+    coef_data <- coef_data %>%
+      rename(varlabel = Term, coef = Estimate) %>%
       select(varlabel, coef, lb, ub, pvalue, proplabel)
+
+    if (!is.null(vlabs)) {
+      coef_data <- coef_data %>%
+        mutate(varlabel = ifelse(varlabel %in% names(vlabs), vlabs[varlabel], varlabel))
+    }
   }
 
-  # Save the output to a CSV file if filesave is provided
+  # File output
   if (!is.null(filesave)) {
     if (dir.exists(filesave)) {
       stop("You provided a directory for 'filesave'. Please provide a valid file path, including the file name.")

@@ -7,7 +7,8 @@
 lpr_coef(
   outcome = NULL,
   xvar = NULL,
-  model = "gaussian",
+  interact = NULL,
+  model = "linear",
   data = NULL,
   estimate = c("coef"),
   vlabs = NULL,
@@ -21,6 +22,8 @@ lpr_coef(
 \item{outcome}{Dependent variable for the svyglm regression model. (e.g., "outcome_name"). Only one variable allowed.}
 
 \item{xvar}{Vector of independent variables for the svyglm regression model (e.g., "xvar1+xvar2+xvar3" and so on). Multiple variables are allowed.}
+
+\item{interact}{Interaction terms (e.g., "xvar1*xvar2 + xvar3:xvar4"). Supports both `:` and `*` operators for interacting variables. Optional, default is NULL.}
 
 \item{model}{Model family object for glm. Default is linear regression (i.e., "gaussian"). For a logit model, use model="binomial"}
 
@@ -43,25 +46,30 @@ Returns a data frame, with data formatted for visualization by lapop_coef
 }
 \examples{
 
-# Example 1: Linear model
-\dontrun{svyglm_linear <- survey::svyglm(
- fs2 ~ it1 + idio2 + edad,
+# Example 1: Linear model using lpr_coef()
+\dontrun{lpr_coef(
+ outcome = "l1",
+ xvar = "it1+idio2",
  data = dataLAPOP,
- family = "gaussian")}
+ model = "gaussian",
+ est = "coef")}
 
-# Example 2: Logit model
-\dontrun{svyglm_logit <- survey::svyglm(
- fs2 ~ it1 + idio2 + edad,
- data = dataLAPOP,
- family = "binomial")}
-
-# Example 3: Using lpr_coef
+# Example 2: Logit model using lpr_coef()
 \dontrun{lpr_coef(
  outcome = "fs2",
- xvar = "it1+idio2+edad",
+ xvar = "it1+idio2",
  data = dataLAPOP,
  model = "binomial",
  est = "contrast")}
+
+# Example 3: Interactive model using lpr_coef()
+\dontrun{lpr_coef(
+outcome = "fs2",
+xvar = "it1+idio2",
+interact = "it1*idio2",
+data = dataLAPOP,
+model = "linear",
+est = "coef")}
 }
 
 \description{
