@@ -18,8 +18,8 @@ AmericasBarometer data following LAPOP Lab's editorial guidelines
 4) Choose the appropriate type of `lpr` graph to represent data. For instance, 
 histograms `lpr_hist`, cross country comparison `lpr_cc`, time series `lpr_ts`, 
 or break down by covariates `lpr_mover` and store it in a R object
-5) Use the correspoding `lapop` ploting function to produce the visualization
-6) You can also export the figure object using `lapop_save()`
+5) Use the correspoding `lapop` ploting function to produce the visualization (e.g., `lapop_hist`, `lapop_cc`, `lapop_ts`, and so on).
+6) Export the figure object using `lapop_save()` to your machine.
 
 -----------------------------------------------------------------------
 ### Workflow of AmericasBarometer data variables and values labels
