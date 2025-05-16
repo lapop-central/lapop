@@ -13,8 +13,8 @@
 #' @param data A survey object.  The data that should be analyzed.
 #' @param outcome_vars Character vector.  Outcome variable(s) of interest to be plotted
 #' across country (or other x variable). Max of 3 variables.
-#' @param xvar Character string. Outcome variables are broken down by this variable.
-#' Default: pais_lab.
+#' @param xvar Character string. Outcome variables are broken down by this variable. You can set
+#' xvar to "wave" or "year" for cross-time comparisons. Default: pais_lab.
 #' @param rec1,rec2,rec3 Numeric. The minimum and maximum values of the outcome variable that
 #' should be included in the numerator of the percentage.  For example, if the variable
 #' is on a 1-7 scale and rec1 is c(5, 7), the function will show the percentage who chose
@@ -43,12 +43,19 @@
 #' valid responses only.  Default: FALSE.
 #'
 #'
-#' @return Returns a data frame, with data formatted for visualization by lapop_ccm
+#' @return Returns a data frame, with data formatted for visualization by lapop_ccm()
 #'
 #' @examples
 #'
 #' \dontrun{lpr_ccm(gm23,
 #' outcome_vars = c("vic1ext", "aoj11"),
+#' rec1 = c(1, 1),
+#' rec2 = c(3, 4),
+#' ttest = TRUE)
+#'
+#' lpr_ccm(gm23,
+#' outcome_vars = c("vic1ext", "aoj11"),
+#' xvar = "wave",
 #' rec1 = c(1, 1),
 #' rec2 = c(3, 4),
 #' ttest = TRUE)}
@@ -57,7 +64,7 @@
 #'@import dplyr
 #'@import srvyr
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 
 lpr_ccm <- function(data,
@@ -207,4 +214,3 @@ lpr_ccm <- function(data,
 
   return(ccm)
 }
-

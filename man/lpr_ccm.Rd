@@ -27,8 +27,8 @@ lpr_ccm(
 \item{outcome_vars}{Character vector.  Outcome variable(s) of interest to be plotted
 across country (or other x variable). Max of 3 variables.}
 
-\item{xvar}{Character string. Outcome variables are broken down by this variable.
-Default: pais_lab.}
+\item{xvar}{Character string. Outcome variables are broken down by this variable. You can set
+xvar to "wave" or "year" for cross-time comparisons. Default: pais_lab.}
 
 \item{rec1, rec2, rec3}{Numeric. The minimum and maximum values of the outcome variable that
 should be included in the numerator of the percentage.  For example, if the variable
@@ -79,9 +79,15 @@ using LAPOP formatting.
 outcome_vars = c("vic1ext", "aoj11"),
 rec1 = c(1, 1),
 rec2 = c(3, 4),
-ttest = TRUE)}
+ttest = TRUE)
 
+lpr_ccm(gm23,
+outcome_vars = c("vic1ext", "aoj11"),
+xvar = "wave",
+rec1 = c(1, 1),
+rec2 = c(3, 4),
+ttest = TRUE)}
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }
