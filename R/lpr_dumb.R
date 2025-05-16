@@ -105,11 +105,11 @@ lpr_dumb <- function(data,
         group_by(wave1 = as.character(as_factor(wave))) %>%
         {
           if (mean) {
-            summarize(.data,
+            summarize(.,
                       prop1 = survey_mean(!!sym(out), na.rm = TRUE, vartype = "ci", level = ci_level)) %>%
               mutate(proplabel1 = if (cfmt != "") sprintf(cfmt, prop1) else sprintf("%.1f", prop1))
           } else {
-            summarize(.data,
+            summarize(.,
                       prop1 = survey_mean(between(!!sym(out), rec[1], rec[2]), na.rm = TRUE,
                                           vartype = "ci", level = ci_level) * 100) %>%
               mutate(proplabel1 = if (cfmt != "") sprintf(cfmt, round(prop1)) else sprintf("%.0f%%", round(prop1)))
@@ -122,11 +122,11 @@ lpr_dumb <- function(data,
         group_by(wave2 = as.character(as_factor(wave))) %>%
         {
           if (mean) {
-            summarize(.data,
+            summarize(.,
                       prop2 = survey_mean(!!sym(out), na.rm = TRUE, vartype = "ci", level = ci_level)) %>%
               mutate(proplabel2 = if (cfmt != "") sprintf(cfmt, prop2) else sprintf("%.1f", prop2))
           } else {
-            summarize(.data,
+            summarize(.,
                       prop2 = survey_mean(between(!!sym(out), rec[1], rec[2]), na.rm = TRUE,
                                           vartype = "ci", level = ci_level) * 100) %>%
               mutate(proplabel2 = if (cfmt != "") sprintf(cfmt, round(prop2)) else sprintf("%.0f%%", round(prop2)))
@@ -159,11 +159,11 @@ lpr_dumb <- function(data,
                wave1 = as.character(as_factor(wave))) %>%
       {
         if (mean) {
-          summarize(.data,
+          summarize(.,
                     prop1 = survey_mean(!!sym(out), na.rm = TRUE, vartype = "ci", level = ci_level)) %>%
             mutate(proplabel1 = if (cfmt != "") sprintf(cfmt, prop1) else sprintf("%.1f", prop1))
         } else {
-          summarize(.data,
+          summarize(.,
                     prop1 = survey_mean(between(!!sym(out), rec[1], rec[2]), na.rm = TRUE,
                                         vartype = "ci", level = ci_level) * 100) %>%
             mutate(proplabel1 = if (cfmt != "") sprintf(cfmt, round(prop1)) else sprintf("%.0f%%", round(prop1)))
@@ -178,11 +178,11 @@ lpr_dumb <- function(data,
                wave2 = as.character(as_factor(wave))) %>%
       {
         if (mean) {
-          summarize(.data,
+          summarize(.,
                     prop2 = survey_mean(!!sym(out), na.rm = TRUE, vartype = "ci", level = ci_level)) %>%
             mutate(proplabel2 = if (cfmt != "") sprintf(cfmt, prop2) else sprintf("%.1f", prop2))
         } else {
-          summarize(.data,
+          summarize(.,
                     prop2 = survey_mean(between(!!sym(out), rec[1], rec[2]), na.rm = TRUE,
                                         vartype = "ci", level = ci_level) * 100) %>%
             mutate(proplabel2 = if (cfmt != "") sprintf(cfmt, round(prop2)) else sprintf("%.0f%%", round(prop2)))
@@ -197,37 +197,37 @@ lpr_dumb <- function(data,
   {
     if (sort == "prop1") {
       if (order == "hi-lo") {
-        arrange(.data, desc(prop1))
+        arrange(., desc(prop1))
       } else if (order == "lo-hi") {
-        arrange(.data, prop1)
+        arrange(., prop1)
       }
     } else if (sort == "prop2") {
       if (order == "hi-lo") {
-        arrange(.data, desc(prop2))
+        arrange(., desc(prop2))
       } else if (order == "lo-hi") {
-        arrange(.data, prop2)
+        arrange(., prop2)
       }
     } else if (sort == "xv") {
       if (order == "hi-lo") {
-        arrange(.data, desc(match(pais, levels(pais))))
+        arrange(., desc(match(pais, levels(pais))))
       } else if (order == "lo-hi") {
-        arrange(.data, match(pais, levels(pais)))
+        arrange(., match(pais, levels(pais)))
       }
     } else if (sort == "diff") {
       if (order == "hi-lo") {
-        mutate(.data, diff = prop2 - prop1) %>%
-          arrange(.data, desc(diff))
+        mutate(., diff = prop2 - prop1) %>%
+          arrange(., desc(diff))
       } else if (order == "lo-hi") {
-        mutate(.data, diff = prop2 - prop1) %>%
-          arrange(.data, diff)
+        mutate(., diff = prop2 - prop1) %>%
+          arrange(., diff)
       }
     } else if (sort == "xl") {
       if (order == "hi-lo") {
-        arrange(.data, desc(as.character(xvar)))
+        arrange(., desc(as.character(xvar)))
       } else if (order == "lo-hi") {
-        arrange(.data, as.character(xvar))
+        arrange(., as.character(xvar))
       } else {
-        .data  # Return unchanged
+        .  # Return unchanged
       }
     }
   }

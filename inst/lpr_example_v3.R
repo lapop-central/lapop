@@ -108,7 +108,7 @@ ym$variables <- ym$variables %>%
     edre <= 2 ~ "None/Primary",
     edre == 3 | edre == 4 ~ "Secondary",
     edre > 4 ~ "Superior",
-    TRUE ~ edre
+    TRUE ~ NA_character_
   ))
 
 ym$variables <- ym$variables %>%
@@ -132,52 +132,56 @@ fig2.3_data$varlabel <- ifelse(fig2.3_data$varlabel == "edrer",
 fig2.3 <- lapop_mover(fig2.3_data,
             main_title = "Satisfaction with democracy is significantly lower among women, 26-45-year-olds,
             \nthose with higher educational attainment, and the middle class",
-            subtitle = "% who are satisfied with democracy")
+            subtitle = "% who are satisfied with democracy"); fig2.3
 
-# hist - spotlight "Citizens’ Views" p. 32
+# Histogram - spotlight "Citizens’ Views" p. 32 lpr_hist()
 spot32_data <- lpr_hist(ym,
-                        outcome = "vb21n")
+                        outcome = "vb21n"); spot32_data
+
 spot32_data$cat <- c("Vote", "Run for\noffice", "Protest", "Participate\nin local orgs.",
                      "Other", "Change is\nimpossible")
 
 spot32 <- lapop_hist(spot32_data,
                      main_title = "On average in the LAC region, one in three say voting is the best way to influence change",
-                     subtitle = "In what way do you believe you can have the most influence to change things in the country?")
+                     subtitle = "In what way do you believe you can have the most influence to change things in the country?"); spot32
 
-# dumb - fig 3.5
+# Dumbell - fig 3.5 lpr_dumb()
 fig3.5_data <- lpr_dumb(gm23,
                       outcome = "q14f",
                       rec = c(1, 1),
                       over = c(2018, 2023),
                       xvar = "pais_lab",
-                      ttest = TRUE)
+                      ttest = TRUE); fig3.5_data
+
+fig3.5_data<-fig3.5_data[1:6,]
 
 
 fig3.5 <- lapop_dumb(fig3.5_data,
-                    main_title = "Among those with emigration intentions, the percentage who say they are very likely to\n
-                    emigrate increased in Nicaragua and Guatemala",
-                     subtitle = "% who say it is very likely they will emigrate")
+                    main_title = "Among those with emigration intentions, the percentage who say they are very likely \nto emigrate increased in Nicaragua and Guatemala",
+                     subtitle = "% who say it is very likely they will emigrate"); fig3.5
 
 
-#stack
+# Stack lpr_Stack()
 # no example of this in the help file, but say we wanted to see perceptions
 # of electoral integrity (COUNTFAIR*) in 2023
 stack_data <- lpr_stack(ym,
-                        outcome = c("countfair1", "countfair3"))
+                        outcome = c("countfair1", "countfair3")); stack_data
 
 stack_ex <- lapop_stack(stack_data,
-                        main_title = "Most in the LAC region have doubts about electoral integrity")
+                        main_title = "Most in the LAC region have doubts about electoral integrity"); stack_ex
 
 
 # stack - figure 3.8
 # you can also use stack_ to show one variable broken down by a second, using "by"
 # for simplicity, I'm not actually making the migration index from 3.8, just
 # showing migration likelihood (q14f)
+
+CONTINUE HERE CONTINUE HERE CONTINUE HERE CONTINUE HERE CONTINUE HERE CONTINUE HERE
+
 fig3.8_data <- lpr_stack(ym,
                         outcome = "q14f",
-                        by = "pais",
-                        order = 'hi-lo')
-
+                        #by = "pais",
+                        order = 'hi-lo'); fig3.8_data
 
 fig3.8 <- lapop_stack(fig3.8_data,
-            main_title = "Nicaragua has the highest percentage of individuals with emigration intentions who also\nhave a high level of readiness to leave, while Haiti has the lowest")
+            main_title = "Nicaragua has the highest percentage of individuals with emigration intentions who also\nhave a high level of readiness to leave, while Haiti has the lowest"); fig3.8
