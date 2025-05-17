@@ -12,7 +12,7 @@
 #'
 #' @param data A survey object.  The data that should be analyzed.
 #' @param outcome_vars Character vector.  Outcome variable(s) of interest to be plotted
-#' across country (or other x variable). Max of 3 variables.
+#' across country (or other x variable). Max of 3 (three) variables.
 #' @param xvar Character string. Outcome variables are broken down by this variable. You can set
 #' xvar to "wave" or "year" for cross-time comparisons. Default: pais_lab.
 #' @param rec1,rec2,rec3 Numeric. The minimum and maximum values of the outcome variable that

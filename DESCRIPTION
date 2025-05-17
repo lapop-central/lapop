@@ -21,6 +21,8 @@ Encoding: UTF-8
 License: MIT + file LICENSE
 RoxygenNote: 7.3.2
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Collate: 
@@ -54,3 +56,4 @@ Collate:
     'lpr_ts.R'
     'globals.R'
     'zzz.R'
+VignetteBuilder: knitr
