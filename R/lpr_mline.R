@@ -51,7 +51,7 @@
 #'
 #' @return Returns a data frame, with data formatted for visualization by lapop_mline
 #'
-#' @examples
+#' @examples {
 #'
 #' Single Variable
 #'#' \dontrun{lpr_mline(gm,
@@ -81,7 +81,7 @@
 #' use_cat = TRUE,
 #' use_wave = TRUE)
 #' }
-#'
+#'}
 #'@export
 #'@import dplyr
 #'@import srvyr
