@@ -14,7 +14,7 @@ data(gm23)
 data(ym23)
 
 ## ----rescale------------------------------------------------------------------
-ym23$variables$aoj11r <- lpr_resc(ym23$variables$aoj11, reverse = TRUE, map = TRUE)
+ym23$variables$ing4r <- lpr_resc(ym23$variables$ing4, reverse = TRUE, map = TRUE)
 
 ## ----lapop fonts--------------------------------------------------------------
 lapop_fonts()

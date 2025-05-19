@@ -21,10 +21,14 @@ save(gm23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\gm23.rda"))
 
 
 ym23 <- ym %>% filter(!(pais %in% c(26, 40, 41)))
-ym23 <- ym23 %>% select("aoj11", "ing4", "wave", "pais_lab", "pais", "year",
+ym23 <- ym23 %>% select("ing4", "wave", "pais_lab", "pais", "year",
                         "b12", "b18", "pn4", "edre", "wealth", "q1tc_r", "vb21n", "q14f")
 #saveRDS(ym, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rds"))
 save(ym23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rda"))
+
+# COMPRESS
+tools::resaveRdaFiles("data/", compress = "xz")
+tools::checkRdaFiles("data/")
 
 ## ----load data, evaluate=F, include=F-----------------------------------------
 #gm23 <- load(paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\gm23.RDS"))
