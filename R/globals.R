@@ -1,7 +1,7 @@
 utils::globalVariables(
   c("wave", "prop1", "prop2", "prop1_low", "prop1_upp", "pais", "ub1", "lb1", "ub2", "lb2",
     
-    "Estimate", "Pr(>|t|)", "Std. Error", "conf.high", "conf.low", ".",
+    "Estimate", "Pr(>|t|)", "Std. Error", "conf.high", "conf.low", ".", "x_display", ":=",
     
     "contrast", "hl_var", "lb", "note_id", "p.value", "prop", 
     "prop2_low", "prop2_upp", "prop_low", "prop_upp", "proplabel",
