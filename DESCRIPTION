@@ -1,7 +1,7 @@
 Package: lapop
 Type: Package
 Title: Creates visualizations using LAPOP Lab Styles along with helper functions to work with AmericasBarometer Data
-Version: 2.0.6
+Version: 2.0.7
 Authors@R: 
     person(given = c("Luke", "Robert"),
            family = c("Plutowski", "Vidigal"),
