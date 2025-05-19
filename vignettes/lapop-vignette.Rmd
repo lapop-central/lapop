@@ -35,7 +35,7 @@ data(ym23)
 ## Rescale Variables
 
 ```{r, rescale}
-gm$variables$aoj11r <- lpr_resc(gm$variables$aoj11, reverse = TRUE, map = TRUE)
+gm23$variables$aoj11r <- lpr_resc(gm23$variables$aoj11, reverse = TRUE, map = TRUE)
 ```
 
 ## Fonts
@@ -47,7 +47,7 @@ lapop_fonts()
 ## Figure 1.1: Time Series
 
 ```{r, time series}
-fig1.1_data <- lpr_ts(gm, outcome = "ing4", rec = c(5, 7), use_wave = TRUE)
+fig1.1_data <- lpr_ts(gm23, outcome = "ing4", rec = c(5, 7), use_wave = TRUE)
 lapop_ts(fig1.1_data,
          ymin = 50,
          ymax = 80,
@@ -58,7 +58,7 @@ lapop_ts(fig1.1_data,
 ## Figure 1.2: Cross-Country Comparison
 
 ```{r, cross country}
-fig1.2_data <- lpr_cc(ym, outcome = "ing4", rec = c(5, 7))
+fig1.2_data <- lpr_cc(ym23, outcome = "ing4", rec = c(5, 7))
 lapop_cc(fig1.2_data,
          main_title = "In many countries, only about one in two adults support democracy",
          subtitle = "% who support democracy")
@@ -67,7 +67,7 @@ lapop_cc(fig1.2_data,
 ## Figure 2.1: Multi-Line Over Time
 
 ```{r, mline}
-fig2.1_data <- lpr_mline(gm,
+fig2.1_data <- lpr_mline(gm23,
                          outcome = c("b13", "b21", "b31"),
                          rec = c(5, 7), rec2 = c(5, 7), rec3 = c(5, 7))
 lapop_mline(fig2.1_data,
@@ -78,7 +78,7 @@ lapop_mline(fig2.1_data,
 ## Figure 2.3: CC Multiple Variables
 
 ```{r, ccm}
-fig2.3_data <- lpr_ccm(ym,
+fig2.3_data <- lpr_ccm(ym23,
                        outcome_vars = c("b12", "b18"),
                        rec1 = c(5, 7),
                        rec2 = c(5, 7))
@@ -91,7 +91,7 @@ lapop_ccm(fig2.3_data,
 ## Mover Example: Satisfaction with Democracy
 
 ```{r, mover}
-ym$variables <- ym$variables %>%
+ym23$variables <- ym23$variables %>%
   mutate(edrer = case_when(
     edre <= 2 ~ "None/Primary",
     edre %in% c(3, 4) ~ "Secondary",
@@ -100,9 +100,9 @@ ym$variables <- ym$variables %>%
   ),
   q1tc_r = ifelse(q1tc_r == 3, NA, q1tc_r))
 
-attributes(ym$variables$wealth)$label <- "Wealth"
+attributes(ym23$variables$wealth)$label <- "Wealth"
 
-fig_mover <- lpr_mover(ym,
+fig_mover <- lpr_mover(ym23,
                        outcome = "pn4",
                        grouping_vars = c("q1tc_r", "edrer", "wealth"),
                        rec = c(1, 2))
@@ -117,7 +117,7 @@ lapop_mover(fig_mover,
 ## Histogram: Citizens’ Views
 
 ```{r, histogram}
-spot32_data <- lpr_hist(ym, outcome = "vb21n")
+spot32_data <- lpr_hist(ym23, outcome = "vb21n")
 spot32_data$cat <- c("Vote", "Run for\noffice", "Protest", "Participate\nin local orgs.",
                      "Other", "Change is\nimpossible")
 
@@ -145,7 +145,7 @@ lapop_dumb(fig3.5_data,
 ## Figure 3.8: Stack Plot by Country
 
 ```{r, stack}
-fig3.8_data <- lpr_stack(ym,
+fig3.8_data <- lpr_stack(ym23,
                          outcome = "q14f",
                          xvar = "pais",
                          order = "hi-lo")
