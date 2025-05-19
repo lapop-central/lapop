@@ -22,7 +22,7 @@ save(gm23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\gm23.rda"))
 
 ym23 <- ym %>% filter(!(pais %in% c(26, 40, 41)))
 ym23 <- ym23 %>% select("wave", "pais_lab", "pais", "year",
-                        "ing4", "b12", "b18", "pn4", "vb21n", "q14f",
+                        "ing4", "b12", "b18", "pn4", "vb21n", "q14f", "d4",
                         "edre", "wealth", "q1tc_r")
 #saveRDS(ym, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rds"))
 save(ym23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rda"))
