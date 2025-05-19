@@ -24,16 +24,12 @@ library(lapop)
 library(dplyr)
 ```
 
-```{r, include=F}
-ym23 <- lpr_data("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/YM/Merge 2023 LAPOP AmericasBarometer (v1.0s).dta") # year-merge
-gm23 <- lpr_data("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/GM/Grand Merge 2004-2023 LAPOP AmericasBarometer (v1.1s).dta") # grand-merge v1.1 wealth variable fix
-```
+```{r, load data}
+# Grand Merge (only a subset of countries)
+data(gm23)
 
-## Filter Countries
-
-```{r, filter}
-gm <- gm23 %>% filter(!(pais %in% c(16, 25, 26, 27, 28, 30, 40, 41)))
-ym <- ym23 %>% filter(!(pais %in% c(26, 40, 41)))
+# 2023 Year Merge (only a subset of countries)
+data(ym23)
 ```
 
 ## Rescale Variables
