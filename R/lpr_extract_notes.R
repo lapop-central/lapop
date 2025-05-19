@@ -28,12 +28,12 @@
 #' as a list where each element contains exactly three components: variable name, note ID,
 #' and note value.
 #'
-#' @examples
+#' @examples {
 #' # Extract the notes
 #' \dontrun{
 #' notes <- lpr_extract_notes(df)
 #' print(notes)}
-#'
+#'}
 #' @export
 
 lpr_extract_notes <- function(data) {
