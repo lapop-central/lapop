@@ -35,7 +35,8 @@
 #'
 #' @examples
 #' # First extract notes from dataset attributes
-#' notes <- lpr_extract_notes(data)
+#' \dontrun{
+#' notes <- lpr_extract_notes(data)}
 #'
 #' # Set variable question wording
 #' \dontrun{
