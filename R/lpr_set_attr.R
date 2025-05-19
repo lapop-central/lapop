@@ -1,13 +1,13 @@
 ##############################################################
 
-# LAPOP Set Variable Attributes from AmericasBarometer Notes # 
+# LAPOP Set Variable Attributes from AmericasBarometer Notes #
 
 ##############################################################
 
 #' Set Variable Attributes from AmericasBarometer Notes
 #'
 #' Applies notes stored in a data frame object as attributes to corresponding variables
-#' in AmericasBarometer dataset. This is particularly useful for setting variable labels, 
+#' in AmericasBarometer dataset. This is particularly useful for setting variable labels,
 #' question wording, or other metadata from extracted notes.
 #'
 #' @param data A data frame whose variables will receive new attributes
@@ -38,8 +38,9 @@
 #' notes <- lpr_extract_notes(data)
 #'
 #' # Set variable question wording
+#' \dontrun{
 #' data <- lpr_set_attr(data, notes, noteid = "note4", attribute_name = "question_wording")
-#' attr(data$ing4, "question_wording")
+#' attr(data$ing4, "question_wording")}
 #'
 #'
 #' @seealso \code{\link{lpr_extract_notes}} for extracting notes from AmericasBarometer dataset attributes
@@ -47,15 +48,15 @@
 
 lpr_set_attr <- function(data, notes, noteid = character(), attribute_name = character()) {
   # Filter notes for rows with the specified note_id
-  
+
   note_subset <- subset(notes, note_id == noteid)
-  
+
   # Loop through each row in the filtered subset
   for (i in 1:nrow(note_subset)) {
     # Get the variable name and note value for the specified note_id
     variable_name <- note_subset$variable_name[i]
     text_label <- note_subset$note_value[i]
-    
+
     # Check if variable_name exists in data
     if (variable_name %in% names(data)) {
       # Set the specified attribute name using the text_label
@@ -64,7 +65,7 @@ lpr_set_attr <- function(data, notes, noteid = character(), attribute_name = cha
       warning(paste("Variable", variable_name, "not found in data."))
     }
   }
-  
+
   # Return the modified data
   return(data)
 }
