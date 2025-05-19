@@ -5,7 +5,6 @@
 #
 #
 # # -----------------------------------------------------------------------
-
 devtools::install_github("lapop-central/lapop", force = T) # Get latest version
 
 library(lapop) # hellow world!
@@ -13,7 +12,8 @@ ym23 <- lpr_data("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional
 gm23 <- lpr_data("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/GM/Grand Merge 2004-2023 LAPOP AmericasBarometer (v1.1s).dta") # v1.1 wealth variable fix
 
 # In this guide, we will recreate figures from the AB Report Pulse of Democracy (2023):
-# browseURL("https://www.vanderbilt.edu/lapop/ab2023/AB2023-Pulse-of-Democracy-final-20240604.pdf")
+#
+browseURL("https://www.vanderbilt.edu/lapop/ab2023/AB2023-Pulse-of-Democracy-final-20240604.pdf")
 
 # Filtering countries
 # # -----------------------------------------------------------------------
@@ -172,16 +172,14 @@ stack_ex <- lapop_stack(stack_data,
 
 
 # stack - figure 3.8
-# you can also use stack_ to show one variable broken down by a second, using "by"
+# you can also use stack_ to show one variable broken down by a second, using "xvar"
 # for simplicity, I'm not actually making the migration index from 3.8, just
 # showing migration likelihood (q14f)
 
-CONTINUE HERE CONTINUE HERE CONTINUE HERE CONTINUE HERE CONTINUE HERE CONTINUE HERE
-
 fig3.8_data <- lpr_stack(ym,
                         outcome = "q14f",
-                        #by = "pais",
+                        xvar = "pais",
                         order = 'hi-lo'); fig3.8_data
 
-fig3.8 <- lapop_stack(fig3.8_data,
-            main_title = "Nicaragua has the highest percentage of individuals with emigration intentions who also\nhave a high level of readiness to leave, while Haiti has the lowest"); fig3.8
+fig3.8 <- lapop_stack(fig3.8_data, xvar = "xvar_label", source = ", AmericasBarometer 2023",
+            main_title = "Nicaragua has the highest percentage of individuals with migration likelihood,\nwhile Haiti has the lowest"); fig3.8
