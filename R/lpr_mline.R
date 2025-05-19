@@ -72,10 +72,10 @@
 #' \dontrun{lpr_mline(gm,
 #' outcome = "jc1",
 #' use_cat = TRUE,
-#' use_wave = TRUE)
+#' use_wave = TRUE)}
 #'
 #' Recode Categorical Variable (max 4-categories)
-#' lpr_mline(gm,
+#' \dontrun{lpr_mline(gm,
 #' outcome = "a4n",
 #' rec = c(1,4),
 #' use_cat = TRUE,
