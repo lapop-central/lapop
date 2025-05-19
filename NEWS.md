@@ -1,7 +1,13 @@
+# lapop 2.0.8
+
+* update lpr_data to load data directly
+
 # lapop 2.0.7
+
 * add xvar parameter for lapop_stack()
  
 # lapop 2.0.6
+
 * add interact parameter for lpr_coef()
 
 # lapop 2.0.5
