@@ -33,16 +33,18 @@
 #' The function is designed to work in tandem with \code{lpr_extract_notes}, creating
 #' a workflow for managing variable metadata in AmericasBarometer data.
 #'
-#' @examples
+#' @examples {
 #' # First extract notes from dataset attributes
 #' \dontrun{
-#' notes <- lpr_extract_notes(data)}
+#' notes <- lpr_extract_notes(data)
+#' }
 #'
 #' # Set variable question wording
 #' \dontrun{
 #' data <- lpr_set_attr(data, notes, noteid = "note4", attribute_name = "question_wording")
-#' attr(data$ing4, "question_wording")}
-#'
+#' attr(data$ing4, "question_wording")
+#' }
+#'}
 #'
 #' @seealso \code{\link{lpr_extract_notes}} for extracting notes from AmericasBarometer dataset attributes
 #' @export

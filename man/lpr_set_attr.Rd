@@ -24,7 +24,7 @@ The input data frame with specified attributes added to relevant variables
 }
 \description{
 Applies notes stored in a data frame object as attributes to corresponding variables
-in AmericasBarometer dataset. This is particularly useful for setting variable labels, 
+in AmericasBarometer dataset. This is particularly useful for setting variable labels,
 question wording, or other metadata from extracted notes.
 }
 \details{
@@ -40,12 +40,13 @@ The function is designed to work in tandem with \code{lpr_extract_notes}, creati
 a workflow for managing variable metadata in AmericasBarometer data.
 }
 \examples{
+\dontrun{
 # First extract notes from dataset attributes
 notes <- lpr_extract_notes(data)
 
 # Set variable question wording
 data <- lpr_set_attr(data, notes, noteid = "note4", attribute_name = "question_wording")
-attr(data$ing4, "question_wording")
+attr(data$ing4, "question_wording")}
 
 
 }
