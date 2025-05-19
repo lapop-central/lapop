@@ -12,6 +12,7 @@
 #'   \item{b12}{Description of Column}
 #'   \item{wave}{Description of Column}
 #'   \item{pais_lab}{Description of Column}
+#'   \item{pais}{Description of Column}
 #'   \item{year}{Description of Column}
 #'   \item{b18}{Description of Column}
 #'   \item{pn4}{Description of Column}

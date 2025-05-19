@@ -35,7 +35,7 @@ data(ym23)
 
 ## Rescale Variables
 
-```{r, rescale}
+```{r, rescale, echo=F}
 gm23$variables$aoj11r <- lpr_resc(gm23$variables$aoj11, reverse = TRUE, map = TRUE)
 ```
 
@@ -99,7 +99,12 @@ ym23$variables <- ym23$variables %>%
     edre > 4 ~ "Superior",
     TRUE ~ NA_character_
   ),
-  q1tc_r = ifelse(q1tc_r == 3, NA, q1tc_r))
+  q1tc_r = ifelse(q1tc_r == 3, NA, q1tc_r)) %>%
+  mutate(q1tc_r = case_when(
+    q1tc_r == 1 ~ "Men",
+    q1tc_r == 2 ~ "Women",
+     TRUE ~ NA_character_
+  ))
 
 attributes(ym23$variables$wealth)$label <- "Wealth"
 
