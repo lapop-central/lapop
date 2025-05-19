@@ -1,0 +1,165 @@
+---
+title: "Visualizing LAPOP Data: 2023 AmericasBarometer Report"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Visualizing LAPOP Data: 2023 AmericasBarometer Report}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+## Introduction
+
+This vignette demonstrates how to use the `lapop` package to reproduce figures from the 2023 *Pulse of Democracy* report.
+
+[Read the full report here](https://www.vanderbilt.edu/lapop/ab2023/AB2023-Pulse-of-Democracy-final-20240604.pdf)
+
+## Load Packages
+
+```{r, packages}
+library(lapop)
+library(dplyr)
+```
+
+```{r, include=F}
+ym23 <- lpr_data("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/YM/Merge 2023 LAPOP AmericasBarometer (v1.0s).dta") # year-merge
+gm23 <- lpr_data("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/GM/Grand Merge 2004-2023 LAPOP AmericasBarometer (v1.1s).dta") # grand-merge v1.1 wealth variable fix
+```
+
+## Filter Countries
+
+```{r, filter}
+gm <- gm23 %>% filter(!(pais %in% c(16, 25, 26, 27, 28, 30, 40, 41)))
+ym <- ym23 %>% filter(!(pais %in% c(26, 40, 41)))
+```
+
+## Rescale Variables
+
+```{r, rescale}
+gm$variables$aoj11r <- lpr_resc(gm$variables$aoj11, reverse = TRUE, map = TRUE)
+```
+
+## Fonts
+
+```{r, lapop fonts}
+lapop_fonts()
+```
+
+## Figure 1.1: Time Series
+
+```{r, time series}
+fig1.1_data <- lpr_ts(gm, outcome = "ing4", rec = c(5, 7), use_wave = TRUE)
+lapop_ts(fig1.1_data,
+         ymin = 50,
+         ymax = 80,
+         main_title = "Support for democracy decline a decade ago and remains comparatively low",
+         subtitle = "% who support democracy")
+```
+
+## Figure 1.2: Cross-Country Comparison
+
+```{r, cross country}
+fig1.2_data <- lpr_cc(ym, outcome = "ing4", rec = c(5, 7))
+lapop_cc(fig1.2_data,
+         main_title = "In many countries, only about one in two adults support democracy",
+         subtitle = "% who support democracy")
+```
+
+## Figure 2.1: Multi-Line Over Time
+
+```{r, mline}
+fig2.1_data <- lpr_mline(gm,
+                         outcome = c("b13", "b21", "b31"),
+                         rec = c(5, 7), rec2 = c(5, 7), rec3 = c(5, 7))
+lapop_mline(fig2.1_data,
+            main_title = "Trust in executives has declined to a level similar to other political institutions",
+            subtitle = "% who trust...")
+```
+
+## Figure 2.3: CC Multiple Variables
+
+```{r, ccm}
+fig2.3_data <- lpr_ccm(ym,
+                       outcome_vars = c("b12", "b18"),
+                       rec1 = c(5, 7),
+                       rec2 = c(5, 7))
+fig2.3_data$var <- ifelse(fig2.3_data$var == "b12", "Armed Forces", "National Police")
+lapop_ccm(fig2.3_data,
+          main_title = "The public typically reports more trust in the armed forces than the police, but levels vary",
+          subtitle = "% who trust...")
+```
+
+## Mover Example: Satisfaction with Democracy
+
+```{r, mover}
+ym$variables <- ym$variables %>%
+  mutate(edrer = case_when(
+    edre <= 2 ~ "None/Primary",
+    edre %in% c(3, 4) ~ "Secondary",
+    edre > 4 ~ "Superior",
+    TRUE ~ NA_character_
+  ),
+  q1tc_r = ifelse(q1tc_r == 3, NA, q1tc_r))
+
+attributes(ym$variables$wealth)$label <- "Wealth"
+
+fig_mover <- lpr_mover(ym,
+                       outcome = "pn4",
+                       grouping_vars = c("q1tc_r", "edrer", "wealth"),
+                       rec = c(1, 2))
+
+fig_mover$varlabel <- ifelse(fig_mover$varlabel == "edrer", "Education", fig_mover$varlabel)
+
+lapop_mover(fig_mover,
+            main_title = "Satisfaction with democracy is significantly lower among women, 26–45-year-olds,\nthose with higher educational attainment, and the middle class",
+            subtitle = "% who are satisfied with democracy")
+```
+
+## Histogram: Citizens’ Views
+
+```{r, histogram}
+spot32_data <- lpr_hist(ym, outcome = "vb21n")
+spot32_data$cat <- c("Vote", "Run for\noffice", "Protest", "Participate\nin local orgs.",
+                     "Other", "Change is\nimpossible")
+
+lapop_hist(spot32_data,
+           main_title = "On average in the LAC region, one in three say voting is the best way to influence change",
+           subtitle = "How do you believe you can best influence change?")
+```
+
+## Figure 3.5: Dumbell Plot
+
+```{r, dumbell}
+fig3.5_data <- lpr_dumb(gm23,
+                        outcome = "q14f",
+                        rec = c(1, 1),
+                        over = c(2018, 2023),
+                        xvar = "pais_lab",
+                        ttest = TRUE)
+fig3.5_data <- fig3.5_data[1:6, ]
+
+lapop_dumb(fig3.5_data,
+           main_title = "Among those with emigration intentions, the percentage who say they are very likely\nto emigrate increased in Nicaragua and Guatemala",
+           subtitle = "% who say it is very likely they will emigrate")
+```
+
+## Figure 3.8: Stack Plot by Country
+
+```{r, stack}
+fig3.8_data <- lpr_stack(ym,
+                         outcome = "q14f",
+                         xvar = "pais",
+                         order = "hi-lo")
+
+lapop_stack(fig3.8_data,
+            xvar = "xvar_label",
+            source = ", AmericasBarometer 2023",
+            main_title = "Nicaragua has the highest percentage of individuals with migration likelihood,\nwhile Haiti has the lowest")
+```
+
+## End
+
+Use this vignette as a template for your own reports and exploratory visualizations using LAPOP data.

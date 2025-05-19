@@ -1,13 +1,6 @@
-# # -----------------------------------------------------------------------
-#
-#
-#
-#
-#
-# # -----------------------------------------------------------------------
 devtools::install_github("lapop-central/lapop", force = T) # Get latest version
 
-library(lapop) # hellow world!
+library(lapop) # hello world!
 ym23 <- lpr_data("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/YM/Merge 2023 LAPOP AmericasBarometer (v1.0s).dta")
 gm23 <- lpr_data("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/GM/Grand Merge 2004-2023 LAPOP AmericasBarometer (v1.1s).dta") # v1.1 wealth variable fix
 
