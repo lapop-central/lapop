@@ -53,13 +53,13 @@
 #'
 #' @examples {
 #'
-#' Single Variable
+#' # Single Variable
 #'#' \dontrun{lpr_mline(gm,
 #' outcome = "ing4",
 #' rec = c(5, 7),
 #' use_wave = FALSE)}
 #'
-#' Multiple Variables
+#' # Multiple Variables
 #' \dontrun{lpr_mline(gm,
 #' outcome = c("b10a", "b13", "b18", "b21"),
 #' rec = c(5, 7),
@@ -68,13 +68,13 @@
 #' rec4 = c(1, 1),
 #' use_wave = TRUE)}
 #'
-#' Binary Single Variable by Category
+#' # Binary Single Variable by Category
 #' \dontrun{lpr_mline(gm,
 #' outcome = "jc1",
 #' use_cat = TRUE,
 #' use_wave = TRUE)}
 #'
-#' Recode Categorical Variable (max 4-categories)
+#' # Recode Categorical Variable (max 4-categories)
 #' \dontrun{lpr_mline(gm,
 #' outcome = "a4n",
 #' rec = c(1,4),

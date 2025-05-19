@@ -83,13 +83,15 @@ variables across time (essentially, it allows you to do lpr_ts for multiple vari
 }
 \examples{
 Single Variable
-\dontrun{lpr_mline(gm,
+\dontrun{
+lpr_mline(gm,
 outcome = "ing4",
 rec = c(5, 7),
 use_wave = FALSE)}
 
 Multiple Variables
-\dontrun{lpr_mline(gm,
+\dontrun{
+lpr_mline(gm,
 outcome = c("b10a", "b13", "b18", "b21"),
 rec = c(5, 7),
 rec2 = c(1, 2),
@@ -98,18 +100,22 @@ rec4 = c(1, 1),
 use_wave = TRUE)}
 
 Binary Single Variable by Category
-\dontrun{lpr_mline(gm,
+\dontrun{
+lpr_mline(gm,
 outcome = "jc1",
 use_cat = TRUE,
 use_wave = TRUE)}
 
-Recode Categorical Variable (max 4-categories)
-\dontrun{lpr_mline(gm,
+Recode Categorical Variable (max four categories)
+\dontrun{
+lpr_mline(gm,
 outcome = "a4n",
 rec = c(1,4),
 use_cat = TRUE,
 use_wave = TRUE)}
+
 }
+
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

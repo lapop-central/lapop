@@ -7,3 +7,4 @@
 ^\.Rproj\.user$
 ^\.lintr$
 /Meta/
+vignettes/lapop-vignette_data.R
