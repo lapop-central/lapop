@@ -21,9 +21,7 @@ svy_tbl object that can then be analyzed using lpr_ commands.
 \examples{
 
 \dontrun{
-gm23 <- haven::read_dta("Merge 2023 LAPOP AmericasBarometer (v1.0s).dta")
-
-gm23s <- lpr_data(gm23)
+gm23 <- lpr_data("Merge 2023 LAPOP AmericasBarometer (v1.0s).dta")
 }
 
 }

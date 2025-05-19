@@ -25,4 +25,4 @@
 #' }
 #' @source LAPOP AmericasBarometer (https://www.vanderbilt.edu/lapop/)
 #' @export
-gm23 <- readRDS("data/gm23.RDS")
+gm23 <- load("data/gm23.rda")
