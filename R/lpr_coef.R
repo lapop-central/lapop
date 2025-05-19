@@ -23,7 +23,7 @@
 #'
 #' @return Returns a data frame, with data formatted for visualization by lapop_coef
 #'
-#' @examples
+#' @examples {
 #'
 #' Example 1: Linear model using lpr_coef()
 #' \dontrun{lpr_coef(
@@ -40,7 +40,7 @@
 #'  data = dataLAPOP,
 #'  model = "binomial",
 #'  est = "contrast")}
-#'}
+#'
 #'
 #' Example 3: Interactive model using lpr_coef()
 #' \dontrun{lpr_coef(
