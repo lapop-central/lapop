@@ -23,9 +23,9 @@ lpr_coef(
 
 \item{xvar}{Vector of independent variables for the svyglm regression model (e.g., "xvar1+xvar2+xvar3" and so on). Multiple variables are allowed.}
 
-\item{interact}{Interaction terms (e.g., "xvar1*xvar2 + xvar3:xvar4"). Supports both `:` and `*` operators for interacting variables. Optional, default is NULL.}
+\item{interact}{Interaction terms (e.g., "xvar1`*`xvar2 + xvar3`:`xvar4"). Supports `:` and `*` operators for interacting variables. Optional, default is NULL.}
 
-\item{model}{Model family object for glm. Default is linear regression (i.e., "gaussian"). For a logit model, use model="binomial"}
+\item{model}{Model family object for glm. Default is gaussian regression (i.e., "linear"). For a logit model, use model="binomial"}
 
 \item{data}{Survey design data from lpr_data() output.}
 
@@ -44,17 +44,21 @@ lpr_coef(
 \value{
 Returns a data frame, with data formatted for visualization by lapop_coef
 }
+\description{
+This function creates a data frame which can then be input in lapop_coef() for
+plotting regression coefficients graph using LAPOP formatting.
+}
 \examples{
+{
 
-# Example 1: Linear model using lpr_coef()
+Example 1: Linear model using lpr_coef()
 \dontrun{lpr_coef(
  outcome = "l1",
  xvar = "it1+idio2",
  data = dataLAPOP,
- model = "gaussian",
+ model = "linear",
  est = "coef")}
-
-# Example 2: Logit model using lpr_coef()
+Example 2: Logit model using lpr_coef()
 \dontrun{lpr_coef(
  outcome = "fs2",
  xvar = "it1+idio2",
@@ -62,21 +66,19 @@ Returns a data frame, with data formatted for visualization by lapop_coef
  model = "binomial",
  est = "contrast")}
 
-# Example 3: Interactive model using lpr_coef()
+
+Example 3: Interactive model using lpr_coef()
 \dontrun{lpr_coef(
-outcome = "fs2",
-xvar = "it1+idio2",
-interact = "it1*idio2",
-data = dataLAPOP,
-model = "linear",
-est = "coef")}
+ outcome = "fs2",
+ xvar = "it1+idio2",
+ interact = "it1*idio2",
+ data = dataLAPOP,
+ model = "linear",
+ est = "coef")}
 }
 
-\description{
-This function creates a data frame which can then be input in lapop_coef() for
-plotting regression coefficients graph using LAPOP formatting.
-}
 
+}
 \author{
 Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

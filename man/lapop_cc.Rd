@@ -48,8 +48,7 @@ Input must match entry in "vallabel" exactly. Default: None.}
 \item{main_title}{Character.  Title of graph.  Default: None.}
 
 \item{source_info}{Character.  Information on dataset used (country, years, version, etc.),
-which is added to the bottom-left corner of the graph.
-Default: LAPOP ("Source: LAPOP Lab" will be printed).}
+which is added to the bottom-left corner of the graph. Default: LAPOP ("Source: LAPOP Lab" will be printed).}
 
 \item{subtitle}{Character.  Describes the values/data shown in the graph, e.g., "percentage of Mexicans who say...)".
 Default: None.}
@@ -63,17 +62,14 @@ Default: #784885.}
 \item{label_size}{Numeric.  Size of text for data labels (percentages above bars).  Default: 5.}
 
 \item{max_countries}{Numeric. Threshold for automatic x-axis label rotation. When the number of unique
-country labels exceeds this value, labels will be rotated for better readability. Default: 30.}
+country labels exceeds this value, labels will be rotated for better readability. Default: 20.}
 
 \item{label_angle}{Numeric. Angle (in degrees) to rotate x-axis labels when max_countries is exceeded. Default: 0.}
-
 }
-
 \value{
 Returns an object of class \code{ggplot}, a ggplot figure showing
 average values of some variables across multiple countries.
 }
-
 \description{
 This function creates bar graphs for comparing values across countries using LAPOP formatting.
 }
@@ -101,8 +97,6 @@ lapop_cc(df,
          ymax = 50)
 
 }
-
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} &
-Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

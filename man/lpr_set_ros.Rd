@@ -32,8 +32,7 @@ names are the response labels and values are the corresponding codes.
 Special codes (values ≥ 1000) are excluded from the response options string.
 }
 \examples{
-# Apply the function
-
+#' # Apply the function
 \dontrun{
 data1 <- lpr_set_ros(data1) # Default English
 data1 <- lpr_set_ros(data1, lang_id = "es", attribute_name = "respuestas") # Spanish
@@ -41,10 +40,5 @@ data1 <- lpr_set_ros(data1, lang_id = "pt", attribute_name = "ROsLabels_pt") # P
 
 # View the resulting attribute
 attr(data1$ing4, "roslabel"); attr(data1$ing4, "respuestas"); attr(data1$ing4, "ROsLabels_pt")
-  }
-
 }
-
-\author{
-Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

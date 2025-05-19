@@ -25,7 +25,7 @@ lpr_ccm(
 \item{data}{A survey object.  The data that should be analyzed.}
 
 \item{outcome_vars}{Character vector.  Outcome variable(s) of interest to be plotted
-across country (or other x variable). Max of 3 variables.}
+across country (or other x variable). Max of 3 (three) variables.}
 
 \item{xvar}{Character string. Outcome variables are broken down by this variable. You can set
 xvar to "wave" or "year" for cross-time comparisons. Default: pais_lab.}
@@ -66,7 +66,7 @@ in the denominator when calculating percentages.  The default is to examine
 valid responses only.  Default: FALSE.}
 }
 \value{
-Returns a data frame, with data formatted for visualization by lapop_ccm
+Returns a data frame, with data formatted for visualization by lapop_ccm()
 }
 \description{
 This function creates dataframes which can then be input in lapop_ccm for
@@ -87,7 +87,8 @@ xvar = "wave",
 rec1 = c(1, 1),
 rec2 = c(3, 4),
 ttest = TRUE)}
+
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

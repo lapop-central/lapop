@@ -36,12 +36,11 @@ or "es" (Spanish).  Default: "en".}
 \item{subtitle}{Character.  Describes the values/data shown in the graph, e.g., "Percent who agree that...".
 Default: None.}
 
-\item{qword}{Character.  Describes the values/data shown in the graph, e.g., "Do you agree that...".
-Default: None.}
+\item{qword}{Character.  Describes the question wording shown in the graph, e.g., "Do you agree that...".
+Default: NULL.}
 
 \item{source_info}{Character.  Information on dataset used (country, years, version, etc.),
-which is added to the bottom-left corner of the graph.
-Default: LAPOP ("Source: LAPOP Lab" will be printed).}
+which is added to the bottom-left corner of the graph. Default: LAPOP ("Source: LAPOP Lab" will be printed).}
 
 \item{rev_values}{Logical.  Should the order of the values for each variable be reversed?  Default: FALSE.}
 
@@ -89,11 +88,11 @@ lapop_mover(df,
             main_title = paste0("More educated, men, and younger individuals",
                                 " in the LAC region are the\nmost likely",
                                   " to be crime victims"),
-            subtitle = "\% victim of a crime",
+            subtitle = "\% victim of a crime", qword = "",
             ymin = 0,
             ymax = 40)
 
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

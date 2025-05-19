@@ -28,6 +28,7 @@ Config/testthat/edition: 3
 Collate: 
     'data_documentation.R'
     'globals.R'
+    'gm23.R'
     'lapop-deprecated.R'
     'lapop_fonts.R'
     'lapop_cc.R'
@@ -56,5 +57,6 @@ Collate:
     'lpr_set_ros.R'
     'lpr_stack.R'
     'lpr_ts.R'
+    'ym23.R'
     'zzz.R'
 VignetteBuilder: knitr

@@ -41,8 +41,7 @@ variable were altered and stored in a new column).}
 \item{main_title}{Character.  Title of graph.  Default: None.}
 
 \item{source_info}{Character.  Information on dataset used (country, years, version, etc.),
-which is added to the bottom-left corner of the graph.
-Default: LAPOP ("Source: LAPOP Lab" will be printed).}
+which is added to the bottom-left corner of the graph. Default: LAPOP ("Source: LAPOP Lab" will be printed).}
 
 \item{subtitle}{Character.  Describes the values/data shown in the graph, e.g., "Percent of Mexicans who agree...".
 Default: None.}
@@ -61,10 +60,10 @@ means of the raw values, so that the y-axis adjusts accordingly. Default: TRUE.}
 Default: -2.1.}
 
 \item{max_years}{Numeric. Threshold for automatic x-axis label rotation. When the number of unique
-country labels exceeds this value, labels will be smaller and if necessary rotated for better readability. Default: 15 years.}
+country labels exceeds this value, labels will be smaller and if necessary rotated for better readability.
+Default: 15 years.}
 
 \item{label_angle}{Numeric. Angle (in degrees) to rotate x-axis labels when max_years is exceeded. Default: 0.}
-
 }
 \value{
 Returns an object of class \code{ggplot}, a ggplot line graph showing
@@ -100,6 +99,5 @@ lapop_ts(df,
 
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}  &
-Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

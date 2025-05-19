@@ -78,13 +78,13 @@ comparing values across countries with a bar graph using LAPOP formatting.
 }
 \examples{
 
-\dontrun{lpr_cc(data = gms, 
-outcome = "ing4", 
-rec = c(5, 7), 
+\dontrun{lpr_cc(data = gms,
+outcome = "ing4",
+rec = c(5, 7),
 xvar = "pais_lab")}
 
-\dontrun{lpr_cc(data = gms, 
-outcome = c("sd2new2", "sd3new2", "sd5new2", "sd6new2"), 
+\dontrun{lpr_cc(data = gms,
+outcome = c("sd2new2", "sd3new2", "sd5new2", "sd6new2"),
 rec = c(5, 7))}
 
 }

@@ -23,12 +23,12 @@ lpr_dumb(
 \arguments{
 \item{data}{A survey object.  The data that should be analyzed.}
 
-\item{outcome}{Outcome variable of interest to be plotted across countries
-and waves, supplied as a character string.}
+\item{outcome}{Outcome variable(s) of interest to be plotted across countries
+and waves, supplied as a character string or vector of strings.}
 
 \item{xvar}{Character. The grouping variable to be plotted
 along the x-axis (technically, the vertical axis for lapop_dumb). Usually
-country (pais).  Default: "pais".}
+country (pais). Default: "pais".}
 
 \item{over}{Numeric.  A vector of values for "wave" that specify which two
 waves should be included in the plot.}
@@ -84,9 +84,17 @@ outcome = "ing4",
 rec = c(5, 7),
 over = c(2021, 2023),
 sort = "diff",
-ttest = TRUE)}
+ttest = TRUE)
+}
+
+Multiple
+\dontrun{lpr_dumb(YM,
+outcome=c("b21", "b13", "b31", "b47a"),
+rec=c(5,7),
+over=c(2004, 2006))
+}
 
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }
