@@ -75,12 +75,14 @@ using LAPOP formatting.
 }
 \examples{
 
-\dontrun{lpr_ccm(gm23,
+\dontrun{
+lpr_ccm(gm23,
 outcome_vars = c("vic1ext", "aoj11"),
 rec1 = c(1, 1),
 rec2 = c(3, 4),
-ttest = TRUE)
+ttest = TRUE)}
 
+\dontrun{
 lpr_ccm(gm23,
 outcome_vars = c("vic1ext", "aoj11"),
 xvar = "wave",
@@ -89,6 +91,7 @@ rec2 = c(3, 4),
 ttest = TRUE)}
 
 }
+
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

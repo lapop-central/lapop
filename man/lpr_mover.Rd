@@ -73,37 +73,43 @@ comparing means across values of secondary variable(s) using LAPOP formatting.
 \examples{
 
 # Single Outcome
-\dontrun{lpr_mover(data = gm23,
+\dontrun{
+lpr_mover(data = gm23,
  outcome = "ing4",
  grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
  rec = c(5, 7)}
 
  # Multiple Outcomes
- \dontrun{lpr_mover(data = gm23,
+ \dontrun{
+ lpr_mover(data = gm23,
  outcome = "c(ing4", "pn4"),
  grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
  rec = c(5, 7), rec2 = c(1, 2)}
 
 # Single DV X Single IV
-\dontrun{lpr_mover(data,
+\dontrun{
+lpr_mover(data,
 outcome="ing4",
 grouping_vars="exc7new",
 rec=c(5,7), ttest=T)}
 
 # Multiple DVs X Single IV
-\dontrun{lpr_mover(data,
+\dontrun{
+lpr_mover(data,
 outcome=c("ing4", "pn4"),
 grouping_vars="exc7new",
 rec=c(5,7), rec2=c(1,2), ttest=T)}
 
 # Single DV X Multiple IVs
-\dontrun{lpr_mover(data,
+\dontrun{
+lpr_mover(data,
 outcome="ing4",
 grouping_vars=c("edre", "q1tc_r"),
 rec=c(5,7), ttest=T)}
 
 # Multiple DVs X Multiple IVs
-\dontrun{lpr_mover(data,
+\dontrun{
+lpr_mover(data,
 outcome=c("ing4", "pn4"),
 grouping_vars=c("edre", "q1tc_r"),
 rec=c(5,7), rec2=c(1,2), ttest=T)}
