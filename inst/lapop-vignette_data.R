@@ -13,6 +13,9 @@ gm <- lpr_data("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/D
 gm23 <- gm %>% filter(!(pais %in% c(16, 25, 26, 27, 28, 30, 40, 41)))
 gm23 <- gm23 %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12", "wave", "pais_lab", "pais",
                     "year", "b18", "pn4", "edre", "wealth", "q1tc_r", "vb21n", "q14f")
+
+qs::qsave(gm23, paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\gm23.qs", preset = "high"))
+
 #saveRDS(gm, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\gm23.rds"))
 save(gm23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\gm23.rda"))
 
