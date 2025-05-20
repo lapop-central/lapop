@@ -31,6 +31,11 @@ save(ym23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rda"))
 tools::resaveRdaFiles("data/", compress = "xz")
 tools::checkRdaFiles("data/")
 
+#bm <-  readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing/BRA 2023 LAPOP AmericasBarometer (v1.0s).dta",
+#                               generate.factors = T)
+#save(bm, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\gm23.rda"))
+
+
 ## ----load data, evaluate=F, include=F-----------------------------------------
 #gm23 <- load(paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\gm23.RDS"))
 #ym23 <- load(paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.RDS"))
