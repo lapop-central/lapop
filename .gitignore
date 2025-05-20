@@ -8,3 +8,4 @@
 ^\.lintr$
 /Meta/
 vignettes/lapop-vignette_data.R
+/doc/

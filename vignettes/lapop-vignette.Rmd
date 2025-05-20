@@ -37,7 +37,7 @@ data(ym23)
 
 ## Rescale Variables
 
-```{r, rescale, echo = F}
+```{r, rescale}
 gm23$variables$aoj11r <- lpr_resc(gm23$variables$aoj11, reverse = TRUE, map = TRUE)
 ```
 
@@ -54,7 +54,7 @@ fig1.1_data <- lpr_ts(gm23, outcome = "ing4", rec = c(5, 7), use_wave = TRUE)
 lapop_ts(fig1.1_data,
          ymin = 50,
          ymax = 80,
-         main_title = "Support for democracy decline a decade ago and \nremains comparatively low",
+         main_title = "Support for democracy decline a decade ago and remains comparatively low",
          subtitle = "% who support democracy")
 ```
 
@@ -74,8 +74,7 @@ fig2.1_data <- lpr_mline(gm23,
                          outcome = c("b13", "b21", "b31"),
                          rec = c(5, 7), rec2 = c(5, 7), rec3 = c(5, 7))
 lapop_mline(fig2.1_data,
-            main_title = "Trust in executives has declined to a level similar to other 
-            \npolitical institutions",
+            main_title = "Trust in executives has declined to a level similar to other political institutions",
             subtitle = "% who trust...")
 ```
 
@@ -88,12 +87,11 @@ fig2.3_data <- lpr_ccm(ym23,
                        rec2 = c(5, 7))
 fig2.3_data$var <- ifelse(fig2.3_data$var == "b12", "Armed Forces", "National Police")
 lapop_ccm(fig2.3_data,
-          main_title = "The public typically reports more trust in the armed forces 
-          \nthan the police, but levels vary",
+          main_title = "The public typically reports more trust in the armed forces than the police, \nbut levels vary",
           subtitle = "% who trust...")
 ```
 
-## Mover Example: Satisfaction with Democracy
+## Figure Mover Example: Satisfaction with Democracy
 
 ```{r, mover}
 ym23$variables <- ym23$variables %>%
@@ -121,11 +119,11 @@ fig_mover$varlabel <- ifelse(fig_mover$varlabel == "edrer", "Education", fig_mov
 
 lapop_mover(fig_mover,
             main_title = "Satisfaction with democracy is significantly lower among women,
-            \nthose with higher educational attainment, and the middle class",
+            those with higher \neducational attainment, and the middle class",
             subtitle = "% who are satisfied with democracy")
 ```
 
-## Histogram: Citizens’ Views
+## FIgure Histogram: Citizens’ Views
 
 ```{r, histogram}
 spot32_data <- lpr_hist(ym23, outcome = "vb21n")
@@ -134,7 +132,7 @@ spot32_data$cat <- c("Vote", "Run for\noffice", "Protest", "Participate\nin loca
 
 lapop_hist(spot32_data,
            main_title = "On average in the LAC region, one in three say voting is 
-           \nthe best way to influence change",
+           the best way to influence change",
            subtitle = "How do you believe you can best influence change?")
 ```
 
@@ -151,7 +149,7 @@ fig3.5_data <- fig3.5_data[1:6, ]
 
 lapop_dumb(fig3.5_data,
            main_title = "Among those with emigration intentions, the percentage who say 
-           \nthey are very likely\nto emigrate increased in Nicaragua and Guatemala",
+           they are very likely\nto emigrate increased in Nicaragua and Guatemala",
            subtitle = "% who say it is very likely they will emigrate")
 ```
 
@@ -166,8 +164,7 @@ fig3.8_data <- lpr_stack(ym23,
 lapop_stack(fig3.8_data,
             xvar = "xvar_label",
             source = ", AmericasBarometer 2023",
-            main_title = "Nicaragua has the highest percentage of individuals with migration 
-            \nintentions, while Haiti has the lowest")
+            main_title = "Nicaragua has the highest percentage of individuals with migration intentions, \nwhile Haiti has the lowest")
 ```
 
 ## End
