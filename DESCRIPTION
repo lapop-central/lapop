@@ -58,4 +58,4 @@ Collate:
     'lpr_ts.R'
     'ym23.R'
     'zzz.R'
-VignetteBuilder: knitr
+VignetteBuilder: knitr, rmarkdown
