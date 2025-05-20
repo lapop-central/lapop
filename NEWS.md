@@ -1,3 +1,7 @@
+# lapop 2.0.9
+
+* include AB data for vignettes
+
 # lapop 2.0.8
 
 * update lpr_data to load data directly
