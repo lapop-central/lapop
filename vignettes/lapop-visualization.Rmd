@@ -24,7 +24,6 @@ This vignette demonstrates how to use the `lapop` package to reproduce figures f
 
 ```{r, packages}
 library(lapop)
-library(dplyr)
 ```
 
 ```{r, load data}
@@ -35,10 +34,10 @@ data(cm23)
 data(ym23)
 ```
 
-## Rescale Variables
+## Reverse Variables
 
-```{r, rescale, eval=F}
-cm23$variables$aoj11r <- lpr_resc(cm23$variables$aoj11, reverse = TRUE, map = TRUE)
+```{r, reverse, eval=F}
+cm23$aoj11r <- lpr_resc(cm23$aoj11, reverse = TRUE)
 ```
 
 ## Fonts
