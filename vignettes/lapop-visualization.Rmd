@@ -39,13 +39,18 @@ data(ym23)
 ## Reverse Variables
 
 ```{r, reverse, eval=F}
-cm23$aoj11r <- lpr_resc(cm23$aoj11, reverse = TRUE)
+cm23$aoj11r <- lpr_resc(cm23$aoj11, reverse = TRUE, map=TRUE)
 ```
 
 ## Fonts
 
 ```{r, lapop fonts, eval=F}
 lapop_fonts()
+```
+
+### Survey Design for the Data
+```{r. lpr_data, eval=F}
+cm23<-lpr_data(cm23, wt=TRUE) # We use wt weights for country specific AB datasets, and weight1500 for comparative.
 ```
 
 ## Figure 1.1: Time Series

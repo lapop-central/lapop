@@ -19,6 +19,7 @@ A data frame
   \item{upm}{Description of Column}
   \item{strata}{Description of Column}
   \item{weight1500}{Description of Column}
+  \item{wt}{Description of Column}
   ...
 }
 }

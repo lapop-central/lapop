@@ -38,7 +38,7 @@ save(ym23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rda"))
 cm <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing/BRA merge 2007-2023 LAPOP AmericasBarometer (v1.0s).dta",
                               generate.factors = T)
 cm23 <- cm %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
-                        "wave", "pais", "year")
+                        "wave", "pais", "year", "upm", "strata", "weight1500", "wt")
 
 save(cm23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\cm23.rda"))
 
