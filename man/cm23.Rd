@@ -10,11 +10,11 @@ A data frame
   \item{aoj11}{Description of Column}
   \item{ing4}{Description of Column}
   \item{b13}{Description of Column}
+  \item{b18}{Description of Column}
   \item{b21}{Description of Column}
   \item{b31}{Description of Column}
   \item{b12}{Description of Column}
   \item{wave}{Description of Column}
-  \item{pais_lab}{Description of Column}
   \item{pais}{Description of Column}
   \item{year}{Description of Column}
   \item{b18}{Description of Column}
