@@ -38,7 +38,7 @@ data(ym23)
 ## Rescale Variables
 
 ```{r, rescale}
-gm23$variables$aoj11r <- lpr_resc(gm23$variables$aoj11, reverse = TRUE, map = TRUE)
+cm23$variables$aoj11r <- lpr_resc(cm23$variables$aoj11, reverse = TRUE, map = TRUE)
 ```
 
 ## Fonts
@@ -50,7 +50,7 @@ lapop_fonts()
 ## Figure 1.1: Time Series
 
 ```{r, time series}
-fig1.1_data <- lpr_ts(gm23, outcome = "ing4", rec = c(5, 7), use_wave = TRUE)
+fig1.1_data <- lpr_ts(cm23, outcome = "ing4", rec = c(5, 7), use_wave = TRUE)
 lapop_ts(fig1.1_data,
          ymin = 50,
          ymax = 80,
@@ -70,7 +70,7 @@ lapop_cc(fig1.2_data,
 ## Figure 2.1: Multi-Line Over Time
 
 ```{r, mline}
-fig2.1_data <- lpr_mline(gm23,
+fig2.1_data <- lpr_mline(cm23,
                          outcome = c("b13", "b21", "b31"),
                          rec = c(5, 7), rec2 = c(5, 7), rec3 = c(5, 7))
 lapop_mline(fig2.1_data,
@@ -139,7 +139,7 @@ lapop_hist(spot32_data,
 ## Figure 3.5: Dumbell Plot
 
 ```{r, dumbell}
-fig3.5_data <- lpr_dumb(gm23,
+fig3.5_data <- lpr_dumb(cm23,
                         outcome = "q14f",
                         rec = c(1, 1),
                         over = c(2018, 2023),
