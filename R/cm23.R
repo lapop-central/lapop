@@ -1,6 +1,6 @@
-#' gm23 Dataset
+#' cm23 Dataset
 #'
-#' A dataset containing the AmericasBarometer Grand Merge up to 2023.
+#' A dataset containing the AmericasBarometer Brazil Country Merge up to 2023.
 #'
 #' @format A data frame
 #' \describe{
@@ -11,7 +11,6 @@
 #'   \item{b31}{Description of Column}
 #'   \item{b12}{Description of Column}
 #'   \item{wave}{Description of Column}
-#'   \item{pais_lab}{Description of Column}
 #'   \item{pais}{Description of Column}
 #'   \item{year}{Description of Column}
 #'   \item{upm}{Description of Column}
