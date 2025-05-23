@@ -59,19 +59,16 @@ In the R programming language, attributes are additional metadata that can be at
 
 
 ```{r, LOAD DATA CHUNK, eval=FALSE}
-# READSTATA13 PACKAGE (RECOMMENDED)
-data1 <- readstata13::read.dta13(cm23, generate.factors = T)
-
+# READSTATA13 PACKAGE (RECOMMENDED) TO OBTAIN METADATA INSIDE expasion.fields
+data1 <- readstata13::read.dta13("<AB-DATA-PATH>", generate.factors = T)
 names(attributes(data1))
 
 # HAVEN PACKAGE
-data2 <- haven::read_dta(cm23)
-
+data2 <- haven::read_dta("<AB-DATA-PATH>")
 names(attributes(data2))
 
 # RIO PACKAGE
-data3 <- rio::import(cm23)
-
+data3 <- rio::import("<AB-DATA-PATH>")
 names(attributes(data3))
 ```
 
@@ -83,8 +80,11 @@ AmericasBarometer variable labels are stored as `notes` in STATA dta files. We
 can find them inside the "expansion.fields" attribute.
 
 ```{r, QWORDING, eval=FALSE}
+# Let's use the AmericasBarometer 2023 Brazil dataset. 
+data(cm23) 
+
 # Extracting attributes from expasion.fields
-varlabels = attr(data1, "expansion.fields")
+varlabels = attr(cm23, "expansion.fields")
 
 # Printing notes for varibale "ing4"
 varlabels[grepl("ing4", varlabels) & grepl("note", varlabels)]
@@ -111,29 +111,29 @@ It is important to keep in mind that note numbers may change across countries da
 
 ```{r, SET ATTRIBUTES, eval=FALSE}
 # English
-data1<-lpr_set_attr(data1, notes, noteid = "note4", attribute_name = "qwording_en") 
+cm23<-lpr_set_attr(cm23, notes, noteid = "note4", attribute_name = "qwording_en") 
 
 # Spanish
-data1<-lpr_set_attr(data1, notes, noteid = "note7", attribute_name = "qwording_es") 
+cm23<-lpr_set_attr(cm23, notes, noteid = "note7", attribute_name = "qwording_es") 
 
 # Portuguese
-data1<-lpr_set_attr(data1, notes, noteid = "note1", attribute_name = "qwording_pt") 
+cm23<-lpr_set_attr(cm23, notes, noteid = "note1", attribute_name = "qwording_pt") 
 
 # Printing 
-attr(data1$ing4, "qwording_es")
-attr(data1$ing4, "qwording_en")
-attr(data1$ing4, "qwording_pt"); 
+attr(cm23$ing4, "qwording_es")
+attr(cm23$ing4, "qwording_en")
+attr(cm23$ing4, "qwording_pt"); 
 ```
 
 Alternatively, a streamlined approach for advanced users who just want to glimpse on variable labels without assigning to the dataset would be assessing those notes directly with a combination of `lapply()` and `Filter()` functions from base R, or also `compact()` and `map()` functions from the `purrr` package.
 
 ```{r, STREAMLINED APPROACH, results=F, eval=FALSE}
 # Base R approach
-Filter(Negate(is.null), lapply(attr(data1, "expansion.fields"), 
+Filter(Negate(is.null), lapply(attr(cm23, "expansion.fields"), 
                                function(x) if (x[1] %in% c("ing4")) x[3]))
 
 # purrr package approach
-purrr::compact(purrr::map(attr(data1, "expansion.fields"), ~ 
+purrr::compact(purrr::map(attr(cm23, "expansion.fields"), ~ 
                             if (.x[1] %in% c("ing4")) .x[3]))
 ```
 
@@ -143,11 +143,11 @@ AmericasBarometer's values labels (i.e., response options) differently from the 
 as an attribute across languages. Default language is English and default attribute name is `roslabel` but the function allows custom attribute names as shown below:
 
 ```{r, ROs, eval=FALSE}
-data1 <- lpr_set_ros(data1) # Default English
-data1 <- lpr_set_ros(data1, lang_id = "es", attribute_name = "respuestas") # Spanish
-data1 <- lpr_set_ros(data1, lang_id = "pt", attribute_name = "ROsLabels_pt") # Portuguese
+cm23 <- lpr_set_ros(cm23) # Default English
+cm23 <- lpr_set_ros(cm23, lang_id = "es", attribute_name = "respuestas") # Spanish
+cm23 <- lpr_set_ros(cm23, lang_id = "pt", attribute_name = "ROsLabels_pt") # Portuguese
 
-attr(data1$ing4, "roslabel"); attr(data1$ing4, "respuestas"); attr(data1$ing4, "ROsLabels_pt")
+attr(cm23$ing4, "roslabel"); attr(cm23$ing4, "respuestas"); attr(cm23$ing4, "ROsLabels_pt")
 ```
 
 <br>

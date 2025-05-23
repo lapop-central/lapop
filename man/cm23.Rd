@@ -16,6 +16,9 @@ A data frame
   \item{wave}{Description of Column}
   \item{pais}{Description of Column}
   \item{year}{Description of Column}
+  \item{upm}{Description of Column}
+  \item{strata}{Description of Column}
+  \item{weight1500}{Description of Column}
   ...
 }
 }

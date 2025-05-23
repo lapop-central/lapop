@@ -14,7 +14,9 @@
 #'   \item{pais_lab}{Description of Column}
 #'   \item{pais}{Description of Column}
 #'   \item{year}{Description of Column}
-#'   \item{b18}{Description of Column}
+#'   \item{upm}{Description of Column}
+#'   \item{strata}{Description of Column}
+#'   \item{weight1500}{Description of Column}
 #'   ...
 #' }
 #' @source LAPOP AmericasBarometer (https://www.vanderbilt.edu/lapop/)
