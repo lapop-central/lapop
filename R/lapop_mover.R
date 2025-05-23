@@ -141,12 +141,18 @@ lapop_mover <- function(data,
                           paste0(" <span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131 </span> ",
                                  "<span style='color:#585860; font-size:13pt'>95% confidence interval</span>")))
   update_geom_defaults("text", list(family = "roboto"))
+
+  grid_labeller <- function(x) {
+    str_wrap(x, width = 6)  # Wrap the labels at a specified width
+  }
+
   ggplot(data, aes(x = order, y = prop, color = factor(varlabel), label = proplabel)) +
     geom_point(alpha=0.47, key_glyph = "point") +
     ggh4x::facet_grid2(cols = vars(varlabel),
                 scales = "free",
                 space = "free",
                 axes = "all",
+                labeller = labeller(varlabel = grid_labeller),
                 strip = strip_themed(
                   text_x = list(element_text(color = mycolors[1]),
                                 element_text(color = mycolors[2]),
