@@ -27,30 +27,35 @@
 #'
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
 
-lpr_data = function(data_path,
-                    wt = FALSE) {
+lpr_data = function (data_path, wt = FALSE)
+{
+  # Check if data_path is a path or a data frame
+  if (is.character(data_path) && file.exists(data_path)) {
+    # If it's a path, read the data
+    data <- haven::read_dta(data_path)
+  } else if (is.data.frame(data_path)) {
+    # If it's already a data frame, use it directly
+    data <- data_path
+  } else {
+    stop("data_path must be a valid file path or a data frame.")
+  }
 
-  data <- haven::read_dta(data_path)
-
-  country_codes <- c(
-    "1" = "MX", "2" = "GT", "3" = "SV", "4" = "HN", "5" = "NI",
-    "6" = "CR", "7" = "PA", "8" = "CO", "9" = "EC", "10" = "BO",
-    "11" = "PE", "12" = "PY", "13" = "CL", "14" = "UY", "15" = "BR",
-    "17" = "AR", "21" = "DO", "22" = "HT", "23" = "JM", "25" = "TT",
-    "26" = "BZ", "27" = "SR", "28" = "BS", "30" = "GD", "40" = "US",
-    "41" = "CA"
-  )
+  country_codes <- c(`1` = "MX", `2` = "GT", `3` = "SV", `4` = "HN",
+                     `5` = "NI", `6` = "CR", `7` = "PA", `8` = "CO", `9` = "EC",
+                     `10` = "BO", `11` = "PE", `12` = "PY", `13` = "CL", `14` = "UY",
+                     `15` = "BR", `17` = "AR", `21` = "DO", `22` = "HT", `23` = "JM",
+                     `25` = "TT", `26` = "BZ", `27` = "SR", `28` = "BS", `30` = "GD",
+                     `40` = "US", `41` = "CA")
 
   data$pais_lab <- country_codes[as.character(data$pais)]
-
   data <- data[!is.na(data$upm), ]
 
   if (wt == TRUE) {
-    datas <- data %>%
-      as_survey(ids = upm, strata = strata, weights = wt, nest = TRUE)
+    datas <- data %>% as_survey(ids = upm, strata = strata,
+                                weights = wt, nest = TRUE)
   } else {
-    datas <- data %>%
-      as_survey(ids = upm, strata = strata, weights = weight1500, nest = TRUE)
+    datas <- data %>% as_survey(ids = upm, strata = strata,
+                                weights = weight1500, nest = TRUE)
   }
 
   return(datas)
