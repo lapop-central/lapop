@@ -143,7 +143,7 @@ lapop_mover <- function(data,
   update_geom_defaults("text", list(family = "roboto"))
 
   grid_labeller <- function(x) {
-    str_wrap(x, width = 12)  # Wrap the labels at a specified width
+    str_wrap(x, width = 10)  # Wrap the labels at a specified width
   }
 
   ggplot(data, aes(x = order, y = prop, color = factor(varlabel), label = proplabel)) +
