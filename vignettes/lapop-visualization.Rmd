@@ -1,10 +1,12 @@
 ---
+
 title: "Visualizing LAPOP Data: 2023 AmericasBarometer Report"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Visualizing LAPOP Data: 2023 AmericasBarometer Report}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  
 ---
 
 ```{r setup, include=FALSE}
