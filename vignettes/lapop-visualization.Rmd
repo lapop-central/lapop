@@ -37,7 +37,7 @@ data(ym23)
 
 ## Rescale Variables
 
-```{r, rescale}
+```{r, rescale, eval=F}
 cm23$variables$aoj11r <- lpr_resc(cm23$variables$aoj11, reverse = TRUE, map = TRUE)
 ```
 
