@@ -15,14 +15,8 @@
 #'   \item{pais}{Description of Column}
 #'   \item{year}{Description of Column}
 #'   \item{b18}{Description of Column}
-#'   \item{pn4}{Description of Column}
-#'   \item{edre}{Description of Column}
-#'   \item{wealth}{Description of Column}
-#'   \item{q1tc_r}{Description of Column}
-#'   \item{vb21n}{Description of Column}
-#'   \item{q14f}{Description of Column}
 #'   ...
 #' }
 #' @source LAPOP AmericasBarometer (https://www.vanderbilt.edu/lapop/)
 #' @export
-gm23 <- load("data/gm23.rda")
+cm23 <- load("data/cm23.rda")

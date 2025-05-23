@@ -27,7 +27,7 @@ Suggests:
 Config/testthat/edition: 3
 Collate: 
     'globals.R'
-    'gm23.R'
+    'cm23.R'
     'lapop-deprecated.R'
     'lapop_fonts.R'
     'lapop_cc.R'
