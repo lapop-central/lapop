@@ -28,10 +28,10 @@ library(dplyr)
 ```
 
 ```{r, load data}
-# Grand Merge (only a subset of countries)
-data(gm23)
+# AmericasBarometer 2007-2023 Country Merge (only Brazil)
+data(cm23)
 
-# 2023 Year Merge (only a subset of countries)
+# AmericasBarometer 2023 Year Merge (only a subset)
 data(ym23)
 ```
 
