@@ -24,7 +24,7 @@ This vignette demonstrates how to use the `lapop` package to reproduce figures f
 
 ## Load Packages
 
-```{r, packages}
+```{r, packages, eval=F}
 library(lapop)
 ```
 
@@ -44,13 +44,13 @@ cm23$aoj11r <- lpr_resc(cm23$aoj11, reverse = TRUE)
 
 ## Fonts
 
-```{r, lapop fonts}
+```{r, lapop fonts, eval=F}
 lapop_fonts()
 ```
 
 ## Figure 1.1: Time Series
 
-```{r, time series}
+```{r, time series, eval=F}
 fig1.1_data <- lpr_ts(cm23, outcome = "ing4", rec = c(5, 7), use_wave = TRUE)
 lapop_ts(fig1.1_data,
          ymin = 50,
@@ -61,7 +61,7 @@ lapop_ts(fig1.1_data,
 
 ## Figure 1.2: Cross-Country Comparison
 
-```{r, cross country}
+```{r, cross country, eval=F}
 fig1.2_data <- lpr_cc(ym23, outcome = "ing4", rec = c(5, 7))
 lapop_cc(fig1.2_data,
          main_title = "In many countries, only about one in two adults support democracy",
@@ -70,7 +70,7 @@ lapop_cc(fig1.2_data,
 
 ## Figure 2.1: Multi-Line Over Time
 
-```{r, mline}
+```{r, mline, eval=F}
 fig2.1_data <- lpr_mline(cm23,
                          outcome = c("b13", "b21", "b31"),
                          rec = c(5, 7), rec2 = c(5, 7), rec3 = c(5, 7))
@@ -81,7 +81,7 @@ lapop_mline(fig2.1_data,
 
 ## Figure 2.3: CC Multiple Variables
 
-```{r, ccm}
+```{r, ccm, eval=F}
 fig2.3_data <- lpr_ccm(ym23,
                        outcome_vars = c("b12", "b18"),
                        rec1 = c(5, 7),
@@ -94,7 +94,7 @@ lapop_ccm(fig2.3_data,
 
 ## Figure Mover Example: Satisfaction with Democracy
 
-```{r, mover}
+```{r, mover, eval=F}
 ym23$variables <- ym23$variables %>%
   mutate(edrer = case_when(
     edre <= 2 ~ "None/Primary",
@@ -126,7 +126,7 @@ lapop_mover(fig_mover,
 
 ## FIgure Histogram: Citizens’ Views
 
-```{r, histogram}
+```{r, histogram, eval=F}
 spot32_data <- lpr_hist(ym23, outcome = "vb21n")
 spot32_data$cat <- c("Vote", "Run for\noffice", "Protest", "Participate\nin local orgs.",
                      "Other", "Change is\nimpossible")
@@ -139,7 +139,7 @@ lapop_hist(spot32_data,
 
 ## Figure 3.5: Dumbell Plot
 
-```{r, dumbell}
+```{r, dumbell, eval=F}
 fig3.5_data <- lpr_dumb(cm23,
                         outcome = "q14f",
                         rec = c(1, 1),
@@ -156,7 +156,7 @@ lapop_dumb(fig3.5_data,
 
 ## Figure 3.8: Stack Plot by Country
 
-```{r, stack}
+```{r, stack, eval=F}
 fig3.8_data <- lpr_stack(ym23,
                          outcome = "q14f",
                          xvar = "pais",
