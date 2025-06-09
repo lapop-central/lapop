@@ -1,10 +1,11 @@
 ---
-title: "lapop-helper-functions"
+title: "LAPOP Helper Functions"
+author: "Robert Vidigal, PhD"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{lapop-helper-functions}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \VignetteIndexEntry{lapop-helper}
+  \VignetteEngine{knitr::rmarkdown}
+  \VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
@@ -34,7 +35,7 @@ devtools::install_github("https://github.com/lapop-central/lapop", force=TRUE)
 
 After installation is successful, you will need to load the package into your library:
 
-```{r, LOAD LPR, eval=FALSE}
+```{r, LOAD LPR}
 library(lapop)
 ```
 
@@ -79,7 +80,7 @@ From the output above, the methods `haven` and `rio` packages  do not recover al
 AmericasBarometer variable labels are stored as `notes` in STATA dta files. We 
 can find them inside the "expansion.fields" attribute.
 
-```{r, QWORDING, eval=FALSE}
+```{r, QWORDING}
 # Let's use the AmericasBarometer 2023 Brazil dataset. 
 data(cm23) 
 
@@ -97,37 +98,38 @@ To ease the researchers and analysts job, LAPOP Lab developed custom functions t
 First, we will use `lpr_extract_notes` to transform the nested lists into a dataframe format that will contain
 3 columns: `variable_name`, `note_id`, and `note_value`
 
-```{r, NOTES EXTRACT, eval=FALSE}
+```{r, NOTES EXTRACT}
 # Extract AB notes
 notes <- lpr_extract_notes(varlabels)
 
 # Rows for "ing4" metadata
-notes[727:733,]
+grep("ing4", notes$variable_name)
+notes[c(1791, 1792, 3199, 3200, 3201, 3202, 3203, 3204, 4201, 4202, 5953, 5954, 7422, 7423), ]
 ```
 
 After extracting the notes, one can assign variable labels to their preferred language as attributes to the dataset using another LAPOP Lab function called `lpr_set_attr()` and than access it during data analysis without the need of an accompanying codebook.
 
 It is important to keep in mind that note numbers may change across countries dataset depending on the language the survey was fielded. That is, note1 will always refer to the actual survey language, so in the case of Brazil it is Portuguese, whereas in other countries it may be Spanish or English instead.
 
-```{r, SET ATTRIBUTES, eval=FALSE}
+```{r, SET ATTRIBUTES, warning=FALSE}
 # English
-cm23<-lpr_set_attr(cm23, notes, noteid = "note4", attribute_name = "qwording_en") 
+cm23<-lpr_set_attr(cm23, notes, noteid = "note2", attribute_name = "qwording_en") 
 
 # Spanish
-cm23<-lpr_set_attr(cm23, notes, noteid = "note7", attribute_name = "qwording_es") 
+cm23<-lpr_set_attr(cm23, notes, noteid = "note1", attribute_name = "qwording_es") 
 
 # Portuguese
-cm23<-lpr_set_attr(cm23, notes, noteid = "note1", attribute_name = "qwording_pt") 
+cm23<-lpr_set_attr(cm23, notes, noteid = "note3", attribute_name = "qwording_pt") 
 
 # Printing 
-attr(cm23$ing4, "qwording_es")
 attr(cm23$ing4, "qwording_en")
-attr(cm23$ing4, "qwording_pt"); 
+attr(cm23$ing4, "qwording_es")
+attr(cm23$ing4, "qwording_pt")
 ```
 
 Alternatively, a streamlined approach for advanced users who just want to glimpse on variable labels without assigning to the dataset would be assessing those notes directly with a combination of `lapply()` and `Filter()` functions from base R, or also `compact()` and `map()` functions from the `purrr` package.
 
-```{r, STREAMLINED APPROACH, results=F, eval=FALSE}
+```{r, STREAMLINED APPROACH, results=F}
 # Base R approach
 Filter(Negate(is.null), lapply(attr(cm23, "expansion.fields"), 
                                function(x) if (x[1] %in% c("ing4")) x[3]))
@@ -142,7 +144,7 @@ purrr::compact(purrr::map(attr(cm23, "expansion.fields"), ~
 AmericasBarometer's values labels (i.e., response options) differently from the variable labels are stored inside the "label.table" attribute. To extract them we will use another LAPOP Lab custom function called `lpr_format_labels` that will set up the response options
 as an attribute across languages. Default language is English and default attribute name is `roslabel` but the function allows custom attribute names as shown below:
 
-```{r, ROs, eval=FALSE}
+```{r, ROs}
 cm23 <- lpr_set_ros(cm23) # Default English
 cm23 <- lpr_set_ros(cm23, lang_id = "es", attribute_name = "respuestas") # Spanish
 cm23 <- lpr_set_ros(cm23, lang_id = "pt", attribute_name = "ROsLabels_pt") # Portuguese
