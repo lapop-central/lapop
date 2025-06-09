@@ -16,7 +16,7 @@ URL: <https://github.com/lapop-central/lapop-viz>
 Depends: 
     R (>= 3.5.0)
 Imports: ggplot2, ggtext, zoo, showtext, sysfonts, ggrepel, dplyr, tidyr, ggh4x, haven, systemfonts, svglite, stats, grid, gridtext, gridExtra, srvyr, purrr, marginaleffects, survey, codebook, stringr
-VignetteBuilder: knitr, rmarkdown
+VignetteBuilder: knitr
 Remotes: teunbrand/ggh4x
 Encoding: UTF-8
 License: MIT + file LICENSE
@@ -28,6 +28,7 @@ Suggests:
 Config/testthat/edition: 3
 Collate: 
     'globals.R'
+    'bra23.R'
     'cm23.R'
     'lapop-deprecated.R'
     'lapop_fonts.R'
