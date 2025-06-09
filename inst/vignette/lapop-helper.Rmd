@@ -1,0 +1,184 @@
+---
+title: "LAPOP Helper Functions"
+author: "Robert Vidigal, PhD"
+output: rmarkdown::html_vignette
+vignette: >
+  \VignetteIndexEntry{lapop-helper}
+  \VignetteEngine{knitr::rmarkdown}
+  \VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+This concise guide demonstrates how R users can effectively work with AmericasBarometer datasets to access variable metadata directly eliminating the need for external codebooks. While these features are more readily visible in STATA, they often require specific approaches in R. The guide outlines:
+
+1. The multilingual structure and storage of AmericasBarometer data (including variable labels and value labels).
+
+2. How to implement our custom LAPOP Lab functions for seamless dataset analysis.
+
+## Installing LAPOP Lab package
+
+The `lapop` package contains custom functions to analyze data and plot figures following the LAPOP Lab's guidelines.
+
+If you do not have the LAPOP Lab package already installed in your machine you can install it using the `devtools` package below:
+
+```{r, INSTALL LPR, eval=FALSE}
+# Install the LAPOP Lab package:
+devtools::install_github("https://github.com/lapop-central/lapop", force=TRUE)
+```
+
+After installation is successful, you will need to load the package into your library:
+
+```{r, LOAD LPR}
+library(lapop)
+```
+
+## How LAPOP Lab stores variables metadata? 
+LAPOP Lab's AmericasBarometer stores variable labels and value labels in parallel languages (i.e., Spanish/English/Portuguese) directly within the dataset structure. This allows researchers to access metadata without external codebooks by:
+
+Embedding language-specific labels as attributes in Stata-formatted files and to use standardized variable naming conventions that maintain consistency across survey waves since 2004. Therefore, Metadata is structured to facilitate longitudinal analysis. The project employs Stata-formatted datasets (.dta) with embedded metadata, preserving:
+
+* Variable labels (i.e., question wording).
+
+* Value labels (i.e., responses options).
+
+* Missing value codes (i.e., Not Applicated, Don't Know, Refused).
+
+As a result, a key advantage is LAPOP Lab's active metadata preservation even when distributing data through third-party platforms like ICPSR or NORC, the Stata-formatted metadata remains intact, allowing R/python users to still access labels via the `readstata13` package.
+
+## How to load AmericasBarometer Data in R?
+
+The preferred method for loading LAPOP Lab datasets is to use the `read.dta13()` function from the `readstata13` package. Below, I highlight a key difference between this recommended approach and two alternative methods commonly used by researchers: `haven::read_dta()` and `rio::import()`.
+
+In the R programming language, attributes are additional metadata that can be attached to R objects. Attributes provide a way to store extra information about an object beyond its basic data structure. To access the attributes of an object, you can use the `attr()` or `attributes()` base functions. 
+
+
+```{r, LOAD DATA CHUNK, eval=FALSE}
+# READSTATA13 PACKAGE (RECOMMENDED) TO OBTAIN METADATA INSIDE expasion.fields
+data1 <- readstata13::read.dta13("<AB-DATA-PATH>", generate.factors = T)
+names(attributes(data1))
+
+# HAVEN PACKAGE
+data2 <- haven::read_dta("<AB-DATA-PATH>")
+names(attributes(data2))
+
+# RIO PACKAGE
+data3 <- rio::import("<AB-DATA-PATH>")
+names(attributes(data3))
+```
+
+From the output above, the methods `haven` and `rio` packages  do not recover all the metadata from `dta` files. Thereby, we proceed with the dataset loaded with the `readstata13` package.
+
+
+## Extracting AmericasBarometer Variables Labels (Question Wording)
+AmericasBarometer variable labels are stored as `notes` in STATA dta files. We 
+can find them inside the "expansion.fields" attribute.
+
+```{r, QWORDING}
+# Let's use the AmericasBarometer 2023 Brazil dataset. 
+data(cm23) 
+
+# Extracting attributes from expasion.fields
+varlabels = attr(cm23, "expansion.fields")
+
+# Printing notes for varibale "ing4"
+varlabels[grepl("ing4", varlabels) & grepl("note", varlabels)]
+```
+
+The `varlabels` object created is a nested list (much like a JSON object) that will contain multilingual notes with the
+question wording of each variable. For instance, for the variable `ing4` in the `Brazil AB 2023` dataset will contain notes with the question wording and lead-in in English (note4 and note5), Spanish (note7 and note8), and Portuguese (note1 and note2).
+
+To ease the researchers and analysts job, LAPOP Lab developed custom functions to deal with those labels in R.
+First, we will use `lpr_extract_notes` to transform the nested lists into a dataframe format that will contain
+3 columns: `variable_name`, `note_id`, and `note_value`
+
+```{r, NOTES EXTRACT}
+# Extract AB notes
+notes <- lpr_extract_notes(varlabels)
+
+# Rows for "ing4" metadata
+grep("ing4", notes$variable_name)
+notes[c(1791, 1792, 3199, 3200, 3201, 3202, 3203, 3204, 4201, 4202, 5953, 5954, 7422, 7423), ]
+```
+
+After extracting the notes, one can assign variable labels to their preferred language as attributes to the dataset using another LAPOP Lab function called `lpr_set_attr()` and than access it during data analysis without the need of an accompanying codebook.
+
+It is important to keep in mind that note numbers may change across countries dataset depending on the language the survey was fielded. That is, note1 will always refer to the actual survey language, so in the case of Brazil it is Portuguese, whereas in other countries it may be Spanish or English instead.
+
+```{r, SET ATTRIBUTES, warning=FALSE}
+# English
+cm23<-lpr_set_attr(cm23, notes, noteid = "note2", attribute_name = "qwording_en") 
+
+# Spanish
+cm23<-lpr_set_attr(cm23, notes, noteid = "note1", attribute_name = "qwording_es") 
+
+# Portuguese
+cm23<-lpr_set_attr(cm23, notes, noteid = "note3", attribute_name = "qwording_pt") 
+
+# Printing 
+attr(cm23$ing4, "qwording_en")
+attr(cm23$ing4, "qwording_es")
+attr(cm23$ing4, "qwording_pt")
+```
+
+Alternatively, a streamlined approach for advanced users who just want to glimpse on variable labels without assigning to the dataset would be assessing those notes directly with a combination of `lapply()` and `Filter()` functions from base R, or also `compact()` and `map()` functions from the `purrr` package.
+
+```{r, STREAMLINED APPROACH, results=F}
+# Base R approach
+Filter(Negate(is.null), lapply(attr(cm23, "expansion.fields"), 
+                               function(x) if (x[1] %in% c("ing4")) x[3]))
+
+# purrr package approach
+purrr::compact(purrr::map(attr(cm23, "expansion.fields"), ~ 
+                            if (.x[1] %in% c("ing4")) .x[3]))
+```
+
+## Extracting AmericasBarometer Values Labels (Response Options)
+
+AmericasBarometer's values labels (i.e., response options) differently from the variable labels are stored inside the "label.table" attribute. To extract them we will use another LAPOP Lab custom function called `lpr_format_labels` that will set up the response options
+as an attribute across languages. Default language is English and default attribute name is `roslabel` but the function allows custom attribute names as shown below:
+
+```{r, ROs}
+cm23 <- lpr_set_ros(cm23) # Default English
+cm23 <- lpr_set_ros(cm23, lang_id = "es", attribute_name = "respuestas") # Spanish
+cm23 <- lpr_set_ros(cm23, lang_id = "pt", attribute_name = "ROsLabels_pt") # Portuguese
+
+attr(cm23$ing4, "roslabel"); attr(cm23$ing4, "respuestas"); attr(cm23$ing4, "ROsLabels_pt")
+```
+
+<br>
+
+## Takeaways (TLDR)
+
+<br>
+
+### Data Structure
+AmericasBarometer datasets are distributed in Stata .dta format with multilingual metadata (question wording and response options) embedded as attributes. These support cross-national and longitudinal comparability.
+
+<br>
+
+###  Preferred Loading Method
+Use the readstata13::read.dta13() function to preserve full metadata structure. Other methods such as `haven::read_dta()` or `rio::import()` often fail to import these critical attributes.
+
+<br>
+
+### Variable Labels (Question Wording):
+Stored in the "expansion.fields" attribute. Use the custom `lpr_extract_notes()` function to convert this into a tidy data frame.
+
+Assign preferred language labels to each variable with `lpr_set_attr()` using the appropriate noteid.
+
+<br>
+
+### Value Labels (Response Options):
+Stored in the "label.table" attribute. Use `lpr_set_ros()` to assign these response labels as attributes in English, Spanish, or Portuguese.
+
+<br>
+
+### Quick Access Options
+For advanced users, the guide also demonstrates streamlined methods using `lapply()` and `purrr::map()` to quickly view variable labels without modifying the dataset.

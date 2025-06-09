@@ -24,18 +24,19 @@ to rescale.}
 
 \item{max}{Integer. Maximum value for the new rescaled variables; default is 1.}
 
-\item{reverse}{Logical.  Reverse code the variable before rescaling.}
+\item{reverse}{Logical.  Reverse code the variable before rescaling. Default: FALSE.}
 
-\item{only_reverse}{Logical.  Reverse code the variable, but do not rescale.}
+\item{only_reverse}{Logical.  Reverse code the variable, but do not rescale. Default: FALSE.}
 
 \item{only_flip}{Logical. Flip the variable coding.  Unlike "only_reverse", this will
 exactly preserve the values of the old variable.  For example, for a variable
 with codes 1, 2, 3, 5, 10, only_flip will code the values 10, 5, 3, 2, 1 (instead
 of 10, 9, 8, 6, 1).  Generally, reverse should be preferred to preserve the
-underlying scale.  Not compatible with rescale.}
+underlying scale.  Not compatible with rescale. Default: FALSE.}
 
 \item{map}{Logical. If TRUE, will print a cross-tab showing the old variable
-and the new, recoded variable.  Used to verify the new variable is coded correctly.}
+and the new, recoded variable.  Used to verify the new variable is coded correctly.
+Default: FALSE.}
 
 \item{new_varlabel}{Character.  Variable label for the new variable.
 Default: old variable's label.}
