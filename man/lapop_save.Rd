@@ -45,11 +45,10 @@ ideo_hist <- lapop_hist(df,
           main_title = "Centrists are a plurality among Peruvians",
           subtitle = "Distribution of ideological preferences",
           source_info = "Peru, 2019",
-          ymax = 27
-)}
+          ymax = 27)}
 
 # Exporting
+\dontrun{
 f <- file.path(tempdir(), "fig1.svg")
-lapop_save(ideo_hist, f, format = "svg", width_px = 800)
-
+lapop_save(ideo_hist, f, format = "svg", width_px = 800)}
 }
