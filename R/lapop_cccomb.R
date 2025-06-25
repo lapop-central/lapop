@@ -25,7 +25,9 @@ NULL
 #' @param file_name Character.  If desired, supply file path + name to save graph.
 #' @param width_px,height_px Numeric.  Width and height of saved graph in pixels. Default: 895, 600.
 #' @return Returns an object of class \code{ggplot}, a ggplot bar graph.
+#'
 #' @examples
+#' \dontrun{
 #'df1 <- data.frame(vallabel = c("Crime victim", "Non-victim"),
 #'prop = c(36.1, 19.3),
 #'proplabel = c("36%" ,"19%"),
@@ -46,7 +48,7 @@ NULL
 #'subtitle2 = "% who are satisfied with democracy",
 #'main_title = "Crime victims are more supportive of and satisfied with democracy",
 #'source_info = ", AmericasBarometer 2023")
-#'
+#'}
 #'
 #'@export
 #'@import ggplot2

@@ -26,13 +26,17 @@ A data frame
   \item{q14f}{Description of Column}
 }
 }
+
 \source{
-LAPOP AmericasBarometer (https://www.vanderbilt.edu/lapop/)  # Ensure this line has a valid source.
+LAPOP Lab AmericasBarometer 2023 (https://www.vanderbilt.edu/lapop/)
 }
+
 \usage{
 ym23
 }
+
 \description{
 A dataset containing information about the AmericasBarometer Year Merge up to 2023.
 }
+
 \keyword{datasets}

@@ -37,21 +37,19 @@ and "no response" (missing code .b) into valid data (value = 99).
 The default is to examine valid responses only.  Default: FALSE.}
 }
 \value{
-Returns a data frame, with data formatted for visualization by lapop_hist
+Returns a data frame, with data formatted for visualization by lapop_hist()
 }
 \description{
 This function creates dataframes which can then be input in lapop_hist for
 showing a bar graph using LAPOP formatting.
 }
 \examples{
-
-\dontrun{lpr_hist(jam23,
+lpr_hist(jam23,
 outcome = "aoj11",
 sort = "xv",
-order = "hi-lo")}
-
+order = "hi-lo")
 }
 \author{
-Shashwat Dhar \email{shashwat.dhar@vanderbilt.edu},
+Shashwat Dhar \email{shashwat.dhar@vanderbilt.edu} &
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
 }

@@ -51,7 +51,7 @@ but the rescaling will work for numeric and factor variables as well
 }
 \examples{
 
-\dontrun{jam$variables$aoj11r <- lpr_resc(jam$variables$aoj11, only_reverse = TRUE, map = TRUE)}
+jam23$variables$aoj11r <- lpr_resc(jam23$variables$aoj11, only_reverse = TRUE, map = TRUE)
 
 }
 \author{

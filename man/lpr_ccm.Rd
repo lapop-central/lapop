@@ -69,29 +69,27 @@ valid responses only.  Default: FALSE.}
 Returns a data frame, with data formatted for visualization by lapop_ccm()
 }
 \description{
-This function creates dataframes which can then be input in lapop_ccm for
+This function creates dataframes which can then be input in lapop_ccm() for
 comparing values for multiple variables across countries with a bar graph
 using LAPOP formatting.
 }
 \examples{
-
-\dontrun{
+# Multiple variables
 lpr_ccm(gm23,
 outcome_vars = c("vic1ext", "aoj11"),
 rec1 = c(1, 1),
 rec2 = c(3, 4),
-ttest = TRUE)}
+ttest = TRUE)
 
-\dontrun{
+# Multiple variables over time
 lpr_ccm(gm23,
 outcome_vars = c("vic1ext", "aoj11"),
 xvar = "wave",
 rec1 = c(1, 1),
 rec2 = c(3, 4),
-ttest = TRUE)}
-
+ttest = TRUE)
 }
 
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

@@ -14,7 +14,8 @@ This function loads fonts needed for LAPOP graph formatting.  In contrast to lap
 this renders text as text instead of polygons, which allows post-hoc editing.
 }
 \examples{
-\dontrun{lapop_fonts_design()}
+# Load LAPOP fonts
+lapop_fonts_design()
 
 }
 \author{

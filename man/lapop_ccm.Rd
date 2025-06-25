@@ -99,8 +99,8 @@ df <- data.frame(pais = c(rep("HT", 2), rep("PE", 2), rep("HN", 2), rep("CO", 2)
                      41, 57, 77, 64, 53, 37, 51, 37, 75, 44, 61, 60))
 
 lapop_ccm(df, sort = "var1")
-
 }
+
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
 }

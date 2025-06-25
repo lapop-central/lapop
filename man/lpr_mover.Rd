@@ -63,58 +63,54 @@ and "no response" (missing code .b) into valid data (value = 99) and use them
 in the denominator when calculating percentages.  The default is to examine
 valid responses only.  Default: FALSE.}
 }
+
 \value{
-Returns a data frame, with data formatted for visualization by lapop_mover
+Returns a data frame, with data formatted for visualization by lapop_mover()
 }
+
 \description{
 This function creates a dataframe which can then be input in lapop_mover() for
 comparing means across values of secondary variable(s) using LAPOP formatting.
 }
-\examples{
 
+\examples{
 # Single Outcome
-\dontrun{
 lpr_mover(data = gm23,
  outcome = "ing4",
  grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
- rec = c(5, 7)}
+ rec = c(5, 7)
 
  # Multiple Outcomes
- \dontrun{
  lpr_mover(data = gm23,
  outcome = "c(ing4", "pn4"),
  grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
- rec = c(5, 7), rec2 = c(1, 2)}
+ rec = c(5, 7), rec2 = c(1, 2)
 
 # Single DV X Single IV
-\dontrun{
 lpr_mover(data,
 outcome="ing4",
 grouping_vars="exc7new",
-rec=c(5,7), ttest=T)}
+rec=c(5,7), ttest=T)
 
 # Multiple DVs X Single IV
-\dontrun{
 lpr_mover(data,
 outcome=c("ing4", "pn4"),
 grouping_vars="exc7new",
-rec=c(5,7), rec2=c(1,2), ttest=T)}
+rec=c(5,7), rec2=c(1,2), ttest=T)
 
 # Single DV X Multiple IVs
-\dontrun{
 lpr_mover(data,
 outcome="ing4",
 grouping_vars=c("edre", "q1tc_r"),
-rec=c(5,7), ttest=T)}
+rec=c(5,7), ttest=T)
 
 # Multiple DVs X Multiple IVs
-\dontrun{
 lpr_mover(data,
 outcome=c("ing4", "pn4"),
 grouping_vars=c("edre", "q1tc_r"),
-rec=c(5,7), rec2=c(1,2), ttest=T)}
+rec=c(5,7), rec2=c(1,2), ttest=T)
 
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

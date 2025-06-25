@@ -24,8 +24,7 @@ lapop_mline(
   percentages = TRUE,
   all_labels = FALSE,
   ci = FALSE,
-  legendnrow = 1
-)
+  legendnrow = 1)
 }
 \arguments{
 \item{data}{Data Frame. Dataset to be used for analysis.  The data frame should have columns
@@ -81,6 +80,7 @@ AmericasBarometer data.  The maximum number of lines is four.  Unlike the lapop_
 single-line time series graph, this function will not print confidence lines nor will
 it show text values for each year (just the final/most recent year).
 }
+
 \examples{
 df <- data.frame(varlabel = c(rep("Honduras", 9), rep("El Salvador", 9),
                              rep("Mexico", 9), rep("Guatemala", 9)),
