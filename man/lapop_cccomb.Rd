@@ -48,6 +48,7 @@ Returns an object of class \code{ggplot}, a ggplot bar graph.
 This function shows a bar graph for categorical variables using LAPOP formatting.
 }
 \examples{
+\dontrun{
 df1 <- data.frame(vallabel = c("Crime victim", "Non-victim"),
 prop = c(36.1, 19.3),
 proplabel = c("36\%" ,"19\%"),
@@ -68,8 +69,7 @@ subtitle1 = "\% who support democracy",
 subtitle2 = "\% who are satisfied with democracy",
 main_title = "Crime victims are more supportive of and satisfied with democracy",
 source_info = ", AmericasBarometer 2023")
-
-
+}
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}

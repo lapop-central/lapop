@@ -95,11 +95,11 @@ df <- data.frame(varlabel = c(rep("Honduras", 9), rep("El Salvador", 9),
                               "14\%", "16\%", "14\%", "16\%", "9\%", "14\%",
                               "18\%", "19\%", "26\%", "21\%", "15\%", "18\%",
                               "20\%", "14\%", "18\%", "17\%", "25\%", "36\%"))
-
+\dontrun{
 lapop_mline(df,
      main_title = "Intentions to emigrate in Guatemala, Honduras and Mexico reached their highs",
      subtitle = "\% who intend to migrate in:",
-     source_info = "GM 2004-2021")
+     source_info = "GM 2004-2021")}
 
 }
 \author{

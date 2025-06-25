@@ -40,12 +40,13 @@ proplabel = c("4\%", "3\%", "5\%", "12\%", "17\%", "23\%", "15\%", "11\%", "5\%"
 )
 
 # 2019 Ideology preferences in Peru
+\dontrun{
 ideo_hist <- lapop_hist(df,
           main_title = "Centrists are a plurality among Peruvians",
           subtitle = "Distribution of ideological preferences",
           source_info = "Peru, 2019",
           ymax = 27
-)
+)}
 
 # Exporting
 f <- file.path(tempdir(), "fig1.svg")

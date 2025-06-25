@@ -79,18 +79,20 @@ comparing means of a variable across countries and two waves using LAPOP formatt
 }
 \examples{
 # Single variable
-lpr_dumb(gm23,
+\dontrun{
+lpr_dumb(cm23,
 outcome = "ing4",
 rec = c(5, 7),
 over = c(2021, 2023),
 sort = "diff",
-ttest = TRUE)
+ttest = TRUE)}
 
 # Multiple Variables over years
+\dontrun{
 lpr_dumb(ym23,
 outcome=c("b21", "b13", "b31", "b47a"),
 rec=c(5,7),
-over=c(2004, 2006))
+over=c(2004, 2006))}
 }
 
 \author{

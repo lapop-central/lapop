@@ -14,8 +14,7 @@ This function loads fonts needed for LAPOP graph formatting.
 No arguments needed; just run lapop_fonts() at the beginning of your session.
 }
 \examples{
-lapop_fonts()
-
+\dontrun{lapop_fonts()}
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}

@@ -83,14 +83,14 @@ df <- data.frame(varlabel = c(rep("Gender", 2), rep("Age", 6),
                         20, 20, 20, 21),
                  ub = c(21, 23, 22, 25, 23, 22, 19, 17, 24, 19, 22, 26, 22,
                         22, 22, 22, 23))
-
+\dontrun{
 lapop_mover(df,
             main_title = paste0("More educated, men, and younger individuals",
                                 " in the LAC region are the\nmost likely",
                                   " to be crime victims"),
             subtitle = "\% victim of a crime", qword = "",
             ymin = 0,
-            ymax = 40)
+            ymax = 40)}
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}

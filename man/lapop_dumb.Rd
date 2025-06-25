@@ -88,12 +88,12 @@ df <- data.frame(pais = c("Haiti", "Peru", "Honduras", "Colombia", "Ecuador",
                  proplabel2 = c("86\%", "73\%", "69\%", "67\%", "67\%", "65\%", "65\%",
                                 "65\%", "63\%", "62\%", "62\%", "57\%", "56\%", "56\%",
                                 "55\%", "55\%", "54\%", "51\%", "46\%", "42\%"))
-
+\dontrun{
 lapop_dumb(df,
          main_title = paste0("Personal economic conditions worsened across the",
                              "LAC region,\nwith a few exceptions"),
          subtitle = "\% personal economic situation worsened",
-         source_info = "GM 2018/19-2021")
+         source_info = "GM 2018/19-2021")}
 
 }
 \author{

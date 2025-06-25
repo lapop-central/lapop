@@ -79,40 +79,45 @@ comparing means across values of secondary variable(s) using LAPOP formatting.
 lpr_mover(data = gm23,
  outcome = "ing4",
  grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
- rec = c(5, 7))
+ rec = c(5, 7))}
 
  # Multiple outcomes
+ \dontrun{
  lpr_mover(data = gm23,
  outcome = c("ing4", "pn4"),
  grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
  rec = c(5, 7),
- rec2 = c(1, 2))
+ rec2 = c(1, 2))}
 
 # Single DV X Single IV
+\dontrun{
 lpr_mover(data,
 outcome = "ing4",
 grouping_vars = "exc7new",
-rec = c(5,7), ttest = T)
+rec = c(5,7), ttest = T)}
 
 # Multiple DVs X Single IV
+\dontrun{
 lpr_mover(data,
 outcome = c("ing4", "pn4"),
 grouping_vars = "exc7new",
-rec = c(5,7), rec2 = c(1,2), ttest = T)
+rec = c(5,7), rec2 = c(1,2), ttest = T)}
 
 # Single DV X Multiple IVs
+\dontrun{
 lpr_mover(data,
 outcome = "ing4",
 grouping_vars = c("edre", "q1tc_r"),
-rec = c(5,7), ttest = T)
+rec = c(5,7), ttest = T)}
 
 # Multiple DVs X Multiple IVs
+\dontrun{
 lpr_mover(data,
 outcome = c("ing4", "pn4"),
 grouping_vars = c("edre", "q1tc_r"),
-rec = c(5,7), rec2 = c(1,2), ttest = T)
+rec = c(5,7), rec2 = c(1,2), ttest = T)}
 }
-}
+
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

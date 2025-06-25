@@ -76,13 +76,13 @@ df <- data.frame(
   pvalue = c(0.075, 0.000, 0.000, 0.784, 0.000),
   proplabel = c("0.02", "-0.07", "-0.24", "0.01", "0.11")
 )
-
+\dontrun{
 lapop_coef(df,
            main_title = "Demographic and Socioeconomic Predictors of Normalizing IPV",
            pred_prob = TRUE,
            source_info = "2021",
            ymin = -0.3,
-           ymax = 0.2)
+           ymax = 0.2)}
 
 }
 \author{

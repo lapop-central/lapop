@@ -84,32 +84,36 @@ variables across time (essentially, it allows you to do lpr_ts for multiple vari
 \examples{
 
 # Single Variable
-lpr_mline(gm,
+\dontrun{
+lpr_mline(gm23,
 outcome = "ing4",
 rec = c(5, 7),
-use_wave = FALSE)
+use_wave = FALSE)}
 
 # Multiple Variables
-lpr_mline(gm,
+\dontrun{
+lpr_mline(gm23,
 outcome = c("b10a", "b13", "b18", "b21"),
 rec = c(5, 7),
 rec2 = c(1, 2),
 rec3 = c(5, 7),
 rec4 = c(1, 1),
-use_wave = TRUE)
+use_wave = TRUE)}
 
 # Binary Single Variable by Category
-lpr_mline(gm,
+\dontrun{
+lpr_mline(gm23,
 outcome = "jc1",
 use_cat = TRUE,
-use_wave = TRUE)
+use_wave = TRUE)}
 
 # Recode Categorical Variable (max 4-categories)
-lpr_mline(gm,
+\dontrun{
+lpr_mline(gm23,
 outcome = "a4n",
 rec = c(1,4),
 use_cat = TRUE,
-use_wave = TRUE)
+use_wave = TRUE)}
 }
 
 \author{
