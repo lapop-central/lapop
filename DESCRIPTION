@@ -17,15 +17,14 @@ Depends:
     R (>= 3.5.0)
 Imports: ggplot2, ggtext, zoo, showtext, sysfonts, ggrepel, dplyr, tidyr, ggh4x, haven, systemfonts, svglite, stats, grid, gridtext, gridExtra, srvyr, purrr, marginaleffects, survey, codebook, stringr
 VignetteBuilder: knitr
-Suggests: knitr, rmarkdown
-Remotes: teunbrand/ggh4x
-Encoding: UTF-8
-License: MIT + file LICENSE
-RoxygenNote: 7.3.2
 Suggests: 
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
+Remotes: teunbrand/ggh4x
+Encoding: UTF-8
+License: MIT + file LICENSE
+RoxygenNote: 7.3.2
 Config/testthat/edition: 3
 Collate: 
     'bra23.R'
