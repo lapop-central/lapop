@@ -79,7 +79,7 @@ NULL
 #'
 #' @examples
 #'
-#' df <- data.frame(pais = c("Haiti", "Peru", "Honduras", "Colombia", "Ecuador",
+#'\dontrun{df <- data.frame(pais = c("Haiti", "Peru", "Honduras", "Colombia", "Ecuador",
 #'                           "Panama", "Bolivia", "Argentina", "Paraguay",
 #'                           "Dom. Rep.", "Brazil", "Jamaica", "Nicaragua",
 #'                           "Guyana", "Costa Rica", "Mexico", "Guatemala",
@@ -101,7 +101,7 @@ NULL
 #'          main_title = paste0("Personal economic conditions worsened across the",
 #'                              "LAC region,\nwith a few exceptions"),
 #'          subtitle = "% personal economic situation worsened",
-#'          source_info = "GM 2018/19-2021")
+#'          source_info = "AmericasBArometer 2018/19-2021")}
 #'
 #' @export
 #'@import ggplot2

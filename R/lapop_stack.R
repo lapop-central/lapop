@@ -107,8 +107,6 @@ NULL
 #'
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
-
-
 lapop_stack <- function(data, outcome_var = data$prop, prop_labels = data$proplabel,
                         var_labels = data$varlabel, value_labels = data$vallabel,
                         xvar = NULL,

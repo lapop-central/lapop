@@ -21,7 +21,6 @@
 #'\dontrun{lapop_fonts_design()}
 #'
 
-
 lapop_fonts_design <- function(){
   showtext::showtext_auto(enable = FALSE)
   systemfonts::register_variant(

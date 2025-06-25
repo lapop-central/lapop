@@ -4,7 +4,6 @@
 
 #######################################
 
-
 #' LAPOP Fonts
 #'
 #' This function loads fonts needed for LAPOP graph formatting.
@@ -16,9 +15,7 @@
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
 #'@return No return value, called for side effects
 #'@examples
-#'lapop_fonts()
-#'
-
+#'\dontrun{lapop_fonts()}
 
 lapop_fonts <- function(){
   sysfonts::font_add_google("nunito", "nunito")

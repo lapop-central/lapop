@@ -34,6 +34,7 @@
 #' notes <- lpr_extract_notes(df)
 #' print(notes)}
 #'}
+#'
 #' @export
 
 lpr_extract_notes <- function(data) {

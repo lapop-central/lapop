@@ -15,7 +15,6 @@ NULL
 #' proplabel (text of outcome variable; character), lb (lower bound of estimate; numeric),
 #'  ub (upper bound of estimate; numeric), and var (labels of secondary variables; character).
 #'  Default: None (must be supplied).
-#'
 #' @param pais,outcome_var,label_var,lower_bound,upper_bound,var Character, numeric, character,
 #' numeric, numeric, character. Each component of the plot data can be manually specified in case
 #' the default columns in the data frame should not be used (if, for example, the values for a given
@@ -47,12 +46,12 @@ NULL
 #'
 #' @examples
 #'
-#'lapop_fonts()
+#'\dontrun{lapop_fonts()
 #'
 #' df <- data.frame(pais = c(rep("HT", 2), rep("PE", 2), rep("HN", 2), rep("CO", 2),
 #'              rep("UY", 2), rep("CR", 2), rep("EC", 2), rep("CL", 2),
 #'               rep("BR", 2), rep("BO", 2), rep("JA", 2), rep("PN", 2)),
-#'               var = rep(c("COUNTFAIR1", "COUNTFAIR2"), 3),
+#'               var = rep(c("countfair1", "countfair3"), 3),
 #'               prop = c(30, 38, 40, 49, 57, 33, 80, 54, 30, 43, 61, 42,
 #'                        38, 54, 74, 61, 50, 34, 48, 34, 72, 41, 58, 57),
 #'               proplabel = c("30%", "38%", "40%", "49%", "57%", "33%",
@@ -64,7 +63,7 @@ NULL
 #'               ub = c(33, 41, 43, 52, 60, 36, 83, 57, 33, 46, 64, 45,
 #'                      41, 57, 77, 64, 53, 37, 51, 37, 75, 44, 61, 60))
 #'
-#'lapop_ccm(df, sort = "var1")
+#'lapop_ccm(df, sort = "var")}
 #'
 #'@export
 #'@import ggplot2

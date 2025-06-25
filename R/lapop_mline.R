@@ -87,7 +87,7 @@ NULL
 #' @param ci Logical.  Add "tie fighter" confidence intervals.  Only recommended when each line represents a different variable.
 #' @param legendnrow Numeric.  How many rows for legend labels. Default: 1.
 #'@examples
-#'df <- data.frame(varlabel = c(rep("Honduras", 9), rep("El Salvador", 9),
+#'\dontrun{df <- data.frame(varlabel = c(rep("Honduras", 9), rep("El Salvador", 9),
 #'                              rep("Mexico", 9), rep("Guatemala", 9)),
 #'                 wave = rep(c("2004", "2006", "2008", "2010", "2012",
 #'                              "2014", "2016/17", "2018/19", "2021"), 4),
@@ -104,7 +104,7 @@ NULL
 #'lapop_mline(df,
 #'      main_title = "Intentions to emigrate in Guatemala, Honduras and Mexico reached their highs",
 #'      subtitle = "% who intend to migrate in:",
-#'      source_info = "GM 2004-2021")
+#'      source_info = "GM 2004-2021")}
 #'
 #'@export
 #'@import ggplot2

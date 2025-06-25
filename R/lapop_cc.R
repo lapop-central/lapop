@@ -44,7 +44,7 @@ NULL
 #'
 #' @examples
 #'
-#'lapop_fonts()
+#'\dontrun{lapop_fonts()
 #'
 #' df <- data.frame(vallabel = c("PE", "CO", "BR", "PN", "GT", "DO", "MX", "BO", "EC",
 #'                           "PY", "CL", "HN", "CR", "SV", "JA", "AR", "UY", "NI"),
@@ -63,7 +63,7 @@ NULL
 #'          subtitle = "% who say domestic violence is private matter",
 #'          source_info = ", 2021",
 #'          highlight = "BR",
-#'          ymax = 50)
+#'          ymax = 50)}
 #'
 #'@export
 #'@import ggplot2
