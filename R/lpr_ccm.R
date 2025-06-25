@@ -47,12 +47,16 @@
 #'
 #' @examples
 #'
-#' \dontrun{lpr_ccm(gm23,
+#' \dontrun{
+#' # Multiple outcomes
+#' lpr_ccm(gm23,
 #' outcome_vars = c("vic1ext", "aoj11"),
 #' rec1 = c(1, 1),
 #' rec2 = c(3, 4),
-#' ttest = TRUE)
+#' ttest = TRUE)}
 #'
+#' \dontrun{
+#' # Multiple outcomes over years
 #' lpr_ccm(gm23,
 #' outcome_vars = c("vic1ext", "aoj11"),
 #' xvar = "wave",

@@ -49,23 +49,22 @@
 #'
 #' @return Returns a data frame, with data formatted for visualization by lapop_dumb
 #'
-#' @examples
-#'
-#' \dontrun{lpr_dumb(gm2123,
+#' @examples {
+#' \dontrun{
+#'  # Single outcome over years
+#' lpr_dumb(gm2123,
 #' outcome = "ing4",
 #' rec = c(5, 7),
 #' over = c(2021, 2023),
 #' sort = "diff",
-#' ttest = TRUE)
-#' }
+#' ttest = TRUE)}
 #'
-#' Multiple
+#' # Multiple outcomes over years
 #'\dontrun{lpr_dumb(YM,
 #' outcome=c("b21", "b13", "b31", "b47a"),
 #' rec=c(5,7),
-#' over=c(2004, 2006))
-#' }
-#'
+#' over=c(2004, 2006))}
+#'}
 #'@export
 #'@import dplyr
 #'@import tidyr

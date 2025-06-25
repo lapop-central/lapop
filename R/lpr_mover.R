@@ -42,19 +42,18 @@
 #'
 #' @return Returns a data frame, with data formatted for visualization by lapop_mover
 #'
-#' @examples
-#'
-#' # Single Outcome
+#' @examples {
+#' # Single outcome
 #' \dontrun{lpr_mover(data = gm23,
 #'  outcome = "ing4",
 #'  grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
 #'  rec = c(5, 7)}
 #'
-#'  # Multiple Outcomes
+#'  # Multiple outcomes
 #'  \dontrun{lpr_mover(data = gm23,
 #'  outcome = "c(ing4", "pn4"),
 #'  grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
-#'  rec = c(5, 7), rec2 = c(1, 2)}
+#'  rec = c(5, 7), rec2 = c(1, 2))}
 #'
 #' # Single DV X Single IV
 #' \dontrun{lpr_mover(data,
@@ -79,7 +78,7 @@
 #' outcome=c("ing4", "pn4"),
 #' grouping_vars=c("edre", "q1tc_r"),
 #' rec=c(5,7), rec2=c(1,2), ttest=T)}
-#'
+#'}
 #'@export
 #'@import dplyr
 #'@import srvyr

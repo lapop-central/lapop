@@ -24,7 +24,8 @@
 #' @return Returns a data frame, with data formatted for visualization by lapop_coef
 #'
 #' @examples {
-#' \dontrun{Example 1: Linear model using lpr_coef()
+#' \dontrun{
+#' # Example 1: Linear model using lpr_coef()
 #' lpr_coef(
 #'  outcome = "l1",
 #'  xvar = "it1+idio2",
@@ -32,7 +33,8 @@
 #'  model = "linear",
 #'  est = "coef")}
 
-#' \dontrun{Example 2: Logit model using lpr_coef()
+#' \dontrun{
+#' # Example 2: Logit model using lpr_coef()
 #' lpr_coef(
 #'  outcome = "fs2",
 #'  xvar = "it1+idio2",
@@ -41,7 +43,8 @@
 #'  est = "contrast")}
 #'
 #'
-#' \dontrun{Example 3: Interactive model using lpr_coef()
+#' \dontrun{
+#' # Example 3: Interactive model using lpr_coef()
 #' lpr_coef(
 #'  outcome = "fs2",
 #'  xvar = "it1+idio2",

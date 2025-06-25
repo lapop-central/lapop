@@ -84,7 +84,8 @@ lpr_mover(data = gm23,
  lpr_mover(data = gm23,
  outcome = "c(ing4", "pn4"),
  grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
- rec = c(5, 7), rec2 = c(1, 2))
+ rec = c(5, 7),
+ rec2 = c(1, 2))
 
 # Single DV X Single IV
 lpr_mover(data,

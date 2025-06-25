@@ -29,7 +29,7 @@
 #'
 #' @examples
 #'
-#' \dontrun{lpr_hist(jam23,
+#' \dontrun{lpr_hist(bra23,
 #' outcome = "aoj11",
 #' sort = "xv",
 #' order = "hi-lo")}
