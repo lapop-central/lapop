@@ -75,19 +75,19 @@ using LAPOP formatting.
 }
 \examples{
 # Multiple variables
-lpr_ccm(gm23,
+\dontrun{lpr_ccm(gm23,
 outcome_vars = c("vic1ext", "aoj11"),
 rec1 = c(1, 1),
 rec2 = c(3, 4),
-ttest = TRUE)
+ttest = TRUE)}
 
 # Multiple variables over time
-lpr_ccm(gm23,
+\dontrun{lpr_ccm(gm23,
 outcome_vars = c("vic1ext", "aoj11"),
 xvar = "wave",
 rec1 = c(1, 1),
 rec2 = c(3, 4),
-ttest = TRUE)
+ttest = TRUE)}
 }
 
 \author{

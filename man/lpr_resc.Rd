@@ -50,9 +50,9 @@ for variables of class "labelled" (used for survey datasets, like LAPOP's),
 but the rescaling will work for numeric and factor variables as well
 }
 \examples{
-
-jam23$variables$aoj11r <- lpr_resc(jam23$variables$aoj11, only_reverse = TRUE, map = TRUE)
-
+\dontrun{
+bra23$variables$aoj11r <- lpr_resc(bra23$variables$aoj11, only_reverse = TRUE, map = TRUE)
+}
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}

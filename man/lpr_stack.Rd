@@ -46,12 +46,13 @@ plotting variables categories with a stacked bar graph using LAPOP formatting.
 }
 
 \examples{
-
 # Multiple Outcomes
-lpr_stack(data = gm23, outcome = c("countfair1", "countfair3"))
+\dontrun{
+lpr_stack(data = gm23, outcome = c("countfair1", "countfair3"))}
 
 # Single Outcome over time
-lpr_stack(data = gm23, outcome = "pese1", xvar="year")
+\dontrun{
+lpr_stack(data = gm23, outcome = "pese1", xvar = "year")}
 }
 
 \author{

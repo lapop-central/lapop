@@ -50,29 +50,32 @@ plotting regression coefficients graph using LAPOP formatting.
 }
 \examples{
 # Example 1: Linear model using lpr_coef()
+\dontrun{
 lpr_coef(
  outcome = "l1",
  xvar = "it1+idio2",
  data = dataLAPOP,
  model = "linear",
- est = "coef")
+ est = "coef")}
 
 # Example 2: Logit model using lpr_coef()
+\dontrun{
 lpr_coef(
  outcome = "fs2",
  xvar = "it1+idio2",
  data = dataLAPOP,
  model = "binomial",
- est = "contrast")
+ est = "contrast")}
 
 # Example 3: Interactive model using lpr_coef()
+\dontrun{
 lpr_coef(
  outcome = "fs2",
  xvar = "it1+idio2",
  interact = "it1*idio2",
  data = dataLAPOP,
  model = "linear",
- est = "coef")
+ est = "coef")}
 }
 
 \author{

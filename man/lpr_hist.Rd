@@ -44,10 +44,11 @@ This function creates dataframes which can then be input in lapop_hist for
 showing a bar graph using LAPOP formatting.
 }
 \examples{
+\dontrun{
 lpr_hist(jam23,
 outcome = "aoj11",
 sort = "xv",
-order = "hi-lo")
+order = "hi-lo")}
 }
 \author{
 Shashwat Dhar \email{shashwat.dhar@vanderbilt.edu} &

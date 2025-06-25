@@ -62,11 +62,12 @@ comparing values across time with a line graph using LAPOP formatting.
 }
 
 \examples{
+\dontrun{
 lpr_ts(gm23,
 outcome = "ing4",
 use_wave = TRUE,
 mean = TRUE,
-ttest = TRUE)
+ttest = TRUE)}
 }
 
 \author{

@@ -19,7 +19,8 @@ This function takes LAPOP datasets and adds survey features, outputting a
 svy_tbl object that can then be analyzed using lpr_ commands.
 }
 \examples{
-gm23 <- lpr_data("Merge 2023 LAPOP AmericasBarometer (v1.0s).dta")
+\dontrun{
+gm23 <- lpr_data("Merge 2023 LAPOP AmericasBarometer (v1.0s).dta")}
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
