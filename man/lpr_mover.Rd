@@ -74,6 +74,7 @@ comparing means across values of secondary variable(s) using LAPOP formatting.
 }
 
 \examples{
+\dontrun{
 # Single Outcome
 lpr_mover(data = gm23,
  outcome = "ing4",
@@ -110,7 +111,7 @@ lpr_mover(data,
 outcome = c("ing4", "pn4"),
 grouping_vars = c("edre", "q1tc_r"),
 rec = c(5,7), rec2 = c(1,2), ttest = T)
-
+}
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}

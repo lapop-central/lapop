@@ -78,17 +78,17 @@ comparing values across countries with a bar graph using LAPOP formatting.
 }
 \examples{
 # Single outcome over countries
-lpr_cc(data = cm23,
+\dontrun{lpr_cc(data = cm23,
 outcome = "ing4",
 rec = c(5, 7),
-xvar = "pais_lab")
+xvar = "pais_lab")}
 
 # Multiple outcomes
-lpr_cc(data = cm23,
+\dontrun{lpr_cc(data = cm23,
 outcome = c("sd2new2", "sd3new2", "sd5new2", "sd6new2"),
 rec = c(5, 7))
 }
-
+}
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }
