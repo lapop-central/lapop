@@ -5,6 +5,9 @@ vignette: >
   %\VignetteIndexEntry{LAPOP R Labels Guide}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+description: >
+  This vignette provides examples of how to use lapop helper functions to
+  access AmericasBarometer question wording and response option labels in R.  
 ---
 
 ## Introduction

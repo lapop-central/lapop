@@ -5,7 +5,9 @@ vignette: >
   %\VignetteIndexEntry{LAPOP Visualization Guide}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  
+description: >
+  This vignette provides examples of how to use the LAPOP R package to
+  create weighted visualizations with properly labeled facets.  
 ---
 
 ```{r setup, include=FALSE}
