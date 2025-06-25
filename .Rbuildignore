@@ -6,4 +6,4 @@
 ^CRAN-SUBMISSION$
 ^Meta$
 ^doc$
-^\inst\extdata$
+^\.inst\.extdata$
