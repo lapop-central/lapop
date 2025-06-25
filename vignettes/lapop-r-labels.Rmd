@@ -2,7 +2,7 @@
 title: "LAPOP R Labels Guide"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{LAPOP R Labels Guide}
+  %\VignetteIndexEntry{AmericasBarometer Labels Guide}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 description: >
