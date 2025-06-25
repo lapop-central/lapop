@@ -120,12 +120,16 @@ attr(data1$ing4, "qwording_pt");
 
 Alternatively, a streamlined approach for advanced users who just want to glimpse on variable labels without assigning to the dataset would be assessing those notes directly with a combination of `lapply()` and `Filter()` functions from base R, or also `compact()` and `map()` functions from the `purrr` package.
 
+Both approaches extract the third element (x[3]) from each list in the "expansion.fields" attribute of data1, but only if the first element (x[1]) equals "ing4" (i.e., the variable of interest). Both produce a cleaned list of matching third nested elements.
+
 ```{r, STREAMLINED APPROACH, results=F}
-# Base R approach
+# Base R approach:
+# The base R version uses lapply to iterate over the list and returns NULL when the condition isn't met, then Filter(Negate(is.null), ...) removes those NULLs.
 Filter(Negate(is.null), lapply(attr(data1, "expansion.fields"), 
                                function(x) if (x[1] %in% c("ing4")) x[3]))
 
 # purrr package approach
+#  The purrr version uses map() to do the same, and also remove NULL results. 
 purrr::compact(purrr::map(attr(data1, "expansion.fields"), ~ 
                             if (.x[1] %in% c("ing4")) .x[3]))
 ```

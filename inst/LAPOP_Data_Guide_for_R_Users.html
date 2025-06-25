@@ -381,6 +381,11 @@ devtools::install_github(&quot;https://github.com/lapop-central/lapop&quot;, for
 <p>After installation is successful, you will need to load the package
 into your library:</p>
 <pre class="r"><code>library(lapop)</code></pre>
+<pre><code>## 
+## LAPOP Lab R package. Version: 2.0.9 loaded successfully
+## For Americasbarometer datasets, please visit https://www.vanderbilt.edu/lapop/
+## To report issues or suggestions, please visit: https://github.com/lapop-central/lapop/issues
+## Contact: &lt;robert.vidigal@vanderbilt.edu&gt;</code></pre>
 </div>
 <div id="how-lapop-lab-stores-variables-metadata" class="section level2">
 <h2>How LAPOP Lab stores variables metadata?</h2>
@@ -546,11 +551,17 @@ would be assessing those notes directly with a combination of
 <code>lapply()</code> and <code>Filter()</code> functions from base R,
 or also <code>compact()</code> and <code>map()</code> functions from the
 <code>purrr</code> package.</p>
-<pre class="r"><code># Base R approach
+<p>Both approaches extract the third element (x[3]) from each list in
+the “expansion.fields” attribute of data1, but only if the first element
+(x[1]) equals “ing4” (i.e., the variable of interest). Both produce a
+cleaned list of matching third nested elements.</p>
+<pre class="r"><code># Base R approach:
+# The base R version uses lapply to iterate over the list and returns NULL when the condition isn&#39;t met, then Filter(Negate(is.null), ...) removes those NULLs.
 Filter(Negate(is.null), lapply(attr(data1, &quot;expansion.fields&quot;), 
                                function(x) if (x[1] %in% c(&quot;ing4&quot;)) x[3]))
 
 # purrr package approach
+#  The purrr version uses map() to do the same, and also remove NULL results. 
 purrr::compact(purrr::map(attr(data1, &quot;expansion.fields&quot;), ~ 
                             if (.x[1] %in% c(&quot;ing4&quot;)) .x[3]))</code></pre>
 </div>
