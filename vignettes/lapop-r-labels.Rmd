@@ -8,6 +8,7 @@ vignette: >
 description: >
   This vignette provides examples of how to use lapop helper functions to
   access AmericasBarometer question wording and response option labels in R.  
+lang: "en-US" 
 ---
 
 ## Introduction

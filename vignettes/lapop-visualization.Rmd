@@ -8,6 +8,7 @@ vignette: >
 description: >
   This vignette provides examples of how to use the LAPOP R package to
   create weighted visualizations with properly labeled facets.  
+lang: "en-US" 
 ---
 
 ```{r setup, include=FALSE}
@@ -31,16 +32,27 @@ Attention: we are only using a subset from the data used in the actual report.
 library(lapop)
 ```
 
+The lapop package brings two datasets already with design effects (weighted).
+
 ```{r, load data}
-# AmericasBarometer 2007-2023 Brasil Merge
+# AmericasBarometer 2023 Brazil (weighted)
 data(bra23)
 
-# AmericasBarometer 2023 Year Merge (only a subset of countries)
+# AmericasBarometer 2006-2023 Brazil Merge
+data(cm23)
+
+# AmericasBarometer 2023 Year Merge (weighted)
 data(ym23)
 ```
 
-## Reverse Variables
+To apply design effects using lapop weights we use the lpr_data() function
 
+```{r, weight cm23}
+cm23w <- lpr_data(cm23)
+print(cm23w)
+```
+
+## Reverse Variables
 ```{r, reverse, include=F, eval=F}
 cm23$aoj11r <- lpr_resc(cm23$aoj11, reverse = TRUE, map=TRUE)
 ```
