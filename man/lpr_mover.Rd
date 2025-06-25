@@ -78,9 +78,9 @@ comparing means across values of secondary variable(s) using LAPOP formatting.
 lpr_mover(data = gm23,
  outcome = "ing4",
  grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
- rec = c(5, 7)
+ rec = c(5, 7))
 
- # Multiple Outcomes
+ # Multiple outcomes
  lpr_mover(data = gm23,
  outcome = "c(ing4", "pn4"),
  grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
