@@ -3,10 +3,8 @@ Type: Package
 Title: Creates visualizations using LAPOP Lab Styles along with helper functions to work with AmericasBarometer Data
 Version: 2.0.9
 Authors@R: 
-    person(given = list(c("Luke", "Robert")),
-           family = list(c("Plutowski", "Vidigal")),
-           email = list(c("Luke.Plutowski@vanderbilt.edu", 
-           "Robert.Vidigal@vanderbilt.edu")),
+    person(given = list(c("Luke", "Plutowski")),
+           family = list(c("Robert", "Vidigal")),
            role = list(c("aut", "cre"), "aut"),
            comment = list(c(ORCID = "0000-0001-8240-6722"), 
                          c(ORCID = "0000-0001-5713-119X")))
