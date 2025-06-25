@@ -39,7 +39,6 @@
 #' in the denominator when calculating percentages.  The default is to examine
 #' valid responses only.  Default: FALSE.
 #'
-#'
 #' @return Returns a data frame, with data formatted for visualization by lapop_mover
 #'
 #' @examples {
