@@ -6,7 +6,8 @@ Authors@R:
     person(given = list(c("Luke", "Plutowski")),
            family = list(c("Robert", "Vidigal")),
            role = list(c("aut", "cre"), c("aut", "cre")),
-           email = list(c("luke.plutowski@banderbilt.edu", "robert.vidigal@vanderbilt.edu"))
+           email = list(c("luke.plutowski@banderbilt.edu", 
+           "robert.vidigal@vanderbilt.edu")),
            comment = list(c(ORCID = "0000-0001-8240-6722"), 
                          c(ORCID = "0000-0001-5713-119X")))
 Maintainer: Robert Vidigal <Robert.Vidigal@vanderbilt.edu>
