@@ -7,7 +7,8 @@ library(dplyr)
 
 ## ----filter data, evaluate=F, include=F---------------------------------------
 
-# GRAND-MERGE
+# # -----------------------------------------------------------------------
+# GRAND-MERGE (TOO LARGE)
 # # -----------------------------------------------------------------------
 #gm <- lpr_data("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/GM/Grand Merge 2004-2023 LAPOP AmericasBarometer (v1.1s).dta") # grand-merge v1.1 wealth variable fix
 
@@ -21,7 +22,7 @@ library(dplyr)
 #saveRDS(gm, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\gm23.rds"))
 #save(gm23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\gm23.rda"))
 
-
+# # -----------------------------------------------------------------------
 # YEAR-MERGE
 # # -----------------------------------------------------------------------
 ym <- lpr_data("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/YM/Merge 2023 LAPOP AmericasBarometer (v1.0s).dta") # year-merge
@@ -33,7 +34,8 @@ ym23 <- ym23 %>% select("wave", "pais_lab", "pais", "year",
 #saveRDS(ym, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rds"))
 save(ym23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rda"))
 
-# COUNTRY-MERGE
+# # -----------------------------------------------------------------------
+# CROSSCOUNTRY-MERGE
 # # -----------------------------------------------------------------------
 cm <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing/BRA merge 2007-2023 LAPOP AmericasBarometer (v1.0s).dta",
                               generate.factors = T)
@@ -41,6 +43,7 @@ cm23 <- cm %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
                         "wave", "pais", "year", "upm", "strata", "weight1500", "wt")
 save(cm23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\cm23.rda"))
 
+# # -----------------------------------------------------------------------
 # BRAZIL-MERGE
 # # -----------------------------------------------------------------------
 bra <- lpr_data("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing/BRA merge 2007-2023 LAPOP AmericasBarometer (v1.0s).dta")
