@@ -7,13 +7,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
-
 ## Introduction
 This concise guide demonstrates how R users can effectively work with AmericasBarometer datasets to access variable metadata directly eliminating the need for external codebooks. While these features are more readily visible in STATA, they often require specific approaches in R. The guide outlines:
 

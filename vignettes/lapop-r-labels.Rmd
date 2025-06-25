@@ -9,7 +9,7 @@ vignette: >
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = "C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing")
+data_path <- find_package_root_file("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing")
 ```
 
 ## Introduction
@@ -58,16 +58,16 @@ In the R programming language, attributes are additional metadata that can be at
 
 ```{r, LOAD DATA CHUNK}
 # READSTATA13 PACKAGE (RECOMMENDED)
-data1 <- readstata13::read.dta13("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta", 
+data1 <- readstata13::read.dta13(paste0(data_path, "/BRA 2023 LAPOP AmericasBarometer (v1.0s).dta"), 
                                  generate.factors = T)
 names(attributes(data1))
 
 # HAVEN PACKAGE
-data2 <- haven::read_dta("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta")
+data2 <- haven::read_dta(paste0(data_path, "/BRA 2023 LAPOP AmericasBarometer (v1.0s).dta"))
 names(attributes(data2))
 
 # RIO PACKAGE
-data3 <- rio::import("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta")
+data3 <- rio::import(paste0(data_path, "/BRA 2023 LAPOP AmericasBarometer (v1.0s).dta"))
 names(attributes(data3))
 ```
 
