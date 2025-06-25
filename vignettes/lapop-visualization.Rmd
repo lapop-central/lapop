@@ -1,11 +1,10 @@
 ---
-title: "Visualizing LAPOP Data: 2023 AmericasBarometer"
-author: "Robert Vidigal, PhD"
+title: "LAPOP Visualization Guide"
 output: rmarkdown::html_vignette
 vignette: >
-  \VignetteIndexEntry{lapop-visualization}
-  \VignetteEngine{knitr::rmarkdown}
-  \VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{LAPOP Visualization Guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
   
 ---
 

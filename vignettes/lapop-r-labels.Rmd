@@ -1,7 +1,10 @@
 ---
-title: "AmericasBarometer Data for R Users"
-author: "Robert Vidigal, PhD (robert.vidigal@vanderbilt.edu)"
-output: html_document
+title: "LAPOP R Labels Guide"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{LAPOP R Labels Guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}

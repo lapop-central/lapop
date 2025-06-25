@@ -1,11 +1,10 @@
 ---
 title: "LAPOP Helper Functions"
-author: "Robert Vidigal, PhD"
 output: rmarkdown::html_vignette
 vignette: >
-  \VignetteIndexEntry{lapop-helper}
-  \VignetteEngine{knitr::rmarkdown}
-  \VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{LAPOP Helper Functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
