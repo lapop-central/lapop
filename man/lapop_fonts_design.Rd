@@ -15,8 +15,7 @@ this renders text as text instead of polygons, which allows post-hoc editing.
 }
 \examples{
 # Load LAPOP fonts
-lapop_fonts_design()
-
+\dontrun{lapop_fonts_design()}
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
