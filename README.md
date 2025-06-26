@@ -6,7 +6,7 @@ These are the helper functions to wrangle and produce visualizations of
 AmericasBarometer data following LAPOP Lab's editorial guidelines
 
 ### To install the package in your machine you need to run in R console
-`devtools::install_github("https://github.com/lapop-central/lapop/", force=TRUE)`
+`devtools::install_github("https://github.com/lapop-central/lapop/", force=TRUE, build_vignettes = TRUE)`
 
 -----------------------------------------------------------------------
 ### Workflow of AmericasBarometer data visualization using LAPOP Lab guidelines 
@@ -14,12 +14,12 @@ AmericasBarometer data following LAPOP Lab's editorial guidelines
 
 1) Load lapop package in R `library(lapop)`
 2) Load `lapop_fonts()` function into console
-3) Load AmericasBarometer data with `lpr_data()` function 
+3) Apply AmericasBarometer sampling design effect with `lpr_data()` function 
 4) Choose the appropriate type of `lpr` graph to represent data. For instance, 
 histograms `lpr_hist`, cross country comparison `lpr_cc`, time series `lpr_ts`, 
 or break down by covariates `lpr_mover` and store it in a R object
 5) Use the correspoding `lapop` ploting function to produce the visualization (e.g., `lapop_hist`, `lapop_cc`, `lapop_ts`, and so on).
-6) Export the figure object using `lapop_save()` to your machine.
+6) Export the figure with `lapop_save()` to your machine.
 
 -----------------------------------------------------------------------
 ### Workflow of AmericasBarometer data variables and values labels
