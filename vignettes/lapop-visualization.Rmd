@@ -53,7 +53,7 @@ print(cm23w)
 ```
 
 ## Reverse Variables
-```{r, reverse, include=F, eval=F}
+```{r, reverse, eval=F}
 cm23$aoj11r <- lpr_resc(cm23$aoj11, reverse = TRUE, map=TRUE)
 ```
 
@@ -64,10 +64,10 @@ lapop_fonts()
 ```
 
 ### Survey Design for the Data
-```{r. lpr_data, eval=F}a
+The AmericasBarometer use `wt` weights for country specific AB datasets, and `weight1500` for comparative datasets.
+
+```{r, lpr_data, eval=F}
 bra23<-lpr_data(bra23, wt=TRUE)
-# We use wt weights for country specific AB datasets, 
-# and weight1500 for comparative.
 ```
 
 ## Figure 1.1: Time Series
