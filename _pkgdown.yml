@@ -35,4 +35,6 @@ articles:
 reference:
   - title: Core Functions
     contents:
-      - lpr_data()
+      - lapop_fonts
+      - lpr_data
+      - lapop_save
