@@ -26,7 +26,7 @@ If you do not have the LAPOP Lab package already installed in your machine you c
 
 ```{r, INSTALL LPR, eval=FALSE}
 # Install the LAPOP Lab package:
-devtools::install_github("https://github.com/lapop-central/lapop", force=TRUE)
+devtools::install_github("https://github.com/lapop-central/lapop", force=TRUE, build_vignettes = TRUE)
 ```
 
 After installation is successful, you will need to load the package into your library:
