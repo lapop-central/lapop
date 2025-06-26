@@ -6,7 +6,7 @@ These are the helper functions to wrangle and produce visualizations of
 AmericasBarometer data following LAPOP Lab's editorial guidelines
 
 ### To install the package in your machine you need to run in R console
-`devtools::install_github("https://github.com/lapop-central/lapop/", force=TRUE)`
+`devtools::install_github("https://github.com/lapop-central/lapop/", force=TRUE, build_vignettes = TRUE)`
 
 -----------------------------------------------------------------------
 ### Workflow of AmericasBarometer data visualization using LAPOP Lab guidelines 
