@@ -52,17 +52,16 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><table class="table">
+  <main id="main" class="col-md-9"><hr>
+<p>lapop R package</p>
+<table class="table">
 <colgroup><col width="100%"></colgroup>
-<thead><tr class="header">
-<th align="left">lapop R package</th>
-</tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">These are the helper functions to wrangle labels and produce visualizations of AmericasBarometer data following LAPOP Lab’s editorial guidelines</td>
+<td>These are the helper functions to wrangle labels and produce visualizations of AmericasBarometer data following LAPOP Lab’s editorial guidelines</td>
 </tr>
 <tr class="even">
-<td align="left">To install the package in your machine you need to run in R console <code>devtools::install_github("https://github.com/lapop-central/lapop/", force=TRUE, build_vignettes = TRUE)</code>
+<td>To install the package in your machine you need to run in R console <code>devtools::install_github("https://github.com/lapop-central/lapop/", force=TRUE, build_vignettes = TRUE)</code>
 </td>
 </tr>
 </tbody>
@@ -78,26 +77,25 @@
 <li>Use the correspoding <code>lapop</code> ploting function to produce the visualization (e.g., <code>lapop_hist</code>, <code>lapop_cc</code>, <code>lapop_ts</code>, and so on).</li>
 <li>Export the figure with <code><a href="reference/lapop_save.html">lapop_save()</a></code> to your machine.</li>
 </ol>
+<hr>
+<p>Workflow of AmericasBarometer data variables and values labels</p>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
-<thead><tr class="header">
-<th align="left">Workflow of AmericasBarometer data variables and values labels</th>
-</tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Please refer to <code>/inst/LAPOP_Data_Guide_for_R_Users.html</code> for the full guide.</td>
+<td>Please refer to <code>/inst/LAPOP_Data_Guide_for_R_Users.html</code> for the full guide.</td>
 </tr>
 <tr class="even">
-<td align="left">1) Data Structure: AmericasBarometer datasets are distributed in Stata .dta format with multilingual metadata (question wording and response options) embedded as attributes. These support cross-national and longitudinal comparability.</td>
+<td>1) Data Structure: AmericasBarometer datasets are distributed in Stata .dta format with multilingual metadata (question wording and response options) embedded as attributes. These support cross-national and longitudinal comparability.</td>
 </tr>
 <tr class="odd">
-<td align="left">2) Preferred Loading Method Use the readstata13::read.dta13() function to preserve full metadata structure. Other methods such as <code><a href="https://haven.tidyverse.org/reference/read_dta.html" class="external-link">haven::read_dta()</a></code> or <code><a href="http://gesistsa.github.io/rio/reference/import.html" class="external-link">rio::import()</a></code> often fail to import these critical attributes.</td>
+<td>2) Preferred Loading Method Use the readstata13::read.dta13() function to preserve full metadata structure. Other methods such as <code><a href="https://haven.tidyverse.org/reference/read_dta.html" class="external-link">haven::read_dta()</a></code> or <code><a href="http://gesistsa.github.io/rio/reference/import.html" class="external-link">rio::import()</a></code> often fail to import these critical attributes.</td>
 </tr>
 <tr class="even">
-<td align="left">3) Variable Labels (Question Wording): Stored in the “expansion.fields” attribute. Use the custom <code><a href="reference/lpr_extract_notes.html">lpr_extract_notes()</a></code> function to convert this into a tidy data frame. Next, assign preferred language labels to each variable with <code><a href="reference/lpr_set_attr.html">lpr_set_attr()</a></code> using the appropriate noteid.</td>
+<td>3) Variable Labels (Question Wording): Stored in the “expansion.fields” attribute. Use the custom <code><a href="reference/lpr_extract_notes.html">lpr_extract_notes()</a></code> function to convert this into a tidy data frame. Next, assign preferred language labels to each variable with <code><a href="reference/lpr_set_attr.html">lpr_set_attr()</a></code> using the appropriate noteid.</td>
 </tr>
 <tr class="odd">
-<td align="left">5) Value Labels (Response Options): Stored in the “label.table” attribute. Use <code><a href="reference/lpr_set_ros.html">lpr_set_ros()</a></code> to assign these response labels as attributes in English, Spanish, or Portuguese.</td>
+<td>5) Value Labels (Response Options): Stored in the “label.table” attribute. Use <code><a href="reference/lpr_set_ros.html">lpr_set_ros()</a></code> to assign these response labels as attributes in English, Spanish, or Portuguese.</td>
 </tr>
 </tbody>
 </table>
