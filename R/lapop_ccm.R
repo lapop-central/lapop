@@ -72,8 +72,7 @@ NULL
 #'@import sysfonts
 #'@import showtext
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
-#'
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 lapop_ccm <- function(data,
                       pais = data$pais, outcome_var = data$prop,
@@ -91,83 +90,96 @@ lapop_ccm <- function(data,
                       highlight = "",
                       color_scheme = c("#784885", "#008381", "#C74E49"),
                       label_size = 4,
-                      text_position = 0.7){
+                      text_position = 0.7) {
+
   fill_colors = paste0(color_scheme, "52")
-  if(highlight != ""){
-    data$hl_var = factor(ifelse(data$pais == highlight, 1, 0), labels = c("hl", "other"))
+
+  # Define highlight logic
+  if (highlight != "") {
+    data$hl_var <- ifelse(data$pais == highlight, "hl", "other")
+  } else {
+    data$hl_var <- "other"
   }
-  else{
-    data$hl_var = factor("other")
+
+  # Compute numeric alpha values (no warning!)
+  data$alpha_value <- ifelse(data$hl_var == "hl", 0.6, 0.32)
+
+  # Add language-specific var label customization
+  if (lang == "es") {
+    data$var <- ifelse(data$var == unique(data$var)[length(unique(data$var))],
+                       paste0(data$var,
+                              "<span style='color:#FFFFFF00'>-------</span>",
+                              "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
+                              "<span style='color:#585860; font-size:13pt'>95% intervalo de confianza </span>"),
+                       data$var)
+    data$var <- factor(data$var, levels = unique(data$var))
+  } else if (lang == "fr") {
+    data$var <- ifelse(data$var == unique(data$var)[length(unique(data$var))],
+                       paste0(data$var,
+                              "<span style='color:#FFFFFF00'>-------</span>",
+                              "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
+                              "<span style='color:#585860; font-size:13pt'>Intervalle de confiance de 95% </span>"),
+                       data$var)
+    data$var <- factor(data$var, levels = unique(data$var))
+  } else {
+    data$var <- ifelse(data$var == unique(data$var)[length(unique(data$var))],
+                       paste0(data$var,
+                              "<span style='color:#FFFFFF00'>-------</span>",
+                              "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
+                              "<span style='color:#585860; font-size:13pt'>95% confidence interval </span>"),
+                       data$var)
+    data$var <- factor(data$var, levels = unique(data$var))
   }
-  if (lang == "es"){
-    data$var = ifelse(data$var == unique(data$var)[length(unique(data$var))],
-                      paste0(data$var,
-                             "<span style='color:#FFFFFF00'>-------</span>",
-                             "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
-                             "<span style='color:#585860; font-size:13pt'>95% intervalo de confianza </span>"),
-                             data$var)
-    data$var = factor(data$var, levels = unique(data$var))
-  } else if (lang == "fr"){
-    data$var = ifelse(data$var == unique(data$var)[length(unique(data$var))],
-                      paste0(data$var,
-                             "<span style='color:#FFFFFF00'>-------</span>",
-                             "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
-                             "<span style='color:#585860; font-size:13pt'>Intervalle de confiance de 95% </span>"),
-                      data$var)
-    data$var = factor(data$var, levels = unique(data$var))
-  }
-  else{
-    data$var = ifelse(data$var == unique(data$var)[length(unique(data$var))],
-                      paste0(data$var,
-                             "<span style='color:#FFFFFF00'>-------</span>",
-                             "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
-                             "<span style='color:#585860; font-size:13pt'>95% confidence interval </span>"),
-                      data$var)
-    data$var = factor(data$var, levels = unique(data$var))
-  }
-  if(sort == "var1"){
-    data = data %>%
+
+  # Sorting logic
+  if (sort == "var1") {
+    data <- data %>%
       group_by(var) %>%
       mutate(rank = rank(-prop)) %>%
       arrange(var, rank)
-    } else if(sort == "var2"){
-    data = data %>%
+  } else if (sort == "var2") {
+    data <- data %>%
       group_by(var) %>%
       mutate(rank = rank(-prop)) %>%
       arrange(match(var, unique(var)[2]), rank)
-    } else if(sort == "var3"){
-      data = data %>%
-        group_by(var) %>%
-        mutate(rank = rank(-prop)) %>%
-        arrange(match(var, unique(var)[3]), rank)
-  } else if(sort == "alpha"){
-    data = data[order(data$pais),]
+  } else if (sort == "var3") {
+    data <- data %>%
+      group_by(var) %>%
+      mutate(rank = rank(-prop)) %>%
+      arrange(match(var, unique(var)[3]), rank)
+  } else if (sort == "alpha") {
+    data <- data[order(data$pais), ]
   }
+
+  # Apply font
   update_geom_defaults("text", list(family = "roboto"))
-  ggplot(data=data, aes(x=factor(pais, levels = unique(pais)), y=prop, fill = var, color = var)) +
-    geom_bar(aes(fill = var, color = var, alpha = hl_var), position = "dodge", stat="identity", width = 0.7) +
-    geom_text(aes(label=label_var, y = upper_bound, group = var),
+
+  # Create ggplot
+  ggplot(data = data,
+         aes(x = factor(pais, levels = unique(pais)),
+             y = prop,
+             fill = var,
+             color = var)) +
+    geom_bar(aes(alpha = alpha_value), position = "dodge", stat = "identity", width = 0.7) +
+    geom_text(aes(label = label_var, y = upper_bound, group = var),
               position = position_dodge(width = text_position),
-              vjust= -0.5, size = label_size, fontface = "bold",
-              show.legend = FALSE) +
-    geom_errorbar(aes(ymin=lower_bound, ymax=upper_bound),
+              vjust = -0.5, size = label_size, fontface = "bold", show.legend = FALSE) +
+    geom_errorbar(aes(ymin = lower_bound, ymax = upper_bound),
                   width = 0.15,
-                  position = position_dodge(width = 0.7), linetype = "solid",
-                  show.legend = FALSE) +
+                  position = position_dodge(width = 0.7), linetype = "solid", show.legend = FALSE) +
     scale_fill_manual(values = fill_colors) +
     scale_color_manual(values = color_scheme) +
-    scale_alpha_discrete(range = c(0.32, 0.6), guide = 'none') +
     scale_y_continuous(limits = c(ymin, ymax), expand = expansion(mult = 0.002)) +
-    labs(title=main_title,
+    labs(title = main_title,
          y = y_label,
          x = x_label,
          caption = paste0(ifelse(lang == "es", "Fuente: LAPOP Lab", "Source: LAPOP Lab"),
                           source_info)) +
-    {if(subtitle != "")labs(subtitle = subtitle)}+
-    {if(x_label != "")theme(axis.title.x = element_text(margin = margin(b = 10, t = 10)))} +
+    { if (subtitle != "") labs(subtitle = subtitle) } +
+    { if (x_label != "") theme(axis.title.x = element_text(margin = margin(b = 10, t = 10))) } +
     theme(text = element_text(size = 14, family = "roboto"),
           plot.title = element_text(size = 18, family = "nunito", face = "bold"),
-          plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "nunito", color="#585860"),
+          plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "nunito", color = "#585860"),
           panel.background = element_blank(),
           panel.border = element_blank(),
           axis.line.x = element_line(linewidth = 0.6, linetype = "solid", colour = "#dddddf"),
@@ -176,9 +188,9 @@ lapop_ccm <- function(data,
           axis.ticks = element_blank(),
           legend.position = "top",
           legend.title = element_blank(),
-          legend.justification='left',
-          legend.margin = margin(t=0, b=0, l=0),
-          legend.text = element_markdown(family = "nunito-light"))
-
+          legend.justification = 'left',
+          legend.margin = margin(t = 0, b = 0, l = 0),
+          legend.text = ggtext::element_markdown(family = "nunito-light")) + guides(alpha = "none")
 }
+
 

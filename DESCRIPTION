@@ -17,7 +17,7 @@ Description: LAPOP Lab (formerly the Latin American Public Opinion Project) at V
 URL: https://lapop-central.github.io/lapop/
 Depends: 
     R (>= 3.5.0)
-Imports: ggplot2, ggtext, ggrepel, ggh4x, showtext, sysfonts, systemfonts, svglite, dplyr, tidyr, srvyr, survey, codebook, haven, stats, purrr, marginaleffects, stringr,  zoo
+Imports: ggplot2, ggtext, ggrepel, ggh4x, showtext, grid, gridExtra, sysfonts, systemfonts, svglite, dplyr, tidyr, srvyr, survey, codebook, haven, stats, purrr, marginaleffects, stringr,  zoo
 VignetteBuilder: knitr
 Suggests: 
     readstata13,
