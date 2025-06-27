@@ -29,7 +29,7 @@
 #'}
 #'
 #'#' # Multi-country  single-year (weight1500)
-#' ym23w <- lpr_data(ym23, wt = TRUE)
+#' ym23w <- lpr_data(ym23)
 #' print(ym23w)
 #'}
 #'}

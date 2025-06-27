@@ -101,10 +101,13 @@ Other methods such as `haven::read_dta()` or `rio::import()` may fail to import 
 
 ## 🤝 Workflow: Contributing to the `lapop` R Package
 
-1. Clone the repository to your machine.
-2. Add the new function to the `R/` folder.
-3. Document the function with `roxygen2` to create the `.Rd` file in `man/`.
-4. Add the new function to the `Collate` field in the `DESCRIPTION` file.
+1. **Fork** the repository and clone it to your local machine.
+2. **Create a new branch** for your feature or fix.
+3. Add your new function in the `R/` folder.
+4. Document the function with roxygen2 comments.
+5. Run `devtools::document()` to generate `.Rd` files in `man/` and update `NAMESPACE`.
+6. Commit your changes and push the branch to your fork.
+7. Submit a **pull request** to the main repository.
 
 ---
 <!-- badges: start -->

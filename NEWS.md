@@ -1,10 +1,15 @@
+# lapop 2.1.0
+
+* include vignettes 
+* create pkgdown website
+
 # lapop 2.0.9
 
-* include AB data for vignettes
+* include AB data for vignettes (bra23, cm23, ym23)
 
 # lapop 2.0.8
 
-* update lpr_data to load data directly
+* update lpr_data() to take different inputs
 
 # lapop 2.0.7
 
@@ -30,11 +35,11 @@
 # lapop 2.0.2
 
 * update labels system for stack and mover
-* add "hacks": "by" and "over" options in lpr_stack() and lpr_mline()
+* add "by" and "over" options in lpr_stack() and lpr_mline()
 
 # lapop 2.0.1
 
-* add lpr_coef()
+* add lpr_coef() for regressions
 
 # lapop 2.0.0
 
@@ -43,8 +48,8 @@
 # lapop 1.3.14
 
 * Create function lapop_cccomb()
-* add drop_singles to dumb
-* allow CIs for mline graphs
+* add drop_singles to lapop_dumb()
+* allow CIs for lapop_mline() graphs
 
 # lapop 1.3.13
 
@@ -204,9 +209,5 @@ Changes to lapop_ccm including:
 * updated errors in description that were rejected by CRAN
 
 # lapop 1.0.0
-
-* prepared lapop package for release to CRAN
-
-# lapop 0.1.0
 
 * Added a `NEWS.md` file to track changes to the package.

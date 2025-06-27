@@ -3,7 +3,7 @@
 \docType{data}
 \name{cm23}
 \alias{cm23}
-\title{cm23 Dataset}
+\title{Single-country Multi-year Dataset}
 \format{
 A data frame
 \describe{

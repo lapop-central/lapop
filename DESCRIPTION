@@ -1,7 +1,7 @@
 Package: lapop
 Type: Package
-Title: Templates for creating AmericasBarometer's visualizations
-Version: 2.0.9
+Title: Tools for Visualizing and Labeling AmericasBarometer Data in R
+Version: 2.1.0
 Authors@R: c(person(given = "Luke", family = "Plutowski", 
              role = c("ctb"), 
              email = "luke.plutowski@vanderbilt.edu", 
@@ -17,7 +17,7 @@ Description: LAPOP Lab (formerly the Latin American Public Opinion Project) at V
 URL: https://lapop-central.github.io/lapop/
 Depends: 
     R (>= 3.5.0)
-Imports: ggplot2, ggtext, zoo, showtext, sysfonts, ggrepel, dplyr, tidyr, ggh4x, haven, systemfonts, svglite, stats, grid, gridtext, gridExtra, srvyr, purrr, marginaleffects, survey, codebook, stringr
+Imports: ggplot2, ggtext, ggrepel, ggh4x, showtext, sysfonts, systemfonts, svglite, dplyr, tidyr, srvyr, survey, codebook, haven, stats, purrr, marginaleffects, stringr,  zoo
 VignetteBuilder: knitr
 Suggests: 
     readstata13,
