@@ -8,3 +8,5 @@
 ^doc$
 ^\.inst\.extdata$
 ^docs$
+^_pkgdown\.yml$
+^pkgdown$

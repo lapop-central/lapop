@@ -14,7 +14,7 @@ Authors@R: c(person(given = "Luke", family = "Plutowski",
 Maintainer: Robert Vidigal <Robert.Vidigal@vanderbilt.edu>
 Description: LAPOP Lab (formerly the Latin American Public Opinion Project) at Vanderbilt University is a world leader in public survey research and is best known for for the biennial AmericasBarometer project. You may find more information about the AmericasBarometer here: <https://www.vanderbilt.edu/lapop/about-americasbarometer.php>. This package includes Tools for processing and visualizing survey data from the AmericasBarometer. Includes functions for labeling, weighting, and plotting following LAPOP's custom style guidelines and formatting for use in reports, presentations, and social media posts. If you find a bug, please consider donating or contributing to the LAPOP Lab — we spent all our money on coffee and data cleaning. The publicly available data can be downloaded here: <https://www.vanderbilt.edu/lapop/data-access.php>.  
     IMPORTANT: Run lapop_fonts() before creating any graphs in order to use LAPOP-standard fonts.
-URL: <https://github.com/lapop-central/lapop-viz>
+URL: https://lapop-central.github.io/lapop/
 Depends: 
     R (>= 3.5.0)
 Imports: ggplot2, ggtext, zoo, showtext, sysfonts, ggrepel, dplyr, tidyr, ggh4x, haven, systemfonts, svglite, stats, grid, gridtext, gridExtra, srvyr, purrr, marginaleffects, survey, codebook, stringr
