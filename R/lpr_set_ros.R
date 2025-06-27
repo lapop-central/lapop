@@ -10,7 +10,7 @@
 #' variables, using label tables stored as attributes. The labels are formatted
 #' with their corresponding numeric codes and can be pulled in multiple languages.
 #'
-#' @param data A data frame loaded using readstata13 containing label table attributes
+#' @param data A data frame loaded using readstata13 containing label.table attributes.
 #' @param lang_id Language identifier for the labels ("en" for English,
 #'        "es" for Spanish, "pt" for Portuguese). Default is "en" (English).
 #' @param attribute_name The name of the attribute where the formatted response

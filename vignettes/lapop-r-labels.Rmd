@@ -30,7 +30,7 @@ The `lapop` package contains custom functions to analyze data and plot figures f
 
 If you do not have the LAPOP Lab package already installed in your machine you can install it using the `devtools` package below:
 
-```{r, INSTALL LPR, eval=FALSE}
+```{r, INSTALL LPR, eval = FALSE}
 # Install the LAPOP Lab package:
 devtools::install_github("https://github.com/lapop-central/lapop", 
                          force=TRUE, 
@@ -65,10 +65,9 @@ The preferred method for loading LAPOP Lab datasets is to use the `read.dta13()`
 In the R programming language, attributes are additional metadata that can be attached to R objects. Attributes provide a way to store extra information about an object beyond its basic data structure. To access the attributes of an object, you can use the `attr()` or `attributes()` base functions. 
 
 
-```{r, LOAD DATA CHUNK, eval=F}
+```{r, LOAD DATA CHUNK, eval = FALSE}
 # READSTATA13 PACKAGE (RECOMMENDED FOR LABELS)
-data1 <- read.dta13("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta", 
-                                 generate.factors = T)
+data1 <- read.dta13("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta")
 names(attributes(data1))
 
 # HAVEN PACKAGE (RECOMMENDED FOR PLOTTING)
@@ -86,7 +85,9 @@ The methods `haven` and `rio` packages  do not recover all the metadata from `dt
 AmericasBarometer variable labels are stored as `notes` in STATA .dta files. We 
 can find them inside the "expansion.fields" attribute.
 
-```{r, QWORDING, eval=F}
+```{r, QWORDING, eval = TRUE, warnings = F}
+data(bra23)
+
 # Extracting attributes from expasion.fields
 names(attributes(bra23))
 varlabels = attr(bra23, "expansion.fields")
@@ -105,7 +106,7 @@ A streamlined approach for users who want to quickly find the values of the note
 
 Both approaches extract the third element (x[3]) from each list in the "expansion.fields" attribute of the dataset, but only if the first element (x[1]) equals "ing4" (i.e., the variable of interest). Both produce a semi-structured list of matching third nested elements.
 
-```{r, STREAMLINED APPROACH, eval=F}
+```{r, STREAMLINED APPROACH, eval = TRUE, warnings = F}
 # Base R approach:
 # The base R version uses lapply to iterate over the list and returns NULL when 
 # the condition isn't met, then Filter(Negate(is.null), ...) removes those NULLs.
@@ -127,7 +128,7 @@ To ease the researchers and analysts job, LAPOP Lab developed custom functions t
 First, we will use `lpr_extract_notes` to transform the nested lists into a long dataframe format that will contain
 3 columns: `variable_name`, `note_id`, and `note_value`
 
-```{r, NOTES EXTRACT, eval=F}
+```{r, NOTES EXTRACT, eval = TRUE, warnings = F}
 # Extract AB notes
 notes <- lpr_extract_notes(varlabels)
 head(notes, n = 10) # columns names
@@ -136,7 +137,7 @@ table(notes$note_id) # note information available!
 
 After extracting the notes, one can assign variable labels to their preferred language as attributes to the dataset using another LAPOP Lab function called `lpr_set_attr()` and than access it during data analysis without the need of an accompanying codebook.
 
-```{r, SET ATTRIBUTES, eval=F, warning=F}
+```{r, SET ATTRIBUTES, eval = TRUE, warnings = F, warning=F}
 # English
 bra23<-lpr_set_attr(bra23, notes, 
                     noteid = "note2", 
@@ -151,11 +152,10 @@ bra23<-lpr_set_attr(bra23, notes,
                     noteid = "note3", 
                     attribute_name = "qwording_pt") 
 
-
 # Printing languages
-attr(bra23$ing4, "qwording_en")
-attr(bra23$ing4, "qwording_es")
-attr(bra23$ing4, "qwording_pt") 
+attr(bra23$ing4, "qwording_en") # English
+attr(bra23$ing4, "qwording_es") # Spanish
+attr(bra23$ing4, "qwording_pt") # Portuguese
 ```
 
 ## Extracting AmericasBarometer Values Labels (Response Options)
@@ -163,7 +163,7 @@ attr(bra23$ing4, "qwording_pt")
 AmericasBarometer's values labels (i.e., response options) differently from the variable labels are stored inside the "label.table" attribute. To extract them we will use another LAPOP Lab custom function called `lpr_format_labels` that will set up the response options
 as an attribute across languages. Default language is English and default attribute name is `roslabel` but the function allows custom attribute names as shown below:
 
-```{r, ROs, eval=F}
+```{r, ROs, eval = TRUE, warnings = F}
 bra23 <- lpr_set_ros(bra23) # Default English
 
 bra23 <- lpr_set_ros(bra23, lang_id = "es", 
@@ -173,9 +173,9 @@ bra23 <- lpr_set_ros(bra23, lang_id = "pt",
                      attribute_name = "ROsLabels_pt") # Portuguese
 
 # Printing ROs
-attr(bra23$ing4, "roslabel")
-attr(bra23$ing4, "respuestas")
-attr(bra23$ing4, "ROsLabels_pt")
+attr(bra23$ing4, "roslabel") # English
+attr(bra23$ing4, "respuestas") # Spanish
+attr(bra23$ing4, "ROsLabels_pt") # Portuguese
 ```
 
 <br>
