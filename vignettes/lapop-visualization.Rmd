@@ -11,7 +11,7 @@ description: >
 lang: "en-US" 
 ---
 
-```{r setup, include=FALSE}
+```{r fig setup, include=FALSE}
 
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 knitr::opts_chunk$set(fig.width = 12, fig.height = 6)
@@ -48,8 +48,14 @@ data(ym23)
 To apply design effects using lapop weights we use the lpr_data() function
 
 ```{r, weight cm23}
+bra23w <- lpr_data(bra23, wt = TRUE)
+print(bra23w)
+
 cm23w <- lpr_data(cm23)
 print(cm23w)
+
+ym23w <- lpr_data(ym23)
+print(ym23w)
 ```
 
 ## Reverse Variables

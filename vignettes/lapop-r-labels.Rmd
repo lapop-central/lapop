@@ -11,6 +11,12 @@ description: >
 lang: "en-US" 
 ---
 
+```{r fig setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(fig.width = 12, fig.height = 6)
+```
+
 ## Introduction
 This concise guide demonstrates how R users can effectively work with AmericasBarometer datasets to access variable metadata directly eliminating the need for external codebooks. While these features are more readily visible in STATA, they often require specific approaches in R. The guide outlines:
 
@@ -31,8 +37,9 @@ devtools::install_github("https://github.com/lapop-central/lapop", force=TRUE, b
 
 After installation is successful, you will need to load the package into your library:
 
-```{r, LOAD LPR, eval=F}
+```{r, LOAD LPR}
 library(lapop)
+# Note: no need for lapop_fonts() since we are not plotting figures
 ```
 
 ## How LAPOP Lab stores variables metadata? 
@@ -70,68 +77,72 @@ data3 <- rio::import("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta")
 names(attributes(data3))
 ```
 
-From the output above, the methods `haven` and `rio` packages  do not recover all the metadata from `dta` files. Thereby, we proceed with the dataset loaded with the `readstata13` package.
-
+The methods `haven` and `rio` packages  do not recover all the metadata from `dta` files. Thereby, we proceed with the dataset loaded with the `readstata13` package.
 
 ## Extracting AmericasBarometer Variables Labels (Question Wording)
-AmericasBarometer variable labels are stored as `notes` in STATA dta files. We 
+AmericasBarometer variable labels are stored as `notes` in STATA .dta files. We 
 can find them inside the "expansion.fields" attribute.
 
 ```{r, QWORDING, eval=F}
 # Extracting attributes from expasion.fields
-varlabels = attr(data1, "expansion.fields")
+names(attributes(bra23))
+varlabels = attr(bra23, "expansion.fields")
 
 # Printing notes for varibale "ing4"
 varlabels[grepl("ing4", varlabels) & grepl("note", varlabels)]
 ```
 
-The `varlabels` object created is a nested list (much like a JSON object) that will contain multilingual notes with the
-question wording of each variable. For instance, for the variable `ing4` in the `Brazil AB 2023` dataset will contain notes with the question wording and lead-in in English (note4 and note5), Spanish (note7 and note8), and Portuguese (note1 and note2).
+The `varlabels` object created is a nested list (much like a JSON object) that will contain multilingual notes with the question wording of each variable. For instance, for the variable `ing4` in the `Brazil AB 2023` dataset will contain notes with the question wording and lead-in in English (note4 and note5), Spanish (note7 and note8), and Portuguese (note1 and note2).
+
+## How do I find the correct language labels?
+
+It is important to keep in mind that note numbers may change across countries datasets and years depending on the language the survey was fielded. For Brazil, it is Brazilian-Portuguese, whereas in most other countries it is in Spanish but also in English like in Jamaica.
+
+A streamlined approach for users who want to quickly find the values of the notes on variable labels without assigning to the dataset would be assessing those notes directly with a combination of `lapply()` and `Filter()` functions from base R, or also `compact()` and `map()` functions from the `purrr` package.
+
+Both approaches extract the third element (x[3]) from each list in the "expansion.fields" attribute of the dataset, but only if the first element (x[1]) equals "ing4" (i.e., the variable of interest). Both produce a semi-structured list of matching third nested elements.
+
+```{r, STREAMLINED APPROACH}
+# Base R approach:
+# The base R version uses lapply to iterate over the list and returns NULL when the condition isn't met, then Filter(Negate(is.null), ...) removes those NULLs.
+Filter(Negate(is.null), lapply(attr(bra23, "expansion.fields"), function(x) {
+  if (x[1] == "ing4") list(note_id = x[2], note_value = x[3])
+}))
+
+# purrr package approach
+#  The purrr version uses map() to do the same, and also remove NULL results. 
+purrr::map_dfr(attr(bra23, "expansion.fields"), ~ {
+  if (.x[1] == "ing4") tibble::tibble(note_id = .x[2], note_value = .x[3])
+})
+
+```
 
 To ease the researchers and analysts job, LAPOP Lab developed custom functions to deal with those labels in R.
-First, we will use `lpr_extract_notes` to transform the nested lists into a dataframe format that will contain
+First, we will use `lpr_extract_notes` to transform the nested lists into a long dataframe format that will contain
 3 columns: `variable_name`, `note_id`, and `note_value`
 
-```{r, NOTES EXTRACT, eval=F}
+```{r, NOTES EXTRACT}
 # Extract AB notes
 notes <- lpr_extract_notes(varlabels)
-print(notes) # See columns names
+head(notes, n = 10) # See columns names
+table(notes$note_id) # See all different note information available!
 ```
 
 After extracting the notes, one can assign variable labels to their preferred language as attributes to the dataset using another LAPOP Lab function called `lpr_set_attr()` and than access it during data analysis without the need of an accompanying codebook.
 
-It is important to keep in mind that note numbers may change across countries dataset depending on the language the survey was fielded. That is, note1 will always refer to the actual survey language, so in the case of Brazil it is Portuguese, whereas in other countries it may be Spanish or English instead.
-
-```{r, SET ATTRIBUTES, eval=F}
+```{r, SET ATTRIBUTES, eval=F, warning=F}
 # English
-data1<-lpr_set_attr(data1, notes, noteid = "note4", attribute_name = "qwording_en") 
-
+bra23<-lpr_set_attr(bra23, notes, noteid = "note2", attribute_name = "qwording_en") 
 # Spanish
-data1<-lpr_set_attr(data1, notes, noteid = "note7", attribute_name = "qwording_es") 
+bra23<-lpr_set_attr(bra23, notes, noteid = "note1", attribute_name = "qwording_es") 
 
 # Portuguese
-data1<-lpr_set_attr(data1, notes, noteid = "note1", attribute_name = "qwording_pt") 
+bra23<-lpr_set_attr(bra23, notes, noteid = "note3", attribute_name = "qwording_pt") 
 
-# Printing 
-attr(data1$ing4, "qwording_es")
-attr(data1$ing4, "qwording_en")
-attr(data1$ing4, "qwording_pt"); 
-```
-
-Alternatively, a streamlined approach for advanced users who just want to glimpse on variable labels without assigning to the dataset would be assessing those notes directly with a combination of `lapply()` and `Filter()` functions from base R, or also `compact()` and `map()` functions from the `purrr` package.
-
-Both approaches extract the third element (x[3]) from each list in the "expansion.fields" attribute of data1, but only if the first element (x[1]) equals "ing4" (i.e., the variable of interest). Both produce a cleaned list of matching third nested elements.
-
-```{r, STREAMLINED APPROACH, eval=F}
-# Base R approach:
-# The base R version uses lapply to iterate over the list and returns NULL when the condition isn't met, then Filter(Negate(is.null), ...) removes those NULLs.
-Filter(Negate(is.null), lapply(attr(data1, "expansion.fields"), 
-                               function(x) if (x[1] %in% c("ing4")) x[3]))
-
-# purrr package approach
-#  The purrr version uses map() to do the same, and also remove NULL results. 
-purrr::compact(purrr::map(attr(data1, "expansion.fields"), ~ 
-                            if (.x[1] %in% c("ing4")) .x[3]))
+# Printing languages
+attr(bra23$ing4, "qwording_en")
+attr(bra23$ing4, "qwording_es")
+attr(bra23$ing4, "qwording_pt") 
 ```
 
 ## Extracting AmericasBarometer Values Labels (Response Options)
@@ -140,11 +151,13 @@ AmericasBarometer's values labels (i.e., response options) differently from the 
 as an attribute across languages. Default language is English and default attribute name is `roslabel` but the function allows custom attribute names as shown below:
 
 ```{r, ROs, eval=F}
-data1 <- lpr_set_ros(data1) # Default English
-data1 <- lpr_set_ros(data1, lang_id = "es", attribute_name = "respuestas") # Spanish
-data1 <- lpr_set_ros(data1, lang_id = "pt", attribute_name = "ROsLabels_pt") # Portuguese
+bra23 <- lpr_set_ros(bra23) # Default English
+bra23 <- lpr_set_ros(bra23, lang_id = "es", attribute_name = "respuestas") # Spanish
+bra23 <- lpr_set_ros(bra23, lang_id = "pt", attribute_name = "ROsLabels_pt") # Portuguese
 
-attr(data1$ing4, "roslabel"); attr(data1$ing4, "respuestas"); attr(data1$ing4, "ROsLabels_pt")
+attr(bra23$ing4, "roslabel")
+attr(bra23$ing4, "respuestas")
+attr(bra23$ing4, "ROsLabels_pt")
 ```
 
 <br>

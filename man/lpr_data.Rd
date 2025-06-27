@@ -19,8 +19,17 @@ This function takes LAPOP datasets and adds survey features, outputting a
 svy_tbl object that can then be analyzed using lpr_ commands.
 }
 \examples{
-\dontrun{
-gm23 <- lpr_data("Merge 2023 LAPOP AmericasBarometer (v1.0s).dta")}
+# Single-country (wt)
+bra23w <- lpr_data(bra23, wt = TRUE)
+print(bra23w)
+
+# Single-country multi-year (weight1500)
+cm23w <- lpr_data(cm23)
+print(cm23w)
+
+# Multi-country single-year (weight1500)
+ym23w <- lpr_data(cm23)
+print(cm23w)
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}

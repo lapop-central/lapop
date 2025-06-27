@@ -29,12 +29,14 @@
 #' @examples {
 #' # Apply the function
 #' \dontrun{
-#' data1 <- lpr_set_ros(data1) # Default English
-#' data1 <- lpr_set_ros(data1, lang_id = "es", attribute_name = "respuestas") # Spanish
-#' data1 <- lpr_set_ros(data1, lang_id = "pt", attribute_name = "ROsLabels_pt") # Portuguese
+#' bra23 <- lpr_set_ros(bra23) # Default English
+#' bra23 <- lpr_set_ros(bra23, lang_id = "es", attribute_name = "respuestas") # Spanish
+#' bra23 <- lpr_set_ros(bra23, lang_id = "pt", attribute_name = "ROsLabels_pt") # Portuguese
 #'
 #' # View the resulting attribute
-#' attr(data1$ing4, "roslabel"); attr(data1$ing4, "respuestas"); attr(data1$ing4, "ROsLabels_pt")
+#' attr(bra23$ing4, "roslabel")
+#' attr(bra23$ing4, "respuestas")
+#' attr(bra23$ing4, "ROsLabels_pt")
 #' }
 #' }
 #' @export
@@ -43,6 +45,22 @@
 lpr_set_ros <- function(data, lang_id = "en", attribute_name = "roslabel") {
   for (VAR in names(data)) {
     label_table_name <- paste0(VAR, "_", lang_id)
+
+    # Extract available language codes from label names (e.g., "_pt", "_es", "_en")
+    matches <- regexpr("(?<=_)[a-z]{2}$", label_table_names, perl = TRUE)
+    lang_suffixes <- regmatches(label_table_names, matches)
+    lang_suffixes <- lang_suffixes[matches != -1] # names that do not end in a valid 2-letter language code, c
+    # causing regexpr() to return -1 and regmatches() to insert NA when coerced to a character vector.
+    lang_suffixes <- lang_suffixes[!is.na(lang_suffixes) & lang_suffixes != ""] # Clean those NAs
+
+    # Warn if requested lang_id not found
+    if (!(lang_id %in% lang_suffixes)) {
+      warning(sprintf(
+        "Language '%s' not found in label tables. Available options: %s",
+        lang_id, paste(unique(lang_suffixes), collapse = ", ")
+      ))
+      return(data)
+    }
 
     # Check if the label table exists for the given language
     if (label_table_name %in% names(attr(data, "label.table"))) {

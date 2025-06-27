@@ -6,26 +6,39 @@
 
 #' LAPOP Data Processing
 #'
-#' This function takes LAPOP datasets and adds survey features, outputting a
-#' svy_tbl object that can then be analyzed using lpr_ commands.
+#' This function takes LAPOP datasets and adds survey features such as sampling
+#' design effects, outputting a svy_tbl object that can then be analyzed using
+#' lpr_ wrangling commands.
 #'
 #' @param data_path A dataframe of LAPOP survey data.
-#' @param wt Logical.  If TRUE, use wt instead of weight1500.  Default: FALSE.
+#' @param wt Logical.  If TRUE, use `wt` (weights only for single-country single-year data)
+#' instead of `weight1500` (the default weights for multiple-country and multiple-year data).
+#' Default: FALSE.
 #'
 #' @return Returns a svy_tbl object
 #'
-#' @examples
+#' @examples {
 #'
-#' \dontrun{
-#' gm23 <- lpr_data("Merge 2023 LAPOP AmericasBarometer (v1.0s).dta")
-#' }
+#' # Single-country single-year (wt)
+#' #' bra23w <- lpr_data(bra23, wt = TRUE)
+#' print(bra23w)
+#'}
+#' # Single-country  multi-year (weight1500)
+#' cm23w <- lpr_data(cm23)
+#' print(cm23w)
+#'}
+#'
+#'#' # Multi-country  single-year (weight1500)
+#' ym23w <- lpr_data(ym23, wt = TRUE)
+#' print(ym23w)
+#'}
 #'
 #'@export
 #'@import srvyr
 #'@import haven
 #'@import dplyr
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 lpr_data = function (data_path, wt = FALSE)
 {
@@ -50,10 +63,13 @@ lpr_data = function (data_path, wt = FALSE)
   data$pais_lab <- country_codes[as.character(data$pais)]
   data <- data[!is.na(data$upm), ]
 
+  # Check if the required weight variable is present
   if (wt == TRUE) {
+    if (!"wt" %in% names(data)) stop("Weight variable 'wt' not found in dataset.")
     datas <- data %>% as_survey(ids = upm, strata = strata,
                                 weights = wt, nest = TRUE)
   } else {
+    if (!"weight1500" %in% names(data)) stop("Weight variable 'weight1500' not found in dataset.")
     datas <- data %>% as_survey(ids = upm, strata = strata,
                                 weights = weight1500, nest = TRUE)
   }
