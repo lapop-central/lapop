@@ -102,7 +102,7 @@ A streamlined approach for users who want to quickly find the values of the note
 
 Both approaches extract the third element (x[3]) from each list in the "expansion.fields" attribute of the dataset, but only if the first element (x[1]) equals "ing4" (i.e., the variable of interest). Both produce a semi-structured list of matching third nested elements.
 
-```{r, STREAMLINED APPROACH}
+```{r, STREAMLINED APPROACH, eval=F}
 # Base R approach:
 # The base R version uses lapply to iterate over the list and returns NULL when the condition isn't met, then Filter(Negate(is.null), ...) removes those NULLs.
 Filter(Negate(is.null), lapply(attr(bra23, "expansion.fields"), function(x) {
@@ -134,10 +134,11 @@ After extracting the notes, one can assign variable labels to their preferred la
 # English
 bra23<-lpr_set_attr(bra23, notes, noteid = "note2", attribute_name = "qwording_en") 
 # Spanish
-bra23<-lpr_set_attr(bra23, notes, noteid = "note1", attribute_name = "qwording_es") 
+bra23<-lpr_set_attr(bra23, notes, noteid = "note1", attribute_name = "qwording_es")
 
 # Portuguese
 bra23<-lpr_set_attr(bra23, notes, noteid = "note3", attribute_name = "qwording_pt") 
+
 
 # Printing languages
 attr(bra23$ing4, "qwording_en")
@@ -152,9 +153,14 @@ as an attribute across languages. Default language is English and default attrib
 
 ```{r, ROs, eval=F}
 bra23 <- lpr_set_ros(bra23) # Default English
-bra23 <- lpr_set_ros(bra23, lang_id = "es", attribute_name = "respuestas") # Spanish
-bra23 <- lpr_set_ros(bra23, lang_id = "pt", attribute_name = "ROsLabels_pt") # Portuguese
 
+bra23 <- lpr_set_ros(bra23, lang_id = "es", 
+                     attribute_name = "respuestas") # Spanish
+
+bra23 <- lpr_set_ros(bra23, lang_id = "pt", 
+                     attribute_name = "ROsLabels_pt") # Portuguese
+
+# Printing ROs
 attr(bra23$ing4, "roslabel")
 attr(bra23$ing4, "respuestas")
 attr(bra23$ing4, "ROsLabels_pt")

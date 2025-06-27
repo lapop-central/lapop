@@ -31,7 +31,11 @@ bra23 <- bra %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
                         "wave", "pais", "year", "upm", "strata", "wt") %>%
                                                         filter(wave==2023)
 
+# rda
 save(bra23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\bra23.rda"))
+# dta
+readstata13::save.dta13(bra23, file = "~/GitHub/lapop/data/bra23.dta",
+                        convert.factors = "label")
 
 # # -----------------------------------------------------------------------
 # BRAZIL SINGLE-COUNTRY MULTI-YEAR MERGE
@@ -40,8 +44,12 @@ cm <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/
                               generate.factors = TRUE)
 cm23 <- cm %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
                         "wave", "pais", "year", "upm", "strata", "weight1500", "wt")
-CONTINUE HEREhaven::write_dta(cm23, paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\cm23.dta"))
+
+# rda
 save(cm23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\cm23.rda"))
+# dta
+readstata13::save.dta13(cm23, file = "~/GitHub/lapop/data/cm23.dta",
+                        convert.factors = "label")
 
 # # -----------------------------------------------------------------------
 # MULTI-COUNTRY SINGLE-YEAR AB 2023 MERGE
@@ -53,8 +61,11 @@ ym23 <- ym23 %>% select("wave", "pais", "year",
                         "ing4", "b12", "b18", "pn4", "vb21n", "q14f", "d4",
                         "edre", "wealth", "q1tc_r", "upm", "strata", "weight1500")
 
-#saveRDS(ym, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rds"))
+#rda
 save(ym23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rda"))
+# dta
+readstata13::save.dta13(ym23, file = "~/GitHub/lapop/data/ym23.dta",
+                        convert.factors = "label")
 
 # CHECK FILES SIZE
 tools::checkRdaFiles("data/")
