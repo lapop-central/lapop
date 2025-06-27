@@ -4,8 +4,6 @@
 #'
 #' @format A data frame
 #' \describe{
-#' \item{b21}{Description of Column}
-#' \item{b31}{Description of Column}
 #' \item{b12}{Description of Column}
 #' \item{wave}{Description of Column}
 #' \item{pais}{Description of Column}
