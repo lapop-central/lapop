@@ -45,11 +45,18 @@ devtools::install_github("lapop-central/lapop",
    - Breakdown by covariates: `lpr_mover()`
 
 5. Store the output in an R object.
+   - File names: .csv and graphics files should have the same name. Their names should be in the following standard format: CountryYear/ts_DVcode(s)_IVcode(s)_graphtype.filetype.
+   - Examples:
+      
+      - mex21_countfair1_hist.csv
+      - hndts_b4_ts.svg
+      - ab23_vic1ext_pais_cc.png
+   - There will be some cases that do not easily fit this standard. Use your best judgment.
 
-6. Use the corresponding `lapop` plotting function to produce the visualization:
+7. Use the corresponding `lapop` plotting function to produce the visualization:
    - Examples: `lapop_hist()`, `lapop_cc()`, `lapop_ts()`, etc.
 
-7. Export the figure to your machine with:
+8. Export the figure to your machine with:
 
    ```r
    lapop_save()
