@@ -52,7 +52,7 @@
 #' @examples {
 #' \dontrun{
 #'  # Single outcome over years
-#' lpr_dumb(gm2123,
+#' lpr_dumb(ym2123,
 #' outcome = "ing4",
 #' rec = c(5, 7),
 #' over = c(2021, 2023),
@@ -60,10 +60,10 @@
 #' ttest = TRUE)}
 #'
 #' # Multiple outcomes over years
-#'\dontrun{lpr_dumb(YM,
+#'\dontrun{lpr_dumb(ym2123,
 #' outcome=c("b21", "b13", "b31", "b47a"),
 #' rec=c(5,7),
-#' over=c(2004, 2006))}
+#' over=c(2021, 2023))}
 #'}
 #'@export
 #'@import dplyr
