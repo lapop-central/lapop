@@ -159,12 +159,17 @@ proceed with the dataset loaded with the <code>readstata13</code>
 package.</p>
 </div>
 <div class="section level2">
-<h2 id="extracting-americasbarometer-variables-labels-question-wording">Extracting AmericasBarometer Variables Labels (Question
-Wording)<a class="anchor" aria-label="anchor" href="#extracting-americasbarometer-variables-labels-question-wording"></a>
+<h2 id="americasbarometer-variables-labels-question-wording">AmericasBarometer Variables Labels (Question Wording)<a class="anchor" aria-label="anchor" href="#americasbarometer-variables-labels-question-wording"></a>
 </h2>
 <p>AmericasBarometer variable labels are stored as <code>notes</code> in
 STATA .dta files. We can find them inside the “expansion.fields”
 attribute.</p>
+<p>The <code>varlabels</code> object created is a nested list (much like
+a JSON object) that will contain multilingual notes with the question
+wording of each variable. For instance, for the variable
+<code>ing4</code> in the <code>Brazil AB 2023</code> dataset will
+contain notes with the question wording and lead-in in English, Spanish,
+and Portuguese.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">bra23</span><span class="op">)</span></span>
 <span></span>
@@ -216,13 +221,6 @@ attribute.</p>
 <span><span class="co">## [1] "ing4"                                                                                                                                          </span></span>
 <span><span class="co">## [2] "note2"                                                                                                                                         </span></span>
 <span><span class="co">## [3] "Democracy may have problems, but it is better than any other form of government.  To what extent do you agree or disagree with this statement?"</span></span></code></pre>
-<p>The <code>varlabels</code> object created is a nested list (much like
-a JSON object) that will contain multilingual notes with the question
-wording of each variable. For instance, for the variable
-<code>ing4</code> in the <code>Brazil AB 2023</code> dataset will
-contain notes with the question wording and lead-in in English (note4
-and note5), Spanish (note7 and note8), and Portuguese (note1 and
-note2).</p>
 </div>
 <div class="section level2">
 <h2 id="how-do-i-find-the-correct-language-labels">How do I find the correct language labels?<a class="anchor" aria-label="anchor" href="#how-do-i-find-the-correct-language-labels"></a>
@@ -245,10 +243,12 @@ produce a semi-structured list of matching third nested elements.</p>
 <code class="sourceCode R"><span><span class="co"># Base R approach:</span></span>
 <span><span class="co"># The base R version uses lapply to iterate over the list and returns NULL when </span></span>
 <span><span class="co"># the condition isn't met, then Filter(Negate(is.null), ...) removes those NULLs.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Negate</a></span><span class="op">(</span><span class="va">is.null</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="st">"expansion.fields"</span><span class="op">)</span>, </span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Negate</a></span><span class="op">(</span><span class="va">is.null</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="st">"expansion.fields"</span><span class="op">)</span>, </span>
 <span>  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"ing4"</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>note_id <span class="op">=</span> <span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, note_value <span class="op">=</span> <span class="va">x</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [[1]]</span></span>
 <span><span class="co">## [[1]]$note_id</span></span>
 <span><span class="co">## [1] "_lang_l_en"</span></span>
@@ -294,71 +294,7 @@ produce a semi-structured list of matching third nested elements.</p>
 <span><span class="co">## [1] "note5"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[6]]$note_value</span></span>
-<span><span class="co">## [1] "Democracy may have problems, but it is better than any other form of government. To what extent do you agree or disagree with this statement?"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[7]]</span></span>
-<span><span class="co">## [[7]]$note_id</span></span>
-<span><span class="co">## [1] "note4"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[7]]$note_value</span></span>
-<span><span class="co">## [1] "Agora, vamos usar um cartão em que o ponto 1 representa \"discorda muito\" e o ponto 7 representa \"concorda muito\". Um número entre 1 e 7, representa uma pontuação intermediária. Agora vou ler algumas frases. Por favor, me diga o quanto concorda ou discorda delas."</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[8]]</span></span>
-<span><span class="co">## [[8]]$note_id</span></span>
-<span><span class="co">## [1] "note3"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[8]]$note_value</span></span>
-<span><span class="co">## [1] "A democracia tem seus problemas, mas é melhor que qualquer outra forma de governo. Até que ponto concorda ou discorda desta frase?"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[9]]</span></span>
-<span><span class="co">## [[9]]$note_id</span></span>
-<span><span class="co">## [1] "_lang_l_default"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[9]]$note_value</span></span>
-<span><span class="co">## [1] "labels2670"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[10]]</span></span>
-<span><span class="co">## [[10]]$note_id</span></span>
-<span><span class="co">## [1] "_lang_v_default"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[10]]$note_value</span></span>
-<span><span class="co">## [1] "ING4. A democracia tem seus problemas, mas é melhor que qualquer outra forma de"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[11]]</span></span>
-<span><span class="co">## [[11]]$note_id</span></span>
-<span><span class="co">## [1] "note1"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[11]]$note_value</span></span>
-<span><span class="co">## [1] "Puede que la democracia tenga problemas, pero es mejor que cualquier otra forma de gobierno. ¿Hasta qué punto está de acuerdo o en desacuerdo con esta frase?"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[12]]</span></span>
-<span><span class="co">## [[12]]$note_id</span></span>
-<span><span class="co">## [1] "note2"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[12]]$note_value</span></span>
-<span><span class="co">## [1] "Democracy may have problems, but it is better than any other form of government.  To what extent do you agree or disagree with this statement?"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[13]]</span></span>
-<span><span class="co">## [[13]]$note_id</span></span>
-<span><span class="co">## [1] "_lang_v_pt"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[13]]$note_value</span></span>
-<span><span class="co">## [1] "Apoio à democracia"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[14]]</span></span>
-<span><span class="co">## [[14]]$note_id</span></span>
-<span><span class="co">## [1] "_lang_l_pt"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[14]]$note_value</span></span>
-<span><span class="co">## [1] "ing4_pt"</span></span></code></pre>
+<span><span class="co">## [1] "Democracy may have problems, but it is better than any other form of government. To what extent do you agree or disagree with this statement?"</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># purrr package approach</span></span>
 <span><span class="co">#  The purrr version uses map() to do the same, and also remove NULL results. </span></span>
@@ -449,7 +385,7 @@ data analysis without the need of an accompanying codebook.</p>
 <pre><code><span><span class="co">## [1] "A democracia tem seus problemas, mas é melhor que qualquer outra forma de governo. Até que ponto concorda ou discorda desta frase?"</span></span></code></pre>
 </div>
 <div class="section level2">
-<h2 id="extracting-americasbarometer-values-labels-response-options">Extracting AmericasBarometer Values Labels (Response Options)<a class="anchor" aria-label="anchor" href="#extracting-americasbarometer-values-labels-response-options"></a>
+<h2 id="americasbarometer-values-labels-response-options">AmericasBarometer Values Labels (Response Options)<a class="anchor" aria-label="anchor" href="#americasbarometer-values-labels-response-options"></a>
 </h2>
 <p>AmericasBarometer’s values labels (i.e., response options)
 differently from the variable labels are stored inside the “label.table”
