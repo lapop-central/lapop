@@ -11,7 +11,6 @@
 #'   \item{b31}{Description of Column}
 #'   \item{b12}{Description of Column}
 #'   \item{wave}{Description of Column}
-#'   \item{pais_lab}{Description of Column}
 #'   \item{pais}{Description of Column}
 #'   \item{year}{Description of Column}
 #'   \item{b18}{Description of Column}
@@ -21,6 +20,8 @@
 #'   \item{q1tc_r}{Description of Column}
 #'   \item{vb21n}{Description of Column}
 #'   \item{q14f}{Description of Column}
+#'   \item{strata}{Description of Column}
+#'   \item{weight1500}{Description of Column}
 #' }
 #' @source LAPOP AmericasBarometer (https://www.vanderbilt.edu/lapop/)  # Ensure this line has a valid source.
 #' @export

@@ -44,6 +44,14 @@ data(cm23)
 # AmericasBarometer 2023 Year Merge
 data(ym23)
 ```
+
+## Reverse Variables
+According to the LAPOP Editorial Guidelines, when variables are measured on a scale, reversing them can enhance clarity and coherence in data representation. For instance, if a survey question aims to measure positive sentiment but higher numeric values indicate negative responses, reversing the variable aligns the coding with the expected direction of responses. This makes it easier for readers to understand the findings.
+
+```{r, reverse}
+cm23$aoj11r <- lpr_resc(cm23$aoj11, reverse = TRUE, map=TRUE)
+```
+
 ### Survey Design for the Data
 
 The AmericasBarometer use `weight1500` for comparative datasets by time or country, `wt` weights are only for country specific datasets (single-country single-year). In the AmericasBarometer the primary sampling units (ids = upm) and stratification variable (strata = strata) to account for the survey’s complex design. Finally, PSUs are nested within strata, properly reflecting the survey’s hierarchical sampling structure. The `lpr_data()` function apply survey design effects. 
@@ -60,13 +68,6 @@ print(cm23w)
 # Multi-Country Single-Year
 ym23w <- lpr_data(ym23)
 print(ym23w)
-```
-
-## Reverse Variables
-According to the LAPOP Editorial Guidelines, when variables are measured on a scale, reversing them can enhance clarity and coherence in data representation. For instance, if a survey question aims to measure positive sentiment but higher numeric values indicate negative responses, reversing the variable aligns the coding with the expected direction of responses. This makes it easier for readers to understand the findings.
-
-```{r, reverse}
-cm23$aoj11r <- lpr_resc(cm23$aoj11, reverse = TRUE, map=TRUE)
 ```
 
 ## Fonts

@@ -19,6 +19,7 @@ This function takes LAPOP datasets and adds survey features, outputting a
 svy_tbl object that can then be analyzed using lpr_ commands.
 }
 \examples{
+\dontrun{
 # Single-country (wt)
 bra23w <- lpr_data(bra23, wt = TRUE)
 print(bra23w)
@@ -30,6 +31,7 @@ print(cm23w)
 # Multi-country single-year (weight1500)
 ym23w <- lpr_data(cm23)
 print(cm23w)
+}
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
