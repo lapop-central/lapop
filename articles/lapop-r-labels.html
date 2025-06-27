@@ -142,12 +142,12 @@ extra information about an object beyond its basic data structure. To
 access the attributes of an object, you can use the <code><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr()</a></code>
 or <code><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes()</a></code> base functions.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># READSTATA13 PACKAGE (RECOMMENDED)</span></span>
+<code class="sourceCode R"><span><span class="co"># READSTATA13 PACKAGE (RECOMMENDED FOR LABELS)</span></span>
 <span><span class="va">data1</span> <span class="op">&lt;-</span> <span class="fu">read.dta13</span><span class="op">(</span><span class="st">"./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta"</span>, </span>
 <span>                                 generate.factors <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">data1</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># HAVEN PACKAGE</span></span>
+<span><span class="co"># HAVEN PACKAGE (RECOMMENDED FOR PLOTTING)</span></span>
 <span><span class="va">data2</span> <span class="op">&lt;-</span> <span class="fu">read_dta</span><span class="op">(</span><span class="st">"./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
