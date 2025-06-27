@@ -94,12 +94,15 @@ machine you can install it using the <code>devtools</code> package
 below:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Install the LAPOP Lab package:</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"https://github.com/lapop-central/lapop"</span>, force<span class="op">=</span><span class="cn">TRUE</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"https://github.com/lapop-central/lapop"</span>, </span>
+<span>                         force<span class="op">=</span><span class="cn">TRUE</span>, </span>
+<span>                         build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>After installation is successful, you will need to load the package
 into your library:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lapop-central.github.io/lapop/">lapop</a></span><span class="op">)</span></span>
-<span><span class="co"># Note: no need for lapop_fonts() since we are not plotting figures</span></span></code></pre></div>
+<span><span class="co"># Note: no need for lapop_fonts() </span></span>
+<span><span class="co"># because we are not plotting figures</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="how-lapop-lab-stores-variables-metadata">How LAPOP Lab stores variables metadata?<a class="anchor" aria-label="anchor" href="#how-lapop-lab-stores-variables-metadata"></a>
@@ -140,16 +143,16 @@ access the attributes of an object, you can use the <code><a href="https://rdrr.
 or <code><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes()</a></code> base functions.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># READSTATA13 PACKAGE (RECOMMENDED)</span></span>
-<span><span class="va">data1</span> <span class="op">&lt;-</span> <span class="fu">readstata13</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/readstata13/man/read.dta13.html" class="external-link">read.dta13</a></span><span class="op">(</span><span class="st">"./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta"</span>, </span>
+<span><span class="va">data1</span> <span class="op">&lt;-</span> <span class="fu">read.dta13</span><span class="op">(</span><span class="st">"./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta"</span>, </span>
 <span>                                 generate.factors <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">data1</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># HAVEN PACKAGE</span></span>
-<span><span class="va">data2</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html" class="external-link">read_dta</a></span><span class="op">(</span><span class="st">"./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta"</span><span class="op">)</span></span>
+<span><span class="va">data2</span> <span class="op">&lt;-</span> <span class="fu">read_dta</span><span class="op">(</span><span class="st">"./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># RIO PACKAGE</span></span>
-<span><span class="va">data3</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="http://gesistsa.github.io/rio/reference/import.html" class="external-link">import</a></span><span class="op">(</span><span class="st">"./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta"</span><span class="op">)</span></span>
+<span><span class="va">data3</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="st">"./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">data3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The methods <code>haven</code> and <code>rio</code> packages do not
 recover all the metadata from <code>dta</code> files. Thereby, we
@@ -199,14 +202,16 @@ produce a semi-structured list of matching third nested elements.</p>
 <code class="sourceCode R"><span><span class="co"># Base R approach:</span></span>
 <span><span class="co"># The base R version uses lapply to iterate over the list and returns NULL when </span></span>
 <span><span class="co"># the condition isn't met, then Filter(Negate(is.null), ...) removes those NULLs.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Negate</a></span><span class="op">(</span><span class="va">is.null</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="st">"expansion.fields"</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Negate</a></span><span class="op">(</span><span class="va">is.null</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="st">"expansion.fields"</span><span class="op">)</span>, </span>
+<span>  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"ing4"</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>note_id <span class="op">=</span> <span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, note_value <span class="op">=</span> <span class="va">x</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># purrr package approach</span></span>
 <span><span class="co">#  The purrr version uses map() to do the same, and also remove NULL results. </span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="st">"expansion.fields"</span><span class="op">)</span>, <span class="op">~</span> <span class="op">{</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">.x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"ing4"</span><span class="op">)</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>note_id <span class="op">=</span> <span class="va">.x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, note_value <span class="op">=</span> <span class="va">.x</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">.x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"ing4"</span><span class="op">)</span> </span>
+<span>    <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>note_id <span class="op">=</span> <span class="va">.x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, note_value <span class="op">=</span> <span class="va">.x</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <p>To ease the researchers and analysts job, LAPOP Lab developed custom
 functions to deal with those labels in R. First, we will use
@@ -217,20 +222,26 @@ dataframe format that will contain 3 columns:
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Extract AB notes</span></span>
 <span><span class="va">notes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_extract_notes.html">lpr_extract_notes</a></span><span class="op">(</span><span class="va">varlabels</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">notes</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># See columns names</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">notes</span><span class="op">$</span><span class="va">note_id</span><span class="op">)</span> <span class="co"># See all different note information available!</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">notes</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># columns names</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">notes</span><span class="op">$</span><span class="va">note_id</span><span class="op">)</span> <span class="co"># note information available!</span></span></code></pre></div>
 <p>After extracting the notes, one can assign variable labels to their
 preferred language as attributes to the dataset using another LAPOP Lab
 function called <code><a href="../reference/lpr_set_attr.html">lpr_set_attr()</a></code> and than access it during
 data analysis without the need of an accompanying codebook.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># English</span></span>
-<span><span class="va">bra23</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/lpr_set_attr.html">lpr_set_attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="va">notes</span>, noteid <span class="op">=</span> <span class="st">"note2"</span>, attribute_name <span class="op">=</span> <span class="st">"qwording_en"</span><span class="op">)</span> </span>
+<span><span class="va">bra23</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/lpr_set_attr.html">lpr_set_attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="va">notes</span>, </span>
+<span>                    noteid <span class="op">=</span> <span class="st">"note2"</span>, </span>
+<span>                    attribute_name <span class="op">=</span> <span class="st">"qwording_en"</span><span class="op">)</span> </span>
 <span><span class="co"># Spanish</span></span>
-<span><span class="va">bra23</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/lpr_set_attr.html">lpr_set_attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="va">notes</span>, noteid <span class="op">=</span> <span class="st">"note1"</span>, attribute_name <span class="op">=</span> <span class="st">"qwording_es"</span><span class="op">)</span></span>
+<span><span class="va">bra23</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/lpr_set_attr.html">lpr_set_attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="va">notes</span>, </span>
+<span>                    noteid <span class="op">=</span> <span class="st">"note1"</span>, </span>
+<span>                    attribute_name <span class="op">=</span> <span class="st">"qwording_es"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Portuguese</span></span>
-<span><span class="va">bra23</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/lpr_set_attr.html">lpr_set_attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="va">notes</span>, noteid <span class="op">=</span> <span class="st">"note3"</span>, attribute_name <span class="op">=</span> <span class="st">"qwording_pt"</span><span class="op">)</span> </span>
+<span><span class="va">bra23</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/lpr_set_attr.html">lpr_set_attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="va">notes</span>, </span>
+<span>                    noteid <span class="op">=</span> <span class="st">"note3"</span>, </span>
+<span>                    attribute_name <span class="op">=</span> <span class="st">"qwording_pt"</span><span class="op">)</span> </span>
 <span></span>
 <span></span>
 <span><span class="co"># Printing languages</span></span>
