@@ -30,15 +30,15 @@ bra <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB
 bra23 <- bra %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
                         "wave", "pais", "year", "upm", "strata", "wt") %>%
                                                         filter(wave==2023)
-#ra23<-lpr_data(bra23, wt = TRUE)
+#bra23<-lpr_data(bra23, wt = TRUE)
 
 bra23
 
 # rda
 save(bra23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\bra23.rda"))
 # dta
-readstata13::save.dta13(bra23, file = "~/GitHub/lapop/data/bra23.dta",
-                        convert.factors = "label")
+#readstata13::save.dta13(bra23, file = "~/GitHub/lapop/data/bra23.dta",
+#                        convert.factors = "label")
 
 # # -----------------------------------------------------------------------
 # BRAZIL SINGLE-COUNTRY MULTI-YEAR MERGE
@@ -48,15 +48,15 @@ cm <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/
 cm23 <- cm %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
                         "wave", "pais", "year", "upm", "strata", "wt", "weight1500")
 
-cm23<-lpr_data(cm23)
+#cm23<-lpr_data(cm23)
 
 cm23
 
 # rda
 save(cm23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\cm23.rda"))
 # dta
-readstata13::save.dta13(cm23, file = "~/GitHub/lapop/data/cm23.dta",
-                        convert.factors = "label")
+#readstata13::save.dta13(cm23, file = "~/GitHub/lapop/data/cm23.dta",
+#                        convert.factors = "label")
 
 # # -----------------------------------------------------------------------
 # MULTI-COUNTRY SINGLE-YEAR AB 2023 MERGE
@@ -65,18 +65,21 @@ ym <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/
                generate.factors = TRUE) # year-merge
 ym23 <- ym %>% filter(!(pais %in% c(26, 40, 41))) # Excluding
 ym23 <- ym23 %>% select("wave", "pais", "year",
-                        "ing4", "b12", "b18", "pn4", "vb21n", "q14f", "d4",
-                        "edre", "wealth", "q1tc_r", "upm", "strata", "weight1500")
+                        "b12", "b18",
+                        "ing4", "pn4",
+                        "vb21n", "q14f",
+                        "edre", "wealth", "q1tc_r",
+                        "upm", "strata", "weight1500")
 
-ym23<-lpr_data(ym23)
+#ym23<-lpr_data(ym23)
 
 ym23
 
 #rda
 save(ym23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rda"))
 # dta
-readstata13::save.dta13(ym23, file = "~/GitHub/lapop/data/ym23.dta",
-                        convert.factors = "label")
+#readstata13::save.dta13(ym23, file = "~/GitHub/lapop/data/ym23.dta",
+#                        convert.factors = "label")
 
 # CHECK FILES SIZE
 tools::checkRdaFiles("data/")
