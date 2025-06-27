@@ -7,7 +7,7 @@
 lpr_data(data_path, wt = FALSE)
 }
 \arguments{
-\item{data_path}{A dataframe of LAPOP survey data.}
+\item{data_path}{The path for a AmericasBarometer data or a an existing dataframe.}
 
 \item{wt}{Logical.  If TRUE, use wt instead of weight1500.  Default: FALSE.}
 }

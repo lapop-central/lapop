@@ -10,7 +10,7 @@
 #' design effects, outputting a svy_tbl object that can then be analyzed using
 #' lpr_ wrangling commands.
 #'
-#' @param data_path A dataframe of LAPOP survey data.
+#' @param data_path The path for a AmericasBarometer data or a an existing dataframe.
 #' @param wt Logical.  If TRUE, use `wt` (weights only for single-country single-year data)
 #' instead of `weight1500` (the default weights for multiple-country and multiple-year data).
 #' Default: FALSE.
@@ -54,14 +54,32 @@ lpr_data = function (data_path, wt = FALSE)
     stop("data_path must be a valid file path or a data frame.")
   }
 
-  country_codes <- c(`1` = "MX", `2` = "GT", `3` = "SV", `4` = "HN",
+  country_codes_numbers <- c(`1` = "MX", `2` = "GT", `3` = "SV", `4` = "HN",
                      `5` = "NI", `6` = "CR", `7` = "PA", `8` = "CO", `9` = "EC",
                      `10` = "BO", `11` = "PE", `12` = "PY", `13` = "CL", `14` = "UY",
                      `15` = "BR", `17` = "AR", `21` = "DO", `22` = "HT", `23` = "JM",
                      `25` = "TT", `26` = "BZ", `27` = "SR", `28` = "BS", `30` = "GD",
                      `40` = "US", `41` = "CA")
 
-  data$pais_lab <- country_codes[as.character(data$pais)]
+  country_codes_names <- c(
+    "Mexico" = "MX", "Guatemala" = "GT", "El Salvador" = "SV", "Honduras" = "HN",
+    "Nicaragua" = "NI", "Costa Rica" = "CR", "Panama" = "PA", "Colombia" = "CO",
+    "Ecuador" = "EC", "Bolivia" = "BO", "Peru" = "PE", "Paraguay" = "PY",
+    "Chile" = "CL", "Uruguay" = "UY", "Brazil" = "BR", "Argentina" = "AR",
+    "Dominican Republic" = "DO", "Haiti" = "HT", "Jamaica" = "JM",
+    "Trinidad and Tobago" = "TT", "Belize" = "BZ", "Surinam" = "SR",
+    "Bahamas" = "BS", "Grenada" = "GD", "United States" = "US", "Canada" = "CA"
+  )
+
+
+  if (is.factor(data$pais)) {
+    # Assume factor of country names
+    data$pais_lab <- country_codes_names[as.character(data$pais)]
+  } else {
+    # Assume numeric codes
+    data$pais_lab <- country_codes_numbers[as.character(data$pais)]
+  }
+
   data <- data[!is.na(data$upm), ]
 
   # Check if the required weight variable is present
