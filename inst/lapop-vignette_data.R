@@ -1,6 +1,6 @@
 ## ----setup, include=FALSE-----------------------------------------------------
 #knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
-
+rm(list=ls()); gv()
 ## ----packages-----------------------------------------------------------------
 library(lapop)
 library(dplyr)
@@ -72,8 +72,4 @@ tools::checkRdaFiles("data/")
 
 # COMPRESS TO XZ FOR BEST FILESIZE
 tools::resaveRdaFiles("data/", compress = "xz")
-
-#gm23 <- load(paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\gm23.RDS"))
-#ym23 <- load(paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.RDS"))
-#cm23 <- load(paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\cm23.RDS"))
-#rm(list=ls()); gc()
+tools::checkRdaFiles("data/")
