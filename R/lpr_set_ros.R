@@ -47,8 +47,8 @@ lpr_set_ros <- function(data, lang_id = "en", attribute_name = "roslabel") {
     label_table_name <- paste0(VAR, "_", lang_id)
 
     # Extract available language codes from label names (e.g., "_pt", "_es", "_en")
-    matches <- regexpr("(?<=_)[a-z]{2}$", label_table_names, perl = TRUE)
-    lang_suffixes <- regmatches(label_table_names, matches)
+    matches <- regexpr("(?<=_)[a-z]{2}$", label_table_name, perl = TRUE)
+    lang_suffixes <- regmatches(label_table_name, matches)
     lang_suffixes <- lang_suffixes[matches != -1] # names that do not end in a valid 2-letter language code, c
     # causing regexpr() to return -1 and regmatches() to insert NA when coerced to a character vector.
     lang_suffixes <- lang_suffixes[!is.na(lang_suffixes) & lang_suffixes != ""] # Clean those NAs
