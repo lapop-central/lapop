@@ -26,8 +26,7 @@ library(dplyr)
 # # -----------------------------------------------------------------------
 # BRAZIL SINGLE-COUNTRY SINGLE-YEAR MERGE
 # # -----------------------------------------------------------------------
-bra <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing/BRA merge 2007-2023 LAPOP AmericasBarometer (v1.0s).dta",
-                               generate.factors = TRUE)
+bra <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing/BRA merge 2007-2023 LAPOP AmericasBarometer (v1.0s).dta")
 bra23 <- bra %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
                         "wave", "pais", "year", "upm", "strata", "wt") %>%
                                                         filter(wave==2023)
@@ -44,8 +43,7 @@ save(bra23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\bra23.rda"))
 # # -----------------------------------------------------------------------
 # BRAZIL SINGLE-COUNTRY MULTI-YEAR MERGE
 # # -----------------------------------------------------------------------
-cm <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing/BRA merge 2007-2023 LAPOP AmericasBarometer (v1.0s).dta",
-                              generate.factors = TRUE)
+cm <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing/BRA merge 2007-2023 LAPOP AmericasBarometer (v1.0s).dta")
 cm23 <- cm %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
                         "wave", "pais", "year", "upm", "strata", "wt", "weight1500")
 
@@ -62,8 +60,7 @@ save(cm23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\cm23.rda"))
 # # -----------------------------------------------------------------------
 # MULTI-COUNTRY SINGLE-YEAR AB 2023 MERGE
 # # -----------------------------------------------------------------------
-ym <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/YM/Merge 2023 LAPOP AmericasBarometer (v1.0s).dta",
-               generate.factors = TRUE) # year-merge
+ym <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/YM/Merge 2023 LAPOP AmericasBarometer (v1.0s).dta") # year-merge
 ym23 <- ym %>% filter(!(pais %in% c(26, 40, 41))) # Excluding
 ym23 <- ym23 %>% select("b12", "b18",
                         "wave", "pais", "year",
