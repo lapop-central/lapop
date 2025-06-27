@@ -1,0 +1,2538 @@
+\nonstopmode{}
+\documentclass[a4paper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\makeatletter\@ifl@t@r\fmtversion{2018/04/01}{}{\usepackage[utf8]{inputenc}}\makeatother
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `lapop'}}
+\par\bigskip{\large \today}
+\end{center}
+\ifthenelse{\boolean{Rd@use@hyper}}{\hypersetup{pdftitle = {lapop: Creates visualizations using LAPOP Lab Styles along with helper functions to work with AmericasBarometer Data}}}{}
+\ifthenelse{\boolean{Rd@use@hyper}}{\hypersetup{pdfauthor = {Robert Vidigal}}}{}
+\begin{description}
+\raggedright{}
+\item[Type]\AsIs{Package}
+\item[Title]\AsIs{Creates visualizations using LAPOP Lab Styles along with helper functions to work with AmericasBarometer Data}
+\item[Version]\AsIs{2.0.9}
+\item[Maintainer]\AsIs{Robert Vidigal }\email{Robert.Vidigal@vanderbilt.edu}\AsIs{}
+\item[Description]\AsIs{LAPOP Lab (formerly the Latin American Public Opinion Project) at Vanderbilt University is a world leader in public survey research and is best known for for the biennial AmericasBarometer project. You may find more information about the AmericasBarometer here: <}\url{https://www.vanderbilt.edu/lapop/about-americasbarometer.php}\AsIs{>. This package includes Tools for processing and visualizing survey data from the AmericasBarometer. Includes functions for labeling, weighting, and plotting following LAPOP's custom style guidelines and formatting for use in reports, presentations, and social media posts. If you find a bug, please consider donating or contributing to the LAPOP Lab — we spent all our money on coffee and data cleaning. The publicly available data can be downloaded here: <}\url{https://www.vanderbilt.edu/lapop/data-access.php}\AsIs{>.  
+IMPORTANT: Run lapop_fonts() before creating any graphs in order to use LAPOP-standard fonts.}
+\item[URL]\AsIs{<}\url{https://github.com/lapop-central/lapop-viz>}\AsIs{}
+\item[Depends]\AsIs{R (>= 3.5.0)}
+\item[Imports]\AsIs{ggplot2, ggtext, zoo, showtext, sysfonts, ggrepel, dplyr, tidyr, ggh4x, haven, systemfonts, svglite, stats, grid, gridtext, gridExtra, srvyr, purrr, marginaleffects, survey, codebook, stringr}
+\item[VignetteBuilder]\AsIs{knitr}
+\item[Suggests]\AsIs{readstata13,
+rio,
+rprojroot,
+knitr,
+rmarkdown,
+testthat (>= 3.0.0)}
+\item[Remotes]\AsIs{teunbrand/ggh4x}
+\item[Encoding]\AsIs{UTF-8}
+\item[License]\AsIs{MIT + file LICENSE}
+\item[RoxygenNote]\AsIs{7.3.2}
+\item[Config/testthat/edition]\AsIs{3}
+\item[Collate]\AsIs{'bra23.R'
+'cm23.R'
+'globals.R'
+'lapop-deprecated.R'
+'lapop_fonts.R'
+'lapop_cc.R'
+'lapop_cccomb.R'
+'lapop_ccm.R'
+'lapop_coef.R'
+'lapop_dumb.R'
+'lapop_fonts_design.R'
+'lapop_hist.R'
+'lapop_mline.R'
+'lapop_mover.R'
+'lapop_save.R'
+'lapop_stack.R'
+'lapop_ts.R'
+'lpr_cc.R'
+'lpr_ccm.R'
+'lpr_coef.R'
+'lpr_data.R'
+'lpr_dumb.R'
+'lpr_extract_notes.R'
+'lpr_hist.R'
+'lpr_mline.R'
+'lpr_mover.R'
+'lpr_resc.R'
+'lpr_set_attr.R'
+'lpr_set_ros.R'
+'lpr_stack.R'
+'lpr_ts.R'
+'ym23.R'
+'zzz.R'}
+\end{description}
+\Rdcontents{Contents}
+\HeaderA{bra23}{bra23 Dataset}{bra23}
+\keyword{datasets}{bra23}
+%
+\begin{Description}
+A dataset containing the AmericasBarometer Brazil 2023.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+bra23
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+A data frame
+\begin{description}
+
+\item[aoj11] Description of Column
+\item[ing4] Description of Column
+\item[b13] Description of Column
+\item[b21] Description of Column
+\item[b31] Description of Column
+\item[b12] Description of Column
+\item[wave] Description of Column
+\item[pais] Description of Column
+\item[year] Description of Column
+\item[upm] Description of Column
+\item[strata] Description of Column
+\item[wt] Description of Column
+...
+
+\end{description}
+
+\end{Format}
+%
+\begin{Source}
+LAPOP AmericasBarometer (https://www.vanderbilt.edu/lapop/)
+\end{Source}
+\HeaderA{cm23}{cm23 Dataset}{cm23}
+\keyword{datasets}{cm23}
+%
+\begin{Description}
+A dataset containing the AmericasBarometer Brazil Country Merge up to 2023.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+cm23
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+A data frame
+\begin{description}
+
+\item[aoj11] Description of Column
+\item[ing4] Description of Column
+\item[b13] Description of Column
+\item[b21] Description of Column
+\item[b31] Description of Column
+\item[b12] Description of Column
+\item[wave] Description of Column
+\item[pais] Description of Column
+\item[year] Description of Column
+\item[upm] Description of Column
+\item[strata] Description of Column
+\item[weight1500] Description of Column
+\item[wt] Description of Column
+...
+
+\end{description}
+
+\end{Format}
+%
+\begin{Source}
+LAPOP AmericasBarometer (https://www.vanderbilt.edu/lapop/)
+\end{Source}
+\HeaderA{lapop\_cc}{LAPOP Cross-Country Bar Graphs}{lapop.Rul.cc}
+%
+\begin{Description}
+This function creates bar graphs for comparing values across countries using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lapop_cc(
+  data,
+  outcome_var = data$prop,
+  lower_bound = data$lb,
+  vallabel = data$vallabel,
+  upper_bound = data$ub,
+  label_var = data$proplabel,
+  ymin = 0,
+  ymax = 100,
+  lang = "en",
+  highlight = "",
+  main_title = "",
+  source_info = "LAPOP",
+  subtitle = "",
+  sort = "",
+  color_scheme = "#784885",
+  label_size = 5,
+  max_countries = 30,
+  label_angle = 0
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] Data Frame. Dataset to be used for analysis.  The data frame should have columns
+titled vallabel (values of x-axis variable (e.g. pais); character vector), prop (outcome variable; numeric),
+proplabel (text of outcome variable; character), lb (lower bound of estimate; numeric),
+and ub (upper bound of estimate; numeric). Default: None (must be supplied).
+
+\item[\code{vallabel}, \code{outcome\_var}, \code{label\_var}, \code{lower\_bound}, \code{upper\_bound}] Character, numeric, character,
+numeric, numeric. Each component of the plot data can be manually specified in case
+the default columns in the data frame should not be used (if, for example, the values for a given
+variable were altered and stored in a new column). x
+
+\item[\code{ymin}, \code{ymax}] Numeric.  Minimum and maximum values for y-axis. Default: 0 to 100.
+
+\item[\code{lang}] Character.  Changes default subtitle text and source info to either Spanish or English.
+Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
+or "es" (Spanish).  Default: "en".
+
+\item[\code{highlight}] Character.  Country of interest.  Will highlight (make darker) that country's bar.
+Input must match entry in "vallabel" exactly. Default: None.
+
+\item[\code{main\_title}] Character.  Title of graph.  Default: None.
+
+\item[\code{source\_info}] Character.  Information on dataset used (country, years, version, etc.),
+which is added to the bottom-left corner of the graph. Default: LAPOP ("Source: LAPOP Lab" will be printed).
+
+\item[\code{subtitle}] Character.  Describes the values/data shown in the graph, e.g., "percentage of Mexicans who say...)".
+Default: None.
+
+\item[\code{sort}] Character. Method of sorting bars.  Options: "hi-lo" (highest to lowest y value), "lo-hi" (lowest to highest),
+"alpha" (alphabetical by vallabel/x-axis label). Default: Order of data frame.
+
+\item[\code{color\_scheme}] Character.  Color of bars.  Takes hex number, beginning with "\#".
+Default: \#784885.
+
+\item[\code{label\_size}] Numeric.  Size of text for data labels (percentages above bars).  Default: 5.
+
+\item[\code{max\_countries}] Numeric. Threshold for automatic x-axis label rotation. When the number of unique
+country labels exceeds this value, labels will be rotated for better readability. Default: 20.
+
+\item[\code{label\_angle}] Numeric. Angle (in degrees) to rotate x-axis labels when max\_countries is exceeded. Default: 0.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns an object of class \code{ggplot}, a ggplot figure showing
+average values of some variables across multiple countries.
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} \& Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+lapop_fonts()
+
+df <- data.frame(vallabel = c("PE", "CO", "BR", "PN", "GT", "DO", "MX", "BO", "EC",
+                          "PY", "CL", "HN", "CR", "SV", "JA", "AR", "UY", "NI"),
+                 prop = c(36.1, 19.3, 16.6, 13.3, 13, 11.1, 9.5, 9, 8.1, 8, 6.6,
+                          5.7, 5.1, 3.4, 2.6, 1.9, 0.8, 0.2),
+                 proplabel = c("36%" ,"19%" ,"17%" ,"13%" ,"13%" ,"11%" ,"10%",
+                               "9%", "8%", "8%", "7%", "6%", "5%", "3%", "3%",
+                               "2%", "1%", "0%"),
+                 lb = c(34.9, 18.1, 15.4, 12.1, 11.8, 9.9, 8.3, 7.8, 6.9, 6.8,
+                        5.4, 4.5, 3.9, 2.2, 1.4, 0.7, -0.4, -1),
+                 ub = c(37.3, 20.5, 17.8, 14.5, 14.2, 12.3, 10.7, 10.2, 9.3,
+                        9.2, 7.8, 6.9, 6.3, 4.6, 3.8, 3.1, 2, 1.4))
+
+lapop_cc(df,
+         main_title = "Normalization of Initimate Partner Violence in Seven LAC Countries",
+         subtitle = "% who say domestic violence is private matter",
+         source_info = ", 2021",
+         highlight = "BR",
+         ymax = 50)
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lapop\_cccomb}{LAPOP Bar Graphs}{lapop.Rul.cccomb}
+%
+\begin{Description}
+This function shows a bar graph for categorical variables using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lapop_cccomb(
+  cc1,
+  cc2,
+  subtitle1 = "",
+  subtitle2 = "",
+  main_title = "",
+  source_info = "",
+  lang = "en",
+  color_scheme = "#784885",
+  file_name = "",
+  width_px = 895,
+  height_px = 600
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{cc1}, \code{cc2}] lapop\_cc (ggplot) object.  Graphic for left and right panes, respectively.
+
+\item[\code{subtitle1}, \code{subtitle2}] Character.  Describes the values/data shown in the graph, e.g., "Percent who agree that...".
+Default: None.
+
+\item[\code{main\_title}] Character.  Title of graph.  Default: None.
+
+\item[\code{source\_info}] Character.  Information on dataset used (country, years, version, etc.),
+which is added to the end of "Source: LAPOP Lab" in the bottom-left corner of the graph.
+Default: None (only "Source: LAPOP Lab" will be printed).
+
+\item[\code{lang}] Character.  Changes default subtitle text and source info to either Spanish or English.
+Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
+or "es" (Spanish).  Default: "en".
+
+\item[\code{color\_scheme}] Character.  Color of bars.
+Takes hex numbers, beginning with "\#". Default: "\#008381".
+
+\item[\code{file\_name}] Character.  If desired, supply file path + name to save graph.
+
+\item[\code{width\_px}, \code{height\_px}] Numeric.  Width and height of saved graph in pixels. Default: 895, 600.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns an object of class \code{ggplot}, a ggplot bar graph.
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+df1 <- data.frame(vallabel = c("Crime victim", "Non-victim"),
+prop = c(36.1, 19.3),
+proplabel = c("36%" ,"19%"),
+lb = c(34.9, 18.1),
+ub = c(37.3, 20.5))
+
+df2 <- data.frame(vallabel = c("Crime victim", "Non-victim"),
+prop = c(45, 15),
+proplabel = c("45%" ,"15%"),
+lb = c(43, 13),
+ub = c(47, 16))
+
+ccx <- lapop_cc(df1)
+ccy <- lapop_cc(df2)
+
+lapop_cccomb(ccx, ccy,
+subtitle1 = "% who support democracy",
+subtitle2 = "% who are satisfied with democracy",
+main_title = "Crime victims are more supportive of and satisfied with democracy",
+source_info = ", AmericasBarometer 2023")
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lapop\_ccm}{LAPOP Cross-Country Bar Graphs}{lapop.Rul.ccm}
+%
+\begin{Description}
+This function creates bar graphs for comparing values across countries using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lapop_ccm(
+  data,
+  pais = data$pais,
+  outcome_var = data$prop,
+  lower_bound = data$lb,
+  upper_bound = data$ub,
+  label_var = data$proplabel,
+  var = data$var,
+  ymin = 0,
+  ymax = 100,
+  lang = "en",
+  main_title = "",
+  source_info = "",
+  subtitle = "",
+  sort = "",
+  y_label = "",
+  x_label = "",
+  highlight = "",
+  color_scheme = c("#784885", "#008381", "#C74E49"),
+  label_size = 4,
+  text_position = 0.7
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] Data Frame. Dataset to be used for analysis.  The data frame should have columns
+titled pais (values of x-axis variable (usually pais); character vector), prop (outcome variable; numeric),
+proplabel (text of outcome variable; character), lb (lower bound of estimate; numeric),
+ub (upper bound of estimate; numeric), and var (labels of secondary variables; character).
+Default: None (must be supplied).
+
+\item[\code{pais}, \code{outcome\_var}, \code{label\_var}, \code{lower\_bound}, \code{upper\_bound}, \code{var}] Character, numeric, character,
+numeric, numeric, character. Each component of the plot data can be manually specified in case
+the default columns in the data frame should not be used (if, for example, the values for a given
+variable were altered and stored in a new column).
+
+\item[\code{ymin}, \code{ymax}] Numeric.  Minimum and maximum values for y-axis. Default: 0 to 100.
+
+\item[\code{lang}] Character.  Changes default subtitle text and source info to either Spanish or English.
+Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
+or "es" (Spanish).  Default: "en".
+
+\item[\code{main\_title}] Character.  Title of graph.  Default: None.
+
+\item[\code{source\_info}] Character.  Information on dataset used (country, years, version, etc.),
+which is added to the end of "Source: " in the bottom-left corner of the graph.
+Default: None (only "Source: " will be printed).
+
+\item[\code{subtitle}] Character.  Describes the values/data shown in the graph, e.g., "percentage of Mexicans who say...)".
+Default: None.
+
+\item[\code{sort}] Character. Method of sorting bars.  Options: "var1" (highest to lowest on variable 1),
+"var2" (highest to lowest on variable 2), "var3" (highest to lowest on variable 3),
+"alpha" (alphabetical along x-axis/pais). Default: Order of data frame.
+
+\item[\code{y\_label}] Character.  Y-axis label.
+
+\item[\code{x\_label}] Character.  X-axis label.
+
+\item[\code{highlight}] Character.  Country of interest.  Will highlight (make darker) that country's bar.
+Input must match entry in "vallabel" exactly. Default: None.
+
+\item[\code{color\_scheme}] Character.  Color of bars.  Takes hex number, beginning with "\#".
+Default: "\#784885", "\#008381", "\#C74E49".
+
+\item[\code{label\_size}] Numeric.  Size of text for data labels (percentages above bars).  Default: 4.
+
+\item[\code{text\_position}] Numeric.  Amount that text above error bars should be offset (to avoid overlap).  Default: 0.7
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns an object of class \code{ggplot}, a ggplot figure showing
+average values of some variables across multiple countries.
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+lapop_fonts()
+
+df <- data.frame(pais = c(rep("HT", 2), rep("PE", 2), rep("HN", 2), rep("CO", 2),
+             rep("UY", 2), rep("CR", 2), rep("EC", 2), rep("CL", 2),
+              rep("BR", 2), rep("BO", 2), rep("JA", 2), rep("PN", 2)),
+              var = rep(c("countfair1", "countfair3"), 3),
+              prop = c(30, 38, 40, 49, 57, 33, 80, 54, 30, 43, 61, 42,
+                       38, 54, 74, 61, 50, 34, 48, 34, 72, 41, 58, 57),
+              proplabel = c("30%", "38%", "40%", "49%", "57%", "33%",
+                            "80%", "54%", "30%", "43%", "61%", "42%",
+                            "38%", "54%", "74%", "61%", "50%", "34%",
+                            "48%", "34%", "72%", "41%", "58%", "57%"),
+              lb = c(27, 35, 37, 46, 54, 30, 77, 51, 27, 40, 58, 39,
+                     35, 51, 71, 58, 47, 31, 45, 31, 69, 38, 55, 54),
+              ub = c(33, 41, 43, 52, 60, 36, 83, 57, 33, 46, 64, 45,
+                     41, 57, 77, 64, 53, 37, 51, 37, 75, 44, 61, 60))
+
+lapop_ccm(df, sort = "var")
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lapop\_coef}{LAPOP Regression Graphs}{lapop.Rul.coef}
+%
+\begin{Description}
+This function creates plots of regression coefficients and predicted probabilities using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lapop_coef(
+  data,
+  coef_var = data$coef,
+  label_var = data$proplabel,
+  varlabel_var = data$varlabel,
+  lb = data$lb,
+  ub = data$ub,
+  pval_var = data$pvalue,
+  lang = "en",
+  main_title = "",
+  subtitle = "",
+  source_info = "",
+  ymin = NULL,
+  ymax = NULL,
+  pred_prob = FALSE,
+  color_scheme = "#784885",
+  subtitle_h_just = 0
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] Data Frame. Dataset to be used for analysis.  The data frame should have columns
+titled coef (regression coefficients/predicted probabilities; numeric), proplabel (text of outcome variable; character),
+varlabel (names of variables to be plotted; character), lb (lower bound of coefficient estimate; numeric),
+ub (upper bound of estimate; numeric), and pvalue (p value of coefficient estimate; numeric).
+Default: None (must be supplied).
+
+\item[\code{coef\_var}, \code{label\_var}, \code{varlabel\_var}, \code{lb}, \code{ub}, \code{pval\_var}] Numeric, character, character, numeric,
+numeric, numeric. Each component of the data to be plotted can be manually specified in case
+the default columns in the data frame should not be used (if, for example, the values for a given
+variable were altered and stored in a new column).
+
+\item[\code{lang}] Character.  Changes default subtitle text and source info to either Spanish or English.
+Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
+or "es" (Spanish).  Default: "en".
+
+\item[\code{main\_title}] Character.  Title of graph.  Default: None.
+
+\item[\code{subtitle}] Character.  Describes the values/data shown in the graph, e.g., "Regression coefficients".
+Default: None.
+
+\item[\code{source\_info}] Character.  Information on dataset used (country, years, version, etc.),
+which is added to the end of "Source: " in the bottom-left corner of the graph.
+Default: None (only "Source: " will be printed).
+
+\item[\code{ymin}, \code{ymax}] Numeric.  Minimum and maximum values for y-axis. Default: dynamic.
+
+\item[\code{pred\_prob}] Logical.  Is the graph showing predicted probabilities (instead of regression coefficients)?
+Will only change text in the legend, not the data.  Default: FALSE.
+
+\item[\code{color\_scheme}] Character.  Color of bars.  Takes hex number, beginning with "\#".
+Default: "\#784885" (purple).
+
+\item[\code{subtitle\_h\_just}] Numeric.  Move the subtitle/legend text left (negative numbers) or right (positive numbers).
+Ranges from -100 to 100.  Default: 0.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns an object of class \code{ggplot}, a ggplot figure showing
+coefficients or predicted probabilities from a multivariate regression.
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+
+df <- data.frame(
+  varlabel = c("Intimate\nPartner", "wealth", "Education", "Age", "Male"),
+  coef = c(0.02, -0.07, -0.24, 0.01, 0.11),
+  lb = c(-0.002, -0.110, -0.295, -0.060, 0.085),
+  ub = c(0.049, -0.031, -0.187, 0.080, 0.135),
+  pvalue = c(0.075, 0.000, 0.000, 0.784, 0.000),
+  proplabel = c("0.02", "-0.07", "-0.24", "0.01", "0.11")
+)
+## Not run: 
+lapop_coef(df,
+           main_title = "Demographic and Socioeconomic Predictors of Normalizing IPV",
+           pred_prob = TRUE,
+           source_info = "2021",
+           ymin = -0.3,
+           ymax = 0.2)
+## End(Not run)
+
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lapop\_dumb}{LAPOP Dummbell Graphs}{lapop.Rul.dumb}
+%
+\begin{Description}
+This function creates "dumbbell" graphs, which show averages for a variable across countries over two time periods, using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lapop_dumb(
+  data,
+  ymin = 0,
+  ymax = 100,
+  lang = "en",
+  main_title = "",
+  source_info = "",
+  subtitle = "",
+  sort = "wave2",
+  order = "hi-lo",
+  color_scheme = c("#008381", "#A43D6A"),
+  subtitle_h_just = 40,
+  subtitle_v_just = -18,
+  text_nudge = 6,
+  drop_singles = FALSE
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] Data Frame. Dataset to be used for analysis.  The data frame should have columns
+titled pais (country name; character), wave1 (name of first wave/year (all rows are the same); character),
+prop1 (outcome variable values for the first wave; numeric), proplabel1 (text of outcome variable for first wave; character),
+wave2 (name of second wave/year (all rows are the same); character),
+prop2 (outcome variable values for the second wave; numeric), proplabel2 (text of outcome variable for second wave; character).
+Default: None (must be supplied).
+
+\item[\code{ymin}, \code{ymax}] Numeric.  Minimum and maximum values for y-axis. Defaults: 0 and 100.
+
+\item[\code{lang}] Character.  Changes default subtitle text and source info to either Spanish or English.
+Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
+or "es" (Spanish).  Default: "en".
+
+\item[\code{main\_title}] Character.  Title of graph.  Default: None.
+
+\item[\code{source\_info}] Character.  Information on dataset used (country, years, version, etc.),
+which is added to the end of "Source: " in the bottom-left corner of the graph.
+Default: None (only "Source: " will be printed).
+
+\item[\code{subtitle}] Character.  Describes the values/data shown in the graph, e.g., "Percent who agree that...".
+Default: None.
+
+\item[\code{sort}] Character.  The metric by which the data are sorted.  Options: "wave1" (outcome variable in first wave), "wave2" (outcome
+variable in wave 2), "diff" (difference between the two waves), "alpha" (alphabetical by country name).
+Default: "wave2".
+
+\item[\code{order}] Whether data should be sorted from low to high or high to low on the sort metric.  Options: "hi-lo" and "lo-hi".
+Default: "hi-lo".
+
+\item[\code{color\_scheme}] Character.  Color of data points.  Must supply two values.  Takes hex numbers, beginning with "\#".
+Default: "\#482677", "\#3CBC70".
+
+\item[\code{subtitle\_h\_just}, \code{subtitle\_v\_just}] Numeric.  Move the subtitle/legend text left/down (negative numbers) or right/up (positive numbers).
+Ranges from -100 to 100.  Defaults: 40, -18.
+
+\item[\code{text\_nudge}] Numeric.  Move text of data further or closer to data point.  Default: 6.
+
+\item[\code{drop\_singles}] Logical.  Should rows with only one dot be removed?  Default: FALSE.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns an object of class \code{ggplot}, a ggplot figure showing
+average values of some variable in two time periods across multiple countries
+(a dumbbell plot).
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+
+df <- data.frame(pais = c("Haiti", "Peru", "Honduras", "Colombia", "Ecuador",
+                          "Panama", "Bolivia", "Argentina", "Paraguay",
+                          "Dom. Rep.", "Brazil", "Jamaica", "Nicaragua",
+                          "Guyana", "Costa Rica", "Mexico", "Guatemala",
+                          "Chile", "Uruguay", "El Salvador"),
+                 wave1 = rep("2018/19", 20),
+                 prop1 = c(NA, 30, 58, 40, 49, 57, 33, 68, 38, 46, 30,
+                           31, 70, NA, 43, 25, 38, 31, 34, 41),
+                 proplabel1 = c(NA, "30%", "58%", "40%", "49%", "57%", "33%",
+                                "68%", "38%", "46%", "30%", "31%", "70%", NA,
+                                "43%", "25%", "38%", "31%", "34%", "41%"),
+                 wave2 = rep("2021", 20),
+                 prop2 = c(86, 73, 69, 67, 67, 65, 65, 65, 63, 62, 62,
+                           57, 56, 56, 55, 55, 54, 51, 46, 42),
+                 proplabel2 = c("86%", "73%", "69%", "67%", "67%", "65%", "65%",
+                                "65%", "63%", "62%", "62%", "57%", "56%", "56%",
+                                "55%", "55%", "54%", "51%", "46%", "42%"))
+## Not run: 
+lapop_dumb(df,
+         main_title = paste0("Personal economic conditions worsened across the",
+                             "LAC region,\nwith a few exceptions"),
+         subtitle = "% personal economic situation worsened",
+         source_info = "GM 2018/19-2021")
+## End(Not run)
+
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lapop\_fonts}{LAPOP Fonts}{lapop.Rul.fonts}
+%
+\begin{Description}
+This function loads fonts needed for LAPOP graph formatting.
+No arguments needed; just run lapop\_fonts() at the beginning of your session.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lapop_fonts()
+\end{verbatim}
+\end{Usage}
+%
+\begin{Value}
+No return value, called for side effects
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: lapop_fonts()
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lapop\_fonts\_design}{LAPOP Fonts (design)}{lapop.Rul.fonts.Rul.design}
+%
+\begin{Description}
+This function loads fonts needed for LAPOP graph formatting.  In contrast to lapop\_fonts(),
+this renders text as text instead of polygons, which allows post-hoc editing.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lapop_fonts_design()
+\end{verbatim}
+\end{Usage}
+%
+\begin{Value}
+No return value, called for side effects
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+# Load LAPOP fonts
+## Not run: lapop_fonts_design()
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lapop\_hist}{LAPOP Bar Graphs}{lapop.Rul.hist}
+%
+\begin{Description}
+This function shows a bar graph for categorical variables using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lapop_hist(
+  data,
+  outcome_var = data$prop,
+  label_var = data$proplabel,
+  cat_var = data$cat,
+  ymin = 0,
+  ymax = 100,
+  lang = "en",
+  main_title = "",
+  subtitle = "",
+  source_info = "LAPOP",
+  order = FALSE,
+  color_scheme = "#008381"
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] Data Frame. Dataset to be used for analysis.  The data frame should have columns
+titled cat (labels of each category in variable; character),
+prop (outcome variable value; numeric), and proplabel (text of outcome variable value; character).
+Default: None (must be provided).
+
+\item[\code{cat\_var}, \code{outcome\_var}, \code{label\_var}] Character, numeric, character.
+Each component of the data to be plotted can be manually specified in case
+the default columns in the data frame should not be used (if, for example, the values for a given
+variable were altered and stored in a new column).
+
+\item[\code{ymin}, \code{ymax}] Numeric.  Minimum and maximum values for y-axis. Defaults: 0, 100.
+
+\item[\code{lang}] Character.  Changes default subtitle text and source info to either Spanish or English.
+Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
+or "es" (Spanish).  Default: "en".
+
+\item[\code{main\_title}] Character.  Title of graph.  Default: None.
+
+\item[\code{subtitle}] Character.  Describes the values/data shown in the graph, e.g., "Percent who agree that...".
+Default: None.
+
+\item[\code{source\_info}] Character.  Information on dataset used (country, years, version, etc.),
+which is added to the bottom-left corner of the graph. Default: LAPOP ("Source: LAPOP Lab" will be printed).
+
+\item[\code{order}] Logical.  Should bars be ordered from most frequent response to least?  Default: FALSE.
+
+\item[\code{color\_scheme}] Character.  Color of bars.
+Takes hex numbers, beginning with "\#". Default: "\#008381".
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns an object of class \code{ggplot}, a ggplot bar graph.
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} \&\& Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+df <- data.frame(
+cat = c("Far Left", 1, 2, 3, 4, "Center", 6, 7, 8, 9, "Far Right"),
+prop = c(4, 3, 5, 12, 17, 23, 15, 11, 5, 4, 1),
+proplabel = c("4%", "3%", "5%", "12%", "17%", "23%", "15%", "11%", "5%", "4%", "1%")
+)
+## Not run: 
+lapop_hist(df,
+          main_title = "Centrists are a plurality among Peruvians",
+          subtitle = "Distribution of ideological preferences",
+          source_info = "Peru, 2019",
+          ymax = 27)
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lapop\_mline}{LAPOP Multi-line Time-Series Graphs}{lapop.Rul.mline}
+%
+\begin{Description}
+This function creates a time series graph utilizing multiple lines representing values of
+an outcome variable for different values of a secondary variable -- for example, support for
+democracy over time by country.  This function is designed to be used for
+AmericasBarometer data.  The maximum number of lines is four.  Unlike the lapop\_ts()
+single-line time series graph, this function will not print confidence lines nor will
+it show text values for each year (just the final/most recent year).
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lapop_mline(
+  data,
+  varlabel = data$varlabel,
+  wave_var = as.character(data$wave),
+  outcome_var = data$prop,
+  label_var = data$proplabel,
+  point_var = data$prop,
+  ymin = 0,
+  ymax = 100,
+  main_title = "",
+  source_info = "",
+  subtitle = "",
+  lang = "en",
+  legend_h_just = 40,
+  legend_v_just = -20,
+  subtitle_h_just = 0,
+  color_scheme = c("#784885", "#008381", "#c74e49", "#2d708e", "#a43d6a", "#202020"),
+  percentages = TRUE,
+  all_labels = FALSE,
+  ci = FALSE,
+  legendnrow = 1)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] Data Frame. Dataset to be used for analysis.  The data frame should have columns
+titled varlabel (values of secondary variable which will be used to make each line; character),
+wave (survey wave/year; character), prop (outcome variable; numeric),
+proplabel (text of outcome variable; character). Default: None (must be supplied).
+
+\item[\code{varlabel}, \code{wave\_var}, \code{outcome\_var}, \code{label\_var}, \code{point\_var}] Character,
+character, numeric, character, numeric. Each component of the data to be plotted
+can be manually specified in case the default columns in the data frame should
+not be used (if, for example, the values for a given variable were altered
+and stored in a new column).
+
+\item[\code{ymin}, \code{ymax}] Numeric.  Minimum and maximum values for y-axis. Default: 0, 100.
+
+\item[\code{main\_title}] Character.  Title of graph.  Default: None.
+
+\item[\code{source\_info}] Character.  Information on dataset used (country, years, version, etc.),
+which is added to the end of "Source: " in the bottom-left corner of the graph.
+Default: None (only "Source: " will be printed).
+
+\item[\code{subtitle}] Character.  Describes the values/data shown in the graph, e.g., "Percent of Mexicans who agree...".
+Default: None.
+
+\item[\code{lang}] Character.  Changes default subtitle text and source info to either Spanish or English.
+Will not translate input text, such as main title or variable labels.  \#' Takes either "en" (English)
+or "es" (Spanish).  Default: "en".
+
+\item[\code{legend\_h\_just}, \code{legend\_v\_just}] Numeric.  Changes location of legend. From 0 to 100.
+(secondary variable labels).  Defaults: 40, -20.
+
+\item[\code{subtitle\_h\_just}] Numeric.  Moves subtitle left to right.  From 0 to 1.
+(secondary variable labels).  Defaults: 0 (left justify).
+
+\item[\code{color\_scheme}] Character.  Color of lines and dots.  Takes hex number, beginning with "\#".
+Must specify four values, even if four are not used.
+Default: c("\#784885", "\#008381", "\#c74e49", "\#2d708e", "\#a43d6a", "\#202020").
+
+\item[\code{percentages}] Logical.  Is the outcome variable a percentage?  Set to FALSE if you are using
+means of the raw values, so that the y-axis adjusts accordingly. Default: TRUE.
+
+\item[\code{all\_labels}] Logical.  If TRUE, show text above all points, instead of only those in the most recent wave. Default: FALSE.
+
+\item[\code{ci}] Logical.  Add "tie fighter" confidence intervals.  Only recommended when each line represents a different variable.
+
+\item[\code{legendnrow}] Numeric.  How many rows for legend labels. Default: 1.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+df <- data.frame(varlabel = c(rep("Honduras", 9), rep("El Salvador", 9),
+                             rep("Mexico", 9), rep("Guatemala", 9)),
+                wave = rep(c("2004", "2006", "2008", "2010", "2012",
+                             "2014", "2016/17", "2018/19", "2021"), 4),
+                prop = c(19, 24, 21, 15, 11, 32, 41, 38, 54, 29, 29, 25,
+                         24, 24, 28, 36, 26, 32, 14, 16, 14, 16, 9, 14,
+                         18, 19, 26, 21, 15, 18, 20, 14, 18, 17, 25, 36),
+                proplabel = c("19%", "24%", "21%", "15%", "11%", "32%",
+                              "41%", "38%", "54%", "29%", "29%", "25%",
+                              "24%", "24%", "28%", "36%", "26%", "32%",
+                              "14%", "16%", "14%", "16%", "9%", "14%",
+                              "18%", "19%", "26%", "21%", "15%", "18%",
+                              "20%", "14%", "18%", "17%", "25%", "36%"))
+## Not run: 
+lapop_mline(df,
+     main_title = "Intentions to emigrate in Guatemala, Honduras and Mexico reached their highs",
+     subtitle = "% who intend to migrate in:",
+     source_info = "GM 2004-2021")
+## End(Not run)
+
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lapop\_mover}{LAPOP Multiple-Over/Breakdown Graphs}{lapop.Rul.mover}
+%
+\begin{Description}
+This function shows the values of an outcome variable for subgroups of a secondary variable, using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lapop_mover(
+  data,
+  lang = "en",
+  main_title = "",
+  subtitle = "",
+  qword = NULL,
+  source_info = "LAPOP",
+  rev_values = FALSE,
+  rev_variables = FALSE,
+  subtitle_h_just = 0,
+  ymin = 0,
+  ymax = 100,
+  x_lab_angle = 90,
+  color_scheme = c("#784885", "#008381", "#c74e49", "#2d708e", "#a43d6a")
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] Data Frame. Dataset to be used for analysis.  The data frame should have columns
+titled varlabel (name(s)/label(s) of secondary variable(s); character), vallabel (names/labels of values for secondary variable; character),
+prop (outcome variable value; numeric), proplabel (text of outcome variable value; character),
+lb (lower bound of estimate; numeric), and ub (upper bound of estimate; numeric).
+Default: None (must be provided).
+
+\item[\code{lang}] Character.  Changes default subtitle text and source info to either Spanish or English.
+Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
+or "es" (Spanish).  Default: "en".
+
+\item[\code{main\_title}] Character.  Title of graph.  Default: None.
+
+\item[\code{subtitle}] Character.  Describes the values/data shown in the graph, e.g., "Percent who agree that...".
+Default: None.
+
+\item[\code{qword}] Character.  Describes the question wording shown in the graph, e.g., "Do you agree that...".
+Default: NULL.
+
+\item[\code{source\_info}] Character.  Information on dataset used (country, years, version, etc.),
+which is added to the bottom-left corner of the graph. Default: LAPOP ("Source: LAPOP Lab" will be printed).
+
+\item[\code{rev\_values}] Logical.  Should the order of the values for each variable be reversed?  Default: FALSE.
+
+\item[\code{rev\_variables}] Logical.  Should the order of the variables be reversed?  Default: FALSE.
+
+\item[\code{subtitle\_h\_just}] Numeric.  Move the subtitle/legend text left (negative numbers) or right (positive numbers).
+Ranges from -100 to 100.  Default: 0.
+
+\item[\code{ymin}, \code{ymax}] Numeric.  Minimum and maximum values for y-axis. Defaults: 0 and 100.
+
+\item[\code{x\_lab\_angle}] Numeric.  Angle/orientation of the value labels.  Default: 90.
+
+\item[\code{color\_scheme}] Character.  Color of data points and text for each secondary variable.  Allows up to 6 values.
+Takes hex numbers, beginning with "\#".
+Default: c("\#784885", "\#008381", "\#c74e49", "\#2d708e", "\#a43d6a")
+(purple, teal, green, olive, sap green, pea soup).
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns an object of class \code{ggplot}, a ggplot figure showing
+average values of some variable broken down by one or more secondary variables
+(commonly, demographic variables).
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} \& Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+
+df <- data.frame(varlabel = c(rep("Gender", 2), rep("Age", 6),
+                              rep("Education", 4), rep("Wealth", 5)),
+                 vallabel = c("Women", "Men", "18-25", "26-35", "36-45",
+                              "46-55", "56-65", "66+", "  None", "Primary",
+                              "Secondary", "Post-Sec.", "Low", "2",
+                              "3", "4", "High"),
+                 prop = c(20, 22, 21, 24, 22, 21, 17, 15, 20, 18, 21, 25, 21,
+                          21, 21, 21, 22),
+                 proplabel = c("20%", "22%", "21%", "24%", "22%", "21%",
+                               "17%", "15%", "20%", "18%", "21%", "25%",
+                               "21%", "21%", "21%", "21%", "22%"),
+                 lb = c(19, 21, 20, 23, 21, 20, 15, 13, 16, 17, 20, 24, 20,
+                        20, 20, 20, 21),
+                 ub = c(21, 23, 22, 25, 23, 22, 19, 17, 24, 19, 22, 26, 22,
+                        22, 22, 22, 23))
+## Not run: 
+lapop_mover(df,
+            main_title = paste0("More educated, men, and younger individuals",
+                                " in the LAC region are the\nmost likely",
+                                  " to be crime victims"),
+            subtitle = "% victim of a crime", qword = "",
+            ymin = 0,
+            ymax = 40)
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lapop\_save}{LAPOP Save}{lapop.Rul.save}
+%
+\begin{Description}
+This function creates exports graphs created using the LAPOP templates.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lapop_save(
+  figure,
+  filename,
+  format = "svg",
+  logo = FALSE,
+  width_px = 895,
+  height_px = 500
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{figure}] Ggplot object.
+
+\item[\code{filename}] File path + name to be saved + .filetype.
+
+\item[\code{format}] Character.  Options: "png", "svg". Default = "svg".
+
+\item[\code{logo}] Logical.  Should logo be added to plot?  Default: FALSE.
+
+\item[\code{width\_px}] Numeric. Width in pixels.  Default: 750.
+
+\item[\code{height\_px}] Numeric.  Height in pixels.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Saves a file (in either .svg or .png format) to provided directory.
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+df <- data.frame(
+cat = c("Far Left", 1, 2, 3, 4, "Center", 6, 7, 8, 9, "Far Right"),
+prop = c(4, 3, 5, 12, 17, 23, 15, 11, 5, 4, 1),
+proplabel = c("4%", "3%", "5%", "12%", "17%", "23%", "15%", "11%", "5%", "4%", "1%")
+)
+
+# 2019 Ideology preferences in Peru
+## Not run: 
+ideo_hist <- lapop_hist(df,
+          main_title = "Centrists are a plurality among Peruvians",
+          subtitle = "Distribution of ideological preferences",
+          source_info = "Peru, 2019",
+          ymax = 27)
+## End(Not run)
+
+# Exporting
+## Not run: 
+f <- file.path(tempdir(), "fig1.svg")
+lapop_save(ideo_hist, f, format = "svg", width_px = 800)
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lapop\_stack}{LAPOP Stacked Bar Graphs}{lapop.Rul.stack}
+%
+\begin{Description}
+This function shows a stacked bar graph using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lapop_stack(
+  data,
+  outcome_var = data$prop,
+  prop_labels = data$proplabel,
+  var_labels = data$varlabel,
+  value_labels = data$vallabel,
+  xvar = NULL,
+  lang = "en",
+  main_title = "",
+  subtitle = "",
+  source_info = "",
+  rev_values = FALSE,
+  rev_variables = FALSE,
+  hide_small_values = TRUE,
+  order_bars = FALSE,
+  subtitle_h_just = 0,
+  fixed_aspect_ratio = TRUE,
+  legendnrow = 1,
+  color_scheme = c("#2D708E", "#008381", "#C74E49", "#784885", "#a43d6a", "#202020")
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] Data Frame. Dataset to be used for analysis.  The data frame should have columns
+titled varlabel (name(s)/label(s) of variable(s) of interest; character), vallabel (names/labels of values for each variable; character),
+prop (outcome variable value; numeric), and proplabel (text of outcome variable value; character).
+Default: None (must be provided).
+
+\item[\code{outcome\_var}, \code{prop\_labels}, \code{var\_labels}, \code{value\_labels}] Numeric, character, character, character.
+Each component of the data to be plotted can be manually specified in case
+the default columns in the data frame should not be used (if, for example, the values for a given
+variable were altered and stored in a new column).
+
+\item[\code{xvar}] Character. Column name to group the plots by. This should match a column name in the dataset.
+Default: NULL (no grouping).
+
+\item[\code{lang}] Character.  Changes default subtitle text and source info to either Spanish or English.
+Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
+or "es" (Spanish).  Default: "en".
+
+\item[\code{main\_title}] Character.  Title of graph.  Default: None.
+
+\item[\code{subtitle}] Character.  Describes the values/data shown in the graph, e.g., "Percent who support...".
+Default: None.
+
+\item[\code{source\_info}] Character.  Information on dataset used (country, years, version, etc.),
+which is added to the end of "Source: " in the bottom-left corner of the graph.
+Default: None (only "Source: " will be printed).
+
+\item[\code{rev\_values}] Logical.  Should the order of the values for each variable be reversed?  Default: FALSE.
+
+\item[\code{rev\_variables}] Logical.  Should the order of the variables be reversed?  Default: FALSE.
+
+\item[\code{hide\_small\_values}] Logical.  Should labels for categories with less than 5 percent be hidden?  Default: TRUE.
+
+\item[\code{order\_bars}] Logical.  Should categories be placed in descending order for each bar?  Default: FALSE.
+showing the distributions of multiple categorical variables.
+
+\item[\code{subtitle\_h\_just}] Numeric.  Move the subtitle/legend text left (negative numbers) or right (positive numbers).
+Ranges from -100 to 100.  Default: 0.
+
+\item[\code{fixed\_aspect\_ratio}] Logical.  Should the aspect ratio be set to a specific value (0.35)?
+This prevents bars from stretching vertically to fit the plot area.  Set to false when you have
+a large number of bars (> 10).  Default: TRUE.
+
+\item[\code{legendnrow}] Numeric.  How many rows for legend labels. Default: 1.
+
+\item[\code{color\_scheme}] Character.  Color of data bars for each value.  Allows up to 6 values.
+Takes hex numbers, beginning with "\#".
+Default: c("\#2D708E", "\#008381", "\#C74E49", "\#784885", "\#a43d6a","\#202020")
+(navy blue, turquoise, teal, green, sap green, pea soup).
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns an object of class \code{ggplot}, a ggplot stacked bar graph
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} \& Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+
+df <- data.frame(varlabel = c(rep("Politicians can\nidentify voters", 5),
+                              rep("Wealthy can\nbuy results", 5),
+                              rep("Votes are\ncounted correctly", 5)),
+                 vallabel = rep(c("Always", "Often", "Sometimes",
+                                  "Never", "Other"), 3),
+                 prop = c(36, 10, 19, 25, 10, 46, 10, 23, 11, 10, 35,
+                          10, 32, 13, 10),
+                 proplabel = c("36%", "10%", "19%", "25%", "10%", "46%",
+                               "10%", "23%", "11%", "10%", "35%", "10%",
+                               "32%", "13%", "10%"))
+## Not run: 
+lapop_stack(df,
+         main_title = "Trust in key features of the electoral process is low in Latin America",
+         subtitle = "% believing it happens:",
+         source_info = "2019")
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lapop\_ts}{LAPOP Time-Series Graphs}{lapop.Rul.ts}
+%
+\begin{Description}
+This function creates time series graphs using LAPOP formatting.  If there are waves missing at the
+beginning or end of the series, the function will omit those waves from the graph (i.e.,
+the x-axis will range from the earliest wave for which data is supplied to the latest).  If there are
+waves missing in the middle of the series, those waves will be displayed on the x-axis, but no data will be
+shown.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lapop_ts(
+  data,
+  outcome_var = data$prop,
+  lower_bound = data$lb,
+  upper_bound = data$ub,
+  wave_var = as.character(data$wave),
+  label_var = data$proplabel,
+  point_var = data$prop,
+  ymin = 0,
+  ymax = 100,
+  main_title = "",
+  source_info = "LAPOP",
+  subtitle = "",
+  lang = "en",
+  color_scheme = "#A43D6A",
+  percentages = TRUE,
+  label_vjust = -2.1,
+  max_years = 15,
+  label_angle = 0
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] Data Frame. Dataset to be used for analysis.  The data frame should have columns
+titled wave (survey wave/year; character vector), prop (outcome variable; numeric),
+proplabel (text of outcome variable; character); lb (lower bound of estimate; numeric),
+and ub (upper bound of estimate; numeric). Default: None (must be supplied).
+
+\item[\code{wave\_var}, \code{outcome\_var}, \code{label\_var}, \code{lower\_bound}, \code{upper\_bound}, \code{point\_var}] Character, numeric, character,
+numeric, numeric, character. Each component of the data to be plotted can be manually specified in case
+the default columns in the data frame should not be used (if, for example, the values for a given
+variable were altered and stored in a new column).
+
+\item[\code{ymin}, \code{ymax}] Numeric.  Minimum and maximum values for y-axis. Default: 0, 100.
+
+\item[\code{main\_title}] Character.  Title of graph.  Default: None.
+
+\item[\code{source\_info}] Character.  Information on dataset used (country, years, version, etc.),
+which is added to the bottom-left corner of the graph. Default: LAPOP ("Source: LAPOP Lab" will be printed).
+
+\item[\code{subtitle}] Character.  Describes the values/data shown in the graph, e.g., "Percent of Mexicans who agree...".
+Default: None.
+
+\item[\code{lang}] Character.  Changes default subtitle text and source info to either Spanish or English.
+Will not translate input text, such as main title or variable labels.  \#' Takes either "en" (English)
+or "es" (Spanish).  Default: "en".
+
+\item[\code{color\_scheme}] Character.  Color of lines and dots.  Takes hex number, beginning with "\#".
+Default: "\#A43D6A" (red).
+
+\item[\code{percentages}] Logical.  Is the outcome variable a percentage?  Set to FALSE if you are using
+means of the raw values, so that the y-axis adjusts accordingly. Default: TRUE.
+
+\item[\code{label\_vjust}] Numeric. Customize vertical space between points and their labels.
+Default: -2.1.
+
+\item[\code{max\_years}] Numeric. Threshold for automatic x-axis label rotation. When the number of unique
+country labels exceeds this value, labels will be smaller and if necessary rotated for better readability.
+Default: 15 years.
+
+\item[\code{label\_angle}] Numeric. Angle (in degrees) to rotate x-axis labels when max\_years is exceeded. Default: 0.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The input data must have a specific format to produce a graph.  It must include columns for
+the survey wave (wave), the outcome variable (prop), the lower bound of the estimate (lb),
+the upper bound of the estimate (ub), and a string for the outcome variable label (proplabel).
+\end{Details}
+%
+\begin{Value}
+Returns an object of class \code{ggplot}, a ggplot line graph showing
+values of a variable over time.
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} \& Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+df <- data.frame(wave = c("2008", "2010", "2016/17", "2018/19", "2021"),
+prop = c(23.2, 14.4, 35.8, 36.6, 40),
+proplabel = c("23.2%", "14.4%", "35.8%", "36.6%", "40.0%"),
+lb = c(20.2, 11.9, 33.3, 33.1, 38),
+ub = c(26.2, 16.9, 38.3, 40.1, 42)
+)
+
+# Political Interest over time in Ecuador
+## Not run: 
+lapop_ts(df,
+ main_title = "Ecuadorians are becoming more interested in politics",
+ subtitle = "% politically interested",
+ source_info = "Ecuador 2006-2021",
+ ymin = 0,
+ ymax = 55)
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lpr\_cc}{LAPOP Cross-Country Bar Graph Pre-Processing}{lpr.Rul.cc}
+%
+\begin{Description}
+This function creates dataframes which can then be input in lapop\_cc for
+comparing values across countries with a bar graph using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lpr_cc(
+  data,
+  outcome,
+  xvar = "pais_lab",
+  rec = list(c(1, 1)),
+  rec2 = list(c(1, 1)),
+  rec3 = list(c(1, 1)),
+  rec4 = list(c(1, 1)),
+  ci_level = 0.95,
+  mean = FALSE,
+  filesave = "",
+  cfmt = "",
+  sort = "y",
+  order = "hi-lo",
+  ttest = FALSE,
+  keep_nr = FALSE
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] A survey object.  The data that should be analyzed.
+
+\item[\code{outcome}] Outcome variable(s) of interest to be plotted across countries.
+It can handle a single variable across countries, or multiple variables instead of multiple countries. See examples below.
+
+\item[\code{xvar}] Grouping variable. Default: pais\_lab. It can handle other variables grouping like year/wave.
+
+\item[\code{rec}] Numeric. The minimum and maximum values of the outcome variable that
+should be included in the numerator of the percentage.  For example, if the variable
+is on a 1-7 scale and rec is c(5, 7), the function will show the percentage who chose
+an answer of 5, 6, 7 out of all valid answers.  Default: c(1, 1).
+
+\item[\code{rec2}] Numeric. Same as rec(). Default: c(1, 1).
+
+\item[\code{rec3}] Numeric. Same as rec(). Default: c(1, 1).
+
+\item[\code{rec4}] Numeric. Same as rec(). Default: c(1, 1).
+
+\item[\code{ci\_level}] Numeric. Confidence interval level for estimates.  Default: 0.95
+
+\item[\code{mean}] Logical.  If TRUE, will produce the mean of the variable rather than
+rescaling to percentage.  Default: FALSE.
+
+\item[\code{filesave}] Character.  Path and file name to save the dataframe as csv.
+
+\item[\code{cfmt}] changes the format of the numbers displayed above the bars.
+Uses sprintf string formatting syntax. Default is whole numbers for percentages
+and tenths place for means.
+
+\item[\code{sort}] Character. On what value the bars are sorted: the x or the y.
+Options are "y" (default; for the value of the outcome variable), "xv" (for
+the underlying values of the x variable), "xl" (for the labels of the x variable,
+i.e., alphabetical).
+
+\item[\code{order}] Character.  How the bars should be sorted.  Options are "hi-lo"
+(default) or "lo-hi".
+
+\item[\code{ttest}] Logical.  If TRUE, will conduct pairwise t-tests for difference
+of means between all individual x levels and save them in attr(x,
+"t\_test\_results"). Default: FALSE.
+
+\item[\code{keep\_nr}] Logical.  If TRUE, will convert "don't know" (missing code .a)
+and "no response" (missing code .b) into valid data (value = 99) and use them
+in the denominator when calculating percentages.  The default is to examine
+valid responses only.  Default: FALSE.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns a data frame, with data formatted for visualization by lapop\_cc
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} \& Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+# Single outcome over countries
+## Not run: lpr_cc(data = cm23,
+outcome = "ing4",
+rec = c(5, 7),
+xvar = "pais_lab")
+## End(Not run)
+
+# Multiple outcomes
+## Not run: lpr_cc(data = cm23,
+outcome = c("sd2new2", "sd3new2", "sd5new2", "sd6new2"),
+rec = c(5, 7))
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lpr\_ccm}{LAPOP Grouped Bar Graph Pre-Processing}{lpr.Rul.ccm}
+%
+\begin{Description}
+This function creates dataframes which can then be input in lapop\_ccm() for
+comparing values for multiple variables across countries with a bar graph
+using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lpr_ccm(
+  data,
+  outcome_vars,
+  xvar = "pais_lab",
+  rec1 = c(1, 1),
+  rec2 = c(1, 1),
+  rec3 = c(1, 1),
+  ci_level = 0.95,
+  mean = FALSE,
+  filesave = "",
+  cfmt = "",
+  sort = "y",
+  order = "hi-lo",
+  ttest = FALSE,
+  keep_nr = FALSE
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] A survey object.  The data that should be analyzed.
+
+\item[\code{outcome\_vars}] Character vector.  Outcome variable(s) of interest to be plotted
+across country (or other x variable). Max of 3 (three) variables.
+
+\item[\code{xvar}] Character string. Outcome variables are broken down by this variable. You can set
+xvar to "wave" or "year" for cross-time comparisons. Default: pais\_lab.
+
+\item[\code{rec1}, \code{rec2}, \code{rec3}] Numeric. The minimum and maximum values of the outcome variable that
+should be included in the numerator of the percentage.  For example, if the variable
+is on a 1-7 scale and rec1 is c(5, 7), the function will show the percentage who chose
+an answer of 5, 6, 7 out of all valid answers.  Can also supply one value only,
+to produce the percentage that chose that value out of all other values.
+Default: c(1, 1).
+
+\item[\code{ci\_level}] Numeric. Confidence interval level for estimates.  Default: 0.95
+
+\item[\code{mean}] Logical.  If TRUE, will produce the mean of the variable rather than
+rescaling to percentage.  Default: FALSE.
+
+\item[\code{filesave}] Character.  Path and file name to save the dataframe as csv.
+
+\item[\code{cfmt}] Character. Changes the format of the numbers displayed above the bars.
+Uses sprintf string formatting syntax. Default is whole numbers for percentages
+and tenths place for means.
+
+\item[\code{sort}] Character. On what value the bars are sorted.
+Options are "y" (default; for the value of the first outcome variable), "xv" (for
+the underlying values of the x variable), "xl" (for the labels of the x variable,
+i.e., alphabetical).
+
+\item[\code{order}] Character.  How the bars should be sorted.  Options are "hi-lo"
+(default) or "lo-hi".
+
+\item[\code{ttest}] Logical.  If TRUE, will conduct pairwise t-tests for difference
+of means between all outcomes vs. all x-vars and save them in attr(x,
+"t\_test\_results"). Default: FALSE.
+
+\item[\code{keep\_nr}] Logical.  If TRUE, will convert "don't know" (missing code .a)
+and "no response" (missing code .b) into valid data (value = 99) and use them
+in the denominator when calculating percentages.  The default is to examine
+valid responses only.  Default: FALSE.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns a data frame, with data formatted for visualization by lapop\_ccm()
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} \& Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+# Multiple variables
+## Not run: lpr_ccm(gm23,
+outcome_vars = c("vic1ext", "aoj11"),
+rec1 = c(1, 1),
+rec2 = c(3, 4),
+ttest = TRUE)
+## End(Not run)
+
+# Multiple variables over time
+## Not run: lpr_ccm(gm23,
+outcome_vars = c("vic1ext", "aoj11"),
+xvar = "wave",
+rec1 = c(1, 1),
+rec2 = c(3, 4),
+ttest = TRUE)
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lpr\_coef}{LAPOP Regression Coefficients Graph Pre-Processing}{lpr.Rul.coef}
+%
+\begin{Description}
+This function creates a data frame which can then be input in lapop\_coef() for
+plotting regression coefficients graph using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lpr_coef(
+  outcome = NULL,
+  xvar = NULL,
+  interact = NULL,
+  model = "linear",
+  data = NULL,
+  estimate = c("coef"),
+  vlabs = NULL,
+  omit = NULL,
+  filesave = NULL,
+  replace = FALSE,
+  level = 95
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{outcome}] Dependent variable for the svyglm regression model. (e.g., "outcome\_name"). Only one variable allowed.
+
+\item[\code{xvar}] Vector of independent variables for the svyglm regression model (e.g., "xvar1+xvar2+xvar3" and so on). Multiple variables are allowed.
+
+\item[\code{interact}] Interaction terms (e.g., "xvar1`*`xvar2 + xvar3`:`xvar4"). Supports `:` and `*` operators for interacting variables. Optional, default is NULL.
+
+\item[\code{model}] Model family object for glm. Default is gaussian regression (i.e., "linear"). For a logit model, use model="binomial"
+
+\item[\code{data}] Survey design data from lpr\_data() output.
+
+\item[\code{estimate}] Character. Graph either the coefficients (i.e., `coef`) or the change in probabilities (i.e., `contrast`). Default is "coef."
+
+\item[\code{vlabs}] Character. Rename variable labels to be displayed in the graph produced by lapop\_coef(). For instance, vlabs=c("old\_varname" = "new\_varname").
+
+\item[\code{omit}] Character. Do not display coefficients for these independent variables. Default is to display all variables included in the model. To omit any variables you need to include the raw "varname" in the omit argument.
+
+\item[\code{filesave}] Character. Path and file name with csv extension to save the dataframe output.
+
+\item[\code{replace}] Logical. Replace the dataset output if it already exists. Default is FALSE.
+
+\item[\code{level}] Numeric. Set confidence level in numeric values; default is 95 percent.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns a data frame, with data formatted for visualization by lapop\_coef
+\end{Value}
+%
+\begin{Author}
+Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+# Example 1: Linear model using lpr_coef()
+## Not run: 
+lpr_coef(
+ outcome = "l1",
+ xvar = "it1+idio2",
+ data = dataLAPOP,
+ model = "linear",
+ est = "coef")
+## End(Not run)
+
+# Example 2: Logit model using lpr_coef()
+## Not run: 
+lpr_coef(
+ outcome = "fs2",
+ xvar = "it1+idio2",
+ data = dataLAPOP,
+ model = "binomial",
+ est = "contrast")
+## End(Not run)
+
+# Example 3: Interactive model using lpr_coef()
+## Not run: 
+lpr_coef(
+ outcome = "fs2",
+ xvar = "it1+idio2",
+ interact = "it1*idio2",
+ data = dataLAPOP,
+ model = "linear",
+ est = "coef")
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lpr\_data}{LAPOP Data Processing}{lpr.Rul.data}
+%
+\begin{Description}
+This function takes LAPOP datasets and adds survey features, outputting a
+svy\_tbl object that can then be analyzed using lpr\_ commands.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lpr_data(data_path, wt = FALSE)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data\_path}] A dataframe of LAPOP survey data.
+
+\item[\code{wt}] Logical.  If TRUE, use wt instead of weight1500.  Default: FALSE.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns a svy\_tbl object
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} \& Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+# Single-country (wt)
+bra23w <- lpr_data(bra23, wt = TRUE)
+print(bra23w)
+
+# Single-country multi-year (weight1500)
+cm23w <- lpr_data(cm23)
+print(cm23w)
+
+# Multi-country single-year (weight1500)
+ym23w <- lpr_data(cm23)
+print(cm23w)
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lpr\_dumb}{LAPOP Dumbbell Graphs}{lpr.Rul.dumb}
+%
+\begin{Description}
+This function creates dataframes which can then be input in lapop\_dumb for
+comparing means of a variable across countries and two waves using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lpr_dumb(
+  data,
+  outcome,
+  xvar = "pais",
+  over,
+  rec = c(1, 1),
+  ci_level = 0.95,
+  mean = FALSE,
+  filesave = "",
+  cfmt = "",
+  sort = "prop2",
+  order = "hi-lo",
+  ttest = FALSE,
+  keep_nr = FALSE
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] A survey object.  The data that should be analyzed.
+
+\item[\code{outcome}] Outcome variable(s) of interest to be plotted across countries
+and waves, supplied as a character string or vector of strings.
+
+\item[\code{xvar}] Character. The grouping variable to be plotted
+along the x-axis (technically, the vertical axis for lapop\_dumb). Usually
+country (pais). Default: "pais".
+
+\item[\code{over}] Numeric.  A vector of values for "wave" that specify which two
+waves should be included in the plot.
+
+\item[\code{rec}] Numeric. The minimum and maximum values of the outcome variable that
+should be included in the numerator of the percentage.  For example, if the variable
+is on a 1-7 scale and rec is c(5, 7), the function will show the percentage who chose
+an answer of 5, 6, 7 out of all valid answers.  Can also supply one value only,
+to produce the percentage that chose that value out of all other values.
+Default: c(1, 1).
+
+\item[\code{ci\_level}] Numeric. Confidence interval level for estimates.  Default: 0.95
+
+\item[\code{mean}] Logical.  If TRUE, will produce the mean of the variable rather than
+recoding to percentage.  Default: FALSE.
+
+\item[\code{filesave}] Character.  Path and file name to save the dataframe as csv.
+
+\item[\code{cfmt}] Character. Changes the format of the numbers displayed above the bars.
+Uses sprintf string formatting syntax. Default is whole numbers for percentages
+and tenths place for means.
+
+\item[\code{sort}] Character. On what value the bars are sorted.
+Options are "prop1" (for the value of the outcome variable in wave 1), "prop2"
+(default; for the value of the outcome variable in wave 2), "xv" (for
+the underlying values of the x variable), "xl" (for the labels of the x variable,
+i.e., alphabetical), and "diff" (for the difference between the outcome between
+the two waves).
+
+\item[\code{order}] Character.  How the bars should be sorted.  Options are "hi-lo"
+(default) or "lo-hi".
+
+\item[\code{ttest}] Logical.  If TRUE, will conduct pairwise t-tests for difference
+of means between all pais-wave combinations and save them in attr(x,
+"t\_test\_results"). Default: FALSE.
+
+\item[\code{keep\_nr}] Logical.  If TRUE, will convert "don't know" (missing code .a)
+and "no response" (missing code .b) into valid data (value = 99) and use them
+in the denominator when calculating percentages.  The default is to examine
+valid responses only.  Default: FALSE.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns a data frame, with data formatted for visualization by lapop\_dumb
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} \& Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+# Single variable
+## Not run: 
+lpr_dumb(cm23,
+outcome = "ing4",
+rec = c(5, 7),
+over = c(2021, 2023),
+sort = "diff",
+ttest = TRUE)
+## End(Not run)
+
+# Multiple Variables over years
+## Not run: 
+lpr_dumb(ym23,
+outcome=c("b21", "b13", "b31", "b47a"),
+rec=c(5,7),
+over=c(2004, 2006))
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lpr\_extract\_notes}{Extract Notes from AmericasBarometer Attributes}{lpr.Rul.extract.Rul.notes}
+%
+\begin{Description}
+Extracts notes stored in a dataset's attributes and organizes them into a tidy data frame.
+This function is particularly useful for processing Stata datasets imported into R that
+contain variable notes in their attributes.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lpr_extract_notes(data)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] A dataset (data frame) containing notes in its attributes. The notes should
+be stored as a list where each element is a vector of length 3 containing:
+(1) variable name, (2) note ID, and (3) note text.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+This function processes the attributes of a dataset to extract notes that are typically
+stored in a specific format. It skips any notes associated with "\_dta" (dataset-level notes)
+and only returns variable-specific notes. The function expects the notes to be organized
+as a list where each element contains exactly three components: variable name, note ID,
+and note value.
+\end{Details}
+%
+\begin{Value}
+A data frame with three columns:
+\begin{description}
+
+\item[variable\_name] Name of the variable the note belongs to
+\item[note\_id] Identifier for the note
+\item[note\_value] The actual note text
+
+\end{description}
+
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+# Extract the notes
+## Not run: 
+notes <- lpr_extract_notes(df)
+print(notes)
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lpr\_hist}{LAPOP Bar/Histogram Graphs}{lpr.Rul.hist}
+%
+\begin{Description}
+This function creates dataframes which can then be input in lapop\_hist for
+showing a bar graph using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lpr_hist(
+  data,
+  outcome,
+  filesave = "",
+  cfmt = "",
+  sort = "xv",
+  order = "lo-hi",
+  keep_nr = FALSE
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] A survey object.  The data that should be analyzed.
+
+\item[\code{outcome}] Character. Outcome variable of interest.
+
+\item[\code{filesave}] Character.  Path and file name to save the dataframe as csv.
+
+\item[\code{cfmt}] Character. Changes the format of the numbers displayed above the bars.
+Uses sprintf string formatting syntax. Default is whole numbers.
+
+\item[\code{sort}] Character. On what value the bars are sorted.
+Options are "y" (for the value of the outcome variable), "xv" (default; for
+the underlying values of the x variable), "xl" (for the labels of the x variable,
+i.e., alphabetical).
+
+\item[\code{order}] Character.  How the bars should be sorted.  Options are "hi-lo"
+or "lo-hi" (default).
+
+\item[\code{keep\_nr}] Logical.  If TRUE, will convert "don't know" (missing code .a)
+and "no response" (missing code .b) into valid data (value = 99).
+The default is to examine valid responses only.  Default: FALSE.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns a data frame, with data formatted for visualization by lapop\_hist()
+\end{Value}
+%
+\begin{Author}
+Shashwat Dhar \email{shashwat.dhar@vanderbilt.edu} \&
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+lpr_hist(jam23,
+outcome = "aoj11",
+sort = "xv",
+order = "hi-lo")
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lpr\_mline}{LAPOP Multi-Line Time Series Graph Pre-Processing}{lpr.Rul.mline}
+%
+\begin{Description}
+This function creates a dataframe which can then be input in lapop\_mline for
+to show a time series plot with multiple lines.  If one "outcome" variable and an
+"xvar" variable is supplied, the function produces the values of a single outcome
+variable, broken down by a secondary variable, across time.  If multiple outcome
+variables (up to four) are supplied, it will show means/percentages of those
+variables across time (essentially, it allows you to do lpr\_ts for multiple variables).
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lpr_mline(
+  data,
+  outcome,
+  rec = c(1, 1),
+  rec2 = c(1, 1),
+  rec3 = c(1, 1),
+  rec4 = c(1, 1),
+  xvar,
+  use_wave = FALSE,
+  use_cat = FALSE,
+  ci_level = 0.95,
+  mean = FALSE,
+  filesave = "",
+  cfmt = "",
+  ttest = FALSE,
+  keep_nr = FALSE
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] A survey object.  The data that should be analyzed.
+
+\item[\code{outcome}] Character vector.  Outcome variable(s) of interest to be plotted
+across time.  If only one value is provided, the graph will show the outcome
+variable, over time, broken down by a secondary variable (x-var).
+If more than one value is supplied, the graph will show each outcome variable
+across time (no secondary variable).
+
+\item[\code{rec}, \code{rec2}, \code{rec3}, \code{rec4}] Numeric. The minimum and maximum values of the outcome
+variable that should be included in the numerator of the percentage.
+For example, if the variable is on a 1-7 scale and rec is c(5, 7), the
+function will show the percentage who chose an answer of 5, 6, 7 out of
+all valid answers.  Can also supply one value only, to produce the percentage
+that chose that value out of all other values. Default: c(1, 1).
+
+\item[\code{xvar}] Character. Variable on which to break down the outcome variable.
+In other words, the line graph will produce multiple lines for each value of
+xvar (technically, it is the z-variable, not the x variable, which is year/wave).
+Ignored if multiple outcome variables are supplied.
+
+\item[\code{use\_wave}] Logical.  If TRUE, will use "wave" for the x-axis; otherwise,
+will use "year".  Default: FALSE.
+
+\item[\code{use\_cat}] Logical. If TRUE, will show the percentages of category values
+of a single variable; otherwise will show percentages of the range of values
+from rec(). Default FALSE.
+
+\item[\code{ci\_level}] Numeric. Confidence interval level for estimates.  Default: 0.95
+
+\item[\code{mean}] Logical.  If TRUE, will produce the mean of the variable rather than
+rescaling to percentage.  Default: FALSE.
+
+\item[\code{filesave}] Character.  Path and file name to save the dataframe as csv.
+
+\item[\code{cfmt}] Character. changes the format of the numbers displayed above the bars.
+Uses sprintf string formatting syntax. Default is whole numbers for percentages
+and tenths place for means.
+
+\item[\code{ttest}] Logical.  If TRUE, will conduct pairwise t-tests for difference
+of means between all individual x levels and save them in attr(x,
+"t\_test\_results"). Default: FALSE.
+
+\item[\code{keep\_nr}] Logical.  If TRUE, will convert "don't know" (missing code .a)
+and "no response" (missing code .b) into valid data (value = 99) and use them
+in the denominator when calculating percentages.  The default is to examine
+valid responses only.  Default: FALSE.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns a data frame, with data formatted for visualization by lapop\_mline
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} \& Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+
+# Single Variable
+## Not run: 
+lpr_mline(gm23,
+outcome = "ing4",
+rec = c(5, 7),
+use_wave = FALSE)
+## End(Not run)
+
+# Multiple Variables
+## Not run: 
+lpr_mline(gm23,
+outcome = c("b10a", "b13", "b18", "b21"),
+rec = c(5, 7),
+rec2 = c(1, 2),
+rec3 = c(5, 7),
+rec4 = c(1, 1),
+use_wave = TRUE)
+## End(Not run)
+
+# Binary Single Variable by Category
+## Not run: 
+lpr_mline(gm23,
+outcome = "jc1",
+use_cat = TRUE,
+use_wave = TRUE)
+## End(Not run)
+
+# Recode Categorical Variable (max 4-categories)
+## Not run: 
+lpr_mline(gm23,
+outcome = "a4n",
+rec = c(1,4),
+use_cat = TRUE,
+use_wave = TRUE)
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lpr\_mover}{LAPOP "Multiple-Over" Breakdown Graphs}{lpr.Rul.mover}
+%
+\begin{Description}
+This function creates a dataframe which can then be input in lapop\_mover() for
+comparing means across values of secondary variable(s) using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lpr_mover(
+  data,
+  outcome,
+  grouping_vars,
+  rec = list(c(1, 1)),
+  rec2 = c(1, 1),
+  rec3 = c(1, 1),
+  rec4 = c(1, 1),
+  ci_level = 0.95,
+  mean = FALSE,
+  filesave = "",
+  cfmt = "",
+  ttest = FALSE,
+  keep_nr = FALSE
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] A survey object. The data that should be analyzed.
+
+\item[\code{outcome}] Character. Outcome variable(s) of interest to be plotted across secondary
+variable(s).
+
+\item[\code{grouping\_vars}] A character vector specifying one or more grouping variables.
+For each variable, the function calculates the average of the outcome variable,
+broken down by the distinct values within the grouping variable(s).
+
+\item[\code{rec}] Numeric. The minimum and maximum values of the frst outcome variable that
+should be included in the numerator of the percentage.  For example, if the variable
+is on a 1-7 scale and rec is c(5, 7), the function will show the percentage who chose
+an answer of 5, 6, 7 out of all valid answers.  Can also supply one value only,
+to produce the percentage that chose that value out of all other values.
+Default: c(1, 1).
+
+\item[\code{rec2}] Numeric. Similar to 'rec' for the second outcome. Default: c(1, 1).
+
+\item[\code{rec3}] Numeric.  Similar to 'rec' for the third outcome. Default: c(1, 1).
+
+\item[\code{rec4}] Numeric.  Similar to 'rec' for the fourth outcome. Default: c(1, 1).
+
+\item[\code{ci\_level}] Numeric. Confidence interval level for estimates.  Default: 0.95
+
+\item[\code{mean}] Logical.  If TRUE, will produce the mean of the variable rather than
+recoding to percentage.  Default: FALSE.
+
+\item[\code{filesave}] Character.  Path and file name to save the dataframe as csv.
+
+\item[\code{cfmt}] Changes the format of the numbers displayed above the bars.
+Uses sprintf string formatting syntax. Default is whole numbers for percentages
+and tenths place for means.
+
+\item[\code{ttest}] Logical.  If TRUE, will conduct pairwise t-tests for difference
+of means between all individual year-xvar levels and save them in attr(x,
+"t\_test\_results"). Default: FALSE.
+
+\item[\code{keep\_nr}] Logical.  If TRUE, will convert "don't know" (missing code .a)
+and "no response" (missing code .b) into valid data (value = 99) and use them
+in the denominator when calculating percentages.  The default is to examine
+valid responses only.  Default: FALSE.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns a data frame, with data formatted for visualization by lapop\_mover()
+\end{Value}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} \& Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+# Single Outcome
+lpr_mover(data = gm23,
+ outcome = "ing4",
+ grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
+ rec = c(5, 7))
+## End(Not run)
+
+ # Multiple outcomes
+ ## Not run: 
+ lpr_mover(data = gm23,
+ outcome = c("ing4", "pn4"),
+ grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
+ rec = c(5, 7),
+ rec2 = c(1, 2))
+## End(Not run)
+
+# Single DV X Single IV
+## Not run: 
+lpr_mover(data,
+outcome = "ing4",
+grouping_vars = "exc7new",
+rec = c(5,7), ttest = T)
+## End(Not run)
+
+# Multiple DVs X Single IV
+## Not run: 
+lpr_mover(data,
+outcome = c("ing4", "pn4"),
+grouping_vars = "exc7new",
+rec = c(5,7), rec2 = c(1,2), ttest = T)
+## End(Not run)
+
+# Single DV X Multiple IVs
+## Not run: 
+lpr_mover(data,
+outcome = "ing4",
+grouping_vars = c("edre", "q1tc_r"),
+rec = c(5,7), ttest = T)
+## End(Not run)
+
+# Multiple DVs X Multiple IVs
+## Not run: 
+lpr_mover(data,
+outcome = c("ing4", "pn4"),
+grouping_vars = c("edre", "q1tc_r"),
+rec = c(5,7), rec2 = c(1,2), ttest = T)
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lpr\_resc}{LAPOP Rescale}{lpr.Rul.resc}
+%
+\begin{Description}
+This function allows users to rescale and reorder variables.  It is designed
+for variables of class "labelled" (used for survey datasets, like LAPOP's),
+but the rescaling will work for numeric and factor variables as well
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lpr_resc(
+  var,
+  min = 0L,
+  max = 1L,
+  reverse = FALSE,
+  only_reverse = FALSE,
+  only_flip = FALSE,
+  map = FALSE,
+  new_varlabel = NULL,
+  new_vallabels = NULL
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{var}] Vector (class "labelled" or "haven\_labelled").  The original variable
+to rescale.
+
+\item[\code{min}] Integer. Minimum value for the new rescaled variables; default is 0.
+
+\item[\code{max}] Integer. Maximum value for the new rescaled variables; default is 1.
+
+\item[\code{reverse}] Logical.  Reverse code the variable before rescaling. Default: FALSE.
+
+\item[\code{only\_reverse}] Logical.  Reverse code the variable, but do not rescale. Default: FALSE.
+
+\item[\code{only\_flip}] Logical. Flip the variable coding.  Unlike "only\_reverse", this will
+exactly preserve the values of the old variable.  For example, for a variable
+with codes 1, 2, 3, 5, 10, only\_flip will code the values 10, 5, 3, 2, 1 (instead
+of 10, 9, 8, 6, 1).  Generally, reverse should be preferred to preserve the
+underlying scale.  Not compatible with rescale. Default: FALSE.
+
+\item[\code{map}] Logical. If TRUE, will print a cross-tab showing the old variable
+and the new, recoded variable.  Used to verify the new variable is coded correctly.
+Default: FALSE.
+
+\item[\code{new\_varlabel}] Character.  Variable label for the new variable.
+Default: old variable's label.
+
+\item[\code{new\_vallabels}] Character vector. Supply custom names for value labels. Default:
+value labels of old variable.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Author}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+bra23$variables$aoj11r <- lpr_resc(bra23$variables$aoj11, only_reverse = TRUE, map = TRUE)
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lpr\_set\_attr}{Set Variable Attributes from AmericasBarometer Notes}{lpr.Rul.set.Rul.attr}
+%
+\begin{Description}
+Applies notes stored in a data frame object as attributes to corresponding variables
+in AmericasBarometer dataset. This is particularly useful for setting variable labels,
+question wording, or other metadata from extracted notes.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lpr_set_attr(data, notes, noteid = character(), attribute_name = character())
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] A data frame whose variables will receive new attributes
+
+\item[\code{notes}] A data frame containing notes information, typically produced by
+\code{\LinkA{lpr\_extract\_notes}{lpr.Rul.extract.Rul.notes}}. Must contain columns: variable\_name,
+note\_id, and note\_value.
+
+\item[\code{noteid}] Character string specifying which note ID to extract from the
+notes data frame (e.g., "label" for variable labels, "qtext" for question text).
+
+\item[\code{attribute\_name}] Character string specifying the attribute name to set
+(e.g., "label", "qwording", "roslabel").
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+This function:
+\begin{itemize}
+
+\item{} Filters the notes data frame to only include rows matching the specified `noteid`
+\item{} Loops through each matching note and applies it as an attribute to the corresponding
+variable in the data frame
+\item{} Issues warnings for variables in the notes that don't exist in the data
+
+\end{itemize}
+
+
+The function is designed to work in tandem with \code{lpr\_extract\_notes}, creating
+a workflow for managing variable metadata in AmericasBarometer data.
+\end{Details}
+%
+\begin{Value}
+The input data frame with specified attributes added to relevant variables
+\end{Value}
+%
+\begin{SeeAlso}
+\code{\LinkA{lpr\_extract\_notes}{lpr.Rul.extract.Rul.notes}} for extracting notes from AmericasBarometer dataset attributes
+\end{SeeAlso}
+%
+\begin{Examples}
+\begin{ExampleCode}
+# First extract notes from dataset attributes
+## Not run: 
+notes <- lpr_extract_notes(data)
+## End(Not run)
+
+# Set variable question wording
+## Not run: 
+data <- lpr_set_attr(data, notes, noteid = "note4", attribute_name = "question_wording")
+attr(data$ing4, "question_wording")
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lpr\_set\_ros}{Set Response Option (ROS) labels for variables in AmericasBarometer datasets}{lpr.Rul.set.Rul.ros}
+%
+\begin{Description}
+This function extracts formatted response option labels for AmericasBarometer
+variables, using label tables stored as attributes. The labels are formatted
+with their corresponding numeric codes and can be pulled in multiple languages.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lpr_set_ros(data, lang_id = "en", attribute_name = "roslabel")
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] A data frame loaded using readstata13 containing label table attributes
+
+\item[\code{lang\_id}] Language identifier for the labels ("en" for English,
+"es" for Spanish, "pt" for Portuguese). Default is "en" (English).
+
+\item[\code{attribute\_name}] The name of the attribute where the formatted response
+options string will be stored. Default is "roslabel".
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The function looks for label tables stored as attributes of the data frame,
+with names following the pattern "VARNAME\_lang\_id" (e.g., "ing4\_en" for English
+labels of variable ing4). Each label table should be a named numeric vector where
+names are the response labels and values are the corresponding codes.
+
+Special codes (values ≥ 1000) are excluded from the response options string.
+\end{Details}
+%
+\begin{Value}
+The input data frame with response option labels added to variables
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+# Apply the function
+## Not run: 
+bra23 <- lpr_set_ros(bra23) # Default English
+bra23 <- lpr_set_ros(bra23, lang_id = "es", attribute_name = "respuestas") # Spanish
+bra23 <- lpr_set_ros(bra23, lang_id = "pt", attribute_name = "ROsLabels_pt") # Portuguese
+
+## End(Not run)
+# View the resulting attributes
+## Not run: 
+attr(bra23$ing4, "roslabel")
+attr(bra23$ing4, "respuestas")
+attr(bra23$ing4, "ROsLabels_pt")
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lpr\_stack}{LAPOP Stacked Bar Graph Pre-Processing}{lpr.Rul.stack}
+%
+\begin{Description}
+This function creates dataframes which can then be input in lapop\_stack() for
+plotting variables categories with a stacked bar graph using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lpr_stack(
+  data,
+  outcome,
+  xvar = NULL,
+  sort = "y",
+  order = "hi-lo",
+  filesave = "",
+  keep_nr = FALSE
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] The data that should be analyzed. It requires a survey object from lpr\_data() function.
+
+\item[\code{outcome}] Vector of variables be plotted.
+
+\item[\code{xvar}] Character. Outcome variable will be broken down by this variable. Default is NULL
+
+\item[\code{sort}] Character. On what value the bars are sorted: the x or the y.
+Options are "y" (default; for the value of the outcome variable), "xv" (for
+the underlying values of the x variable), "xl" (for the labels of the x variable,
+i.e., alphabetical).
+
+\item[\code{order}] Character. How the bars should be sorted. Options are "hi-lo"
+(default) or "lo-hi".
+
+\item[\code{filesave}] Character. Path and file name to save the dataframe as csv.
+
+\item[\code{keep\_nr}] Logical. If TRUE, will convert "don't know" (missing code .a)
+and "no response" (missing code .b) into valid data (value = 99) and use them
+in the denominator when calculating percentages.  The default is to examine
+valid responses only.  Default: FALSE.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns a data frame, with data formatted for visualization by lapop\_stack
+\end{Value}
+%
+\begin{Author}
+Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+# Multiple Outcomes
+## Not run: 
+lpr_stack(data = gm23, outcome = c("countfair1", "countfair3"))
+## End(Not run)
+
+# Single Outcome over time
+## Not run: 
+lpr_stack(data = gm23, outcome = "pese1", xvar = "year")
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{lpr\_ts}{LAPOP Time-Series Line Graph Pre-Processing}{lpr.Rul.ts}
+%
+\begin{Description}
+This function creates dataframes which can then be input in lapop\_ts() for
+comparing values across time with a line graph using LAPOP formatting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lpr_ts(
+  data,
+  outcome,
+  rec = c(1, 1),
+  use_wave = FALSE,
+  ci_level = 0.95,
+  mean = FALSE,
+  filesave = "",
+  cfmt = "",
+  ttest = FALSE,
+  keep_nr = FALSE
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] A survey object.  The data that should be analyzed.
+
+\item[\code{outcome}] Character.  Outcome variable of interest to be plotted
+across time.
+
+\item[\code{rec}] Numeric. The minimum and maximum values of the outcome variable that
+should be included in the numerator of the percentage.  For example, if the variable
+is on a 1-7 scale and rec is c(5, 7), the function will show the percentage who chose
+an answer of 5, 6, 7 out of all valid answers.  Can also supply one value only,
+to produce the percentage that chose that value out of all other values.
+Default: c(1, 1).
+
+\item[\code{use\_wave}] Logical.  If TRUE, will use "wave" for the x-axis; otherwise,
+will use "year".  Default: FALSE.
+
+\item[\code{ci\_level}] Numeric. Confidence interval level for estimates.  Default: 0.95
+
+\item[\code{mean}] Logical.  If TRUE, will produce the mean of the variable rather than
+rescaling to percentage.  Default: FALSE.
+
+\item[\code{filesave}] Character.  Path and file name to save the dataframe as csv.
+
+\item[\code{cfmt}] Character. changes the format of the numbers displayed above the bars.
+Uses sprintf string formatting syntax. Default is whole numbers for percentages
+and tenths place for means.
+
+\item[\code{ttest}] Logical.  If TRUE, will conduct pairwise t-tests for difference
+of means between all individual x levels and save them in attr(x,
+"t\_test\_results"). Default: FALSE.
+
+\item[\code{keep\_nr}] Logical.  If TRUE, will convert "don't know" (missing code .a)
+and "no response" (missing code .b) into valid data (value = 99) and use them
+in the denominator when calculating percentages.  The default is to examine
+valid responses only.  Default: FALSE.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Returns a data frame, with data formatted for visualization by lapop\_ts()
+\end{Value}
+%
+\begin{Author}
+Berta Diaz, \email{berta.diaz.martinez@vanderbilt.edu} \&
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+lpr_ts(gm23,
+outcome = "ing4",
+use_wave = TRUE,
+mean = TRUE,
+ttest = TRUE)
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{ym23}{ym23 Dataset}{ym23}
+\keyword{datasets}{ym23}
+%
+\begin{Description}
+A dataset containing information about the AmericasBarometer Year Merge up to 2023.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+ym23
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+A data frame
+\begin{description}
+
+\item[b21] Description of Column
+\item[b31] Description of Column
+\item[b12] Description of Column
+\item[wave] Description of Column
+\item[pais] Description of Column
+\item[year] Description of Column
+\item[b18] Description of Column
+\item[ing4] Description of Column
+\item[pn4] Description of Column
+\item[edre] Description of Column
+\item[wealth] Description of Column
+\item[q1tc\_r] Description of Column
+\item[vb21n] Description of Column
+\item[q14f] Description of Column
+\item[upm] Description of Column
+\item[strata] Description of Column
+\item[weight1500] Description of Column
+
+\end{description}
+
+\end{Format}
+%
+\begin{Source}
+LAPOP Lab AmericasBarometer 2023 (https://www.vanderbilt.edu/lapop/)
+\end{Source}
+\printindex{}
+\end{document}

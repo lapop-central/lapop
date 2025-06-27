@@ -4,7 +4,6 @@
 #'
 #' @format A data frame
 #' \describe{
-#' \item{b13}{Description of Column}
 #' \item{b21}{Description of Column}
 #' \item{b31}{Description of Column}
 #' \item{b12}{Description of Column}
