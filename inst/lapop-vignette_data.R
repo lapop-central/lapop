@@ -1,6 +1,6 @@
 ## ----setup, include=FALSE-----------------------------------------------------
 #knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
-rm(list=ls()); gv()
+rm(list=ls()); gc()
 ## ----packages-----------------------------------------------------------------
 library(lapop)
 library(dplyr)
@@ -30,6 +30,7 @@ bra <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB
 bra23 <- bra %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
                         "wave", "pais", "year", "upm", "strata", "wt") %>%
                                                         filter(wave==2023)
+bra23<-lpr_data(bra23, wt = TRUE)
 
 # rda
 save(bra23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\bra23.rda"))

@@ -58,16 +58,16 @@ The AmericasBarometer use `weight1500` for comparative datasets by time or count
 
 ```{r, weight datasets}
 # Single-Country Single-Year
-bra23w <- lpr_data(bra23, wt = TRUE)
-print(bra23w)
+#bra23w <- lpr_data(bra23, wt = TRUE)
+#print(bra23w)
 
 # Single-Country Multi-Year
 cm23w <- lpr_data(cm23)
 print(cm23w)
 
 # Multi-Country Single-Year
-ym23w <- lpr_data(ym23)
-print(ym23w)
+#ym23w <- lpr_data(ym23)
+#print(ym23w)
 ```
 
 ## Fonts
@@ -100,7 +100,7 @@ lapop_cc(fig1.2_data,
 ## Figure 2.1: Multi-line Over Time
 
 ```{r, mline, eval=F}
-fig2.1_data <- lpr_mline(ym23,
+fig2.1_data <- lpr_mline(cm23,
                          outcome = c("b13", "b21", "b31"),
                          rec = c(5, 7), rec2 = c(5, 7), rec3 = c(5, 7))
 lapop_mline(fig2.1_data,
@@ -109,9 +109,8 @@ lapop_mline(fig2.1_data,
 ```
 
 ## Figure 2.3: CC Multiple Variables
-
-```{r, ccm, eval=F}
-fig2.3_data <- lpr_ccm(ym23w,
+```{r, ccm}
+fig2.3_data <- lpr_ccm(ym23,
                        outcome_vars = c("b12", "b18"),
                        rec1 = c(5, 7),
                        rec2 = c(5, 7))
@@ -123,8 +122,8 @@ lapop_ccm(fig2.3_data,
 
 ## Figure Mover Example: Satisfaction with Democracy
 
-```{r, mover, eval=F}
-ym23w$variables <- ym23w$variables %>%
+```{r, mover}
+ym23$variables <- ym23$variables %>%
   mutate(edre = case_when(
     edre <= 2 ~ "None/Primary",
     edre %in% c(3, 4) ~ "Secondary",
@@ -138,9 +137,9 @@ ym23w$variables <- ym23w$variables %>%
      TRUE ~ NA_character_
   ))
 
-attributes(ym23w$variables$wealth)$label <- "Wealth"
+attributes(ym23$variables$wealth)$label <- "Wealth"
 
-fig_mover <- lpr_mover(ym23w,
+fig_mover <- lpr_mover(ym23,
                        outcome = "pn4",
                        grouping_vars = c("q1tc_r", "edrer", "wealth"),
                        rec = c(1, 2))

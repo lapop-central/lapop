@@ -104,7 +104,8 @@ Both approaches extract the third element (x[3]) from each list in the "expansio
 
 ```{r, STREAMLINED APPROACH, eval=F}
 # Base R approach:
-# The base R version uses lapply to iterate over the list and returns NULL when the condition isn't met, then Filter(Negate(is.null), ...) removes those NULLs.
+# The base R version uses lapply to iterate over the list and returns NULL when 
+# the condition isn't met, then Filter(Negate(is.null), ...) removes those NULLs.
 Filter(Negate(is.null), lapply(attr(bra23, "expansion.fields"), function(x) {
   if (x[1] == "ing4") list(note_id = x[2], note_value = x[3])
 }))
