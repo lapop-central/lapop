@@ -62,15 +62,27 @@ lpr_data = function (data_path, wt = FALSE)
                      `40` = "US", `41` = "CA")
 
   country_codes_names <- c(
-    "Mexico" = "MX", "Guatemala" = "GT", "El Salvador" = "SV", "Honduras" = "HN",
-    "Nicaragua" = "NI", "Costa Rica" = "CR", "Panama" = "PA", "Colombia" = "CO",
-    "Ecuador" = "EC", "Bolivia" = "BO", "Peru" = "PE", "Paraguay" = "PY",
-    "Chile" = "CL", "Uruguay" = "UY", "Brazil" = "BR", "Argentina" = "AR",
-    "Dominican Republic" = "DO", "Haiti" = "HT", "Jamaica" = "JM",
-    "Trinidad and Tobago" = "TT", "Belize" = "BZ", "Surinam" = "SR",
-    "Bahamas" = "BS", "Grenada" = "GD", "United States" = "US", "Canada" = "CA"
+    "Mexico" = "MX", "México" = "MX",
+    "Guatemala" = "GT", "El Salvador" = "SV",
+    "Honduras" = "HN", "Nicaragua" = "NI",
+    "Costa Rica" = "CR",
+    "Panama" = "PA", "Panamá" = "PA",
+    "Colombia" = "CO", "Ecuador" = "EC",
+    "Bolivia" = "BO",
+    "Peru" = "PE", "Perú" = "PE",
+    "Paraguay" = "PY", "Chile" = "CL", "Uruguay" = "UY",
+    "Brazil" = "BR", "Brasil" = "BR",
+    "Argentina" = "AR",
+    "Dominican Republic" = "DO", "República Dominicana" = "DO",
+    "Haiti" = "HT", "Haití" = "HT",
+    "Jamaica" = "JM",
+    "Trinidad and Tobago" = "TT", "Trinidad y Tobago" = "TT",
+    "Belize" = "BZ", "Belice" = "BZ",
+    "Suriname" = "SR", "Surinam" = "SR",
+    "Bahamas" = "BS", "Grenada" = "GD",
+    "United States" = "US", "Estados Unidos" = "US",
+    "Canada" = "CA", "Canadá" = "CA"
   )
-
 
   if (is.factor(data$pais)) {
     # Assume factor of country names

@@ -10,7 +10,8 @@ library(dplyr)
 # # -----------------------------------------------------------------------
 # GRAND-MERGE (TOO LARGE FOR R PACKAGE)
 # # -----------------------------------------------------------------------
-#gm <- lpr_data("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/GM/Grand Merge 2004-2023 LAPOP AmericasBarometer (v1.1s).dta") # grand-merge v1.1 wealth variable fix
+#gm <- readstata13::read.dta13("C:/users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/GM/Grand Merge 2004-2023 LAPOP AmericasBarometer (v1.1s).dta", generate.factors=T) # grand-merge v1.1 wealth variable fix
+#gm <- lpr_data("C:/users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/GM/Grand Merge 2004-2023 LAPOP AmericasBarometer (v1.1s).dta") # grand-merge v1.1 wealth variable fix
 
 # Filter Countries and Variables
 #gm23 <- gm %>% filter(!(pais %in% c(16, 25, 26, 27, 28, 30, 40, 41)))
@@ -30,7 +31,7 @@ bra <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB
 bra23 <- bra %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
                         "wave", "pais", "year", "upm", "strata", "wt") %>%
                                                         filter(wave==2023)
-bra23<-lpr_data(bra23, wt = TRUE)
+#bra23<-lpr_data(bra23, wt = TRUE)
 
 bra23
 
@@ -48,7 +49,7 @@ cm <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/
 cm23 <- cm %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
                         "wave", "pais", "year", "upm", "strata", "wt", "weight1500")
 
-cm23<-lpr_data(cm23)
+#cm23<-lpr_data(cm23)
 
 cm23
 
@@ -71,7 +72,7 @@ ym23 <- ym23 %>% select("b12", "b18",
                         "edre", "wealth", "q1tc_r",
                         "upm", "strata", "weight1500")
 
-ym23<-lpr_data(ym23)
+#ym23<-lpr_data(ym23)
 
 ym23
 
