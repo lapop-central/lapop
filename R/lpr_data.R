@@ -18,7 +18,7 @@
 #' @return Returns a svy_tbl object
 #'
 #' @examples {
-#'
+#'\dontrun{
 #' # Single-country single-year (wt)
 #' #' bra23w <- lpr_data(bra23, wt = TRUE)
 #' print(bra23w)
@@ -32,7 +32,7 @@
 #' ym23w <- lpr_data(ym23, wt = TRUE)
 #' print(ym23w)
 #'}
-#'
+#'}
 #'@export
 #'@import srvyr
 #'@import haven
