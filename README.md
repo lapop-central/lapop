@@ -1,14 +1,16 @@
 -----------------------------------------------------------------------
-### lapop R package
------------------------------------------------------------------------
-These are the helper functions to wrangle and produce visualizations of 
-AmericasBarometer data following LAPOP Lab's editorial guidelines
+lapop R package
 
-### To install the package in your machine you need to run in R console
+-----------------------------------------------------------------------
+These are the helper functions to wrangle labels and produce visualizations 
+of AmericasBarometer data following LAPOP Lab's editorial guidelines
+
+To install the package in your machine you need to run in R console
 `devtools::install_github("https://github.com/lapop-central/lapop/", force=TRUE, build_vignettes = TRUE)`
 
 -----------------------------------------------------------------------
-### Workflow of AmericasBarometer data visualization using LAPOP Lab guidelines 
+Workflow of AmericasBarometer data visualization using LAPOP Lab guidelines 
+
 -----------------------------------------------------------------------
 
 1) Load lapop package in R `library(lapop)`
@@ -21,7 +23,8 @@ or break down by covariates `lpr_mover` and store it in a R object
 6) Export the figure with `lapop_save()` to your machine.
 
 -----------------------------------------------------------------------
-### Workflow of AmericasBarometer data variables and values labels
+Workflow of AmericasBarometer data variables and values labels
+
 -----------------------------------------------------------------------
 Please refer to `/inst/LAPOP_Data_Guide_for_R_Users.html` for the full guide.
 
@@ -45,7 +48,8 @@ Use `lpr_set_ros()` to assign these response labels as attributes
 in English, Spanish, or Portuguese.
 
 -----------------------------------------------------------------------
-### Workflow to contribute to the `lapop` R package
+Workflow to contribute to the `lapop` R package
+
 -----------------------------------------------------------------------
 1) Clone the repository to your machine
 2) Add the new function to the `\R` folder
