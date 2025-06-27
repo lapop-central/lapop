@@ -45,7 +45,8 @@ lpr_data = function (data_path, wt = FALSE)
   # Check if data_path is a path or a data frame
   if (is.character(data_path) && file.exists(data_path)) {
     # If it's a path, read the data
-    data <- haven::read_dta(data_path)
+    #data <- haven::read_dta(data_path)
+    data <- readstata13::read.dta13(data_path)
   } else if (is.data.frame(data_path)) {
     # If it's already a data frame, use it directly
     data <- data_path

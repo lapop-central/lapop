@@ -1,5 +1,5 @@
 ---
-title: "LAPOP R Labels Guide"
+title: "AmericasBarometer Labels Guide"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{AmericasBarometer Labels Guide}
