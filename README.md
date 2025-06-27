@@ -1,65 +1,103 @@
------------------------------------------------------------------------
+# lapop R package
 
-lapop R package
+These are helper functions to wrangle labels and produce visualizations of AmericasBarometer data following LAPOP Lab's editorial guidelines.
 
------------------------------------------------------------------------
-These are the helper functions to wrangle labels and produce visualizations 
-of AmericasBarometer data following LAPOP Lab's editorial guidelines
+---
 
-To install the package in your machine you need to run in R console
-`devtools::install_github("https://github.com/lapop-central/lapop/", force=TRUE, build_vignettes = TRUE)`
+## 🛠️ Installation
 
------------------------------------------------------------------------
+To install the package in your R console, run:
 
-Workflow of AmericasBarometer data visualization using LAPOP Lab guidelines 
+```r
+devtools::install_github("lapop-central/lapop", 
+                         force = TRUE, 
+                         build_vignettes = TRUE)
+```
 
------------------------------------------------------------------------
+---
 
-1) Load lapop package in R `library(lapop)`
-2) Load `lapop_fonts()` function into console
-3) Apply AmericasBarometer sampling design effect with `lpr_data()` function 
-4) Choose the appropriate type of `lpr` graph to represent data. For instance, 
-histograms `lpr_hist`, cross country comparison `lpr_cc`, time series `lpr_ts`, 
-or break down by covariates `lpr_mover` and store it in a R object
-5) Use the correspoding `lapop` ploting function to produce the visualization (e.g., `lapop_hist`, `lapop_cc`, `lapop_ts`, and so on).
-6) Export the figure with `lapop_save()` to your machine.
+## 🎨 Workflow: AmericasBarometer Data Visualization
 
------------------------------------------------------------------------
+1. Load the package in R:
 
-Workflow of AmericasBarometer data variables and values labels
+   ```r
+   library(lapop)
+   ```
 
------------------------------------------------------------------------
-Please refer to `/inst/LAPOP_Data_Guide_for_R_Users.html` for the full guide.
+2. Load LAPOP Lab fonts:
 
-1) Data Structure: AmericasBarometer datasets are distributed in Stata .dta format with
-multilingual metadata (question wording and response options) embedded
-as attributes. These support cross-national and longitudinal
-comparability.
+   ```r
+   lapop_fonts()
+   ```
 
-2) Preferred Loading Method
-Use the readstata13::read.dta13() function to preserve full metadata
-structure. Other methods such as `haven::read_dta()` or
-`rio::import()` often fail to import these critical attributes.
+3. Apply the AmericasBarometer sampling design with:
 
-3) Variable Labels (Question Wording): Stored in the “expansion.fields” attribute.
-Use the custom `lpr_extract_notes()` function to convert this into a tidy
-data frame. Next, assign preferred language labels to each variable with
-`lpr_set_attr()` using the appropriate noteid.
+   ```r
+   lpr_data()
+   ```
 
-5) Value Labels (Response Options): Stored in the “label.table” attribute. 
-Use `lpr_set_ros()` to assign these response labels as attributes
-in English, Spanish, or Portuguese.
+4. Choose the appropriate `lpr` graph type:
+   - Histograms: `lpr_hist()`
+   - Cross-country comparison: `lpr_cc()`
+   - Time series: `lpr_ts()`
+   - Breakdown by covariates: `lpr_mover()`
 
------------------------------------------------------------------------
+5. Store the output in an R object.
 
-Workflow to contribute to the `lapop` R package
+6. Use the corresponding `lapop` plotting function to produce the visualization:
+   - Examples: `lapop_hist()`, `lapop_cc()`, `lapop_ts()`, etc.
 
------------------------------------------------------------------------
-1) Clone the repository to your machine
-2) Add the new function to the `\R` folder
-3) Add the .Rd file in the `\man` folder using `roxygen2`
-4) Collate the new function in the DESCRIPTION file
------------------------------------------------------------------------
+7. Export the figure to your machine with:
+
+   ```r
+   lapop_save()
+   ```
+
+---
+
+## ⚙️ Workflow: AmericasBarometer Variable & Value Labels
+
+For the full guide, see the vignette:
+
+[inst/LAPOP_Data_Guide_for_R_Users.html](inst/LAPOP_Data_Guide_for_R_Users.html)
+
+### 1. Data Structure
+
+AmericasBarometer datasets are distributed in Stata `.dta` format with multilingual metadata (question wording and response options) embedded as attributes. These support cross-national and longitudinal comparability.
+
+### 2. Preferred Loading Method
+
+Use:
+
+```r
+readstata13::read.dta13()
+```
+
+to preserve the full metadata structure.
+
+Other methods such as `haven::read_dta()` or `rio::import()` may fail to import these critical attributes.
+
+### 3. Variable Labels (Question Wording)
+
+- Stored in the `expansion.fields` attribute.
+- Use `lpr_extract_notes()` to convert into a tidy data frame.
+- Assign preferred language labels with `lpr_set_attr()` using the appropriate `noteid`.
+
+### 4. Value Labels (Response Options)
+
+- Stored in the `label.table` attribute.
+- Use `lpr_set_ros()` to assign these response labels in English, Spanish, or Portuguese.
+
+---
+
+## 🤝 Workflow: Contributing to the `lapop` R Package
+
+1. Clone the repository to your machine.
+2. Add the new function to the `R/` folder.
+3. Document the function with `roxygen2` to create the `.Rd` file in `man/`.
+4. Add the new function to the `Collate` field in the `DESCRIPTION` file.
+
+---
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/lapop-central/lapop-viz/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lapop-central/lapop-viz/actions/workflows/R-CMD-check.yaml)
 [![GitHub stars](https://img.shields.io/github/stars/lapop-central/lapop.svg?style=social&label=Star&maxAge=3600)](https://github.com/lapop-central/lapop/stargazers)
