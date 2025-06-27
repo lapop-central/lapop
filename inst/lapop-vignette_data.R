@@ -30,7 +30,7 @@ bra <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB
 bra23 <- bra %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
                         "wave", "pais", "year", "upm", "strata", "wt") %>%
                                                         filter(wave==2023)
-#bra23<-lpr_data(bra23, wt = TRUE)
+bra23<-lpr_data(bra23, wt = TRUE)
 
 bra23
 
@@ -48,7 +48,7 @@ cm <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/
 cm23 <- cm %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
                         "wave", "pais", "year", "upm", "strata", "wt", "weight1500")
 
-#cm23<-lpr_data(cm23)
+cm23<-lpr_data(cm23)
 
 cm23
 
@@ -71,7 +71,7 @@ ym23 <- ym23 %>% select("b12", "b18",
                         "edre", "wealth", "q1tc_r",
                         "upm", "strata", "weight1500")
 
-#ym23<-lpr_data(ym23)
+ym23<-lpr_data(ym23)
 
 ym23
 

@@ -58,16 +58,16 @@ The AmericasBarometer use `weight1500` for comparative datasets by time or count
 
 ```{r, weight datasets, eval = FALSE}
 # Single-Country Single-Year
-bra23w <- lpr_data(bra23, wt = TRUE)
-print(bra23w)
+#bra23w <- lpr_data(bra23, wt = TRUE)
+#print(bra23w)
 
 # Single-Country Multi-Year
-cm23w <- lpr_data(cm23)
-print(cm23w)
+#cm23w <- lpr_data(cm23)
+#print(cm23w)
 
 # Multi-Country Single-Year
-ym23w <- lpr_data(ym23)
-print(ym23w)
+#ym23w <- lpr_data(ym23)
+#print(ym23w)
 ```
 
 ## Fonts
