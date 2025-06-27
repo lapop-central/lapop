@@ -59,9 +59,9 @@ devtools::install_github("lapop-central/lapop",
 
 ## ⚙️ Workflow: AmericasBarometer Variable & Value Labels
 
-For the full guide, see the vignette:
+For the full online guide, see:
 
-[inst/LAPOP_Data_Guide_for_R_Users.html](inst/LAPOP_Data_Guide_for_R_Users.html)
+[📖 LAPOP Data Guide for R Users (pkgdown article)](https://lapop-central.github.io/lapop/articles/lapop-r-labels.html)
 
 ### 1. Data Structure
 
