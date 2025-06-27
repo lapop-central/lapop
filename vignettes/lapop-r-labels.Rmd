@@ -66,12 +66,12 @@ In the R programming language, attributes are additional metadata that can be at
 
 
 ```{r, LOAD DATA CHUNK, eval=F}
-# READSTATA13 PACKAGE (RECOMMENDED)
+# READSTATA13 PACKAGE (RECOMMENDED FOR LABELS)
 data1 <- read.dta13("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta", 
                                  generate.factors = T)
 names(attributes(data1))
 
-# HAVEN PACKAGE
+# HAVEN PACKAGE (RECOMMENDED FOR PLOTTING)
 data2 <- read_dta("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta")
 names(attributes(data2))
 

@@ -66,8 +66,8 @@ print(bra23w)
 #print(cm23w)
 
 # Multi-Country Single-Year
-#ym23w <- lpr_data(ym23)
-#print(ym23w)
+ym23w <- lpr_data(ym23)
+print(ym23w)
 ```
 
 ## Fonts
@@ -91,7 +91,7 @@ lapop_ts(fig1.1_data,
 ## Figure 1.2: Cross-Country Comparison
 
 ```{r, cross country, eval = FALSE}
-fig1.2_data <- lpr_cc(ym23, outcome = "ing4", rec = c(5, 7))
+fig1.2_data <- lpr_cc(ym23w, outcome = "ing4", rec = c(5, 7))
 lapop_cc(fig1.2_data,
          main_title = "In many countries, only about one in two adults support democracy",
          subtitle = "% who support democracy")

@@ -30,6 +30,6 @@ LAPOP AmericasBarometer (https://www.vanderbilt.edu/lapop/)
 cm23
 }
 \description{
-A dataset containing the AmericasBarometer Brazil Country Merge up to 2023.
+A dataset containing the AmericasBarometer Brazil Country Merge from 2006 to 2023.
 }
 \keyword{datasets}
