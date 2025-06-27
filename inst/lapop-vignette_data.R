@@ -64,8 +64,8 @@ save(cm23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\cm23.rda"))
 ym <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/YM/Merge 2023 LAPOP AmericasBarometer (v1.0s).dta",
                generate.factors = TRUE) # year-merge
 ym23 <- ym %>% filter(!(pais %in% c(26, 40, 41))) # Excluding
-ym23 <- ym23 %>% select("wave", "pais", "year",
-                        "b12", "b18",
+ym23 <- ym23 %>% select("b12", "b18",
+                        "wave", "pais", "year",
                         "ing4", "pn4",
                         "vb21n", "q14f",
                         "edre", "wealth", "q1tc_r",
