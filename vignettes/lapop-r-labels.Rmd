@@ -32,14 +32,17 @@ If you do not have the LAPOP Lab package already installed in your machine you c
 
 ```{r, INSTALL LPR, eval=FALSE}
 # Install the LAPOP Lab package:
-devtools::install_github("https://github.com/lapop-central/lapop", force=TRUE, build_vignettes = TRUE)
+devtools::install_github("https://github.com/lapop-central/lapop", 
+                         force=TRUE, 
+                         build_vignettes = TRUE)
 ```
 
 After installation is successful, you will need to load the package into your library:
 
 ```{r, LOAD LPR}
 library(lapop)
-# Note: no need for lapop_fonts() since we are not plotting figures
+# Note: no need for lapop_fonts() 
+# because we are not plotting figures
 ```
 
 ## How LAPOP Lab stores variables metadata? 
@@ -64,16 +67,16 @@ In the R programming language, attributes are additional metadata that can be at
 
 ```{r, LOAD DATA CHUNK, eval=F}
 # READSTATA13 PACKAGE (RECOMMENDED)
-data1 <- readstata13::read.dta13("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta", 
+data1 <- read.dta13("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta", 
                                  generate.factors = T)
 names(attributes(data1))
 
 # HAVEN PACKAGE
-data2 <- haven::read_dta("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta")
+data2 <- read_dta("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta")
 names(attributes(data2))
 
 # RIO PACKAGE
-data3 <- rio::import("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta")
+data3 <- import("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta")
 names(attributes(data3))
 ```
 
@@ -106,14 +109,16 @@ Both approaches extract the third element (x[3]) from each list in the "expansio
 # Base R approach:
 # The base R version uses lapply to iterate over the list and returns NULL when 
 # the condition isn't met, then Filter(Negate(is.null), ...) removes those NULLs.
-Filter(Negate(is.null), lapply(attr(bra23, "expansion.fields"), function(x) {
+Filter(Negate(is.null), lapply(attr(bra23, "expansion.fields"), 
+  function(x) {
   if (x[1] == "ing4") list(note_id = x[2], note_value = x[3])
 }))
 
 # purrr package approach
 #  The purrr version uses map() to do the same, and also remove NULL results. 
 purrr::map_dfr(attr(bra23, "expansion.fields"), ~ {
-  if (.x[1] == "ing4") tibble::tibble(note_id = .x[2], note_value = .x[3])
+  if (.x[1] == "ing4") 
+    tibble::tibble(note_id = .x[2], note_value = .x[3])
 })
 
 ```
@@ -125,20 +130,26 @@ First, we will use `lpr_extract_notes` to transform the nested lists into a long
 ```{r, NOTES EXTRACT, eval=F}
 # Extract AB notes
 notes <- lpr_extract_notes(varlabels)
-head(notes, n = 10) # See columns names
-table(notes$note_id) # See all different note information available!
+head(notes, n = 10) # columns names
+table(notes$note_id) # note information available!
 ```
 
 After extracting the notes, one can assign variable labels to their preferred language as attributes to the dataset using another LAPOP Lab function called `lpr_set_attr()` and than access it during data analysis without the need of an accompanying codebook.
 
 ```{r, SET ATTRIBUTES, eval=F, warning=F}
 # English
-bra23<-lpr_set_attr(bra23, notes, noteid = "note2", attribute_name = "qwording_en") 
+bra23<-lpr_set_attr(bra23, notes, 
+                    noteid = "note2", 
+                    attribute_name = "qwording_en") 
 # Spanish
-bra23<-lpr_set_attr(bra23, notes, noteid = "note1", attribute_name = "qwording_es")
+bra23<-lpr_set_attr(bra23, notes, 
+                    noteid = "note1", 
+                    attribute_name = "qwording_es")
 
 # Portuguese
-bra23<-lpr_set_attr(bra23, notes, noteid = "note3", attribute_name = "qwording_pt") 
+bra23<-lpr_set_attr(bra23, notes, 
+                    noteid = "note3", 
+                    attribute_name = "qwording_pt") 
 
 
 # Printing languages
