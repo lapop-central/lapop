@@ -49,8 +49,8 @@ devtools::install_github("lapop-central/lapop",
    - Examples:
       
       - mex21_countfair1_hist.csv
-      - hndts_b4_ts.svg
-      - ab23_vic1ext_pais_cc.png
+      - hnd_b4_ts.svg
+      - ab23_vic1ext_pais_cc.svg
    - There will be some cases that do not easily fit this standard. Use your best judgment.
 
 7. Use the corresponding `lapop` plotting function to produce the visualization:
