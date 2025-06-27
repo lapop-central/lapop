@@ -28,7 +28,8 @@ library(dplyr)
 bra <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing/BRA merge 2007-2023 LAPOP AmericasBarometer (v1.0s).dta",
                                generate.factors = TRUE)
 bra23 <- bra %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
-                        "wave", "pais", "year", "upm", "strata", "wt") %>% filter(wave==2023)
+                        "wave", "pais", "year", "upm", "strata", "wt") %>%
+                                                        filter(wave==2023)
 
 save(bra23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\bra23.rda"))
 
@@ -39,6 +40,7 @@ cm <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/
                               generate.factors = TRUE)
 cm23 <- cm %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
                         "wave", "pais", "year", "upm", "strata", "weight1500", "wt")
+CONTINUE HEREhaven::write_dta(cm23, paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\cm23.dta"))
 save(cm23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\cm23.rda"))
 
 # # -----------------------------------------------------------------------
@@ -49,16 +51,16 @@ ym <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/
 ym23 <- ym %>% filter(!(pais %in% c(26, 40, 41))) # Excluding
 ym23 <- ym23 %>% select("wave", "pais", "year",
                         "ing4", "b12", "b18", "pn4", "vb21n", "q14f", "d4",
-                        "edre", "wealth", "q1tc_r", "weight1500")
+                        "edre", "wealth", "q1tc_r", "upm", "strata", "weight1500")
 
 #saveRDS(ym, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rds"))
 save(ym23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rda"))
 
-## ----load data, evaluate=F, include=F-----------------------------------------
+# CHECK FILES SIZE
+tools::checkRdaFiles("data/")
 
 # COMPRESS TO XZ FOR BEST FILESIZE
 tools::resaveRdaFiles("data/", compress = "xz")
-tools::checkRdaFiles("data/")
 
 #gm23 <- load(paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\gm23.RDS"))
 #ym23 <- load(paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.RDS"))

@@ -121,7 +121,7 @@ To ease the researchers and analysts job, LAPOP Lab developed custom functions t
 First, we will use `lpr_extract_notes` to transform the nested lists into a long dataframe format that will contain
 3 columns: `variable_name`, `note_id`, and `note_value`
 
-```{r, NOTES EXTRACT}
+```{r, NOTES EXTRACT, eval=F}
 # Extract AB notes
 notes <- lpr_extract_notes(varlabels)
 head(notes, n = 10) # See columns names
