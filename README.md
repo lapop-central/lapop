@@ -18,6 +18,41 @@ devtools::install_github("lapop-central/lapop",
 
 ---
 
+## ⚙️ Workflow: AmericasBarometer Variable & Value Labels
+
+For the full online guide, see:
+
+<a href="https://lapop-central.github.io/lapop/articles/lapop-r-labels.html" target="_blank">📖 LAPOP Data Guide for R Users (pkgdown article)</a>
+
+### 1. Data Structure
+
+AmericasBarometer datasets are distributed in Stata `.dta` format with multilingual metadata (question wording and response options) embedded as attributes. These support cross-national and longitudinal comparability.
+
+### 2. Preferred Loading Method
+
+Use:
+
+```r
+readstata13::read.dta13()
+```
+
+to preserve the full metadata structure.
+
+Other methods such as `haven::read_dta()` or `rio::import()` may fail to import these critical attributes.
+
+### 3. Variable Labels (Question Wording)
+
+- Stored in the `expansion.fields` attribute.
+- Use `lpr_extract_notes()` to convert into a tidy data frame.
+- Assign preferred language labels with `lpr_set_attr()` using the appropriate `noteid`.
+
+### 4. Value Labels (Response Options)
+
+- Stored in the `label.table` attribute.
+- Use `lpr_set_ros()` to assign these response labels in English, Spanish, or Portuguese.
+
+---
+
 ## 🎨 Workflow: AmericasBarometer Data Visualization
 
 1. Load the package in R:
@@ -61,41 +96,6 @@ devtools::install_github("lapop-central/lapop",
    ```r
    lapop_save()
    ```
-
----
-
-## ⚙️ Workflow: AmericasBarometer Variable & Value Labels
-
-For the full online guide, see:
-
-<a href="https://lapop-central.github.io/lapop/articles/lapop-r-labels.html" target="_blank">📖 LAPOP Data Guide for R Users (pkgdown article)</a>
-
-### 1. Data Structure
-
-AmericasBarometer datasets are distributed in Stata `.dta` format with multilingual metadata (question wording and response options) embedded as attributes. These support cross-national and longitudinal comparability.
-
-### 2. Preferred Loading Method
-
-Use:
-
-```r
-readstata13::read.dta13()
-```
-
-to preserve the full metadata structure.
-
-Other methods such as `haven::read_dta()` or `rio::import()` may fail to import these critical attributes.
-
-### 3. Variable Labels (Question Wording)
-
-- Stored in the `expansion.fields` attribute.
-- Use `lpr_extract_notes()` to convert into a tidy data frame.
-- Assign preferred language labels with `lpr_set_attr()` using the appropriate `noteid`.
-
-### 4. Value Labels (Response Options)
-
-- Stored in the `label.table` attribute.
-- Use `lpr_set_ros()` to assign these response labels in English, Spanish, or Portuguese.
 
 ---
 
