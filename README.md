@@ -61,7 +61,7 @@ devtools::install_github("lapop-central/lapop",
 
 For the full online guide, see:
 
-[📖 LAPOP Data Guide for R Users (pkgdown article)](https://lapop-central.github.io/lapop/articles/lapop-r-labels.html)
+<a href="https://lapop-central.github.io/lapop/articles/lapop-r-labels.html" target="_blank">📖 LAPOP Data Guide for R Users (pkgdown article)</a>
 
 ### 1. Data Structure
 
