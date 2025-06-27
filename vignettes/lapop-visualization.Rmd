@@ -35,7 +35,7 @@ library(lapop)
 The lapop package brings two datasets already with design effects (weighted).
 
 ```{r, load data}
-# SIngle-country Single-year AmericasBarometer 2023 Brazil
+# Single-country Single-year AmericasBarometer 2023 Brazil
 data(bra23)
 
 # AmericasBarometer 2006-2023 Brazil Merge
@@ -79,7 +79,7 @@ lapop_fonts()
 ## Figure 1.1: Time Series
 
 ```{r, time series, eval=F}
-fig1.1_data <- lpr_ts(cm23, outcome = "ing4", rec = c(5, 7), use_wave = TRUE)
+fig1.1_data <- lpr_ts(cm23w, outcome = "ing4", rec = c(5, 7), use_wave = TRUE)
 lapop_ts(fig1.1_data,
          ymin = 50,
          ymax = 80,
@@ -96,7 +96,7 @@ lapop_cc(fig1.2_data,
          subtitle = "% who support democracy")
 ```
 
-## Figure 2.1: Multi-Line Over Time
+## Figure 2.1: Multi-line Over Time
 
 ```{r, mline, eval=F}
 fig2.1_data <- lpr_mline(ym23,
@@ -110,7 +110,7 @@ lapop_mline(fig2.1_data,
 ## Figure 2.3: CC Multiple Variables
 
 ```{r, ccm, eval=F}
-fig2.3_data <- lpr_ccm(ym23,
+fig2.3_data <- lpr_ccm(ym23w,
                        outcome_vars = c("b12", "b18"),
                        rec1 = c(5, 7),
                        rec2 = c(5, 7))
@@ -123,8 +123,8 @@ lapop_ccm(fig2.3_data,
 ## Figure Mover Example: Satisfaction with Democracy
 
 ```{r, mover, eval=F}
-ym23$variables <- ym23$variables %>%
-  mutate(edrer = case_when(
+ym23w$variables <- ym23w$variables %>%
+  mutate(edre = case_when(
     edre <= 2 ~ "None/Primary",
     edre %in% c(3, 4) ~ "Secondary",
     edre > 4 ~ "Superior",
@@ -137,9 +137,9 @@ ym23$variables <- ym23$variables %>%
      TRUE ~ NA_character_
   ))
 
-attributes(ym23$variables$wealth)$label <- "Wealth"
+attributes(ym23w$variables$wealth)$label <- "Wealth"
 
-fig_mover <- lpr_mover(ym23,
+fig_mover <- lpr_mover(ym23w,
                        outcome = "pn4",
                        grouping_vars = c("q1tc_r", "edrer", "wealth"),
                        rec = c(1, 2))
@@ -152,10 +152,10 @@ lapop_mover(fig_mover,
             subtitle = "% who are satisfied with democracy")
 ```
 
-## FIgure Histogram: Citizens’ Views
+## Figure Histogram: Citizens’ Views
 
-```{r, histogram, eval=F}
-spot32_data <- lpr_hist(ym23, outcome = "vb21n")
+```{r, histogram}
+spot32_data <- lpr_hist(ym23w, outcome = "vb21n")
 spot32_data$cat <- c("Vote", "Run for\noffice", "Protest", "Participate\nin local orgs.",
                      "Other", "Change is\nimpossible")
 
@@ -168,7 +168,7 @@ lapop_hist(spot32_data,
 ## Figure 3.5: Dumbell Plot
 
 ```{r, dumbell, eval=F}
-fig3.5_data <- lpr_dumb(bra23,
+fig3.5_data <- lpr_dumb(cm23w,
                         outcome = "q14f",
                         rec = c(1, 1),
                         over = c(2018, 2023),
@@ -185,7 +185,7 @@ lapop_dumb(fig3.5_data,
 ## Figure 3.8: Stack Plot by Country
 
 ```{r, stack, eval=F}
-fig3.8_data <- lpr_stack(ym23,
+fig3.8_data <- lpr_stack(ym23w,
                          outcome = "q14f",
                          xvar = "pais",
                          order = "hi-lo")
