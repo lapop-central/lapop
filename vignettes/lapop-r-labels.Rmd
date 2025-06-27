@@ -81,9 +81,11 @@ names(attributes(data3))
 
 The methods `haven` and `rio` packages  do not recover all the metadata from `dta` files. Thereby, we proceed with the dataset loaded with the `readstata13` package.
 
-## Extracting AmericasBarometer Variables Labels (Question Wording)
+## AmericasBarometer Variables Labels (Question Wording)
 AmericasBarometer variable labels are stored as `notes` in STATA .dta files. We 
 can find them inside the "expansion.fields" attribute.
+
+The `varlabels` object created is a nested list (much like a JSON object) that will contain multilingual notes with the question wording of each variable. For instance, for the variable `ing4` in the `Brazil AB 2023` dataset will contain notes with the question wording and lead-in in English, Spanish, and Portuguese.
 
 ```{r, QWORDING, eval = TRUE, warnings = F}
 data(bra23)
@@ -95,8 +97,6 @@ varlabels = attr(bra23, "expansion.fields")
 # Printing notes for varibale "ing4"
 varlabels[grepl("ing4", varlabels) & grepl("note", varlabels)]
 ```
-
-The `varlabels` object created is a nested list (much like a JSON object) that will contain multilingual notes with the question wording of each variable. For instance, for the variable `ing4` in the `Brazil AB 2023` dataset will contain notes with the question wording and lead-in in English (note4 and note5), Spanish (note7 and note8), and Portuguese (note1 and note2).
 
 ## How do I find the correct language labels?
 
@@ -110,10 +110,12 @@ Both approaches extract the third element (x[3]) from each list in the "expansio
 # Base R approach:
 # The base R version uses lapply to iterate over the list and returns NULL when 
 # the condition isn't met, then Filter(Negate(is.null), ...) removes those NULLs.
-Filter(Negate(is.null), lapply(attr(bra23, "expansion.fields"), 
+head(
+  Filter(Negate(is.null), lapply(attr(bra23, "expansion.fields"), 
   function(x) {
   if (x[1] == "ing4") list(note_id = x[2], note_value = x[3])
 }))
+)
 
 # purrr package approach
 #  The purrr version uses map() to do the same, and also remove NULL results. 
@@ -158,7 +160,7 @@ attr(bra23$ing4, "qwording_es") # Spanish
 attr(bra23$ing4, "qwording_pt") # Portuguese
 ```
 
-## Extracting AmericasBarometer Values Labels (Response Options)
+## AmericasBarometer Values Labels (Response Options)
 
 AmericasBarometer's values labels (i.e., response options) differently from the variable labels are stored inside the "label.table" attribute. To extract them we will use another LAPOP Lab custom function called `lpr_format_labels` that will set up the response options
 as an attribute across languages. Default language is English and default attribute name is `roslabel` but the function allows custom attribute names as shown below:
