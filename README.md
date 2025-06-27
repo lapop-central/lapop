@@ -1,4 +1,5 @@
 -----------------------------------------------------------------------
+
 lapop R package
 
 -----------------------------------------------------------------------
@@ -9,6 +10,7 @@ To install the package in your machine you need to run in R console
 `devtools::install_github("https://github.com/lapop-central/lapop/", force=TRUE, build_vignettes = TRUE)`
 
 -----------------------------------------------------------------------
+
 Workflow of AmericasBarometer data visualization using LAPOP Lab guidelines 
 
 -----------------------------------------------------------------------
@@ -23,6 +25,7 @@ or break down by covariates `lpr_mover` and store it in a R object
 6) Export the figure with `lapop_save()` to your machine.
 
 -----------------------------------------------------------------------
+
 Workflow of AmericasBarometer data variables and values labels
 
 -----------------------------------------------------------------------
@@ -48,6 +51,7 @@ Use `lpr_set_ros()` to assign these response labels as attributes
 in English, Spanish, or Portuguese.
 
 -----------------------------------------------------------------------
+
 Workflow to contribute to the `lapop` R package
 
 -----------------------------------------------------------------------
