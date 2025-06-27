@@ -2,6 +2,8 @@
 
 These are helper functions to wrangle labels and produce visualizations of AmericasBarometer data following LAPOP Lab's editorial guidelines.
 
+🔗 **Package website:** [https://lapop-central.github.io/lapop/](https://lapop-central.github.io/lapop/)
+
 ---
 
 ## 🛠️ Installation
