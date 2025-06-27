@@ -24,14 +24,14 @@
 #' print(bra23w)
 #'}
 #' # Single-country  multi-year (weight1500)
-#' cm23w <- lpr_data(cm23)
+#' \dontrun{cm23w <- lpr_data(cm23)
 #' print(cm23w)
 #'}
 #'
 #'#' # Multi-country  single-year (weight1500)
-#' ym23w <- lpr_data(ym23)
+#' \dontrun{ym23w <- lpr_data(ym23)
 #' print(ym23w)
-#'}
+#' }
 #'}
 #'@export
 #'@import srvyr
