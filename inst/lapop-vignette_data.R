@@ -1,6 +1,6 @@
 ## ----setup, include=FALSE-----------------------------------------------------
 #knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
-rm(list=ls()); gc()
+#rm(list=ls()); gc()
 ## ----packages-----------------------------------------------------------------
 library(lapop)
 library(dplyr)
@@ -60,8 +60,14 @@ save(cm23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\cm23.rda"))
 # # -----------------------------------------------------------------------
 # MULTI-COUNTRY SINGLE-YEAR AB 2023 MERGE
 # # -----------------------------------------------------------------------
-ym <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/YM/Merge 2023 LAPOP AmericasBarometer (v1.0s).dta") # year-merge
-ym23 <- ym %>% filter(!(pais %in% c(26, 40, 41))) # Excluding
+
+# GRAND MERGE
+#gm <- haven::read_dta("C:/users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/GM/Grand Merge 2004-2023 LAPOP AmericasBarometer (v1.1s).dta") # grand-merge v1.1 wealth variable fix
+
+# Excluding countries and selecting waves
+ym23 <- gm %>%
+  filter(!(pais %in% c(26, 40, 41)) & wave %in% c(2018, 2023))
+
 ym23 <- ym23 %>% select("b12", "b18",
                         "wave", "pais", "year",
                         "ing4", "pn4",
@@ -69,15 +75,8 @@ ym23 <- ym23 %>% select("b12", "b18",
                         "edre", "wealth", "q1tc_r",
                         "upm", "strata", "weight1500")
 
-#ym23<-lpr_data(ym23)
-
-ym23
-
 #rda
 save(ym23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rda"))
-# dta
-#readstata13::save.dta13(ym23, file = "~/GitHub/lapop/data/ym23.dta",
-#                        convert.factors = "label")
 
 # CHECK FILES SIZE
 tools::checkRdaFiles("data/")
@@ -85,3 +84,4 @@ tools::checkRdaFiles("data/")
 # COMPRESS TO XZ FOR BEST FILESIZE
 tools::resaveRdaFiles("data/", compress = "xz")
 tools::checkRdaFiles("data/")
+

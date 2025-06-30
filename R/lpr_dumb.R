@@ -15,7 +15,7 @@
 #' @param xvar Character. The grouping variable to be plotted
 #' along the x-axis (technically, the vertical axis for lapop_dumb). Usually
 #' country (pais). Default: "pais".
-#' @param over Numeric.  A vector of values for "wave" that specify which two
+#' @param over Numeric. A vector of values for "wave" that specify which two
 #' waves should be included in the plot.
 #' @param rec Numeric. The minimum and maximum values of the outcome variable that
 #' should be included in the numerator of the percentage.  For example, if the variable

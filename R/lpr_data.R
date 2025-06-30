@@ -90,7 +90,6 @@ lpr_data = function (data_path, wt = FALSE)
     "Canada" = "CA", "Canad\u00e1" = "CA"
   )
 
-
   if (is.factor(data$pais)) {
     # Assume factor of country names
     data$pais_lab <- country_codes_names[as.character(data$pais)]
