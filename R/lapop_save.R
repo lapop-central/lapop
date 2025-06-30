@@ -18,7 +18,7 @@
 #' @return Saves a file (in either .svg or .png format) to provided directory.
 #'
 #' @examples
-#' df <- data.frame(
+#' \dontrun{df <- data.frame(
 #'cat = c("Far Left", 1, 2, 3, 4, "Center", 6, 7, 8, 9, "Far Right"),
 #'prop = c(4, 3, 5, 12, 17, 23, 15, 11, 5, 4, 1),
 #'proplabel = c("4%", "3%", "5%", "12%", "17%", "23%", "15%", "11%", "5%", "4%", "1%")
@@ -32,7 +32,7 @@
 #'
 #' f <- file.path(tempdir(), "fig1.svg")
 #' lapop_save(myfigure, f, format = "svg", width_px = 800)
-#'
+#'}
 #'@import grDevices
 #'@import ggplot2
 #'@importFrom svglite svglite

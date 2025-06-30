@@ -26,6 +26,7 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
+Language: en-US
 Remotes: teunbrand/ggh4x
 Encoding: UTF-8
 License: MIT + file LICENSE
