@@ -1,6 +1,6 @@
-#' ym23 Dataset
+#' ym23: Multi-country Single-year Dataset
 #'
-#' A dataset containing information about the AmericasBarometer Year Merge up to 2023.
+#' A dataset containing the AmericasBarometer Year Merge of 2023.
 #'
 #' @format A data frame
 #' \describe{

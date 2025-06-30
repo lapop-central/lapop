@@ -3,7 +3,7 @@
 \docType{data}
 \name{ym23}
 \alias{ym23}
-\title{ym23 Dataset}
+\title{ym23: Multi-country Single-year Dataset}
 \format{
 A data frame
 \describe{
@@ -31,6 +31,6 @@ LAPOP AmericasBarometer (https://www.vanderbilt.edu/lapop/)  # Ensure this line 
 ym23
 }
 \description{
-A dataset containing information about the AmericasBarometer Year Merge up to 2023.
+A dataset containing the AmericasBarometer Year Merge of 2023.
 }
 \keyword{datasets}
