@@ -9,19 +9,11 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 note
-
-
-Notes:
-1. **Installed size is 5.0 Mb** (the guideline is ~5 MB).  
-   This is due to included fonts and data objects, but is necessary for the package functionality.
-
-2. **Unable to verify current time for future file timestamps.**  
-   This is a benign note caused by the system clock check and does not affect package correctness.
+0 errors | 0 warnings | 0 notes
 
 ## Additional comments
 
-* This is a submission of version 2.1.0 with updated functions and examples.
+* This is a submission of version 2.1.0 with updated functions and examples following CRAN recommendations.
 * All checks pass on local and remote environments.
 * There are no reverse dependencies.
 * All vignettes build correctly.
