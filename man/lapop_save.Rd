@@ -39,7 +39,7 @@ prop = c(4, 3, 5, 12, 17, 23, 15, 11, 5, 4, 1),
 proplabel = c("4\%", "3\%", "5\%", "12\%", "17\%", "23\%", "15\%", "11\%", "5\%", "4\%", "1\%")
 )
 
-# Load LAPOP fonts
+# Import LAPOP fonts
 lapop_fonts()
 
 myfigure <- lapop_hist(df,

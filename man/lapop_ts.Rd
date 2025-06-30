@@ -89,6 +89,9 @@ lb = c(20.2, 11.9, 33.3, 33.1, 38),
 ub = c(26.2, 16.9, 38.3, 40.1, 42)
 )
 
+# Import LAPOP fonts
+lapop_fonts()
+
 lapop_ts(df,
  main_title = "Ecuadorians are becoming more interested in politics",
  subtitle = "\% politically interested",

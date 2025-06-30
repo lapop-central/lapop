@@ -89,6 +89,9 @@ This function creates "dumbbell" graphs, which show averages for a variable acro
                                 "65\%", "63\%", "62\%", "62\%", "57\%", "56\%", "56\%",
                                 "55\%", "55\%", "54\%", "51\%", "46\%", "42\%"))
 
+# Import LAPOP fonts
+lapop_fonts()
+
 lapop_dumb(df,
          main_title = paste0("Personal economic conditions worsened across the",
                              "LAC region,\nwith a few exceptions"),

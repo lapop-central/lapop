@@ -89,6 +89,9 @@ df <- data.frame(vallabel = c("PE", "CO", "BR", "PN", "GT", "DO", "MX", "BO", "E
                  ub = c(37.3, 20.5, 17.8, 14.5, 14.2, 12.3, 10.7, 10.2, 9.3,
                         9.2, 7.8, 6.9, 6.3, 4.6, 3.8, 3.1, 2, 1.4))
 
+# Import LAPOP fonts
+lapop_fonts()
+
 lapop_cc(df,
          main_title = "Normalization of Initimate Partner Violence in Seven LAC Countries",
          subtitle = "\% who say domestic violence is private matter",

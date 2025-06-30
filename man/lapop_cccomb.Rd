@@ -64,6 +64,9 @@ ub = c(47, 16))
 ccx <- lapop_cc(df1)
 ccy <- lapop_cc(df2)
 
+# Import LAPOP fonts
+lapop_fonts()
+
 lapop_cccomb(ccx, ccy,
 subtitle1 = "\% who support democracy",
 subtitle2 = "\% who are satisfied with democracy",

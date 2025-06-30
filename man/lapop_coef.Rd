@@ -77,6 +77,9 @@ This function creates plots of regression coefficients and predicted probabiliti
   proplabel = c("0.02", "-0.07", "-0.24", "0.01", "0.11")
 )
 
+# Import LAPOP fonts
+lapop_fonts()
+
 lapop_coef(df,
            main_title = "Demographic and Socioeconomic Predictors of Normalizing IPV",
            pred_prob = TRUE,

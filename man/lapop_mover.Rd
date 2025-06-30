@@ -84,6 +84,9 @@ This function shows the values of an outcome variable for subgroups of a seconda
                  ub = c(21, 23, 22, 25, 23, 22, 19, 17, 24, 19, 22, 26, 22,
                         22, 22, 22, 23))
 
+# Import LAPOP fonts
+lapop_fonts()
+
 lapop_mover(df,
             main_title = paste0("More educated, men, and younger individuals",
                                 " in the LAC region are the\nmost likely",
