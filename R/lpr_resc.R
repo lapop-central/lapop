@@ -31,7 +31,10 @@
 #'
 #' @examples
 #'
-#' \dontrun{jam23$variables$aoj11r <- lpr_resc(jam23$variables$aoj11, only_reverse = TRUE, map = TRUE)}
+#' \dontrun{cm23$aoj11r <- lpr_resc(cm23$aoj11,
+#' reverse = TRUE,
+#' map=TRUE)
+#' }
 #'
 #'@export
 #'@import haven
