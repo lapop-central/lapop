@@ -33,11 +33,15 @@ Saves a file (in either .svg or .png format) to provided directory.
 This function creates exports graphs created using the LAPOP templates.
 }
 \examples{
-df <- data.frame(
+\dontrun{df <- data.frame(
 cat = c("Far Left", 1, 2, 3, 4, "Center", 6, 7, 8, 9, "Far Right"),
 prop = c(4, 3, 5, 12, 17, 23, 15, 11, 5, 4, 1),
 proplabel = c("4\%", "3\%", "5\%", "12\%", "17\%", "23\%", "15\%", "11\%", "5\%", "4\%", "1\%")
 )
+
+# Load LAPOP fonts
+lapop_fonts()
+
 myfigure <- lapop_hist(df,
           main_title = "Centrists are a plurality among Peruvians",
           subtitle = "Distribution of ideological preferences",
@@ -45,7 +49,8 @@ myfigure <- lapop_hist(df,
           ymax = 27
 )
 
+# Export
 f <- file.path(tempdir(), "fig1.svg")
-lapop_save(myfigure, f, format = "svg", width_px = 800)
+lapop_save(myfigure, f, format = "svg", width_px = 800)}
 
 }
