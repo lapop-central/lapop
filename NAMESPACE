@@ -61,6 +61,3 @@ importFrom(stats,setNames)
 importFrom(stringr,str_wrap)
 importFrom(svglite,svglite)
 importFrom(zoo,na.approx)
-importFrom("stats", "as.formula", "coef", "complete.cases", "pt", "qt",
-               "var")
-importFrom("utils", "combn", "write.csv")
