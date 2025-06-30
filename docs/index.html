@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Templates for creating AmericasBarometer's visualizations • lapop</title>
+<title>Tools for Visualizing and Labeling AmericasBarometer Data in R • lapop</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Templates for creating AmericasBarometer's visualizations">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Tools for Visualizing and Labeling AmericasBarometer Data in R">
 <meta name="description" content="LAPOP Lab (formerly the Latin American Public Opinion Project) at Vanderbilt University is a world leader in public survey research and is best known for for the biennial AmericasBarometer project. You may find more information about the AmericasBarometer here: &lt;https://www.vanderbilt.edu/lapop/about-americasbarometer.php&gt;. This package includes Tools for processing and visualizing survey data from the AmericasBarometer. Includes functions for labeling, weighting, and plotting following LAPOP's custom style guidelines and formatting for use in reports, presentations, and social media posts. If you find a bug, please consider donating or contributing to the LAPOP Lab — we spent all our money on coffee and data cleaning. The publicly available data can be downloaded here: &lt;https://www.vanderbilt.edu/lapop/data-access.php&gt;. IMPORTANT: Run lapop_fonts() before creating any graphs in order to use LAPOP-standard fonts.">
 <meta property="og:description" content="LAPOP Lab (formerly the Latin American Public Opinion Project) at Vanderbilt University is a world leader in public survey research and is best known for for the biennial AmericasBarometer project. You may find more information about the AmericasBarometer here: &lt;https://www.vanderbilt.edu/lapop/about-americasbarometer.php&gt;. This package includes Tools for processing and visualizing survey data from the AmericasBarometer. Includes functions for labeling, weighting, and plotting following LAPOP's custom style guidelines and formatting for use in reports, presentations, and social media posts. If you find a bug, please consider donating or contributing to the LAPOP Lab — we spent all our money on coffee and data cleaning. The publicly available data can be downloaded here: &lt;https://www.vanderbilt.edu/lapop/data-access.php&gt;. IMPORTANT: Run lapop_fonts() before creating any graphs in order to use LAPOP-standard fonts.">
 </head>
@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">lapop</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,67 +69,6 @@
 <hr>
 </div>
 <div class="section level2">
-<h2 id="id_-workflow-americasbarometer-data-visualization">🎨 Workflow: AmericasBarometer Data Visualization<a class="anchor" aria-label="anchor" href="#id_-workflow-americasbarometer-data-visualization"></a>
-</h2>
-<ol style="list-style-type: decimal">
-<li>
-<p>Load the package in R:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">lapop</span><span class="op">)</span></span></code></pre></div>
-</li>
-<li>
-<p>Load LAPOP Lab fonts:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/lapop_fonts.html">lapop_fonts</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-</li>
-<li>
-<p>Apply the AmericasBarometer sampling design with:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/lpr_data.html">lpr_data</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-</li>
-<li>
-<p>Choose the appropriate <code>lpr</code> graph type:</p>
-<ul>
-<li>Histograms: <code><a href="reference/lpr_hist.html">lpr_hist()</a></code>
-</li>
-<li>Cross-country comparison: <code><a href="reference/lpr_cc.html">lpr_cc()</a></code>
-</li>
-<li>Time series: <code><a href="reference/lpr_ts.html">lpr_ts()</a></code>
-</li>
-<li>Breakdown by covariates: <code><a href="reference/lpr_mover.html">lpr_mover()</a></code>
-</li>
-</ul>
-</li>
-<li>
-<p>Store the output in an R object.</p>
-<ul>
-<li><p>File names: .csv and graphics files should have the same name. Their names should be in the following standard format: CountryYear/ts_DVcode(s)_IVcode(s)_graphtype.filetype.</p></li>
-<li>
-<p>Examples:</p>
-<ul>
-<li>mex21_countfair1_hist.csv</li>
-<li>hndts_b4_ts.svg</li>
-<li>ab23_vic1ext_pais_cc.png</li>
-</ul>
-</li>
-<li><p>There will be some cases that do not easily fit this standard. Use your best judgment.</p></li>
-</ul>
-</li>
-<li>
-<p>Use the corresponding <code>lapop</code> plotting function to produce the visualization:</p>
-<ul>
-<li>Examples: <code><a href="reference/lapop_hist.html">lapop_hist()</a></code>, <code><a href="reference/lapop_cc.html">lapop_cc()</a></code>, <code><a href="reference/lapop_ts.html">lapop_ts()</a></code>, etc.</li>
-</ul>
-</li>
-<li>
-<p>Export the figure to your machine with:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/lapop_save.html">lapop_save</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-</li>
-</ol>
-<hr>
-</div>
-<div class="section level2">
 <h2 id="id_️-workflow-americasbarometer-variable--value-labels">⚙️ Workflow: AmericasBarometer Variable &amp; Value Labels<a class="anchor" aria-label="anchor" href="#id_%EF%B8%8F-workflow-americasbarometer-variable--value-labels"></a>
 </h2>
 <p>For the full online guide, see:</p>
@@ -143,7 +82,7 @@
 <h3 id="id_2-preferred-loading-method">2. Preferred Loading Method<a class="anchor" aria-label="anchor" href="#id_2-preferred-loading-method"></a>
 </h3>
 <p>Use:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">readstata13</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/readstata13/man/read.dta13.html" class="external-link">read.dta13</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>to preserve the full metadata structure.</p>
 <p>Other methods such as <code><a href="https://haven.tidyverse.org/reference/read_dta.html" class="external-link">haven::read_dta()</a></code> or <code><a href="http://gesistsa.github.io/rio/reference/import.html" class="external-link">rio::import()</a></code> may fail to import these critical attributes.</p>
@@ -168,13 +107,79 @@
 </div>
 </div>
 <div class="section level2">
+<h2 id="id_-workflow-americasbarometer-data-visualization">🎨 Workflow: AmericasBarometer Data Visualization<a class="anchor" aria-label="anchor" href="#id_-workflow-americasbarometer-data-visualization"></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li>
+<p>Load the package in R:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lapop-central.github.io/lapop/">lapop</a></span><span class="op">)</span></span></code></pre></div>
+</li>
+<li>
+<p>Load LAPOP Lab fonts:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/lapop_fonts.html">lapop_fonts</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</li>
+<li>
+<p>Apply the AmericasBarometer sampling design with:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/lpr_data.html">lpr_data</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</li>
+<li>
+<p>Choose the appropriate <code>lpr</code> graph type:</p>
+<ul>
+<li>Histograms: <code><a href="reference/lpr_hist.html">lpr_hist()</a></code>
+</li>
+<li>Cross-country comparison: <code><a href="reference/lpr_cc.html">lpr_cc()</a></code>
+</li>
+<li>Time series: <code><a href="reference/lpr_ts.html">lpr_ts()</a></code>
+</li>
+<li>Breakdown by covariates: <code><a href="reference/lpr_mover.html">lpr_mover()</a></code>
+</li>
+</ul>
+</li>
+<li>
+<p>Store the output in an R object.</p>
+<ul>
+<li><p>File names: .csv and graphics files should have the same name. Their names should be in the following standard format: CountryYear/ts_DVcode(s)_IVcode(s)_graphtype.filetype.</p></li>
+<li>
+<p>Examples:</p>
+<ul>
+<li>mex21_countfair1_hist.csv</li>
+<li>hnd_b4_ts.svg</li>
+<li>ab23_vic1ext_pais_cc.svg</li>
+</ul>
+</li>
+<li><p>There will be some cases that do not easily fit this standard. Use your best judgment.</p></li>
+</ul>
+</li>
+<li>
+<p>Use the corresponding <code>lapop</code> plotting function to produce the visualization:</p>
+<ul>
+<li>Examples: <code><a href="reference/lapop_hist.html">lapop_hist()</a></code>, <code><a href="reference/lapop_cc.html">lapop_cc()</a></code>, <code><a href="reference/lapop_ts.html">lapop_ts()</a></code>, etc.</li>
+</ul>
+</li>
+<li>
+<p>Export the figure to your machine with:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/lapop_save.html">lapop_save</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</li>
+</ol>
+<hr>
+</div>
+<div class="section level2">
 <h2 id="id_-workflow-contributing-to-the-lapop-r-package">🤝 Workflow: Contributing to the <code>lapop</code> R Package<a class="anchor" aria-label="anchor" href="#id_-workflow-contributing-to-the-lapop-r-package"></a>
 </h2>
 <ol style="list-style-type: decimal">
-<li>Clone the repository to your machine.</li>
-<li>Add the new function to the <code>R/</code> folder.</li>
-<li>Document the function with <code>roxygen2</code> to create the <code>.Rd</code> file in <code>man/</code>.</li>
-<li>Add the new function to the <code>Collate</code> field in the <code>DESCRIPTION</code> file.</li>
+<li>
+<strong>Fork</strong> the repository and clone it to your local machine.</li>
+<li>
+<strong>Create a new branch</strong> for your feature or fix.</li>
+<li>Add your new function in the <code>R/</code> folder.</li>
+<li>Document the function with roxygen2 comments.</li>
+<li>Run <code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code> to generate <code>.Rd</code> files in <code>man/</code> and update <code>NAMESPACE</code>.</li>
+<li>Commit your changes and push the branch to your fork.</li>
+<li>Submit a <strong>pull request</strong> to the main repository.</li>
 </ol>
 <hr>
 <!-- badges: start -->

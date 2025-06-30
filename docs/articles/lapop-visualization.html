@@ -24,7 +24,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">lapop</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,7 +84,7 @@ the full report here</a></p>
 <h2 id="load-packages">Load Packages<a class="anchor" aria-label="anchor" href="#load-packages"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">lapop</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lapop-central.github.io/lapop/">lapop</a></span><span class="op">)</span></span></code></pre></div>
 <p>The lapop package brings two datasets already with design effects
 (weighted).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -109,6 +109,15 @@ direction of responses. This makes it easier for readers to understand
 the findings.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cm23</span><span class="op">$</span><span class="va">aoj11r</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_resc.html">lpr_resc</a></span><span class="op">(</span><span class="va">cm23</span><span class="op">$</span><span class="va">aoj11</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span>, map<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##                                </span></span>
+<span><span class="co">##                                    0 0.333333333333333 0.666666666666667    1</span></span>
+<span><span class="co">##   Muy seguro(a)                    0                 0                 0 3008</span></span>
+<span><span class="co">##   Algo seguro(a)                   0                 0              5038    0</span></span>
+<span><span class="co">##   Algo inseguro(a)                 0              2586                 0    0</span></span>
+<span><span class="co">##   Muy inseguro(a)               2290                 0                 0    0</span></span>
+<span><span class="co">##   No sabe                          0                 0                 0    0</span></span>
+<span><span class="co">##   No responde                      0                 0                 0    0</span></span>
+<span><span class="co">##   No se le preguntó en este año    0                 0                 0    0</span></span></code></pre>
 <div class="section level3">
 <h3 id="survey-design-for-the-data">Survey Design for the Data<a class="anchor" aria-label="anchor" href="#survey-design-for-the-data"></a>
 </h3>
@@ -120,141 +129,211 @@ stratification variable (strata = strata) to account for the survey’s
 complex design. Finally, PSUs are nested within strata, properly
 reflecting the survey’s hierarchical sampling structure. The
 <code><a href="../reference/lpr_data.html">lpr_data()</a></code> function apply survey design effects.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Single-Country Single-Year</span></span>
-<span><span class="co">#bra23w &lt;- lpr_data(bra23, wt = TRUE)</span></span>
-<span><span class="co">#print(bra23w)</span></span>
+<span><span class="va">bra23w</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_data.html">lpr_data</a></span><span class="op">(</span><span class="va">bra23</span>, wt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Single-Country Multi-Year</span></span>
-<span><span class="co">#cm23w &lt;- lpr_data(cm23)</span></span>
-<span><span class="co">#print(cm23w)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">bra23w</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Stratified 1 - level Cluster Sampling design (with replacement)</span></span>
+<span><span class="co">## With (125) clusters.</span></span>
+<span><span class="co">## Called via srvyr</span></span>
+<span><span class="co">## Sampling variables:</span></span>
+<span><span class="co">##   - ids: upm </span></span>
+<span><span class="co">##   - strata: strata </span></span>
+<span><span class="co">##   - weights: wt </span></span>
+<span><span class="co">## Data variables: </span></span>
+<span><span class="co">##   - aoj11 (fct), ing4 (int), b13 (int), b21 (int), b31 (int), b12 (int), wave</span></span>
+<span><span class="co">##     (fct), pais (fct), year (fct), upm (int), strata (dbl), wt (dbl), pais_lab</span></span>
+<span><span class="co">##     (chr)</span></span></code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Single-Country Multi-Year</span></span>
+<span><span class="va">cm23w</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_data.html">lpr_data</a></span><span class="op">(</span><span class="va">cm23</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Multi-Country Single-Year</span></span>
-<span><span class="co">#ym23w &lt;- lpr_data(ym23)</span></span>
-<span><span class="co">#print(ym23w)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cm23w</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Stratified 1 - level Cluster Sampling design (with replacement)</span></span>
+<span><span class="co">## With (3943) clusters.</span></span>
+<span><span class="co">## Called via srvyr</span></span>
+<span><span class="co">## Sampling variables:</span></span>
+<span><span class="co">##   - ids: upm </span></span>
+<span><span class="co">##   - strata: strata </span></span>
+<span><span class="co">##   - weights: weight1500 </span></span>
+<span><span class="co">## Data variables: </span></span>
+<span><span class="co">##   - aoj11 (fct), ing4 (int), b13 (int), b21 (int), b31 (int), b12 (int), wave</span></span>
+<span><span class="co">##     (fct), pais (fct), year (fct), upm (int), strata (dbl), wt (dbl),</span></span>
+<span><span class="co">##     weight1500 (dbl), aoj11r (dbl), pais_lab (chr)</span></span></code></pre>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Multi-Country Single-Year</span></span>
+<span><span class="va">ym23w</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_data.html">lpr_data</a></span><span class="op">(</span><span class="va">ym23</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ym23w</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Stratified 1 - level Cluster Sampling design (with replacement)</span></span>
+<span><span class="co">## With (7856) clusters.</span></span>
+<span><span class="co">## Called via srvyr</span></span>
+<span><span class="co">## Sampling variables:</span></span>
+<span><span class="co">##   - ids: upm </span></span>
+<span><span class="co">##   - strata: strata </span></span>
+<span><span class="co">##   - weights: weight1500 </span></span>
+<span><span class="co">## Data variables: </span></span>
+<span><span class="co">##   - b12 (dbl+lbl), b18 (dbl+lbl), wave (dbl+lbl), pais (dbl+lbl), year</span></span>
+<span><span class="co">##     (dbl+lbl), ing4 (dbl+lbl), pn4 (dbl+lbl), vb21n (dbl+lbl), q14f (dbl+lbl),</span></span>
+<span><span class="co">##     edre (dbl+lbl), wealth (dbl), q1tc_r (dbl+lbl), upm (dbl+lbl), strata</span></span>
+<span><span class="co">##     (dbl), weight1500 (dbl), pais_lab (chr)</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
-<h2 id="fonts">Fonts<a class="anchor" aria-label="anchor" href="#fonts"></a>
+<h2 id="fonts-for-2023-pulse-of-democracy-report-">Fonts for 2023 <em>Pulse of Democracy</em> report.<a class="anchor" aria-label="anchor" href="#fonts-for-2023-pulse-of-democracy-report-"></a>
 </h2>
 <p>Running <code><a href="../reference/lapop_fonts.html">lapop_fonts()</a></code> at the start of your analysis
 ensures that all exported charts have a polished, standardized
 appearance to ensure consistent and professional typography in all LAPOP
 plots. This function loads Nunito and Roboto fonts.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/lapop_fonts.html">lapop_fonts</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="figure-1-1-time-series">Figure 1.1: Time Series<a class="anchor" aria-label="anchor" href="#figure-1-1-time-series"></a>
 </h2>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fig1.1_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_ts.html">lpr_ts</a></span><span class="op">(</span><span class="va">cm23</span>, outcome <span class="op">=</span> <span class="st">"ing4"</span>, rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>, use_wave <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fig1.1_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_ts.html">lpr_ts</a></span><span class="op">(</span><span class="va">cm23w</span>, outcome <span class="op">=</span> <span class="st">"ing4"</span>, rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>, use_wave <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/lapop_ts.html">lapop_ts</a></span><span class="op">(</span><span class="va">fig1.1_data</span>,</span>
 <span>         ymin <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>         ymax <span class="op">=</span> <span class="fl">80</span>,</span>
 <span>         main_title <span class="op">=</span> <span class="st">"Support for democracy decline a decade ago and remains comparatively low in Brazil"</span>,</span>
 <span>         subtitle <span class="op">=</span> <span class="st">"% who support democracy"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="lapop-visualization_files/figure-html/time%20series-1.png" width="960"></p>
 </div>
 <div class="section level2">
 <h2 id="figure-1-2-cross-country-comparison">Figure 1.2: Cross-Country Comparison<a class="anchor" aria-label="anchor" href="#figure-1-2-cross-country-comparison"></a>
 </h2>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fig1.2_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_cc.html">lpr_cc</a></span><span class="op">(</span><span class="va">ym23</span>, outcome <span class="op">=</span> <span class="st">"ing4"</span>, rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fig1.2_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_cc.html">lpr_cc</a></span><span class="op">(</span><span class="va">ym23w</span>, outcome <span class="op">=</span> <span class="st">"ing4"</span>, rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/lapop_cc.html">lapop_cc</a></span><span class="op">(</span><span class="va">fig1.2_data</span>,</span>
 <span>         main_title <span class="op">=</span> <span class="st">"In many countries, only about one in two adults support democracy"</span>,</span>
 <span>         subtitle <span class="op">=</span> <span class="st">"% who support democracy"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="lapop-visualization_files/figure-html/cross%20country-1.png" width="960"></p>
 </div>
 <div class="section level2">
 <h2 id="figure-2-1-multi-line-over-time">Figure 2.1: Multi-line Over Time<a class="anchor" aria-label="anchor" href="#figure-2-1-multi-line-over-time"></a>
 </h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fig2.1_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_mline.html">lpr_mline</a></span><span class="op">(</span><span class="va">cm23</span>,</span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fig2.1_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_mline.html">lpr_mline</a></span><span class="op">(</span><span class="va">cm23w</span>,</span>
 <span>                         outcome <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b13"</span>, <span class="st">"b21"</span>, <span class="st">"b31"</span><span class="op">)</span>,</span>
 <span>                         rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>, rec2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>, rec3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Changing legend for readibility</span></span>
+<span><span class="va">fig2.1_data</span><span class="op">$</span><span class="va">varlabel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">fig2.1_data</span><span class="op">$</span><span class="va">varlabel</span> <span class="op">==</span> <span class="st">"b13"</span>, <span class="st">"National Legislature"</span>, </span>
+<span>                          <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">fig2.1_data</span><span class="op">$</span><span class="va">varlabel</span><span class="op">==</span><span class="st">"b21"</span>, <span class="st">"Political Parties"</span>,</span>
+<span>                                 <span class="st">"Supreme Court"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/lapop_mline.html">lapop_mline</a></span><span class="op">(</span><span class="va">fig2.1_data</span>,</span>
 <span>            main_title <span class="op">=</span> <span class="st">"Trust in executives has declined to a level similar to other political institutions"</span>,</span>
 <span>            subtitle <span class="op">=</span> <span class="st">"% who trust..."</span><span class="op">)</span></span></code></pre></div>
+<p><img src="lapop-visualization_files/figure-html/mline-1.png" width="960"></p>
 </div>
 <div class="section level2">
 <h2 id="figure-2-3-cc-multiple-variables">Figure 2.3: CC Multiple Variables<a class="anchor" aria-label="anchor" href="#figure-2-3-cc-multiple-variables"></a>
 </h2>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fig2.3_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_ccm.html">lpr_ccm</a></span><span class="op">(</span><span class="va">ym23</span>,</span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fig2.3_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_ccm.html">lpr_ccm</a></span><span class="op">(</span><span class="va">ym23w</span>,</span>
 <span>                       outcome_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b12"</span>, <span class="st">"b18"</span><span class="op">)</span>,</span>
 <span>                       rec1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>,</span>
 <span>                       rec2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Changing legend for readibility</span></span>
 <span><span class="va">fig2.3_data</span><span class="op">$</span><span class="va">var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">fig2.3_data</span><span class="op">$</span><span class="va">var</span> <span class="op">==</span> <span class="st">"b12"</span>, <span class="st">"Armed Forces"</span>, <span class="st">"National Police"</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/lapop_ccm.html">lapop_ccm</a></span><span class="op">(</span><span class="va">fig2.3_data</span>,</span>
-<span>          main_title <span class="op">=</span> <span class="st">"The public typically reports more trust in the armed forces than the police, \nbut levels vary"</span>,</span>
+<span>          main_title <span class="op">=</span> <span class="st">"The public typically reports more trust in the armed forces than the police, but levels vary"</span>,</span>
 <span>          subtitle <span class="op">=</span> <span class="st">"% who trust..."</span><span class="op">)</span></span></code></pre></div>
+<p><img src="lapop-visualization_files/figure-html/ccm-1.png" width="960"></p>
 </div>
 <div class="section level2">
 <h2 id="figure-mover-example-satisfaction-with-democracy">Figure Mover Example: Satisfaction with Democracy<a class="anchor" aria-label="anchor" href="#figure-mover-example-satisfaction-with-democracy"></a>
 </h2>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ym23</span><span class="op">$</span><span class="va">variables</span> <span class="op">&lt;-</span> <span class="va">ym23</span><span class="op">$</span><span class="va">variables</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>edre <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span></span>
-<span>    <span class="va">edre</span> <span class="op">&lt;=</span> <span class="fl">2</span> <span class="op">~</span> <span class="st">"None/Primary"</span>,</span>
-<span>    <span class="va">edre</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span> <span class="op">~</span> <span class="st">"Secondary"</span>,</span>
-<span>    <span class="va">edre</span> <span class="op">&gt;</span> <span class="fl">4</span> <span class="op">~</span> <span class="st">"Superior"</span>,</span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ym23w</span><span class="op">$</span><span class="va">variables</span> <span class="op">&lt;-</span> <span class="va">ym23w</span><span class="op">$</span><span class="va">variables</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    edrer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">edre</span><span class="op">)</span>,</span>
+<span>    gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">q1tc_r</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>edrer <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
+<span>    <span class="va">edrer</span> <span class="op">&lt;=</span> <span class="fl">2</span> <span class="op">~</span> <span class="st">"None/Primary"</span>,</span>
+<span>    <span class="va">edrer</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span> <span class="op">~</span> <span class="st">"Secondary"</span>,</span>
+<span>    <span class="va">edrer</span> <span class="op">&gt;</span> <span class="fl">4</span> <span class="op">~</span> <span class="st">"Superior"</span>,</span>
 <span>    <span class="cn">TRUE</span> <span class="op">~</span> <span class="cn">NA_character_</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  q1tc_r <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">q1tc_r</span> <span class="op">==</span> <span class="fl">3</span>, <span class="cn">NA</span>, <span class="va">q1tc_r</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>q1tc_r <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span></span>
-<span>    <span class="va">q1tc_r</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">~</span> <span class="st">"Men"</span>,</span>
-<span>    <span class="va">q1tc_r</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">~</span> <span class="st">"Women"</span>,</span>
+<span>  <span class="op">)</span>, </span>
+<span>  edrer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">edrer</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"None/Primary"</span>, <span class="st">"Secondary"</span>, <span class="st">"Superior"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  </span>
+<span>  gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">q1tc_r</span> <span class="op">==</span> <span class="fl">3</span>, <span class="cn">NA</span>, <span class="va">q1tc_r</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>gender <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
+<span>    <span class="va">gender</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">~</span> <span class="st">"Men"</span>,</span>
+<span>    <span class="va">gender</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">~</span> <span class="st">"Women"</span>,</span>
 <span>     <span class="cn">TRUE</span> <span class="op">~</span> <span class="cn">NA_character_</span></span>
 <span>  <span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">ym23</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">wealth</span><span class="op">)</span><span class="op">$</span><span class="va">label</span> <span class="op">&lt;-</span> <span class="st">"Wealth"</span></span>
+<span><span class="co"># Changing legend for readibility </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">ym23w</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">gender</span><span class="op">)</span><span class="op">$</span><span class="va">label</span> <span class="op">&lt;-</span> <span class="st">"Gender"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">ym23w</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">edrer</span><span class="op">)</span><span class="op">$</span><span class="va">label</span> <span class="op">&lt;-</span> <span class="st">"Education"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">ym23w</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">wealth</span><span class="op">)</span><span class="op">$</span><span class="va">label</span> <span class="op">&lt;-</span> <span class="st">"Wealth"</span></span>
 <span></span>
-<span><span class="va">fig_mover</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_mover.html">lpr_mover</a></span><span class="op">(</span><span class="va">ym23</span>,</span>
+<span><span class="va">fig_mover</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_mover.html">lpr_mover</a></span><span class="op">(</span><span class="va">ym23w</span>,</span>
 <span>                       outcome <span class="op">=</span> <span class="st">"pn4"</span>,</span>
-<span>                       grouping_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"q1tc_r"</span>, <span class="st">"edrer"</span>, <span class="st">"wealth"</span><span class="op">)</span>,</span>
-<span>                       rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">fig_mover</span><span class="op">$</span><span class="va">varlabel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">fig_mover</span><span class="op">$</span><span class="va">varlabel</span> <span class="op">==</span> <span class="st">"edrer"</span>, <span class="st">"Education"</span>, <span class="va">fig_mover</span><span class="op">$</span><span class="va">varlabel</span><span class="op">)</span></span>
+<span>                       grouping_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gender"</span>, <span class="st">"edrer"</span>, <span class="st">"wealth"</span><span class="op">)</span>,</span>
+<span>                       rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="fu"><a href="../reference/lapop_mover.html">lapop_mover</a></span><span class="op">(</span><span class="va">fig_mover</span>,</span>
-<span>            main_title <span class="op">=</span> <span class="st">"Satisfaction with democracy is significantly lower among women,</span></span>
-<span><span class="st">            those with higher \neducational attainment, and the middle class"</span>,</span>
+<span>            main_title <span class="op">=</span> <span class="st">"Satisfaction with democracy is significantly lower among women, those with higher educational attainment, and the middle class"</span>,</span>
 <span>            subtitle <span class="op">=</span> <span class="st">"% who are satisfied with democracy"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="lapop-visualization_files/figure-html/mover-1.png" width="960"></p>
 </div>
 <div class="section level2">
 <h2 id="figure-histogram-citizens-views">Figure Histogram: Citizens’ Views<a class="anchor" aria-label="anchor" href="#figure-histogram-citizens-views"></a>
 </h2>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">spot32_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_hist.html">lpr_hist</a></span><span class="op">(</span><span class="va">ym23</span>, outcome <span class="op">=</span> <span class="st">"vb21n"</span><span class="op">)</span></span>
-<span><span class="va">spot32_data</span><span class="op">$</span><span class="va">cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vote"</span>, <span class="st">"Run for\noffice"</span>, <span class="st">"Protest"</span>, <span class="st">"Participate\nin local orgs."</span>,</span>
-<span>                     <span class="st">"Other"</span>, <span class="st">"Change is\nimpossible"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">spot32_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_hist.html">lpr_hist</a></span><span class="op">(</span><span class="va">ym23w</span>, outcome <span class="op">=</span> <span class="st">"vb21n"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Translating to English</span></span>
+<span><span class="va">spot32_data</span><span class="op">$</span><span class="va">cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vote"</span>, <span class="st">"Run for\noffice"</span>, </span>
+<span>                     <span class="st">"Protest"</span>, </span>
+<span>                     <span class="st">"Participate\nin local orgs."</span>, </span>
+<span>                     <span class="st">"Other"</span>, </span>
+<span>                     <span class="st">"Change is\nimpossible"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/lapop_hist.html">lapop_hist</a></span><span class="op">(</span><span class="va">spot32_data</span>,</span>
-<span>           main_title <span class="op">=</span> <span class="st">"On average in the LAC region, one in three say voting is </span></span>
-<span><span class="st">           the best way to influence change"</span>,</span>
+<span>           main_title <span class="op">=</span> <span class="st">"On average in the LAC region, one in three say voting is the best way to influence change"</span>,</span>
 <span>           subtitle <span class="op">=</span> <span class="st">"How do you believe you can best influence change?"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="lapop-visualization_files/figure-html/histogram-1.png" width="960"></p>
 </div>
 <div class="section level2">
 <h2 id="figure-3-5-dumbell-plot">Figure 3.5: Dumbell Plot<a class="anchor" aria-label="anchor" href="#figure-3-5-dumbell-plot"></a>
 </h2>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fig3.5_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_dumb.html">lpr_dumb</a></span><span class="op">(</span><span class="va">cm23w</span>,</span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fig3.5_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_dumb.html">lpr_dumb</a></span><span class="op">(</span><span class="va">ym23w</span>,</span>
 <span>                        outcome <span class="op">=</span> <span class="st">"q14f"</span>,</span>
 <span>                        rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>                        over <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2018</span>, <span class="fl">2023</span><span class="op">)</span>,</span>
-<span>                        xvar <span class="op">=</span> <span class="st">"pais_lab"</span>,</span>
+<span>                        xvar <span class="op">=</span> <span class="st">"pais"</span>,</span>
 <span>                        ttest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">fig3.5_data</span> <span class="op">&lt;-</span> <span class="va">fig3.5_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Select Countries</span></span>
+<span><span class="va">fig3.5_data</span> <span class="op">&lt;-</span> <span class="va">fig3.5_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span>, <span class="op">]</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/lapop_dumb.html">lapop_dumb</a></span><span class="op">(</span><span class="va">fig3.5_data</span>,</span>
-<span>           main_title <span class="op">=</span> <span class="st">"Among those with emigration intentions, the percentage who say </span></span>
-<span><span class="st">           they are very likely\nto emigrate increased in Nicaragua and Guatemala"</span>,</span>
+<span>           main_title <span class="op">=</span> <span class="st">"Among those with emigration intentions, the percentage who say they are very likely to emigrate increased in Nicaragua and Guatemala"</span>,</span>
 <span>           subtitle <span class="op">=</span> <span class="st">"% who say it is very likely they will emigrate"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="lapop-visualization_files/figure-html/dumbell-1.png" width="960"></p>
 </div>
 <div class="section level2">
 <h2 id="figure-3-8-stack-plot-by-country">Figure 3.8: Stack Plot by Country<a class="anchor" aria-label="anchor" href="#figure-3-8-stack-plot-by-country"></a>
 </h2>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fig3.8_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_stack.html">lpr_stack</a></span><span class="op">(</span><span class="va">ym23w</span>,</span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">ym23w</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">q14f</span><span class="op">)</span><span class="op">$</span><span class="va">label</span> <span class="op">&lt;-</span> <span class="st">"Migration intentions"</span></span>
+<span></span>
+<span><span class="va">fig3.8_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_stack.html">lpr_stack</a></span><span class="op">(</span><span class="va">ym23w</span>,</span>
 <span>                         outcome <span class="op">=</span> <span class="st">"q14f"</span>,</span>
 <span>                         xvar <span class="op">=</span> <span class="st">"pais"</span>,</span>
 <span>                         order <span class="op">=</span> <span class="st">"hi-lo"</span><span class="op">)</span></span>
@@ -262,13 +341,38 @@ plots. This function loads Nunito and Roboto fonts.</p>
 <span><span class="fu"><a href="../reference/lapop_stack.html">lapop_stack</a></span><span class="op">(</span><span class="va">fig3.8_data</span>,</span>
 <span>            xvar <span class="op">=</span> <span class="st">"xvar_label"</span>,</span>
 <span>            source <span class="op">=</span> <span class="st">", AmericasBarometer 2023"</span>,</span>
-<span>            main_title <span class="op">=</span> <span class="st">"Nicaragua has the highest percentage of individuals with migration intentions, \nwhile Haiti has the lowest"</span><span class="op">)</span></span></code></pre></div>
+<span>            main_title <span class="op">=</span> <span class="st">"Nicaragua has the highest percentage of individuals with migration intentions, while Haiti has the lowest"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="lapop-visualization_files/figure-html/stack-1.png" width="960"></p>
 </div>
 <div class="section level2">
 <h2 id="end">End<a class="anchor" aria-label="anchor" href="#end"></a>
 </h2>
-<p>Use this vignette as a template for your own reports and exploratory
-visualizations using LAPOP data.</p>
+<p>This vignette is intended as a <strong>template and starting
+point</strong> for your own reports and exploratory visualizations using
+LAPOP data.</p>
+<p>By adapting these examples, you can produce <strong>consistent,
+high-quality charts</strong> that follow the LAPOP Lab’s editorial
+guidelines and communicate survey results effectively.</p>
+<p>For further guidance:</p>
+<ul>
+<li>
+<strong>Function documentation:</strong> See the package help pages
+for detailed arguments and examples (e.g., <code><a href="../reference/lpr_cc.html">?lpr_cc</a></code>,
+<code><a href="../reference/lapop_cc.html">?lapop_cc</a></code>).</li>
+<li>
+<strong>Editorial guidelines:</strong> Follow LAPOP Lab’s
+recommendations for plot labeling to ensure clarity and
+comparability.</li>
+<li>
+<strong>More articles:</strong> Check other vignettes and the <a href="https://lapop-central.github.io/lapop/">pkgdown site</a> for
+additional tutorials and updates.</li>
+</ul>
+<p>If you encounter any issues or have suggestions for improvement,
+please let us know via our <a href="https://github.com/lapop-central/lapop/issues" class="external-link">GitHub issues
+page</a>.</p>
+<p>Thank you for using the <strong>LAPOP R package</strong> to help make
+high-quality, reproducible social science research easier and more
+accessible!</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

@@ -131,7 +131,7 @@ fig2.3_data <- lpr_ccm(ym23w,
 fig2.3_data$var <- ifelse(fig2.3_data$var == "b12", "Armed Forces", "National Police")
 
 lapop_ccm(fig2.3_data,
-          main_title = "The public typically reports more trust in the armed forces than the police, \nbut levels vary",
+          main_title = "The public typically reports more trust in the armed forces than the police, but levels vary",
           subtitle = "% who trust...")
 
 ```
@@ -172,8 +172,7 @@ fig_mover <- lpr_mover(ym23w,
                        rec = c(1, 2)) 
 
 lapop_mover(fig_mover,
-            main_title = "Satisfaction with democracy is significantly lower among women, those with higher 
-            \neducational attainment, and the middle class",
+            main_title = "Satisfaction with democracy is significantly lower among women, those with higher educational attainment, and the middle class",
             subtitle = "% who are satisfied with democracy")
 ```
 
@@ -190,8 +189,7 @@ spot32_data$cat <- c("Vote", "Run for\noffice",
                      "Change is\nimpossible")
 
 lapop_hist(spot32_data,
-           main_title = "On average in the LAC region, 
-           one in three say voting is the best way to influence change",
+           main_title = "On average in the LAC region, one in three say voting is the best way to influence change",
            subtitle = "How do you believe you can best influence change?")
 ```
 
@@ -209,8 +207,7 @@ fig3.5_data <- lpr_dumb(ym23w,
 fig3.5_data <- fig3.5_data[c(1:3,5:6), ]
 
 lapop_dumb(fig3.5_data,
-           main_title = "Among those with emigration intentions, the percentage who say they are very likely
-           \nto emigrate increased in Nicaragua and Guatemala",
+           main_title = "Among those with emigration intentions, the percentage who say they are very likely to emigrate increased in Nicaragua and Guatemala",
            subtitle = "% who say it is very likely they will emigrate")
 ```
 
@@ -227,7 +224,7 @@ fig3.8_data <- lpr_stack(ym23w,
 lapop_stack(fig3.8_data,
             xvar = "xvar_label",
             source = ", AmericasBarometer 2023",
-            main_title = "Nicaragua has the highest percentage of individuals with migration intentions, \nwhile Haiti has the lowest")
+            main_title = "Nicaragua has the highest percentage of individuals with migration intentions, while Haiti has the lowest")
 ```
 
 ## End

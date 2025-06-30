@@ -78,6 +78,10 @@ ym23 <- ym23 %>% select("b12", "b18",
 #rda
 save(ym23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rda"))
 
+# # -----------------------------------------------------------------------
+# EXPORTING
+# # -----------------------------------------------------------------------
+
 # CHECK FILES SIZE
 tools::checkRdaFiles("data/")
 
