@@ -3,7 +3,7 @@
 \docType{data}
 \name{cm23}
 \alias{cm23}
-\title{Single-country Multi-year Dataset}
+\title{cm23 Dataset}
 \format{
 A data frame
 \describe{
@@ -30,6 +30,6 @@ LAPOP AmericasBarometer (https://www.vanderbilt.edu/lapop/)
 cm23
 }
 \description{
-A dataset containing the AmericasBarometer Brazil Country Merge from 2006 to 2023.
+A dataset containing the AmericasBarometer Country Merge up to 2023.
 }
 \keyword{datasets}

@@ -83,7 +83,7 @@ This function shows a stacked bar graph using LAPOP formatting.
 }
 \examples{
 
-\dontrun{df <- data.frame(varlabel = c(rep("Politicians can\nidentify voters", 5),
+df <- data.frame(varlabel = c(rep("Politicians can\nidentify voters", 5),
                               rep("Wealthy can\nbuy results", 5),
                               rep("Votes are\ncounted correctly", 5)),
                  vallabel = rep(c("Always", "Often", "Sometimes",
@@ -94,14 +94,10 @@ This function shows a stacked bar graph using LAPOP formatting.
                                "10\%", "23\%", "11\%", "10\%", "35\%", "10\%",
                                "32\%", "13\%", "10\%"))
 
-# Import LAPOP fonts
-lapop_fonts()
-
-
 lapop_stack(df,
          main_title = "Trust in key features of the electoral process is low in Latin America",
          subtitle = "\% believing it happens:",
-         source_info = "2019")}
+         source_info = "2019")
 
 }
 \author{

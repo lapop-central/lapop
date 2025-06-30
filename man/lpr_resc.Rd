@@ -51,9 +51,10 @@ but the rescaling will work for numeric and factor variables as well
 }
 \examples{
 
-\dontrun{cm23$aoj11r <- lpr_resc(Cm23$aoj11,
-only_reverse = TRUE,
-map = TRUE)}
+\dontrun{cm23$aoj11r <- lpr_resc(cm23$aoj11,
+reverse = TRUE,
+map=TRUE)
+}
 
 }
 \author{

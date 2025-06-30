@@ -91,8 +91,8 @@ xvar = "wave",
 rec1 = c(1, 1),
 rec2 = c(3, 4),
 ttest = TRUE)}
-}
 
+}
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

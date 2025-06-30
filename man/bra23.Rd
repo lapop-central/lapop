@@ -3,7 +3,7 @@
 \docType{data}
 \name{bra23}
 \alias{bra23}
-\title{Single-country Single-year Brazil 2023 Dataset}
+\title{bra23 Dataset}
 \format{
 A data frame
 \describe{
@@ -29,6 +29,6 @@ LAPOP AmericasBarometer (https://www.vanderbilt.edu/lapop/)
 bra23
 }
 \description{
-A dataset containing the AmericasBarometer Brazil 2023 data.
+A dataset containing the AmericasBarometer Brazil 2023.
 }
 \keyword{datasets}

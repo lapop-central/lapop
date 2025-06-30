@@ -71,6 +71,7 @@ This function creates a dataframe which can then be input in lapop_mover() for
 comparing means across values of secondary variable(s) using LAPOP formatting.
 }
 \examples{
+{
 # Single DV
 \dontrun{lpr_mover(data = ym23,
  outcome = "ing4",
@@ -101,7 +102,7 @@ outcome=c("ing4", "pn4"),
 grouping_vars=c("edre", "q1tc_r"),
 rec=c(5,7), rec2=c(1,2), ttest=T)}
 }
-
+}
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

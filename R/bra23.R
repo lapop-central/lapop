@@ -1,6 +1,6 @@
-#' bra23 Dataset
+#' bra23: Single-country Single-year Dataset
 #'
-#' A dataset containing the AmericasBarometer Brazil 2023.
+#' A dataset containing the AmericasBarometer Brazil 2023 survey round.
 #'
 #' @format A data frame
 #' \describe{

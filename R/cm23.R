@@ -1,6 +1,6 @@
-#' cm23 Dataset
+#' cm23: Single-country Multi-year Dataset
 #'
-#' A dataset containing the AmericasBarometer Country Merge up to 2023.
+#' A dataset containing the AmericasBarometer Brazil  Country Merge up to 2023.
 #'
 #' @format A data frame
 #' \describe{
