@@ -41,7 +41,7 @@
 #'
 #' @return Returns a data frame, with data formatted for visualization by lapop_mover
 #'
-#' @examples {
+#' @examples
 #' # Single DV
 #' \dontrun{lpr_mover(data = ym23,
 #'  outcome = "ing4",
@@ -71,7 +71,7 @@
 #' outcome=c("ing4", "pn4"),
 #' grouping_vars=c("edre", "q1tc_r"),
 #' rec=c(5,7), rec2=c(1,2), ttest=T)}
-#'}
+#'
 #'@export
 #'@import dplyr
 #'@import srvyr

@@ -40,7 +40,6 @@ The function is designed to work in tandem with \code{lpr_extract_notes}, creati
 a workflow for managing variable metadata in AmericasBarometer data.
 }
 \examples{
-{
 # First extract notes from dataset attributes
 \dontrun{
 notes <- lpr_extract_notes(data)
@@ -50,7 +49,6 @@ notes <- lpr_extract_notes(data)
 \dontrun{
 data <- lpr_set_attr(data, notes, noteid = "note4", attribute_name = "question_wording")
 attr(data$ing4, "question_wording")
-}
 }
 
 }

@@ -6,9 +6,9 @@
 
 #' LAPOP Multi-Line Time Series Graph Pre-Processing
 #'
-#'This function creates a dataframe which can then be input in lapop_mline for
+#' This function creates a dataframe which can then be input in lapop_mline for
 #' to show a time series plot with multiple lines.  If one "outcome" variable and an
-#' "xvar" variable is supplied, the function produces the values of a single outcome
+#' `xvar` variable is supplied, the function produces the values of a single outcome
 #' variable, broken down by a secondary variable, across time.  If multiple outcome
 #' variables (up to four) are supplied, it will show means/percentages of those
 #' variables across time (essentially, it allows you to do lpr_ts for multiple variables).
@@ -51,41 +51,37 @@
 #'
 #' @return Returns a data frame, with data formatted for visualization by lapop_mline
 #'
-#' @examples {
+#' @examples
 #'
 #' # Single Variable
-#'#' \dontrun{
-#'lpr_mline(gm,
+#'\dontrun{
+#'lpr_mline(ym23,
 #' outcome = "ing4",
 #' rec = c(5, 7),
-#' use_wave = FALSE)}
+#' use_wave = FALSE)
 #'
 #' # Multiple Variables
-#' \dontrun{
-#' lpr_mline(gm,
-#' outcome = c("b10a", "b13", "b18", "b21"),
+#' lpr_mline(cm23,
+#' outcome = c("b13", "b18", "b21"),
 #' rec = c(5, 7),
 #' rec2 = c(1, 2),
 #' rec3 = c(5, 7),
 #' rec4 = c(1, 1),
-#' use_wave = TRUE)}
+#' use_wave = TRUE)
 #'
 #' # Binary Single Variable by Category
-#' \dontrun{
-#' lpr_mline(gm,
+#' lpr_mline(bra23,
 #' outcome = "jc1",
 #' use_cat = TRUE,
-#' use_wave = TRUE)}
+#' use_wave = TRUE)
 #'
 #' # Recode Categorical Variable (max 4-categories)
-#' \dontrun{
 #' lpr_mline(gm,
 #' outcome = "a4n",
 #' rec = c(1,4),
 #' use_cat = TRUE,
-#' use_wave = TRUE)
-#' }
-#'}
+#' use_wave = TRUE)}
+#'
 #'@export
 #'@import dplyr
 #'@import srvyr

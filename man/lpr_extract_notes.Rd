@@ -32,7 +32,6 @@ as a list where each element contains exactly three components: variable name, n
 and note value.
 }
 \examples{
-
 # Extract the notes
 \dontrun{
 notes <- lpr_extract_notes(df)

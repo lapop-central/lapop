@@ -49,7 +49,7 @@
 #'
 #' @return Returns a data frame, with data formatted for visualization by lapop_dumb
 #'
-#' @examples {
+#' @examples
 #' \dontrun{
 #'  # Single outcome over years
 #' lpr_dumb(ym2123,
@@ -64,7 +64,7 @@
 #' outcome=c("b21", "b13", "b31", "b47a"),
 #' rec=c(5,7),
 #' over=c(2021, 2023))}
-#'}
+#'
 #'@export
 #'@import dplyr
 #'@import tidyr

@@ -77,7 +77,7 @@ print(ym23w)
 Running `lapop_fonts()` at the start of your analysis ensures that all exported charts have a polished, standardized appearance to ensure consistent and professional typography in all LAPOP plots. This function loads Nunito and Roboto fonts.
 
 ```{r, lapop fonts}
-lapop_fonts()
+lapop_fonts() # Load fonts
 ```
 
 ## Figure 1.1: Time Series

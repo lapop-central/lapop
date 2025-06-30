@@ -53,7 +53,7 @@ NULL
 #' values of a variable over time.
 #'
 #' @examples
-#' df <- data.frame(wave = c("2008", "2010", "2016/17", "2018/19", "2021"),
+#' \dontrun{df <- data.frame(wave = c("2008", "2010", "2016/17", "2018/19", "2021"),
 #' prop = c(23.2, 14.4, 35.8, 36.6, 40),
 #' proplabel = c("23.2%", "14.4%", "35.8%", "36.6%", "40.0%"),
 #' lb = c(20.2, 11.9, 33.3, 33.1, 38),
@@ -66,7 +66,7 @@ NULL
 #'  source_info = "Ecuador 2006-2021",
 #'  ymin = 0,
 #'  ymax = 55
-#'  )
+#'  )}
 #'
 #'@export
 #'@import ggplot2

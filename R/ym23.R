@@ -22,4 +22,5 @@
 #' }
 #' @source LAPOP AmericasBarometer (https://www.vanderbilt.edu/lapop/)  # Ensure this line has a valid source.
 #' @export
+#'
 ym23 <- load("data/ym23.rda")

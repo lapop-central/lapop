@@ -49,7 +49,6 @@ This function creates a data frame which can then be input in lapop_coef() for
 plotting regression coefficients graph using LAPOP formatting.
 }
 \examples{
-{
 \dontrun{
 # Example 1: Linear model using lpr_coef()
 lpr_coef(
@@ -77,7 +76,6 @@ lpr_coef(
  data = dataLAPOP,
  model = "linear",
  est = "coef")}
-}
 
 }
 \author{

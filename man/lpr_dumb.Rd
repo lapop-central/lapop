@@ -92,8 +92,8 @@ ttest = TRUE)}
 outcome=c("b21", "b13", "b31", "b47a"),
 rec=c(5,7),
 over=c(2021, 2023))}
-}
 
+}
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

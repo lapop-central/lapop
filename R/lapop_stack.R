@@ -80,9 +80,10 @@ NULL
 #' @param order_bars Logical.  Should categories be placed in descending order for each bar?  Default: FALSE.
 #' showing the distributions of multiple categorical variables.
 #' @param legendnrow Numeric.  How many rows for legend labels. Default: 1.
+#'
 #' @examples
 #'
-#' df <- data.frame(varlabel = c(rep("Politicians can\nidentify voters", 5),
+#' \dontrun{df <- data.frame(varlabel = c(rep("Politicians can\nidentify voters", 5),
 #'                               rep("Wealthy can\nbuy results", 5),
 #'                               rep("Votes are\ncounted correctly", 5)),
 #'                  vallabel = rep(c("Always", "Often", "Sometimes",
@@ -96,7 +97,7 @@ NULL
 #' lapop_stack(df,
 #'          main_title = "Trust in key features of the electoral process is low in Latin America",
 #'          subtitle = "% believing it happens:",
-#'          source_info = "2019")
+#'          source_info = "2019")}
 #'
 #'@export
 #'@import ggplot2

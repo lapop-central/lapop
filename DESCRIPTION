@@ -3,7 +3,7 @@ Type: Package
 Title: Tools for Visualizing and Labeling AmericasBarometer Data in R
 Version: 2.1.0
 Authors@R: c(person(given = "Luke", family = "Plutowski", 
-             role = c("ctb"), 
+             role = c("ctb", "aut"), 
              email = "luke.plutowski@vanderbilt.edu", 
              comment = c(ORCID = "0000-0001-8240-6722")),
       person(given = "Robert", family = "Vidigal", 
