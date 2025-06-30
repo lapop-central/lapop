@@ -298,27 +298,30 @@ produce a semi-structured list of matching third nested elements.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># purrr package approach</span></span>
 <span><span class="co">#  The purrr version uses map() to do the same, and also remove NULL results. </span></span>
-<span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="st">"expansion.fields"</span><span class="op">)</span>, <span class="op">~</span> <span class="op">{</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="st">"expansion.fields"</span><span class="op">)</span>, <span class="op">~</span> <span class="op">{</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">.x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"ing4"</span><span class="op">)</span> </span>
-<span>    <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>note_id <span class="op">=</span> <span class="va">.x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, note_value <span class="op">=</span> <span class="va">.x</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 14 × 2</span></span></span>
-<span><span class="co">##    note_id         note_value                                                   </span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                        </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> _lang_l_en      <span style="color: #949494;">"</span>ing4_en<span style="color: #949494;">"</span>                                                    </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> _lang_v_en      <span style="color: #949494;">"</span>Support for democracy<span style="color: #949494;">"</span>                                      </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> note0           <span style="color: #949494;">"</span>7<span style="color: #949494;">"</span>                                                          </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> note7           <span style="color: #949494;">"</span>Ahora, vamos a usar una escalera en donde el número 1 repre…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> note6           <span style="color: #949494;">"</span>Now we will use a ladder where 1 means \"strongly disagree\…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> note5           <span style="color: #949494;">"</span>Democracy may have problems, but it is better than any othe…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> note4           <span style="color: #949494;">"</span>Agora, vamos usar um cartão em que o ponto 1 representa \"d…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> note3           <span style="color: #949494;">"</span>A democracia tem seus problemas, mas é melhor que qualquer …</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> _lang_l_default <span style="color: #949494;">"</span>labels2670<span style="color: #949494;">"</span>                                                 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> _lang_v_default <span style="color: #949494;">"</span>ING4. A democracia tem seus problemas, mas é melhor que qua…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">11</span> note1           <span style="color: #949494;">"</span>Puede que la democracia tenga problemas, pero es mejor que …</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">12</span> note2           <span style="color: #949494;">"</span>Democracy may have problems, but it is better than any othe…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">13</span> _lang_v_pt      <span style="color: #949494;">"</span>Apoio à democracia<span style="color: #949494;">"</span>                                         </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">14</span> _lang_l_pt      <span style="color: #949494;">"</span>ing4_pt<span style="color: #949494;">"</span></span></span></code></pre>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>      note_id <span class="op">=</span> <span class="va">.x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
+<span>      note_value <span class="op">=</span> <span class="va">.x</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>,</span>
+<span>      stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##            note_id</span></span>
+<span><span class="co">## 9  _lang_l_default</span></span>
+<span><span class="co">## 10 _lang_v_default</span></span>
+<span><span class="co">## 11           note1</span></span>
+<span><span class="co">## 12           note2</span></span>
+<span><span class="co">## 13      _lang_v_pt</span></span>
+<span><span class="co">## 14      _lang_l_pt</span></span>
+<span><span class="co">##                                                                                                                                                       note_value</span></span>
+<span><span class="co">## 9                                                                                                                                                     labels2670</span></span>
+<span><span class="co">## 10                                                                               ING4. A democracia tem seus problemas, mas é melhor que qualquer outra forma de</span></span>
+<span><span class="co">## 11 Puede que la democracia tenga problemas, pero es mejor que cualquier otra forma de gobierno. ¿Hasta qué punto está de acuerdo o en desacuerdo con esta frase?</span></span>
+<span><span class="co">## 12                Democracy may have problems, but it is better than any other form of government.  To what extent do you agree or disagree with this statement?</span></span>
+<span><span class="co">## 13                                                                                                                                            Apoio à democracia</span></span>
+<span><span class="co">## 14                                                                                                                                                       ing4_pt</span></span></code></pre>
 <p>To ease the researchers and analysts job, LAPOP Lab developed custom
 functions to deal with those labels in R. First, we will use
 <code>lpr_extract_notes</code> to transform the nested lists into a long
