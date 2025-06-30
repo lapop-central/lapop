@@ -3,7 +3,7 @@ utils::globalVariables(
     "lb1", "ub2", "lb2",
 
     "Estimate", "Pr(>|t|)", "Std. Error", "conf.high", "conf.low",
-    ".", "x_display", ":=", "label_table_names",
+    ".", "x_display", ":=", "label_table_names", "alpha_value",
 
     "contrast", "hl_var", "lb", "note_id", "p.value", "prop",
     "prop2_low", "prop2_upp", "prop_low", "prop_upp", "proplabel",
