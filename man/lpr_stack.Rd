@@ -44,10 +44,12 @@ This function creates dataframes which can then be input in lapop_stack() for
 plotting variables categories with a stacked bar graph using LAPOP formatting.
 }
 \examples{
+\dontrun{lpr_stack(data = gm,
+outcome = c("countfair1", "countfair3"))}
 
-\dontrun{lpr_stack(data = gm, outcome = c("countfair1", "countfair3"))}
-\dontrun{lpr_stack(data = gm, outcome = "pese1", xvar="year")}
-
+\dontrun{lpr_stack(data = gm,
+outcome = "pese1",
+xvar="year")}
 }
 \author{
 Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}

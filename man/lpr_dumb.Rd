@@ -78,7 +78,6 @@ This function creates dataframes which can then be input in lapop_dumb for
 comparing means of a variable across countries and two waves using LAPOP formatting.
 }
 \examples{
-{
 \dontrun{
  # Single outcome over years
 lpr_dumb(ym2123,
@@ -94,7 +93,7 @@ outcome=c("b21", "b13", "b31", "b47a"),
 rec=c(5,7),
 over=c(2021, 2023))}
 }
-}
+
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

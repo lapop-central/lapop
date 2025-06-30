@@ -82,10 +82,8 @@ variables (up to four) are supplied, it will show means/percentages of those
 variables across time (essentially, it allows you to do lpr_ts for multiple variables).
 }
 \examples{
-{
-
 # Single Variable
-#' \dontrun{
+\dontrun{
 lpr_mline(gm,
 outcome = "ing4",
 rec = c(5, 7),
@@ -114,10 +112,9 @@ lpr_mline(gm,
 outcome = "a4n",
 rec = c(1,4),
 use_cat = TRUE,
-use_wave = TRUE)
+use_wave = TRUE)}
 }
-}
-}
+
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }
