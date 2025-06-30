@@ -7,7 +7,7 @@
 lpr_set_ros(data, lang_id = "en", attribute_name = "roslabel")
 }
 \arguments{
-\item{data}{A data frame loaded using readstata13 containing label table attributes}
+\item{data}{A data frame loaded using readstata13 containing label.table attributes.}
 
 \item{lang_id}{Language identifier for the labels ("en" for English,
 "es" for Spanish, "pt" for Portuguese). Default is "en" (English).}
@@ -32,16 +32,17 @@ names are the response labels and values are the corresponding codes.
 Special codes (values ≥ 1000) are excluded from the response options string.
 }
 \examples{
+{
 # Apply the function
 \dontrun{
 bra23 <- lpr_set_ros(bra23) # Default English
 bra23 <- lpr_set_ros(bra23, lang_id = "es", attribute_name = "respuestas") # Spanish
 bra23 <- lpr_set_ros(bra23, lang_id = "pt", attribute_name = "ROsLabels_pt") # Portuguese
-}
-# View the resulting attributes
-\dontrun{
+
+# View the resulting attribute
 attr(bra23$ing4, "roslabel")
 attr(bra23$ing4, "respuestas")
 attr(bra23$ing4, "ROsLabels_pt")
+}
 }
 }

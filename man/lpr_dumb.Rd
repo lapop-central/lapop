@@ -30,7 +30,7 @@ and waves, supplied as a character string or vector of strings.}
 along the x-axis (technically, the vertical axis for lapop_dumb). Usually
 country (pais). Default: "pais".}
 
-\item{over}{Numeric.  A vector of values for "wave" that specify which two
+\item{over}{Numeric. A vector of values for "wave" that specify which two
 waves should be included in the plot.}
 
 \item{rec}{Numeric. The minimum and maximum values of the outcome variable that
@@ -78,23 +78,23 @@ This function creates dataframes which can then be input in lapop_dumb for
 comparing means of a variable across countries and two waves using LAPOP formatting.
 }
 \examples{
-# Single variable
+{
 \dontrun{
-lpr_dumb(cm23,
+ # Single outcome over years
+lpr_dumb(ym2123,
 outcome = "ing4",
 rec = c(5, 7),
 over = c(2021, 2023),
 sort = "diff",
 ttest = TRUE)}
 
-# Multiple Variables over years
-\dontrun{
-lpr_dumb(ym23,
+# Multiple outcomes over years
+\dontrun{lpr_dumb(ym2123,
 outcome=c("b21", "b13", "b31", "b47a"),
 rec=c(5,7),
-over=c(2004, 2006))}
+over=c(2021, 2023))}
 }
-
+}
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

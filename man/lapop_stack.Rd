@@ -93,12 +93,13 @@ df <- data.frame(varlabel = c(rep("Politicians can\nidentify voters", 5),
                  proplabel = c("36\%", "10\%", "19\%", "25\%", "10\%", "46\%",
                                "10\%", "23\%", "11\%", "10\%", "35\%", "10\%",
                                "32\%", "13\%", "10\%"))
-\dontrun{
+
 lapop_stack(df,
          main_title = "Trust in key features of the electoral process is low in Latin America",
          subtitle = "\% believing it happens:",
-         source_info = "2019")}
+         source_info = "2019")
+
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

@@ -68,7 +68,7 @@ This function creates plots of regression coefficients and predicted probabiliti
 }
 \examples{
 
-df <- data.frame(
+\dontrun{df <- data.frame(
   varlabel = c("Intimate\nPartner", "wealth", "Education", "Age", "Male"),
   coef = c(0.02, -0.07, -0.24, 0.01, 0.11),
   lb = c(-0.002, -0.110, -0.295, -0.060, 0.085),
@@ -76,7 +76,7 @@ df <- data.frame(
   pvalue = c(0.075, 0.000, 0.000, 0.784, 0.000),
   proplabel = c("0.02", "-0.07", "-0.24", "0.01", "0.11")
 )
-\dontrun{
+
 lapop_coef(df,
            main_title = "Demographic and Socioeconomic Predictors of Normalizing IPV",
            pred_prob = TRUE,

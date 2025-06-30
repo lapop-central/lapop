@@ -38,17 +38,14 @@ cat = c("Far Left", 1, 2, 3, 4, "Center", 6, 7, 8, 9, "Far Right"),
 prop = c(4, 3, 5, 12, 17, 23, 15, 11, 5, 4, 1),
 proplabel = c("4\%", "3\%", "5\%", "12\%", "17\%", "23\%", "15\%", "11\%", "5\%", "4\%", "1\%")
 )
-
-# 2019 Ideology preferences in Peru
-\dontrun{
-ideo_hist <- lapop_hist(df,
+myfigure <- lapop_hist(df,
           main_title = "Centrists are a plurality among Peruvians",
           subtitle = "Distribution of ideological preferences",
           source_info = "Peru, 2019",
-          ymax = 27)}
+          ymax = 27
+)
 
-# Exporting
-\dontrun{
 f <- file.path(tempdir(), "fig1.svg")
-lapop_save(ideo_hist, f, format = "svg", width_px = 800)}
+lapop_save(myfigure, f, format = "svg", width_px = 800)
+
 }

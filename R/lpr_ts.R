@@ -39,7 +39,7 @@
 #'
 #' @examples
 #'
-#' \dontrun{lpr_ts(jam23,
+#' \dontrun{lpr_ts(bra23,
 #' outcome = "ing4",
 #' use_wave = TRUE,
 #' mean = TRUE,

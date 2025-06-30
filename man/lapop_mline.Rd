@@ -24,7 +24,8 @@ lapop_mline(
   percentages = TRUE,
   all_labels = FALSE,
   ci = FALSE,
-  legendnrow = 1)
+  legendnrow = 1
+)
 }
 \arguments{
 \item{data}{Data Frame. Dataset to be used for analysis.  The data frame should have columns
@@ -80,9 +81,8 @@ AmericasBarometer data.  The maximum number of lines is four.  Unlike the lapop_
 single-line time series graph, this function will not print confidence lines nor will
 it show text values for each year (just the final/most recent year).
 }
-
 \examples{
-df <- data.frame(varlabel = c(rep("Honduras", 9), rep("El Salvador", 9),
+\dontrun{df <- data.frame(varlabel = c(rep("Honduras", 9), rep("El Salvador", 9),
                              rep("Mexico", 9), rep("Guatemala", 9)),
                 wave = rep(c("2004", "2006", "2008", "2010", "2012",
                              "2014", "2016/17", "2018/19", "2021"), 4),
@@ -95,7 +95,7 @@ df <- data.frame(varlabel = c(rep("Honduras", 9), rep("El Salvador", 9),
                               "14\%", "16\%", "14\%", "16\%", "9\%", "14\%",
                               "18\%", "19\%", "26\%", "21\%", "15\%", "18\%",
                               "20\%", "14\%", "18\%", "17\%", "25\%", "36\%"))
-\dontrun{
+
 lapop_mline(df,
      main_title = "Intentions to emigrate in Guatemala, Honduras and Mexico reached their highs",
      subtitle = "\% who intend to migrate in:",

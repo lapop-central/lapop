@@ -17,5 +17,5 @@ No arguments needed; just run lapop_fonts() at the beginning of your session.
 \dontrun{lapop_fonts()}
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

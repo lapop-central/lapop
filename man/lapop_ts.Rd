@@ -89,16 +89,15 @@ lb = c(20.2, 11.9, 33.3, 33.1, 38),
 ub = c(26.2, 16.9, 38.3, 40.1, 42)
 )
 
-# Political Interest over time in Ecuador
-\dontrun{
 lapop_ts(df,
  main_title = "Ecuadorians are becoming more interested in politics",
  subtitle = "\% politically interested",
  source_info = "Ecuador 2006-2021",
  ymin = 0,
- ymax = 55)}
-}
+ ymax = 55
+ )
 
+}
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

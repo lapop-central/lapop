@@ -63,54 +63,46 @@ and "no response" (missing code .b) into valid data (value = 99) and use them
 in the denominator when calculating percentages.  The default is to examine
 valid responses only.  Default: FALSE.}
 }
-
 \value{
-Returns a data frame, with data formatted for visualization by lapop_mover()
+Returns a data frame, with data formatted for visualization by lapop_mover
 }
-
 \description{
 This function creates a dataframe which can then be input in lapop_mover() for
 comparing means across values of secondary variable(s) using LAPOP formatting.
 }
-
 \examples{
-\dontrun{
+{
 # Single DV
-lpr_mover(data = gm23,
+\dontrun{lpr_mover(data = ym23,
  outcome = "ing4",
- grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
+ grouping_vars = c("q1tc_r", "edre", "wealth"),
  rec = c(5, 7))}
 
  # Multiple DV
- \dontrun{
- lpr_mover(data = gm23,
+ \dontrun{lpr_mover(data = ym23,
  outcome = c("ing4", "pn4"),
- grouping_vars = c("q1tc_r", "edad", "edre", "wealth"),
- rec = c(5, 7),
- rec2 = c(1, 2))}
+ grouping_vars = c("q1tc_r", "edre", "wealth"),
+ rec = c(5, 7), rec2 = c(1, 2))}
 
 # Single DV X Single IV
-\dontrun{
-lpr_mover(data,
-outcome = "ing4",
-grouping_vars = "exc7new",
-rec = c(5,7), ttest = T)}
+\dontrun{lpr_mover(data = ym23,
+outcome="ing4",
+grouping_vars="pn4",
+rec=c(5,7), ttest=T)}
 
 # Multiple DV X Single IV
-\dontrun{
-lpr_mover(data,
-outcome = c("ing4", "pn4"),
-grouping_vars = "exc7new",
-rec = c(5,7), rec2 = c(1,2), ttest = T)}
+\dontrun{lpr_mover(data = ym23,
+outcome=c("ing4", "pn4"),
+grouping_vars="edre",
+rec=c(5,7), rec2=c(1,2), ttest=T)}
 
 # Multiple DV X Multiple IV
-\dontrun{
-lpr_mover(data,
-outcome = c("ing4", "pn4"),
-grouping_vars = c("edre", "q1tc_r"),
-rec = c(5,7), rec2 = c(1,2), ttest = T)}
+\dontrun{lpr_mover(data = ym23,
+outcome=c("ing4", "pn4"),
+grouping_vars=c("edre", "q1tc_r"),
+rec=c(5,7), rec2=c(1,2), ttest=T)}
 }
-
+}
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

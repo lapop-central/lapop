@@ -49,17 +49,17 @@ This function creates a data frame which can then be input in lapop_coef() for
 plotting regression coefficients graph using LAPOP formatting.
 }
 \examples{
-# Example 1: Linear model using lpr_coef()
+{
 \dontrun{
+# Example 1: Linear model using lpr_coef()
 lpr_coef(
  outcome = "l1",
  xvar = "it1+idio2",
  data = dataLAPOP,
  model = "linear",
  est = "coef")}
-
-# Example 2: Logit model using lpr_coef()
 \dontrun{
+# Example 2: Logit model using lpr_coef()
 lpr_coef(
  outcome = "fs2",
  xvar = "it1+idio2",
@@ -67,8 +67,9 @@ lpr_coef(
  model = "binomial",
  est = "contrast")}
 
-# Example 3: Interactive model using lpr_coef()
+
 \dontrun{
+# Example 3: Interactive model using lpr_coef()
 lpr_coef(
  outcome = "fs2",
  xvar = "it1+idio2",
@@ -78,6 +79,7 @@ lpr_coef(
  est = "coef")}
 }
 
+}
 \author{
 Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

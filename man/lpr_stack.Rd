@@ -3,7 +3,6 @@
 \name{lpr_stack}
 \alias{lpr_stack}
 \title{LAPOP Stacked Bar Graph Pre-Processing}
-
 \usage{
 lpr_stack(
   data,
@@ -44,17 +43,12 @@ Returns a data frame, with data formatted for visualization by lapop_stack
 This function creates dataframes which can then be input in lapop_stack() for
 plotting variables categories with a stacked bar graph using LAPOP formatting.
 }
-
 \examples{
-# Multiple Outcomes
-\dontrun{
-lpr_stack(data = gm23, outcome = c("countfair1", "countfair3"))}
 
-# Single Outcome over time
-\dontrun{
-lpr_stack(data = gm23, outcome = "pese1", xvar = "year")}
+\dontrun{lpr_stack(data = gm, outcome = c("countfair1", "countfair3"))}
+\dontrun{lpr_stack(data = gm, outcome = "pese1", xvar="year")}
+
 }
-
 \author{
 Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

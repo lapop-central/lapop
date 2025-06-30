@@ -70,6 +70,7 @@ subtitle2 = "\% who are satisfied with democracy",
 main_title = "Crime victims are more supportive of and satisfied with democracy",
 source_info = ", AmericasBarometer 2023")
 }
+
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
