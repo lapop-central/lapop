@@ -119,10 +119,16 @@ head(
 
 # purrr package approach
 #  The purrr version uses map() to do the same, and also remove NULL results. 
-purrr::map_dfr(attr(bra23, "expansion.fields"), ~ {
+tail(
+  purrr::map_dfr(attr(bra23, "expansion.fields"), ~ {
   if (.x[1] == "ing4") 
-    tibble::tibble(note_id = .x[2], note_value = .x[3])
+    data.frame(
+      note_id = .x[2],
+      note_value = .x[3],
+      stringsAsFactors = FALSE
+    )
 })
+)
 
 ```
 
