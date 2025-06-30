@@ -7,7 +7,6 @@
 \format{
 A data frame
 \describe{
-  \item{aoj11}{Description of Column}
   \item{ing4}{Description of Column}
   \item{b13}{Description of Column}
   \item{b21}{Description of Column}

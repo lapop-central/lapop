@@ -27,7 +27,7 @@ library(dplyr)
 # BRAZIL SINGLE-COUNTRY SINGLE-YEAR MERGE
 # # -----------------------------------------------------------------------
 bra <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing/BRA merge 2007-2023 LAPOP AmericasBarometer (v1.0s).dta")
-bra23 <- bra %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
+bra23 <- bra %>% select("ing4", "b13", "b21", "b31", "b12",
                         "wave", "pais", "year", "upm", "strata", "wt") %>%
                                                         filter(wave==2023)
 #bra23<-lpr_data(bra23, wt = TRUE)
@@ -44,8 +44,8 @@ save(bra23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\bra23.rda"))
 # BRAZIL SINGLE-COUNTRY MULTI-YEAR MERGE
 # # -----------------------------------------------------------------------
 cm <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing/BRA merge 2007-2023 LAPOP AmericasBarometer (v1.0s).dta")
-cm23 <- cm %>% select("aoj11", "ing4", "b13", "b21", "b31", "b12",
-                        "wave", "pais", "year", "upm", "strata", "wt", "weight1500")
+cm23 <- cm %>% select("ing4", "b13", "b21", "b31", "wave", "pais", "year",
+                      "upm", "strata", "weight1500")
 
 #cm23<-lpr_data(cm23)
 
@@ -88,4 +88,3 @@ tools::checkRdaFiles("data/")
 # COMPRESS TO XZ FOR BEST FILESIZE
 tools::resaveRdaFiles("data/", compress = "xz")
 tools::checkRdaFiles("data/")
-
