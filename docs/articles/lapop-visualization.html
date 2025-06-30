@@ -96,28 +96,6 @@ the full report here</a></p>
 <span></span>
 <span><span class="co"># AmericasBarometer 2023 Year Merge</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ym23</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="reverse-variables">Reverse Variables<a class="anchor" aria-label="anchor" href="#reverse-variables"></a>
-</h2>
-<p>According to the LAPOP Editorial Guidelines, when variables are
-measured on a scale, reversing them can enhance clarity and coherence in
-data representation. For instance, if a survey question aims to measure
-positive sentiment but higher numeric values indicate negative
-responses, reversing the variable aligns the coding with the expected
-direction of responses. This makes it easier for readers to understand
-the findings.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cm23</span><span class="op">$</span><span class="va">aoj11r</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_resc.html">lpr_resc</a></span><span class="op">(</span><span class="va">cm23</span><span class="op">$</span><span class="va">aoj11</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span>, map<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##                                </span></span>
-<span><span class="co">##                                    0 0.333333333333333 0.666666666666667    1</span></span>
-<span><span class="co">##   Muy seguro(a)                    0                 0                 0 3008</span></span>
-<span><span class="co">##   Algo seguro(a)                   0                 0              5038    0</span></span>
-<span><span class="co">##   Algo inseguro(a)                 0              2586                 0    0</span></span>
-<span><span class="co">##   Muy inseguro(a)               2290                 0                 0    0</span></span>
-<span><span class="co">##   No sabe                          0                 0                 0    0</span></span>
-<span><span class="co">##   No responde                      0                 0                 0    0</span></span>
-<span><span class="co">##   No se le preguntó en este año    0                 0                 0    0</span></span></code></pre>
 <div class="section level3">
 <h3 id="survey-design-for-the-data">Survey Design for the Data<a class="anchor" aria-label="anchor" href="#survey-design-for-the-data"></a>
 </h3>
@@ -129,7 +107,7 @@ stratification variable (strata = strata) to account for the survey’s
 complex design. Finally, PSUs are nested within strata, properly
 reflecting the survey’s hierarchical sampling structure. The
 <code><a href="../reference/lpr_data.html">lpr_data()</a></code> function apply survey design effects.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Single-Country Single-Year</span></span>
 <span><span class="va">bra23w</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_data.html">lpr_data</a></span><span class="op">(</span><span class="va">bra23</span>, wt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
@@ -145,7 +123,7 @@ reflecting the survey’s hierarchical sampling structure. The
 <span><span class="co">##   - aoj11 (fct), ing4 (int), b13 (int), b21 (int), b31 (int), b12 (int), wave</span></span>
 <span><span class="co">##     (fct), pais (fct), year (fct), upm (int), strata (dbl), wt (dbl), pais_lab</span></span>
 <span><span class="co">##     (chr)</span></span></code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Single-Country Multi-Year</span></span>
 <span><span class="va">cm23w</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_data.html">lpr_data</a></span><span class="op">(</span><span class="va">cm23</span><span class="op">)</span></span>
 <span></span>
@@ -160,8 +138,8 @@ reflecting the survey’s hierarchical sampling structure. The
 <span><span class="co">## Data variables: </span></span>
 <span><span class="co">##   - aoj11 (fct), ing4 (int), b13 (int), b21 (int), b31 (int), b12 (int), wave</span></span>
 <span><span class="co">##     (fct), pais (fct), year (fct), upm (int), strata (dbl), wt (dbl),</span></span>
-<span><span class="co">##     weight1500 (dbl), aoj11r (dbl), pais_lab (chr)</span></span></code></pre>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<span><span class="co">##     weight1500 (dbl), pais_lab (chr)</span></span></code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Multi-Country Single-Year</span></span>
 <span><span class="va">ym23w</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_data.html">lpr_data</a></span><span class="op">(</span><span class="va">ym23</span><span class="op">)</span></span>
 <span></span>
@@ -187,13 +165,13 @@ reflecting the survey’s hierarchical sampling structure. The
 ensures that all exported charts have a polished, standardized
 appearance to ensure consistent and professional typography in all LAPOP
 plots. This function loads Nunito and Roboto fonts.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/lapop_fonts.html">lapop_fonts</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/lapop_fonts.html">lapop_fonts</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Load fonts</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="figure-1-1-time-series">Figure 1.1: Time Series<a class="anchor" aria-label="anchor" href="#figure-1-1-time-series"></a>
 </h2>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fig1.1_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_ts.html">lpr_ts</a></span><span class="op">(</span><span class="va">cm23w</span>, outcome <span class="op">=</span> <span class="st">"ing4"</span>, rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>, use_wave <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/lapop_ts.html">lapop_ts</a></span><span class="op">(</span><span class="va">fig1.1_data</span>,</span>
@@ -206,7 +184,7 @@ plots. This function loads Nunito and Roboto fonts.</p>
 <div class="section level2">
 <h2 id="figure-1-2-cross-country-comparison">Figure 1.2: Cross-Country Comparison<a class="anchor" aria-label="anchor" href="#figure-1-2-cross-country-comparison"></a>
 </h2>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fig1.2_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_cc.html">lpr_cc</a></span><span class="op">(</span><span class="va">ym23w</span>, outcome <span class="op">=</span> <span class="st">"ing4"</span>, rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/lapop_cc.html">lapop_cc</a></span><span class="op">(</span><span class="va">fig1.2_data</span>,</span>
@@ -217,7 +195,7 @@ plots. This function loads Nunito and Roboto fonts.</p>
 <div class="section level2">
 <h2 id="figure-2-1-multi-line-over-time">Figure 2.1: Multi-line Over Time<a class="anchor" aria-label="anchor" href="#figure-2-1-multi-line-over-time"></a>
 </h2>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fig2.1_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_mline.html">lpr_mline</a></span><span class="op">(</span><span class="va">cm23w</span>,</span>
 <span>                         outcome <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b13"</span>, <span class="st">"b21"</span>, <span class="st">"b31"</span><span class="op">)</span>,</span>
 <span>                         rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>, rec2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>, rec3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span>
@@ -235,7 +213,7 @@ plots. This function loads Nunito and Roboto fonts.</p>
 <div class="section level2">
 <h2 id="figure-2-3-cc-multiple-variables">Figure 2.3: CC Multiple Variables<a class="anchor" aria-label="anchor" href="#figure-2-3-cc-multiple-variables"></a>
 </h2>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fig2.3_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_ccm.html">lpr_ccm</a></span><span class="op">(</span><span class="va">ym23w</span>,</span>
 <span>                       outcome_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b12"</span>, <span class="st">"b18"</span><span class="op">)</span>,</span>
 <span>                       rec1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>,</span>
@@ -252,7 +230,7 @@ plots. This function loads Nunito and Roboto fonts.</p>
 <div class="section level2">
 <h2 id="figure-mover-example-satisfaction-with-democracy">Figure Mover Example: Satisfaction with Democracy<a class="anchor" aria-label="anchor" href="#figure-mover-example-satisfaction-with-democracy"></a>
 </h2>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ym23w</span><span class="op">$</span><span class="va">variables</span> <span class="op">&lt;-</span> <span class="va">ym23w</span><span class="op">$</span><span class="va">variables</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -293,7 +271,7 @@ plots. This function loads Nunito and Roboto fonts.</p>
 <div class="section level2">
 <h2 id="figure-histogram-citizens-views">Figure Histogram: Citizens’ Views<a class="anchor" aria-label="anchor" href="#figure-histogram-citizens-views"></a>
 </h2>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">spot32_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_hist.html">lpr_hist</a></span><span class="op">(</span><span class="va">ym23w</span>, outcome <span class="op">=</span> <span class="st">"vb21n"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Translating to English</span></span>
@@ -311,7 +289,7 @@ plots. This function loads Nunito and Roboto fonts.</p>
 <div class="section level2">
 <h2 id="figure-3-5-dumbell-plot">Figure 3.5: Dumbell Plot<a class="anchor" aria-label="anchor" href="#figure-3-5-dumbell-plot"></a>
 </h2>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fig3.5_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_dumb.html">lpr_dumb</a></span><span class="op">(</span><span class="va">ym23w</span>,</span>
 <span>                        outcome <span class="op">=</span> <span class="st">"q14f"</span>,</span>
 <span>                        rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
@@ -330,7 +308,7 @@ plots. This function loads Nunito and Roboto fonts.</p>
 <div class="section level2">
 <h2 id="figure-3-8-stack-plot-by-country">Figure 3.8: Stack Plot by Country<a class="anchor" aria-label="anchor" href="#figure-3-8-stack-plot-by-country"></a>
 </h2>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">ym23w</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">q14f</span><span class="op">)</span><span class="op">$</span><span class="va">label</span> <span class="op">&lt;-</span> <span class="st">"Migration intentions"</span></span>
 <span></span>
 <span><span class="va">fig3.8_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_stack.html">lpr_stack</a></span><span class="op">(</span><span class="va">ym23w</span>,</span>
@@ -343,6 +321,59 @@ plots. This function loads Nunito and Roboto fonts.</p>
 <span>            source <span class="op">=</span> <span class="st">", AmericasBarometer 2023"</span>,</span>
 <span>            main_title <span class="op">=</span> <span class="st">"Nicaragua has the highest percentage of individuals with migration intentions, while Haiti has the lowest"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="lapop-visualization_files/figure-html/stack-1.png" width="960"></p>
+</div>
+<div class="section level2">
+<h2 id="bonus-reverse-variables">Bonus: Reverse Variables<a class="anchor" aria-label="anchor" href="#bonus-reverse-variables"></a>
+</h2>
+<p>According to the LAPOP Editorial Guidelines, when variables are
+measured on a scale, reversing them can enhance clarity and coherence in
+data representation. For instance, if a survey question aims to measure
+positive sentiment but higher numeric values indicate negative
+responses, reversing the variable aligns the coding with the expected
+direction of responses. This makes it easier for readers to understand
+the findings.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># For data.frames</span></span>
+<span><span class="va">cm23</span><span class="op">$</span><span class="va">ing4r</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_resc.html">lpr_resc</a></span><span class="op">(</span><span class="va">cm23</span><span class="op">$</span><span class="va">ing4</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span>, map<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##    </span></span>
+<span><span class="co">##        0 0.166666666666667 0.333333333333333  0.5 0.666666666666667</span></span>
+<span><span class="co">##   1    0                 0                 0    0                 0</span></span>
+<span><span class="co">##   2    0                 0                 0    0                 0</span></span>
+<span><span class="co">##   3    0                 0                 0    0              1274</span></span>
+<span><span class="co">##   4    0                 0                 0 2112                 0</span></span>
+<span><span class="co">##   5    0                 0              2811    0                 0</span></span>
+<span><span class="co">##   6    0              2374                 0    0                 0</span></span>
+<span><span class="co">##   7 4952                 0                 0    0                 0</span></span>
+<span><span class="co">##    </span></span>
+<span><span class="co">##     0.833333333333333    1</span></span>
+<span><span class="co">##   1                 0  928</span></span>
+<span><span class="co">##   2               660    0</span></span>
+<span><span class="co">##   3                 0    0</span></span>
+<span><span class="co">##   4                 0    0</span></span>
+<span><span class="co">##   5                 0    0</span></span>
+<span><span class="co">##   6                 0    0</span></span>
+<span><span class="co">##   7                 0    0</span></span></code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># For LPR_DATA() objects</span></span>
+<span><span class="va">cm23w</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">ing4r</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_resc.html">lpr_resc</a></span><span class="op">(</span><span class="va">cm23w</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">ing4</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span>, map<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##    </span></span>
+<span><span class="co">##        0 0.166666666666667 0.333333333333333  0.5 0.666666666666667</span></span>
+<span><span class="co">##   1    0                 0                 0    0                 0</span></span>
+<span><span class="co">##   2    0                 0                 0    0                 0</span></span>
+<span><span class="co">##   3    0                 0                 0    0              1274</span></span>
+<span><span class="co">##   4    0                 0                 0 2112                 0</span></span>
+<span><span class="co">##   5    0                 0              2811    0                 0</span></span>
+<span><span class="co">##   6    0              2374                 0    0                 0</span></span>
+<span><span class="co">##   7 4952                 0                 0    0                 0</span></span>
+<span><span class="co">##    </span></span>
+<span><span class="co">##     0.833333333333333    1</span></span>
+<span><span class="co">##   1                 0  928</span></span>
+<span><span class="co">##   2               660    0</span></span>
+<span><span class="co">##   3                 0    0</span></span>
+<span><span class="co">##   4                 0    0</span></span>
+<span><span class="co">##   5                 0    0</span></span>
+<span><span class="co">##   6                 0    0</span></span>
+<span><span class="co">##   7                 0    0</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="end">End<a class="anchor" aria-label="anchor" href="#end"></a>
@@ -381,7 +412,7 @@ accessible!</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Robert Vidigal.</p>
+  <p>Developed by Robert Vidigal, Luke Plutowski.</p>
 </div>
 
 <div class="pkgdown-footer-right">

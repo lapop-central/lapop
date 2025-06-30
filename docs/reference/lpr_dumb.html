@@ -83,7 +83,7 @@ country (pais). Default: "pais".</p></dd>
 
 
 <dt id="arg-over">over<a class="anchor" aria-label="anchor" href="#arg-over"></a></dt>
-<dd><p>Numeric.  A vector of values for "wave" that specify which two
+<dd><p>Numeric. A vector of values for "wave" that specify which two
 waves should be included in the plot.</p></dd>
 
 
@@ -148,26 +148,26 @@ valid responses only.  Default: FALSE.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
-    <p>Luke Plutowski, <a href="mailto:luke.plutowski@vanderbilt.edu">luke.plutowski@vanderbilt.edu</a> &amp; Robert Vidigal, <a href="mailto:robert.vidigal@vanderbilt.edu">robert.vidigal@vanderbilt.edu</a></p>
+    <p>Luke Plutowski, <a href="mailto:luke.plutowski@vanderbilt.edu">luke.plutowski@vanderbilt.edu</a> &amp;&amp; Robert Vidigal, <a href="mailto:robert.vidigal@vanderbilt.edu">robert.vidigal@vanderbilt.edu</a></p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Single variable</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="fu">lpr_dumb</span><span class="op">(</span><span class="va">cm23</span>,</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span> <span class="co"># Single outcome over years</span></span></span>
+<span class="r-in"><span><span class="fu">lpr_dumb</span><span class="op">(</span><span class="va">ym2123</span>,</span></span>
 <span class="r-in"><span>outcome <span class="op">=</span> <span class="st">"ing4"</span>,</span></span>
 <span class="r-in"><span>rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>over <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2021</span>, <span class="fl">2023</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>sort <span class="op">=</span> <span class="st">"diff"</span>,</span></span>
 <span class="r-in"><span>ttest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Multiple Variables over years</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="fu">lpr_dumb</span><span class="op">(</span><span class="va">ym23</span>,</span></span>
+<span class="r-in"><span><span class="co"># Multiple outcomes over years</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fu">lpr_dumb</span><span class="op">(</span><span class="va">ym2123</span>,</span></span>
 <span class="r-in"><span>outcome<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b21"</span>, <span class="st">"b13"</span>, <span class="st">"b31"</span>, <span class="st">"b47a"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>rec<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">7</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>over<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2004</span>, <span class="fl">2006</span><span class="op">)</span><span class="op">)</span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span>over<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2021</span>, <span class="fl">2023</span><span class="op">)</span><span class="op">)</span> <span class="co"># \dontrun{}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -175,7 +175,7 @@ valid responses only.  Default: FALSE.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Robert Vidigal.</p>
+  <p>Developed by Robert Vidigal, Luke Plutowski.</p>
 </div>
 
 <div class="pkgdown-footer-right">
