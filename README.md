@@ -38,7 +38,7 @@ readstata13::read.dta13()
 
 to preserve the full metadata structure.
 
-Other methods such as `haven::read_dta()` or `rio::import()` may fail to import these critical attributes.
+Other methods such as `haven::read_dta()` or `rio::import()` may fail to import the STATA attributes.
 
 ### 3. Variable Labels (Question Wording)
 
