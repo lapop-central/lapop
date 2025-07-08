@@ -9,7 +9,9 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note
+
+ * The only NOTE is “unable to verify current time” on Windows, which is a known benign artifact.
 
 ## Additional comments
 
@@ -17,6 +19,5 @@
 * All checks pass on local and remote environments.
 * There are no reverse dependencies.
 * All vignettes build correctly.
-* No non-CRAN dependencies are used.
 
 Thank you for reviewing this submission!
