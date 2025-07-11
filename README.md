@@ -67,7 +67,7 @@ Other methods such as `haven::read_dta()` or `rio::import()` may fail to import 
    lapop_fonts()
    ```
 
-3. Apply the AmericasBarometer sampling design with:
+3. Apply the AmericasBarometer design effects with:
 
    ```r
    lpr_data()
@@ -77,10 +77,11 @@ Other methods such as `haven::read_dta()` or `rio::import()` may fail to import 
    - Histograms: `lpr_hist()`
    - Cross-country comparison: `lpr_cc()`
    - Time series: `lpr_ts()`
-   - Breakdown by covariates: `lpr_mover()`
+   - Breakdown by covariates: `lpr_mover()`  
 
-5. Store the output in an R object.
-   - File names: .csv and graphics files should have the same name. Their names should be in the following standard format: CountryYear/ts_DVcode(s)_IVcode(s)_graphtype.filetype.
+<p>5. Store the output in an R object.</p>
+
+   - File names: .csv and graphics files should have the same name. Their names should be in the following standard format: CountryYear/ts_DVcode(s)_IVcode(s)_graphtype.extension.
    - Examples:
       
       - mex21_countfair1_hist.csv
@@ -88,15 +89,15 @@ Other methods such as `haven::read_dta()` or `rio::import()` may fail to import 
       - ab23_vic1ext_pais_cc.svg
    - There will be some cases that do not easily fit this standard. Use your best judgment.
 
-7. Use the corresponding `lapop` plotting function to produce the visualization:
+6. Use the corresponding `lapop` plotting function to produce the visualization:
+
    - Examples: `lapop_hist()`, `lapop_cc()`, `lapop_ts()`, etc.
 
-8. Export the figure to your machine with:
+<p>7. Export the figure to your machine with:</p>
 
    ```r
    lapop_save()
    ```
-
 ---
 
 ## 🤝 Workflow: Contributing to the `lapop` R Package

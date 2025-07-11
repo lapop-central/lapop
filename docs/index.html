@@ -85,7 +85,7 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">readstata13</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/readstata13/man/read.dta13.html" class="external-link">read.dta13</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>to preserve the full metadata structure.</p>
-<p>Other methods such as <code><a href="https://haven.tidyverse.org/reference/read_dta.html" class="external-link">haven::read_dta()</a></code> or <code><a href="http://gesistsa.github.io/rio/reference/import.html" class="external-link">rio::import()</a></code> may fail to import these critical attributes.</p>
+<p>Other methods such as <code><a href="https://haven.tidyverse.org/reference/read_dta.html" class="external-link">haven::read_dta()</a></code> or <code><a href="http://gesistsa.github.io/rio/reference/import.html" class="external-link">rio::import()</a></code> may fail to import the STATA attributes.</p>
 </div>
 <div class="section level3">
 <h3 id="id_3-variable-labels-question-wording">3. Variable Labels (Question Wording)<a class="anchor" aria-label="anchor" href="#id_3-variable-labels-question-wording"></a>
@@ -121,7 +121,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="reference/lapop_fonts.html">lapop_fonts</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
-<p>Apply the AmericasBarometer sampling design with:</p>
+<p>Apply the AmericasBarometer design effects with:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/lpr_data.html">lpr_data</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </li>
@@ -138,10 +138,15 @@
 </li>
 </ul>
 </li>
+</ol>
+<p>
+</p>
+<ol start="5" style="list-style-type: decimal">
 <li>
 <p>Store the output in an R object.</p>
+
 <ul>
-<li><p>File names: .csv and graphics files should have the same name. Their names should be in the following standard format: CountryYear/ts_DVcode(s)_IVcode(s)_graphtype.filetype.</p></li>
+<li><p>File names: .csv and graphics files should have the same name. Their names should be in the following standard format: CountryYear/ts_DVcode(s)_IVcode(s)_graphtype.extension.</p></li>
 <li>
 <p>Examples:</p>
 <ul>
@@ -159,13 +164,17 @@
 <li>Examples: <code><a href="reference/lapop_hist.html">lapop_hist()</a></code>, <code><a href="reference/lapop_cc.html">lapop_cc()</a></code>, <code><a href="reference/lapop_ts.html">lapop_ts()</a></code>, etc.</li>
 </ul>
 </li>
-<li>
-<p>Export the figure to your machine with:</p>
+</ol>
+<p>
+</p>
+<ol start="7" style="list-style-type: decimal">
+<li>Export the figure to your machine with:
+
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/lapop_save.html">lapop_save</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<hr>
 </li>
 </ol>
-<hr>
 </div>
 <div class="section level2">
 <h2 id="id_-workflow-contributing-to-the-lapop-r-package">🤝 Workflow: Contributing to the <code>lapop</code> R Package<a class="anchor" aria-label="anchor" href="#id_-workflow-contributing-to-the-lapop-r-package"></a>
@@ -228,7 +237,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>

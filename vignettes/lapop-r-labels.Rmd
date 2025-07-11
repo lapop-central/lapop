@@ -18,7 +18,7 @@ knitr::opts_chunk$set(fig.width = 12, fig.height = 6)
 ```
 
 ## Introduction
-This concise guide demonstrates how R users can effectively work with AmericasBarometer datasets to access variable metadata directly eliminating the need for external codebooks. While these features are more readily visible in STATA, they often require specific approaches in R. The guide outlines:
+This concise guide demonstrates how R users can effectively work with AmericasBarometer datasets to access variable metadata directly eliminating the need for external codebooks. While these features are more readily visible in Stata, they often require specific approaches in R. The guide outlines:
 
 1. The multilingual structure and storage of AmericasBarometer data (including variable labels and value labels).
 
@@ -45,7 +45,7 @@ library(lapop)
 # because we are not plotting figures
 ```
 
-## How LAPOP Lab stores variables metadata? 
+## How LAPOP Lab stores variables metadata
 LAPOP Lab's AmericasBarometer stores variable labels and value labels in parallel languages (i.e., Spanish/English/Portuguese) directly within the dataset structure. This allows researchers to access metadata without external codebooks by:
 
 Embedding language-specific labels as attributes in Stata-formatted files and to use standardized variable naming conventions that maintain consistency across survey waves since 2004. Therefore, Metadata is structured to facilitate longitudinal analysis. The project employs Stata-formatted datasets (.dta) with embedded metadata, preserving:
@@ -58,9 +58,9 @@ Embedding language-specific labels as attributes in Stata-formatted files and to
 
 As a result, a key advantage is LAPOP Lab's active metadata preservation even when distributing data through third-party platforms like ICPSR or NORC, the Stata-formatted metadata remains intact, allowing R/python users to still access labels via the `readstata13` package.
 
-## How to load AmericasBarometer Data in R?
+## How to load AmericasBarometer Data in R
 
-The preferred method for loading LAPOP Lab datasets is to use the `read.dta13()` function from the `readstata13` package. Below, I highlight a key difference between this recommended approach and two alternative methods commonly used by researchers: `haven::read_dta()` and `rio::import()`.
+The preferred method for loading LAPOP Lab datasets is to use the `read.dta13()` function from the `readstata13` package. Below, I show a key difference between this recommended approach and two alternative methods commonly used by researchers: `haven::read_dta()` and `rio::import()`.
 
 In the R programming language, attributes are additional metadata that can be attached to R objects. Attributes provide a way to store extra information about an object beyond its basic data structure. To access the attributes of an object, you can use the `attr()` or `attributes()` base functions. 
 
@@ -82,7 +82,7 @@ names(attributes(data3))
 The methods `haven` and `rio` packages  do not recover all the metadata from `dta` files. Thereby, we proceed with the dataset loaded with the `readstata13` package.
 
 ## AmericasBarometer Variables Labels (Question Wording)
-AmericasBarometer variable labels are stored as `notes` in STATA .dta files. We 
+AmericasBarometer variable labels are stored as `notes` in Stata .dta files. We 
 can find them inside the "expansion.fields" attribute.
 
 The `varlabels` object created is a nested list (much like a JSON object) that will contain multilingual notes with the question wording of each variable. For instance, for the variable `ing4` in the `Brazil AB 2023` dataset will contain notes with the question wording and lead-in in English, Spanish, and Portuguese.
