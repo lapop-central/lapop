@@ -75,7 +75,7 @@
 <p>This concise guide demonstrates how R users can effectively work with
 AmericasBarometer datasets to access variable metadata directly
 eliminating the need for external codebooks. While these features are
-more readily visible in STATA, they often require specific approaches in
+more readily visible in Stata, they often require specific approaches in
 R. The guide outlines:</p>
 <ol style="list-style-type: decimal">
 <li><p>The multilingual structure and storage of AmericasBarometer data
@@ -105,7 +105,7 @@ into your library:</p>
 <span><span class="co"># because we are not plotting figures</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="how-lapop-lab-stores-variables-metadata">How LAPOP Lab stores variables metadata?<a class="anchor" aria-label="anchor" href="#how-lapop-lab-stores-variables-metadata"></a>
+<h2 id="how-lapop-lab-stores-variables-metadata">How LAPOP Lab stores variables metadata<a class="anchor" aria-label="anchor" href="#how-lapop-lab-stores-variables-metadata"></a>
 </h2>
 <p>LAPOP Lab’s AmericasBarometer stores variable labels and value labels
 in parallel languages (i.e., Spanish/English/Portuguese) directly within
@@ -129,11 +129,11 @@ allowing R/python users to still access labels via the
 <code>readstata13</code> package.</p>
 </div>
 <div class="section level2">
-<h2 id="how-to-load-americasbarometer-data-in-r">How to load AmericasBarometer Data in R?<a class="anchor" aria-label="anchor" href="#how-to-load-americasbarometer-data-in-r"></a>
+<h2 id="how-to-load-americasbarometer-data-in-r">How to load AmericasBarometer Data in R<a class="anchor" aria-label="anchor" href="#how-to-load-americasbarometer-data-in-r"></a>
 </h2>
 <p>The preferred method for loading LAPOP Lab datasets is to use the
 <code>read.dta13()</code> function from the <code>readstata13</code>
-package. Below, I highlight a key difference between this recommended
+package. Below, I show a key difference between this recommended
 approach and two alternative methods commonly used by researchers:
 <code><a href="https://haven.tidyverse.org/reference/read_dta.html" class="external-link">haven::read_dta()</a></code> and <code><a href="http://gesistsa.github.io/rio/reference/import.html" class="external-link">rio::import()</a></code>.</p>
 <p>In the R programming language, attributes are additional metadata
@@ -162,7 +162,7 @@ package.</p>
 <h2 id="americasbarometer-variables-labels-question-wording">AmericasBarometer Variables Labels (Question Wording)<a class="anchor" aria-label="anchor" href="#americasbarometer-variables-labels-question-wording"></a>
 </h2>
 <p>AmericasBarometer variable labels are stored as <code>notes</code> in
-STATA .dta files. We can find them inside the “expansion.fields”
+Stata .dta files. We can find them inside the “expansion.fields”
 attribute.</p>
 <p>The <code>varlabels</code> object created is a nested list (much like
 a JSON object) that will contain multilingual notes with the question
