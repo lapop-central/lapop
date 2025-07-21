@@ -7,17 +7,16 @@
 \format{
 A data frame
 \describe{
-  \item{ing4}{Description of Column}
-  \item{b13}{Description of Column}
-  \item{b21}{Description of Column}
-  \item{b31}{Description of Column}
-  \item{wave}{Description of Column}
-  \item{pais}{Description of Column}
-  \item{year}{Description of Column}
-  \item{upm}{Description of Column}
-  \item{strata}{Description of Column}
-  \item{weight1500}{Description of Column}
-  ...
+ \item{ing4}{Support for Democracy}
+ \item{b13}{Trust in the National Legislature}
+ \item{b21}{Trust in Political Parties}
+ \item{b31}{Trust in the Supreme Court of Justice}
+ \item{wave}{Survey round year for regional or multi-country data}
+ \item{pais}{Country of survey}
+ \item{year}{Survey round year for single-country data}
+ \item{upm}{Primary Sampling Unit}
+ \item{strata}{Stratification}
+ \item{weight1500}{Cross-country and cross-time weight}
 }
 }
 \source{
