@@ -9,9 +9,7 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
- * The only NOTE is “unable to verify current time” on Windows, which is a known benign artifact.
+0 errors | 0 warnings | 0 notes
 
 ## Additional comments
 
