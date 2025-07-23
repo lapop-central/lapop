@@ -14,7 +14,7 @@
 #' \item{year}{Survey round year for single-country data}
 #' \item{upm}{Primary Sampling Unit}
 #' \item{strata}{Stratification}
-#' \item{wt}{Country-specific poststratification weight}
+#' \item{wt}{Country-specific post stratification weight}
 #' }
 #' @source LAPOP AmericasBarometer (https://www.vanderbilt.edu/lapop/)
 #' @export

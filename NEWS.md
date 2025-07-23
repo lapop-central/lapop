@@ -189,7 +189,7 @@ Changes to lapop_ccm including:
 * Added repelling of labels that overlapping in lapop_sb()
 * Made subtitle movable in lapop_tsmulti()
 * lapop_coef() description header was wrong
-* Time series help page: example at the bottom wasincorrectly formatted
+* Time series help page: example at the bottom was incorrectly formatted
 * Interpolation by group for lapop_tsmulti() now prevents interpolation of final data point
 * Made sorting possible in lapop_sb()
 

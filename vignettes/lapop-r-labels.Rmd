@@ -54,7 +54,7 @@ Embedding language-specific labels as attributes in Stata-formatted files and to
 
 * Value labels (i.e., responses options).
 
-* Missing value codes (i.e., Not Applicated, Don't Know, Refused).
+* Missing value codes (i.e., Not Applicable, Don't Know, Refused).
 
 As a result, a key advantage is LAPOP Lab's active metadata preservation even when distributing data through third-party platforms like ICPSR or NORC, the Stata-formatted metadata remains intact, allowing R/python users to still access labels via the `readstata13` package.
 
