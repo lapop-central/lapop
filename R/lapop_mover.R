@@ -103,8 +103,6 @@ NULL
 #'@export
 #'@import ggplot2
 #'@import stringr
-#'@importFrom ggh4x facet_grid2
-#'@importFrom ggh4x strip_themed
 #'@importFrom ggtext element_markdown
 #'@importFrom stats setNames
 #'@import showtext
@@ -112,25 +110,25 @@ NULL
 #'
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
-
-
 lapop_mover <- function(data,
-                         lang = "en",
-                         main_title = "",
-                         subtitle = "",
-                         qword = NULL,
-                         source_info = "LAPOP",
-                         rev_values = FALSE,
-                         rev_variables = FALSE,
-                         subtitle_h_just = 0,
-                         ymin = 0,
-                         ymax = 100,
-                         x_lab_angle = 90,
-                         color_scheme = c("#784885", "#008381", "#c74e49", "#2d708e", "#a43d6a")){
+                        lang = "en",
+                        main_title = "",
+                        subtitle = "",
+                        qword = NULL,
+                        source_info = "LAPOP",
+                        rev_values = FALSE,
+                        rev_variables = FALSE,
+                        subtitle_h_just = 0,
+                        ymin = 0,
+                        ymax = 100,
+                        x_lab_angle = 90,
+                        color_scheme = c("#784885", "#008381", "#c74e49", "#2d708e", "#a43d6a")) {
+
   data$varlabel = factor(data$varlabel, levels = unique(data$varlabel))
   data$order = 1:nrow(data)
   data$order = factor(data$order, levels = unique(data$order))
   mycolors = color_scheme[seq_along(unique(data$varlabel))]
+
   ci_text = ifelse(lang == "es",
                    paste0(" <span style='color:#585860; font-size:18pt'>\u0131\u2014\u0131 </span>",
                           "<span style='color:#585860; font-size:13pt'>95% intervalo de confianza </span>"),
@@ -139,27 +137,32 @@ lapop_mover <- function(data,
                                  "<span style='color:#585860; font-size:13pt'>Intervalle de confiance de 95% </span>"),
                           paste0(" <span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131 </span> ",
                                  "<span style='color:#585860; font-size:13pt'>95% confidence interval</span>")))
+
   update_geom_defaults("text", list(family = "roboto"))
 
+  # Create a color map based on unique levels in varlabel
+  color_map <- setNames(mycolors[1:length(unique(data$varlabel))], unique(data$varlabel))
+
+  # Modify the facet labeller function to use colors
   grid_labeller <- function(x) {
-    str_wrap(x, width = 12)  # Wrap the labels at a specified width
+    # Wrap the labels at a specified width
+    wrapped_labels <- str_wrap(x, width = 12)
+
+    # Apply color from the color_map based on the variable level
+    color <- color_map[x]
+
+    # Return the wrapped label with color applied
+    wrapped_labels <- paste0("<span style='color:", color, "'>", wrapped_labels, "</span>")
+    return(wrapped_labels)
   }
 
   ggplot(data, aes(x = order, y = prop, color = factor(varlabel), label = proplabel)) +
-    geom_point(alpha=0.47, key_glyph = "point") +
-    ggh4x::facet_grid2(cols = vars(varlabel),
-                scales = "free",
-                space = "free",
-                axes = "all",
-                labeller = labeller(varlabel = grid_labeller),
-                strip = strip_themed(
-                  text_x = list(element_text(color = mycolors[1]),
-                                element_text(color = mycolors[2]),
-                                element_text(color = mycolors[3]),
-                                element_text(color = mycolors[4]),
-                                element_text(color = mycolors[5]))
-                )) +
-    geom_errorbar(aes(ymin=lb, ymax=ub), width = 0.2, show.legend = FALSE) +
+    geom_point(alpha = 0.47, key_glyph = "point") +
+    facet_grid(. ~ varlabel,
+               scales = "free_x",
+               space = "free_x",
+               labeller = labeller(varlabel = grid_labeller)) +
+    geom_errorbar(aes(ymin = lb, ymax = ub), width = 0.2, show.legend = FALSE) +
     geom_text(aes(y = ub), fontface = "bold", size = 5, vjust = -0.8, show.legend = FALSE) +
     scale_color_manual(values = mycolors,
                        labels = paste0("<span style='color:#585860; font-size:13pt'> ",
@@ -167,16 +170,16 @@ lapop_mover <- function(data,
                                        "<span style='color:#FFFFFF00'>-----------</span>",
                                        ci_text),
                        guide = guide_legend(override.aes = list(shape = 16,
-                                                                color = c("black", rep("white", length(unique(data$varlabel)) -1)),
-                                                                fill = c("black", rep("white", length(unique(data$varlabel)) -1))))) +
+                                                                color = c("black", rep("white", length(unique(data$varlabel)) - 1)),
+                                                                fill = c("black", rep("white", length(unique(data$varlabel)) - 1))))) +
     scale_y_continuous(limits = c(ymin, ymax),
                        breaks = seq(ymin, ymax, ifelse(ymax - ymin <= 50, 5, 10)),
-                       expand = c(0,0)) +
+                       expand = c(0, 0)) +
     scale_x_discrete(
       labels = function(x) stringr::str_wrap(data$vallabel[match(x, data$order)], width = 12),
       expand = expansion(add = 0.5)
     ) +
-    geom_vline(xintercept = seq(0.5, length(data$vallabel), by = 1), color="#dddddf", size = 0.5) +
+    geom_vline(xintercept = seq(0.5, length(data$vallabel), by = 1), color = "#dddddf", size = 0.5) +
     labs(title = main_title,
          y = "",
          x = " ",
@@ -185,10 +188,10 @@ lapop_mover <- function(data,
                                         source_info)))) +
     theme(text = element_text(size = 14, family = "roboto"),
           plot.title = element_text(size = 17, family = "nunito", face = "bold"),
-          plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "nunito", color="#585860"),
-          plot.subtitle = element_text(size = 14, family = "nunito", color="#585860"),
+          plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "nunito", color = "#585860"),
+          plot.subtitle = element_text(size = 14, family = "nunito", color = "#585860"),
           panel.grid.major.x = element_blank(),
-          panel.grid.major.y = element_line(size=.5, color="#dddddf"),
+          panel.grid.major.y = element_line(size = .5, color = "#dddddf"),
           panel.background = element_rect(fill = "white"),
           panel.border = element_rect(linetype = "solid", color = "#dddddf", fill = NA, linewidth = 1),
           axis.text.y = element_blank(),
@@ -197,11 +200,12 @@ lapop_mover <- function(data,
           axis.text = element_text(size = 14, family = "roboto", color = "#585860"),
           legend.position = "top",
           legend.title = element_blank(),
-          legend.justification='left',
-          legend.margin=margin(0, 0, -5, 0-subtitle_h_just),
-          legend.text=element_markdown(family = "nunito-light"),
-          legend.key=element_blank(),
-          strip.text = element_text(size = 14),
+          legend.justification = 'left',
+          legend.margin = margin(0, 0, -5, 0 - subtitle_h_just),
+          legend.text = element_markdown(family = "nunito-light"),
+          legend.key = element_blank(),
+          strip.text = element_markdown(size = 14),
           strip.background = element_blank()
     )
 }
+

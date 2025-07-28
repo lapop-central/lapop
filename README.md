@@ -109,6 +109,7 @@ Other methods such as `haven::read_dta()` or `rio::import()` may fail to import 
 5. Run `devtools::document()` to generate `.Rd` files in `man/` and update `NAMESPACE`.
 6. Commit your changes and push the branch to your fork.
 7. Submit a **pull request** to the main repository.
+8. If you find a bug, please consider donating to the LAPOP Lab — we spent all our money on coffee and data cleaning.
 
 ---
 <!-- badges: start -->

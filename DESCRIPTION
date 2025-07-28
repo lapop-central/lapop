@@ -11,7 +11,7 @@ Authors@R: c(person(given = "Robert", family = "Vidigal",
              email = "luke.plutowski@vanderbilt.edu", 
              comment = c(ORCID = "0000-0001-8240-6722")))
 Maintainer: Robert Vidigal <robert.vidigal@vanderbilt.edu>
-Description: Includes tools for processing and visualizing survey data from the Americas Barometer. Includes functions for labeling, weighting, and plotting following custom style guidelines and formatting for use in reports, presentations, and social media posts. LAPOP Lab (formerly the Latin American Public Opinion Project) at Vanderbilt University is a world leader in public survey research and is best known for the biennial AmericasBarometer project. You may find more information about the AmericasBarometer here: <https://www.vanderbilt.edu/lapop/about-americasbarometer.php>. If you find a bug, please consider donating to the LAPOP Lab — we spent all our money on coffee and data cleaning. The publicly available data can be downloaded here: <https://www.vanderbilt.edu/lapop/data-access.php>. IMPORTANT: Run lapop_fonts() before creating any graphs in order to use LAPOP-standard fonts.
+Description: Provides tools for processing and visualizing survey data from the Americas Barometer. The package includes functions for labeling, weighting, and plotting data following custom style guidelines for use in reports, presentations, and social media posts. The Center for Global Democracy (formerly the Latin American Public Opinion Project) at Vanderbilt University is a leader in public survey research, best known for the Americas Barometer project. The publicly available data can be downloaded from: <https://www.vanderbilt.edu/lapop/data-access.php>.
 URL: https://lapop-central.github.io/lapop/
 Depends: 
     R (>= 3.5.0)
@@ -27,7 +27,6 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 Language: en-US
-Remotes: teunbrand/ggh4x
 Encoding: UTF-8
 License: MIT + file LICENSE
 RoxygenNote: 7.3.2
