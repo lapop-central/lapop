@@ -1,7 +1,7 @@
 ## Test environments
 
 * Local: Windows 11 x64 (build 22631)
-  - R version 4.4.1 (2024-06-14 ucrt)
+  - R version 4.5.1 (2025-06-13 ucrt)
   - Platform: x86_64-w64-mingw32
 * Additional test environments:
   - GitHub Actions CI: ubuntu-latest, windows-latest, macOS-latest
