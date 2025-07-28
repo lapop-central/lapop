@@ -24,7 +24,7 @@
 #' labels of variable ing4). Each label table should be a named numeric vector where
 #' names are the response labels and values are the corresponding codes.
 #'
-#' Special codes (values ≥ 1000) are excluded from the response options string.
+#' Special codes (values >= 1000) are excluded from the response options string.
 #'
 #' @examples
 #' # Apply the function

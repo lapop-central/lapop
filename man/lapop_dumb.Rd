@@ -93,7 +93,7 @@ lapop_dumb(df,
          main_title = paste0("Personal economic conditions worsened across the",
                              "LAC region,\nwith a few exceptions"),
          subtitle = "\% personal economic situation worsened",
-         source_info = "AmericasBArometer 2018/19-2021")}
+         source_info = "AmericasBarometer 2018/19-2021")}
 
 }
 \author{
