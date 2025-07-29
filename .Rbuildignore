@@ -10,3 +10,9 @@
 ^docs$
 ^_pkgdown\.yml$
 ^pkgdown$
+^.*\.qmd$
+^.*\.ya?ml$
+^_quarto\.yml$
+^\.github$
+^vignettes/.*\.qmd$
+^docs$

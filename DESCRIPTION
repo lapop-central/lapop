@@ -15,7 +15,7 @@ Description: Provides tools for processing and visualizing survey data from the 
 URL: https://lapop-central.github.io/lapop/
 Depends: 
     R (>= 3.5.0)
-Imports: ggplot2, ggtext, ggrepel, ggh4x, showtext, grid, gridtext, gridExtra,
+Imports: ggplot2, ggtext, ggrepel, showtext, grid, gridtext, gridExtra,
     sysfonts, systemfonts, svglite, dplyr, tidyr, srvyr, survey, codebook,
     haven, stats, purrr, marginaleffects, stringr, zoo
 VignetteBuilder: knitr
