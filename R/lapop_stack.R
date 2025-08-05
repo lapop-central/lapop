@@ -108,13 +108,16 @@ NULL
 #'
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
-lapop_stack <- function(data, outcome_var = data$prop, prop_labels = data$proplabel,
-                        var_labels = data$varlabel, value_labels = data$vallabel,
+lapop_stack <- function(data,
+                        outcome_var = data$prop,
+                        prop_labels = data$proplabel,
+                        var_labels = data$varlabel,
+                        value_labels = data$vallabel,
                         xvar = NULL,
                         lang = "en",
                         main_title = "",
                         subtitle = "",
-                        source_info = "",
+                        source_info = "LAPOP",
                         rev_values = FALSE,
                         rev_variables = FALSE,
                         hide_small_values = TRUE,
@@ -227,8 +230,9 @@ lapop_stack <- function(data, outcome_var = data$prop, prop_labels = data$propla
       labs(title = main_title,
            y = "",
            x = " ",
-           caption = paste0(ifelse(lang == "es", "Fuente: ", "Source: "),
-                            source_info),
+           caption = paste0(ifelse(lang == "es" & source_info == "LAPOP", "Fuente: LAPOP Lab",
+                                   ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
+                                          source_info))),
            subtitle = subtitle) +
       theme(text = element_text(size = 14, family = "roboto"),
             plot.title = element_text(size = 17, family = "nunito", face = "bold"),

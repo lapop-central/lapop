@@ -50,7 +50,7 @@ Default: None.}
 
 \item{source_info}{Character.  Information on dataset used (country, years, version, etc.),
 which is added to the end of "Source: " in the bottom-left corner of the graph.
-Default: None (only "Source: " will be printed).}
+Default: LAPOP ("Source: LAPOP Lab" will be printed).}
 
 \item{rev_values}{Logical.  Should the order of the values for each variable be reversed?  Default: FALSE.}
 
