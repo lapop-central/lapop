@@ -58,7 +58,7 @@ NULL
 #' @param main_title Character.  Title of graph.  Default: None.
 #' @param source_info Character.  Information on dataset used (country, years, version, etc.),
 #' which is added to the end of "Source: " in the bottom-left corner of the graph.
-#' Default: None (only "Source: " will be printed).
+#' Default: LAPOP ("Source: LAPOP Lab" will be printed).
 #' @param subtitle Character.  Describes the values/data shown in the graph, e.g., "Percent who support...".
 #' Default: None.
 #' @param lang Character.  Changes default subtitle text and source info to either Spanish or English.

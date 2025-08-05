@@ -47,7 +47,7 @@
 #' valid responses only.  Default: FALSE.
 #'
 #'
-#' @return Returns a data frame, with data formatted for visualization by lapop_dumb
+#' @return Returns a data frame, with data formatted for visualization by lapop_dumb()
 #'
 #' @examples
 #' \dontrun{

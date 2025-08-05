@@ -56,7 +56,7 @@ NULL
 #' @param main_title Character.  Title of graph.  Default: None.
 #' @param source_info Character.  Information on dataset used (country, years, version, etc.),
 #' which is added to the end of "Source: " in the bottom-left corner of the graph.
-#' Default: None (only "Source: " will be printed).
+#' Default: LAPOP (only "Source: "LAPOP Lab will be printed).
 #' @param subtitle Character.  Describes the values/data shown in the graph, e.g., "Percent who agree that...".
 #' Default: None.
 #' @param lang Character.  Changes default subtitle text and source info to either Spanish or English.
@@ -98,18 +98,15 @@ NULL
 #'                                 "55%", "55%", "54%", "51%", "46%", "42%"))
 #'
 #' lapop_dumb(df,
-#'          main_title = paste0("Personal economic conditions worsened across the",
-#'                              "LAC region,\nwith a few exceptions"),
+#' main_title = paste0("Personal economic conditions worsened across the LAC region, with a few exceptions"),
 #'          subtitle = "% personal economic situation worsened",
-#'          source_info = "AmericasBArometer 2018/19-2021")}
+#'          source_info = "AmericasBarometer 2018/19-2021")}
 #'
-#' @export
+#'@export
 #'@import ggplot2
 #'@import ggtext
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
-#'
-#'
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 lapop_dumb <- function(data,
                       ymin = 0,
@@ -118,16 +115,18 @@ lapop_dumb <- function(data,
                       main_title = "",
                       source_info = "",
                       subtitle = "",
-                     sort = "wave2",
+                      sort = "wave2",
                       order = "hi-lo",
                       color_scheme = c("#008381", "#A43D6A"),
                       subtitle_h_just = 40,
-                     subtitle_v_just = -18,
-                     text_nudge = 6,
-                     drop_singles = FALSE){
+                      subtitle_v_just = -18,
+                      text_nudge = 6,
+                      drop_singles = FALSE){
+
   if(drop_singles == TRUE) {
     data = complete.cases(data)
   }
+
   if(sort == "diff"){
     data$diff = data$prop2-data$prop1
     data = data[order(-data$diff),]
@@ -138,14 +137,19 @@ lapop_dumb <- function(data,
   } else if(sort == "alpha"){
     data = data[order(data$pais),]
   }
+
   if(order == "hi-lo"){
     data$pais = factor(data$pais, levels = rev(unique(data$pais)))
   } else if(order == "lo-hi") {
     data$pais = factor(data$pais, levels = unique(data$pais))
   }
+
   data$max1 = data$prop2 < data$prop1
+
   data$max1[is.na(data$max1)] <- FALSE
+
   names(color_scheme) = c(unique(data$wave1), unique(data$wave2))
+
   update_geom_defaults("text", list(family = "roboto"))
     ggplot(data, aes(y=pais)) +
       geom_point(aes(x = prop1, color = names(color_scheme)[1]), size=4) +
@@ -168,8 +172,9 @@ lapop_dumb <- function(data,
       labs(title = main_title,
            y = "",
            x = " ",
-           caption = paste0(ifelse(lang == "es", "Fuente: LAPOP Lab", "Source: LAPOP Lab"),
-                            source_info),
+           caption = paste0(ifelse(lang == "es" & source_info == "LAPOP", "Fuente: LAPOP Lab",
+                                   ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
+                            source_info))),
            subtitle = subtitle) +
       theme(text = element_text(size = 14, family = "roboto"),
             plot.title = element_text(size = 17, family = "nunito", face = "bold"),
