@@ -19,13 +19,8 @@
 #'}
 
 lapop_fonts <- function(){
-  sysfonts::font_add_google("nunito", "nunito")
-  sysfonts::font_add_google("roboto", "roboto")
-  sysfonts::font_add_google("roboto", family = "roboto-light", regular.wt = 300)
-  sysfonts::font_add_google("nunito", family = "nunito-light", regular.wt = 300)
+  sysfonts::font_add_google("inter", "inter")
+  sysfonts::font_add_google("inter", family = "inter-light", regular.wt = 300)
   showtext::showtext_auto()
-  message("LAPOP fonts loaded successfully: Nunito and Roboto (regular and light).")
+  message("LAPOP fonts loaded successfully: Inter (regular and light).")
 }
-
-
-
