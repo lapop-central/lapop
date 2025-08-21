@@ -39,7 +39,7 @@ or "es" (Spanish).  Default: "en".}
 
 \item{source_info}{Character.  Information on dataset used (country, years, version, etc.),
 which is added to the end of "Source: " in the bottom-left corner of the graph.
-Default: None (only "Source: " will be printed).}
+Default: LAPOP (only "Source: "LAPOP Lab will be printed).}
 
 \item{subtitle}{Character.  Describes the values/data shown in the graph, e.g., "Percent who agree that...".
 Default: None.}
@@ -90,12 +90,11 @@ This function creates "dumbbell" graphs, which show averages for a variable acro
                                 "55\%", "55\%", "54\%", "51\%", "46\%", "42\%"))
 
 lapop_dumb(df,
-         main_title = paste0("Personal economic conditions worsened across the",
-                             "LAC region,\nwith a few exceptions"),
+main_title = paste0("Personal economic conditions worsened across LAC"),
          subtitle = "\% personal economic situation worsened",
-         source_info = "AmericasBArometer 2018/19-2021")}
+         source_info = "AmericasBarometer 2018/19-2021")}
 
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

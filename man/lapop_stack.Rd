@@ -14,7 +14,7 @@ lapop_stack(
   lang = "en",
   main_title = "",
   subtitle = "",
-  source_info = "",
+  source_info = "LAPOP",
   rev_values = FALSE,
   rev_variables = FALSE,
   hide_small_values = TRUE,

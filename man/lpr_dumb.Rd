@@ -71,7 +71,7 @@ in the denominator when calculating percentages.  The default is to examine
 valid responses only.  Default: FALSE.}
 }
 \value{
-Returns a data frame, with data formatted for visualization by lapop_dumb
+Returns a data frame, with data formatted for visualization by lapop_dumb()
 }
 \description{
 This function creates dataframes which can then be input in lapop_dumb for

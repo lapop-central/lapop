@@ -168,7 +168,7 @@ attr(bra23$ing4, "qwording_pt") # Portuguese
 
 ## AmericasBarometer Values Labels (Response Options)
 
-AmericasBarometer's values labels (i.e., response options) differently from the variable labels are stored inside the "label.table" attribute. To extract them we will use another LAPOP Lab custom function called `lpr_format_labels` that will set up the response options
+AmericasBarometer values labels (i.e., response options) differently from the variable labels are stored inside the "label.table" attribute. To extract them we will use another LAPOP Lab custom function called `lpr_format_labels` that will set up the response options
 as an attribute across languages. Default language is English and default attribute name is `roslabel` but the function allows custom attribute names as shown below:
 
 ```{r, ROs, eval = TRUE, warnings = F}

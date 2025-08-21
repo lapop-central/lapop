@@ -98,7 +98,7 @@ NULL
 #'                                 "55%", "55%", "54%", "51%", "46%", "42%"))
 #'
 #' lapop_dumb(df,
-#' main_title = paste0("Personal economic conditions worsened across the LAC region, with a few exceptions"),
+#' main_title = paste0("Personal economic conditions worsened across LAC"),
 #'          subtitle = "% personal economic situation worsened",
 #'          source_info = "AmericasBarometer 2018/19-2021")}
 #'

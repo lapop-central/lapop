@@ -46,8 +46,8 @@ value labels of old variable.}
 }
 \description{
 This function allows users to rescale and reorder variables.  It is designed
-for variables of class "labelled" (used for survey datasets, like LAPOP's),
-but the rescaling will work for numeric and factor variables as well
+for variables of class "labelled" but the rescaling will work for numeric
+and factor variables too.
 }
 \examples{
 
