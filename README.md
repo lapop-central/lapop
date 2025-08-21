@@ -1,6 +1,6 @@
 # lapop R package
 
-These are helper functions to wrangle labels and produce visualizations of AmericasBarometer data following LAPOP Lab's editorial guidelines.
+These are helper functions to wrangle labels and produce visualizations of 'AmericasBarometer' data following LAPOP Lab's editorial guidelines.
 
 🔗 **Package website:** [https://lapop-central.github.io/lapop/](https://lapop-central.github.io/lapop/)
 
@@ -18,7 +18,7 @@ devtools::install_github("lapop-central/lapop",
 
 ---
 
-## ⚙️ Workflow: AmericasBarometer Variable & Value Labels
+## ⚙️ Workflow: 'AmericasBarometer' Variable & Value Labels
 
 For the full online guide, see:
 
@@ -26,7 +26,7 @@ For the full online guide, see:
 
 ### 1. Data Structure
 
-AmericasBarometer datasets are distributed in Stata `.dta` format with multilingual metadata (question wording and response options) embedded as attributes. These support cross-national and longitudinal comparability.
+'AmericasBarometer' datasets are distributed in Stata `.dta` format with multilingual metadata (question wording and response options) embedded as attributes. These support cross-national and longitudinal comparability.
 
 ### 2. Preferred Loading Method
 
@@ -53,7 +53,7 @@ Other methods such as `haven::read_dta()` or `rio::import()` may fail to import 
 
 ---
 
-## 🎨 Workflow: AmericasBarometer Data Visualization
+## 🎨 Workflow: 'AmericasBarometer' Data Visualization
 
 1. Load the package in R:
 
@@ -67,7 +67,7 @@ Other methods such as `haven::read_dta()` or `rio::import()` may fail to import 
    lapop_fonts()
    ```
 
-3. Apply the AmericasBarometer design effects with:
+3. Apply the 'AmericasBarometer' design effects with:
 
    ```r
    lpr_data()

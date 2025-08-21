@@ -1,73 +1,69 @@
 ##############################################################
 
-# LAPOP Set Variable Attributes from AmericasBarometer Notes #
+# LAPOP Set Variable Attributes from AmericasBarometer Notes # 
 
 ##############################################################
 
-#' Set Variable Attributes from AmericasBarometer Notes
+#' Set Variable Attributes from AmericasBarometer Notes (with propagation)
 #'
-#' Applies notes stored in a data frame object as attributes to corresponding variables
-#' in AmericasBarometer dataset. This is particularly useful for setting variable labels,
-#' question wording, or other metadata from extracted notes.
+#' Applies notes stored in a data frame as attributes to variables in `data`.
+#' If a variable has expanded children (e.g., vb20_1, vb20_2), the attribute
+#' is propagated to all of them by default.
 #'
-#' @param data A data frame whose variables will receive new attributes
-#' @param notes A data frame containing notes information, typically produced by
-#'        \code{\link{lpr_extract_notes}}. Must contain columns: variable_name,
-#'        note_id, and note_value.
-#' @param noteid Character string specifying which note ID to extract from the
-#'        notes data frame (e.g., "label" for variable labels, "qtext" for question text).
-#' @param attribute_name Character string specifying the attribute name to set
-#'        (e.g., "label", "qwording", "roslabel").
-#'
-#' @return The input data frame with specified attributes added to relevant variables
-#'
-#' @details
-#' This function:
-#' \itemize{
-#'   \item Filters the notes data frame to only include rows matching the specified `noteid`
-#'   \item Loops through each matching note and applies it as an attribute to the corresponding
-#'         variable in the data frame
-#'   \item Issues warnings for variables in the notes that don't exist in the data
-#' }
-#'
-#' The function is designed to work in tandem with \code{lpr_extract_notes}, creating
-#' a workflow for managing variable metadata in AmericasBarometer data.
-#'
-#' @examples
-#' # First extract notes from dataset attributes
-#' \dontrun{
-#' notes <- lpr_extract_notes(data)
-#' }
-#'
-#' # Set variable question wording
-#' \dontrun{
-#' data <- lpr_set_attr(data, notes, noteid = "note4", attribute_name = "question_wording")
-#' attr(data$ing4, "question_wording")
-#' }
-#'
-#' @seealso \code{\link{lpr_extract_notes}} for extracting notes from AmericasBarometer dataset attributes
+#' @param data data.frame with variables to annotate
+#' @param notes data.frame with columns variable_name, note_id, note_value
+#' @param noteid character scalar; which note_id to use (e.g., "qtext_en")
+#' @param attribute_name character scalar; attribute name to set (e.g., "qwording_en")
+#' @param propagate logical; if TRUE, also set on <varname>_* children. 
+#' Useful for nominal variables or multiple response options variables. Default TRUE.
+#' @param overwrite logical; if FALSE, do not overwrite existing attribute on a variable. Default TRUE.
+#' @return data frame with attributes applied
 #' @export
 
-lpr_set_attr <- function(data, notes, noteid = character(), attribute_name = character()) {
-  # Filter notes for rows with the specified note_id
-
-  note_subset <- subset(notes, note_id == noteid)
-
-  # Loop through each row in the filtered subset
-  for (i in 1:nrow(note_subset)) {
-    # Get the variable name and note value for the specified note_id
-    variable_name <- note_subset$variable_name[i]
+lpr_set_attr <- function(data,
+                         notes,
+                         noteid = character(),
+                         attribute_name = character(),
+                         propagate = TRUE,
+                         overwrite = TRUE) {
+  
+  # basic checks
+  req_cols <- c("variable_name", "note_id", "note_value")
+  miss <- setdiff(req_cols, names(notes))
+  if (length(miss)) stop("`notes` is missing columns: ", 
+                         paste(miss, collapse=", "))
+  
+  note_subset <- notes[notes$note_id == noteid & !is.na(notes$note_value), 
+                       c("variable_name","note_value")]
+  if (!nrow(note_subset)) return(data)
+  
+  # escape regex metacharacters in base var names
+  .escape <- function(x) gsub("([\\^\\$\\.\\|\\(\\)\\[\\]\\{\\}\\+\\*\\?\\\\-])", 
+                              "\\\\\\1", x, perl = TRUE)
+  
+  for (i in seq_len(nrow(note_subset))) {
+    base_var <- as.character(note_subset$variable_name[i])
     text_label <- note_subset$note_value[i]
-
-    # Check if variable_name exists in data
-    if (variable_name %in% names(data)) {
-      # Set the specified attribute name using the text_label
-      attr(data[[variable_name]], attribute_name) <- text_label
+    
+    if (propagate) {
+      # match exact base or base_...
+      pat <- paste0("^", .escape(base_var), "($|_)")
+      targets <- grep(pat, names(data), value = TRUE, perl = TRUE)
     } else {
-      warning(paste("Variable", variable_name, "not found in data."))
+      targets <- intersect(base_var, names(data))
+    }
+    
+    if (!length(targets)) {
+      warning(paste("Variable", base_var, 
+                    "not found in data (no base or expanded matches)."))
+      next
+    }
+    
+    for (nm in targets) {
+      if (!overwrite && !is.null(attr(data[[nm]], attribute_name))) next
+      attr(data[[nm]], attribute_name) <- text_label
     }
   }
-
-  # Return the modified data
-  return(data)
+  
+  data
 }
