@@ -112,8 +112,3 @@ Other methods such as `haven::read_dta()` or `rio::import()` may fail to import 
 8. If you find a bug, please consider contributing to the lapop package — we spent all our money on coffee and data cleaning.
 
 ---
-<!-- badges: start -->
-[![R-CMD-check](https://github.com/lapop-central/lapop/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lapop-central/lapop/actions/workflows/R-CMD-check.yaml)
-[![GitHub stars](https://img.shields.io/github/stars/lapop-central/lapop.svg?style=social&label=Star&maxAge=3600)](https://github.com/lapop-central/lapop/stargazers)
-[![Tweet](https://cdn.prod.website-files.com/5e0f1144930a8bc8aace526c/65dd9eb5aaca434fac4f1ca4_shields.io.svg)](https://twitter.com/intent/tweet?url=https://github.com/lapop-central/lapop&text=Check%20out%20the%20lapop%20R%20package%20for%20working%20with%20the%20AmericasBarometer%20data!%20%23rstats%20%23lapop%20%23AmericasBarometer%20%23opensource)
-<!-- badges: end -->
