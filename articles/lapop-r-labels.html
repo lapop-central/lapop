@@ -390,13 +390,13 @@ data analysis without the need of an accompanying codebook.</p>
 <div class="section level2">
 <h2 id="americasbarometer-values-labels-response-options">AmericasBarometer Values Labels (Response Options)<a class="anchor" aria-label="anchor" href="#americasbarometer-values-labels-response-options"></a>
 </h2>
-<p>AmericasBarometer’s values labels (i.e., response options)
-differently from the variable labels are stored inside the “label.table”
-attribute. To extract them we will use another LAPOP Lab custom function
-called <code>lpr_format_labels</code> that will set up the response
-options as an attribute across languages. Default language is English
-and default attribute name is <code>roslabel</code> but the function
-allows custom attribute names as shown below:</p>
+<p>AmericasBarometer values labels (i.e., response options) differently
+from the variable labels are stored inside the “label.table” attribute.
+To extract them we will use another LAPOP Lab custom function called
+<code>lpr_format_labels</code> that will set up the response options as
+an attribute across languages. Default language is English and default
+attribute name is <code>roslabel</code> but the function allows custom
+attribute names as shown below:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bra23</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_set_ros.html">lpr_set_ros</a></span><span class="op">(</span><span class="va">bra23</span><span class="op">)</span> <span class="co"># Default English</span></span>
 <span></span>
