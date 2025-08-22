@@ -15,4 +15,9 @@
 ^_quarto\.yml$
 ^\.github$
 ^vignettes/.*\.qmd$
-^docs$
+^\.gitlab-ci\.yml$
+^\.gitignore$
+^cran-comments\.md$
+^revdep$
+
+
