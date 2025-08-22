@@ -1,6 +1,6 @@
 Package: lapop
 Type: Package
-Title: Tools for Visualizing and Labeling AmericasBarometer Data in R
+Title: Tools for Visualizing and Labeling Americas Barometer Data in R
 Version: 2.1.0
 Authors@R: c(person(given = "Robert", family = "Vidigal", 
              role = c("cre","aut"), 

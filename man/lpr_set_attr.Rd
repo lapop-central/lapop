@@ -2,56 +2,36 @@
 % Please edit documentation in R/lpr_set_attr.R
 \name{lpr_set_attr}
 \alias{lpr_set_attr}
-\title{Set Variable Attributes from AmericasBarometer Notes}
+\title{Set Variable Attributes from AmericasBarometer Notes (with propagation)}
 \usage{
-lpr_set_attr(data, notes, noteid = character(), attribute_name = character())
+lpr_set_attr(
+  data,
+  notes,
+  noteid = character(),
+  attribute_name = character(),
+  propagate = TRUE,
+  overwrite = TRUE
+)
 }
 \arguments{
-\item{data}{A data frame whose variables will receive new attributes}
+\item{data}{data.frame with variables to annotate}
 
-\item{notes}{A data frame containing notes information, typically produced by
-\code{\link{lpr_extract_notes}}. Must contain columns: variable_name,
-note_id, and note_value.}
+\item{notes}{data.frame with columns variable_name, note_id, note_value}
 
-\item{noteid}{Character string specifying which note ID to extract from the
-notes data frame (e.g., "label" for variable labels, "qtext" for question text).}
+\item{noteid}{character scalar; which note_id to use (e.g., "qtext_en")}
 
-\item{attribute_name}{Character string specifying the attribute name to set
-(e.g., "label", "qwording", "roslabel").}
+\item{attribute_name}{character scalar; attribute name to set (e.g., "qwording_en")}
+
+\item{propagate}{logical; if TRUE, also set on <varname>_* children. 
+Useful for nominal variables or multiple response options variables. Default TRUE.}
+
+\item{overwrite}{logical; if FALSE, do not overwrite existing attribute on a variable. Default TRUE.}
 }
 \value{
-The input data frame with specified attributes added to relevant variables
+data frame with attributes applied
 }
 \description{
-Applies notes stored in a data frame object as attributes to corresponding variables
-in AmericasBarometer dataset. This is particularly useful for setting variable labels,
-question wording, or other metadata from extracted notes.
-}
-\details{
-This function:
-\itemize{
-  \item Filters the notes data frame to only include rows matching the specified `noteid`
-  \item Loops through each matching note and applies it as an attribute to the corresponding
-        variable in the data frame
-  \item Issues warnings for variables in the notes that don't exist in the data
-}
-
-The function is designed to work in tandem with \code{lpr_extract_notes}, creating
-a workflow for managing variable metadata in AmericasBarometer data.
-}
-\examples{
-# First extract notes from dataset attributes
-\dontrun{
-notes <- lpr_extract_notes(data)
-}
-
-# Set variable question wording
-\dontrun{
-data <- lpr_set_attr(data, notes, noteid = "note4", attribute_name = "question_wording")
-attr(data$ing4, "question_wording")
-}
-
-}
-\seealso{
-\code{\link{lpr_extract_notes}} for extracting notes from AmericasBarometer dataset attributes
+Applies notes stored in a data frame as attributes to variables in `data`.
+If a variable has expanded children (e.g., vb20_1, vb20_2), the attribute
+is propagated to all of them by default.
 }
