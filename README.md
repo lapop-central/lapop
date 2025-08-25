@@ -22,7 +22,7 @@ devtools::install_github("lapop-central/lapop",
 
 For the full online guide, see:
 
-<a href="https://lapop-central.github.io/lapop/articles/lapop-r-labels.html" target="_blank">📖 LAPOP Data Guide for R Users (pkgdown article)</a>
+<a href="https://lapop-central.github.io/lapop/articles/lapop-r-labels.html" target="_blank">📖 LAPOP Data Guide for R Users</a>
 
 ### 1. Data Structure
 
@@ -54,6 +54,8 @@ Other methods such as `haven::read_dta()` or `rio::import()` may fail to import 
 ---
 
 ## 🎨 Workflow: 'AmericasBarometer' Data Visualization
+
+<a href="https://lapop-central.github.io/lapop/articles/lapop-visualization.html" target="_blank">📖 LAPOP Visualization Guide</a>
 
 1. Load the package in R:
 
