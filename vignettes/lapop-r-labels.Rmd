@@ -74,7 +74,7 @@ names(attributes(data1))
 data2 <- read_dta("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta")
 names(attributes(data2))
 
-# RIO PACKAGE
+# RIO PACKAGE (NOT RECOMMENDED)
 data3 <- import("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta")
 names(attributes(data3))
 ```
@@ -110,9 +110,7 @@ Both approaches extract the third element (x[3]) from each list in the "expansio
 head(
   Filter(Negate(is.null), lapply(attr(bra23, "expansion.fields"), 
   function(x) {
-  if (x[1] == "ing4") list(note_id = x[2], note_value = x[3])
-}))
-)
+    if (x[1] == "ing4") list(note_id = x[2], note_value = x[3])})), n = 3)
 
 # purrr package approach
 #  The purrr version uses map() to do the same, and also remove NULL results. 
