@@ -146,7 +146,6 @@ ym23w$variables <- ym23w$variables %>%
     TRUE ~ NA_character_
   ), 
   edrer = factor(edrer, levels = c("None/Primary", "Secondary", "Superior")),
-  
   gender = ifelse(q1tc_r == 3, NA, q1tc_r)) %>%
   mutate(gender = case_when(
     gender == 1 ~ "Men",
