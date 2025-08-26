@@ -9,6 +9,7 @@ lpr_set_attr(
   notes,
   noteid = character(),
   attribute_name = character(),
+  verbose = FALSE,
   propagate = TRUE,
   overwrite = TRUE
 )
@@ -21,6 +22,8 @@ lpr_set_attr(
 \item{noteid}{character scalar; which note_id to use (e.g., "qtext_en")}
 
 \item{attribute_name}{character scalar; attribute name to set (e.g., "qwording_en")}
+
+\item{verbose}{logical; if TRUE it prints all variables notes available but not found in data}
 
 \item{propagate}{logical; if TRUE, also set on <varname>_* children.
 Useful for nominal variables or multiple response options variables. Default TRUE.}

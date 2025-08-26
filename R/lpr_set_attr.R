@@ -14,6 +14,7 @@
 #' @param notes data.frame with columns variable_name, note_id, note_value
 #' @param noteid character scalar; which note_id to use (e.g., "qtext_en")
 #' @param attribute_name character scalar; attribute name to set (e.g., "qwording_en")
+#' @param verbose logical; if TRUE it prints all variables notes available but not found in data
 #' @param propagate logical; if TRUE, also set on <varname>_* children.
 #' Useful for nominal variables or multiple response options variables. Default TRUE.
 #' @param overwrite logical; if FALSE, do not overwrite existing attribute on a variable. Default TRUE.
@@ -24,6 +25,7 @@ lpr_set_attr <- function(data,
                          notes,
                          noteid = character(),
                          attribute_name = character(),
+                         verbose = FALSE,
                          propagate = TRUE,
                          overwrite = TRUE) {
 
@@ -53,7 +55,7 @@ lpr_set_attr <- function(data,
       targets <- intersect(base_var, names(data))
     }
 
-    if (!length(targets)) {
+    if (!length(targets) & verbose == TRUE) {
       cat(paste("Variable", base_var, "not found in data (no base or expanded matches) but notes available.\n"))
       next
     }

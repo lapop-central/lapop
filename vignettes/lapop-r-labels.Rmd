@@ -93,9 +93,6 @@ data(bra23)
 # Extracting attributes from expasion.fields
 names(attributes(bra23))
 varlabels = attr(bra23, "expansion.fields")
-
-# Printing notes for varibale "ing4"
-varlabels[grepl("ing4", varlabels) & grepl("note", varlabels)]
 ```
 
 ## How do I find the correct language labels?
@@ -145,16 +142,16 @@ One can assign variable labels to their preferred language as attributes to the 
 
 ```{r, SET ATTRIBUTES, eval = TRUE, warnings = F, warning=F}
 # English
-bra23<-lpr_set_attr(bra23, BRA23notes, 
+bra23<-lpr_set_attr(bra23, BRA23notes, verbose = F,
                     noteid = "note2", 
                     attribute_name = "qwording_en") 
 # Spanish
-bra23<-lpr_set_attr(bra23, BRA23notes, 
+bra23<-lpr_set_attr(bra23, BRA23notes, verbose = F,
                     noteid = "note1", 
                     attribute_name = "qwording_es")
 
 # Portuguese
-bra23<-lpr_set_attr(bra23, BRA23notes, 
+bra23<-lpr_set_attr(bra23, BRA23notes, verbose = F,
                     noteid = "note3", 
                     attribute_name = "qwording_pt") 
 
