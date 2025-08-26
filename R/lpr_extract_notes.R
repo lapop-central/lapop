@@ -10,9 +10,7 @@
 #' This function is particularly useful for processing Stata datasets imported into R that
 #' contain variable notes in their attributes.
 #'
-#' @param data A dataset (data frame) containing notes in its attributes. The notes should
-#'        be stored as a list where each element is a vector of length 3 containing:
-#'        (1) variable name, (2) note ID, and (3) note text.
+#' @param data A dataset (data frame) containing "expansion.fields" in its attributes.
 #'
 #' @return A data frame with three columns:
 #' \describe{
@@ -30,29 +28,43 @@
 #'
 #' @examples
 #' # Extract the notes
-#' \dontrun{
 #' notes <- lpr_extract_notes(df)
-#' print(notes)}
+#' print(notes)
 #'
 #' @export
 
-lpr_extract_notes <- function(data) {
-  notes_df <- data.frame(variable_name = character(), noteid = character(), note_value = character(), stringsAsFactors = FALSE)
-
+lpr_extract_notes <- function(data) { # Extract notes from expansion.fields
+  data = attr(data, "expansion.fields") 
+  
+  # DF for output
+  notes_df <- data.frame(variable_name = character(), 
+                         noteid = character(), 
+                         note_value = character(), 
+                         stringsAsFactors = FALSE)
+  
   for (i in seq_along(data)) {
-    sublist <- data[[i]]
-
+    
+    sublist <- data[[i]] # object is a nested list
+    
     if (length(sublist) == 3) {
+      
       variable_name <- sublist[[1]]
+      
       noteid <- sublist[[2]]
+      
       note_value <- sublist[[3]]
-
-       if (variable_name!="_dta") {
-        # Add the row to notes_df
-        notes_df <- rbind(notes_df, data.frame(variable_name = variable_name, note_id = noteid, note_value = note_value, stringsAsFactors = FALSE))
+      
+       if (variable_name!="_dta") { # Add the row to notes_df
+        notes_df <- rbind(notes_df, data.frame(variable_name = variable_name, 
+                                               note_id = noteid, 
+                                               note_value = note_value, 
+                                               stringsAsFactors = FALSE))
       }
     }
   }
+  
   notes_df<-subset(notes_df, variable_name!="_dta")
+  
   return(notes_df)
+  
 }

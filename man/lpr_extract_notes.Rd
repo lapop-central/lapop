@@ -7,9 +7,7 @@
 lpr_extract_notes(data)
 }
 \arguments{
-\item{data}{A dataset (data frame) containing notes in its attributes. The notes should
-be stored as a list where each element is a vector of length 3 containing:
-(1) variable name, (2) note ID, and (3) note text.}
+\item{data}{A dataset (data frame) containing notes in its attributes.}
 }
 \value{
 A data frame with three columns:
