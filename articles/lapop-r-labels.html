@@ -324,14 +324,14 @@ produce a semi-structured list of matching third nested elements.</p>
 <span><span class="co">## 14                                                                                                                                                       ing4_pt</span></span></code></pre>
 <p>To ease the researchers and analysts job, LAPOP Lab developed custom
 functions to deal with those labels in R. First, we will use
-<code>lpr_extract_notes</code> to transform the nested lists into a long
-dataframe format that will contain 3 columns:
-<code>variable_name</code>, <code>note_id</code>, and
-<code>note_value</code></p>
+<code>lpr_extract_notes</code> to transform the nested lists from
+<code>expansion.fields</code> attribute into a long dataframe format
+that will contain 3 columns: <code>variable_name</code>,
+<code>note_id</code>, and <code>note_value</code></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Extract AB notes</span></span>
-<span><span class="va">notes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_extract_notes.html">lpr_extract_notes</a></span><span class="op">(</span><span class="va">varlabels</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">notes</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># columns names</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Extract AB notes with lpr function</span></span>
+<span><span class="va">BRA23notes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lpr_extract_notes.html">lpr_extract_notes</a></span><span class="op">(</span><span class="va">bra23</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">BRA23notes</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># columns names</span></span></code></pre></div>
 <pre><code><span><span class="co">##    variable_name    note_id                       note_value</span></span>
 <span><span class="co">## 1         strata _lang_l_en                        strata_en</span></span>
 <span><span class="co">## 2         strata _lang_v_en                    Survey strata</span></span>
@@ -344,7 +344,7 @@ dataframe format that will contain 3 columns:
 <span><span class="co">## 9          q1tca _lang_l_en                         q1tca_en</span></span>
 <span><span class="co">## 10         q1tca _lang_v_en                           Gender</span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">notes</span><span class="op">$</span><span class="va">note_id</span><span class="op">)</span> <span class="co"># note information available!</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">BRA23notes</span><span class="op">$</span><span class="va">note_id</span><span class="op">)</span> <span class="co"># note information available!</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">##     _lang_l_default          _lang_l_en          _lang_l_pt     _lang_v_default </span></span>
 <span><span class="co">##                 190                1332                1332                 202 </span></span>
@@ -358,13 +358,13 @@ dataframe format that will contain 3 columns:
 <span><span class="co">##                 189                 172                 134                  91 </span></span>
 <span><span class="co">##               note8               note9 spss_variable_label </span></span>
 <span><span class="co">##                  68                  25                   3</span></span></code></pre>
-<p>After extracting the notes, one can assign variable labels to their
-preferred language as attributes to the dataset using another LAPOP Lab
-function called <code><a href="../reference/lpr_set_attr.html">lpr_set_attr()</a></code> and than access it during
-data analysis without the need of an accompanying codebook.</p>
+<p>One can assign variable labels to their preferred language as
+attributes to the dataset using another LAPOP Lab function called
+<code><a href="../reference/lpr_set_attr.html">lpr_set_attr()</a></code> and than access it during data analysis
+without the need of an accompanying codebook.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># English</span></span>
-<span><span class="va">bra23</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/lpr_set_attr.html">lpr_set_attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="va">notes</span>, </span>
+<span><span class="va">bra23</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/lpr_set_attr.html">lpr_set_attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="va">BRA23notes</span>, </span>
 <span>                    noteid <span class="op">=</span> <span class="st">"note2"</span>, </span>
 <span>                    attribute_name <span class="op">=</span> <span class="st">"qwording_en"</span><span class="op">)</span> </span></code></pre></div>
 <pre><code><span><span class="co">## Variable a4n not found in data (no base or expanded matches) but notes available.</span></span>
@@ -1196,7 +1196,7 @@ data analysis without the need of an accompanying codebook.</p>
 <span><span class="co">## Variable psc13n_77 not found in data (no base or expanded matches) but notes available.</span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Spanish</span></span>
-<span><span class="va">bra23</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/lpr_set_attr.html">lpr_set_attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="va">notes</span>, </span>
+<span><span class="va">bra23</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/lpr_set_attr.html">lpr_set_attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="va">BRA23notes</span>, </span>
 <span>                    noteid <span class="op">=</span> <span class="st">"note1"</span>, </span>
 <span>                    attribute_name <span class="op">=</span> <span class="st">"qwording_es"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Variable a4n not found in data (no base or expanded matches) but notes available.</span></span>
@@ -2041,7 +2041,7 @@ data analysis without the need of an accompanying codebook.</p>
 <span><span class="co">## Variable psc13n_77 not found in data (no base or expanded matches) but notes available.</span></span></code></pre>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Portuguese</span></span>
-<span><span class="va">bra23</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/lpr_set_attr.html">lpr_set_attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="va">notes</span>, </span>
+<span><span class="va">bra23</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/lpr_set_attr.html">lpr_set_attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="va">BRA23notes</span>, </span>
 <span>                    noteid <span class="op">=</span> <span class="st">"note3"</span>, </span>
 <span>                    attribute_name <span class="op">=</span> <span class="st">"qwording_pt"</span><span class="op">)</span> </span></code></pre></div>
 <pre><code><span><span class="co">## Variable a4n not found in data (no base or expanded matches) but notes available.</span></span>
