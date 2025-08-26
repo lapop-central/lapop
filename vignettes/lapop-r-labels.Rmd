@@ -132,31 +132,29 @@ tail(
 
 ```
 
-To ease the researchers and analysts job, LAPOP Lab developed custom functions to deal with those labels in R.
-First, we will use `lpr_extract_notes` to transform the nested lists into a long dataframe format that will contain
-3 columns: `variable_name`, `note_id`, and `note_value`
+To ease the researchers and analysts job, LAPOP Lab developed custom functions to deal with those labels in R. First, we will use `lpr_extract_notes` to transform the nested lists from `expansion.fields` attribute into a long dataframe format that will contain 3 columns: `variable_name`, `note_id`, and `note_value`
 
 ```{r, NOTES EXTRACT, eval = TRUE, warnings = F}
-# Extract AB notes
-notes <- lpr_extract_notes(varlabels)
-head(notes, n = 10) # columns names
-table(notes$note_id) # note information available!
+# Extract AB notes with lpr function
+BRA23notes <- lpr_extract_notes(bra23)
+head(BRA23notes, n = 10) # columns names
+table(BRA23notes$note_id) # note information available!
 ```
 
-After extracting the notes, one can assign variable labels to their preferred language as attributes to the dataset using another LAPOP Lab function called `lpr_set_attr()` and than access it during data analysis without the need of an accompanying codebook.
+One can assign variable labels to their preferred language as attributes to the dataset using another LAPOP Lab function called `lpr_set_attr()` and than access it during data analysis without the need of an accompanying codebook.
 
 ```{r, SET ATTRIBUTES, eval = TRUE, warnings = F, warning=F}
 # English
-bra23<-lpr_set_attr(bra23, notes, 
+bra23<-lpr_set_attr(bra23, BRA23notes, 
                     noteid = "note2", 
                     attribute_name = "qwording_en") 
 # Spanish
-bra23<-lpr_set_attr(bra23, notes, 
+bra23<-lpr_set_attr(bra23, BRA23notes, 
                     noteid = "note1", 
                     attribute_name = "qwording_es")
 
 # Portuguese
-bra23<-lpr_set_attr(bra23, notes, 
+bra23<-lpr_set_attr(bra23, BRA23notes, 
                     noteid = "note3", 
                     attribute_name = "qwording_pt") 
 

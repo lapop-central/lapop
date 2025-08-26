@@ -22,7 +22,7 @@ lpr_set_attr(
 
 \item{attribute_name}{character scalar; attribute name to set (e.g., "qwording_en")}
 
-\item{propagate}{logical; if TRUE, also set on <varname>_* children. 
+\item{propagate}{logical; if TRUE, also set on <varname>_* children.
 Useful for nominal variables or multiple response options variables. Default TRUE.}
 
 \item{overwrite}{logical; if FALSE, do not overwrite existing attribute on a variable. Default TRUE.}

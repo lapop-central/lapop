@@ -7,7 +7,7 @@
 lpr_extract_notes(data)
 }
 \arguments{
-\item{data}{A dataset (data frame) containing notes in its attributes.}
+\item{data}{A dataset (data frame) containing "expansion.fields" in its attributes.}
 }
 \value{
 A data frame with three columns:
@@ -31,8 +31,7 @@ and note value.
 }
 \examples{
 # Extract the notes
-\dontrun{
 notes <- lpr_extract_notes(df)
-print(notes)}
+print(notes)
 
 }
