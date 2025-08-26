@@ -150,7 +150,7 @@ or <code><a href="https://rdrr.io/r/base/attributes.html" class="external-link">
 <span><span class="va">data2</span> <span class="op">&lt;-</span> <span class="fu">read_dta</span><span class="op">(</span><span class="st">"./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># RIO PACKAGE</span></span>
+<span><span class="co"># RIO PACKAGE (NOT RECOMMENDED)</span></span>
 <span><span class="va">data3</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="st">"./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">data3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The methods <code>haven</code> and <code>rio</code> packages do not
@@ -206,9 +206,7 @@ produce a semi-structured list of matching third nested elements.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Negate</a></span><span class="op">(</span><span class="va">is.null</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">bra23</span>, <span class="st">"expansion.fields"</span><span class="op">)</span>, </span>
 <span>  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"ing4"</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>note_id <span class="op">=</span> <span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, note_value <span class="op">=</span> <span class="va">x</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"ing4"</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>note_id <span class="op">=</span> <span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, note_value <span class="op">=</span> <span class="va">x</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span><span class="op">}</span><span class="op">)</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [[1]]</span></span>
 <span><span class="co">## [[1]]$note_id</span></span>
 <span><span class="co">## [1] "_lang_l_en"</span></span>
@@ -230,31 +228,7 @@ produce a semi-structured list of matching third nested elements.</p>
 <span><span class="co">## [1] "note0"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[3]]$note_value</span></span>
-<span><span class="co">## [1] "7"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[4]]</span></span>
-<span><span class="co">## [[4]]$note_id</span></span>
-<span><span class="co">## [1] "note7"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[4]]$note_value</span></span>
-<span><span class="co">## [1] "Ahora, vamos a usar una escalera en donde el número 1 representa \"muy en desacuerdo\" y el número 7 representa \"muy de acuerdo\". Un número entre el 1 y el 7, representa un puntaje intermedio. Le voy a leer algunas frases. Por favor dígame hasta qué punto está de acuerdo o en desacuerdo con ellas."</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[5]]</span></span>
-<span><span class="co">## [[5]]$note_id</span></span>
-<span><span class="co">## [1] "note6"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[5]]$note_value</span></span>
-<span><span class="co">## [1] "Now we will use a ladder where 1 means \"strongly disagree\" and 7 means \"strongly agree.\" A number in between 1 and 7 represents an intermediate score. Now I am going to read some statements. Please tell me to what extent you agree or disagree with them."</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[6]]</span></span>
-<span><span class="co">## [[6]]$note_id</span></span>
-<span><span class="co">## [1] "note5"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## [[6]]$note_value</span></span>
-<span><span class="co">## [1] "Democracy may have problems, but it is better than any other form of government. To what extent do you agree or disagree with this statement?"</span></span></code></pre>
+<span><span class="co">## [1] "7"</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># purrr package approach</span></span>
 <span><span class="co">#  The purrr version uses map() to do the same, and also remove NULL results. </span></span>
