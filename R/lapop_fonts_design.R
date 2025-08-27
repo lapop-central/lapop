@@ -3,12 +3,14 @@
 # LAPOP Visualization Templates #
 
 #######################################
-
-
 #' LAPOP Fonts (design)
 #'
 #' This function loads fonts needed for LAPOP graph formatting.  In contrast to lapop_fonts(),
 #' this renders text as text instead of polygons, which allows post-hoc editing.
+#'@import sysfonts
+#'@import systemfonts
+#'@import showtext
+#'@export
 #'
 #'@return No return value, called for side effects
 #'
@@ -21,16 +23,11 @@
 #'   systemfonts::register_variant(
 #'     name = "roboto-light",
 #'     family = "roboto",
-#'     weight = "light"
-#'   )
+#'     weight = "light")
+#'
 #'   systemfonts::register_variant(
 #'     name = "nunito-light",
 #'     family = "nunito",
-#'     weight = "light"
-#'   )
-#'@export
-#'@import sysfonts
-#'@import systemfonts
-#'@import showtext
+#'     weight = "light")
 #'
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
