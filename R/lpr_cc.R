@@ -45,7 +45,7 @@
 #'
 #' @examples
 #'
-#' require(lapop); data(ym23)
+#' require(lapop); data(ym23); data(bra23)
 #'
 #' # Set Survey Context
 #' bra23lpr <- lpr_data(bra23)

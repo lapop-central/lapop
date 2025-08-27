@@ -9,12 +9,13 @@
 #' This function creates a data frame which can then be input in lapop_coef() for
 #' plotting regression coefficients graph using LAPOP formatting.
 #'
+#' @param data Survey design data from lpr_data() output.
 #' @param outcome Dependent variable for the svyglm regression model. (e.g., "outcome_name"). Only one variable allowed.
 #' @param xvar Vector of independent variables for the svyglm regression model (e.g., "xvar1+xvar2+xvar3" and so on). Multiple variables are allowed.
 #' @param interact Interaction terms (e.g., "xvar1`*`xvar2 + xvar3`:`xvar4"). Supports `:` and `*` operators for interacting variables. Optional, default is NULL.
 #' @param model Model family object for glm. Default is gaussian regression (i.e., "linear"). For a logit model, use model="binomial"
-#' @param data Survey design data from lpr_data() output.
 #' @param estimate Character. Graph either the coefficients (i.e., `coef`) or the change in probabilities (i.e., `contrast`). Default is "coef."
+#' @param est Character. Shortcut for `estimate`; identical options.
 #' @param vlabs Character. Rename variable labels to be displayed in the graph produced by lapop_coef(). For instance, vlabs=c("old_varname" = "new_varname").
 #' @param omit Character. Do not display coefficients for these independent variables. Default is to display all variables included in the model. To omit any variables you need to include the raw "varname" in the omit argument.
 #' @param filesave Character. Path and file name with csv extension to save the dataframe output.
@@ -100,31 +101,6 @@
      full_formula   <- paste(outcome, "~", xvar)
    }
    formula <- as.formula(full_formula)
-
-   # ---- Map `model` to a family object --------------------------------------
-   family_obj <- if (inherits(model, "family")) {
-     model
-   } else if (is.function(model)) {
-     model()
-   } else if (is.character(model)) {
-     switch(tolower(model),
-            "linear"        = gaussian(),
-            "gaussian"      = gaussian(),
-            "identity"      = gaussian(),
-            # quasi-binomial to avoid "non-integer successes" warnings with survey designs
-            "binomial"      = quasibinomial(),
-            "logit"         = quasibinomial(),
-            "logistic"      = quasibinomial(),
-            "quasibinomial" = quasibinomial(),
-            "poisson"       = poisson(),
-            "quasipoisson"  = quasipoisson(),
-            "gamma"         = Gamma(link = "log"),
-            stop("Unknown model: ", model,
-                 ". Provide a family() (e.g., gaussian()) or a known string.")
-     )
-   } else {
-     stop("`model` must be a family object, a family function, or a string.")
-   }
 
    # ---- Fit model ------------------------------------------------------------
    svyglm_object <- tryCatch(

@@ -32,6 +32,8 @@ lpr_coef(
 
 \item{estimate}{Character. Graph either the coefficients (i.e., `coef`) or the change in probabilities (i.e., `contrast`). Default is "coef."}
 
+\item{est}{Character. Shortcut for `estimate`; identical options.}
+
 \item{vlabs}{Character. Rename variable labels to be displayed in the graph produced by lapop_coef(). For instance, vlabs=c("old_varname" = "new_varname").}
 
 \item{omit}{Character. Do not display coefficients for these independent variables. Default is to display all variables included in the model. To omit any variables you need to include the raw "varname" in the omit argument.}
