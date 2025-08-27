@@ -14,9 +14,9 @@
 #'
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 #'@return No return value, called for side effects
-#'@examples{
-#'\dontrun{lapop_fonts()}
-#'}
+#'@examples
+#'\donttest{require(lapop); lapop_fonts()}
+#'
 
 lapop_fonts <- function(){
   sysfonts::font_add_google("inter", "inter")

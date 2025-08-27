@@ -28,13 +28,22 @@
 #' Default: old variable's label.
 #' @param new_vallabels Character vector. Supply custom names for value labels. Default:
 #' value labels of old variable.
+#' @return The input variable rescaled
 #'
 #' @examples
 #'
-#' \dontrun{cm23$aoj11r <- lpr_resc(cm23$aoj11,
+#' require(lapop); data(ym23)
+#'
+#' # Regular data.frame
+#' ym23$pn4r <- lpr_resc(ym23$pn4,
 #' reverse = TRUE,
-#' map=TRUE)
-#' }
+#' map = TRUE)
+#'
+#' # LPR data.frame
+#' ym23lpr<-lpr_data(ym23)
+#' ym23lpr$variables$pn4r <- lpr_resc(ym23lpr$variables$pn4,
+#' reverse = TRUE,
+#' map = TRUE)
 #'
 #'@export
 #'@import haven

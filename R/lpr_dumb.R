@@ -46,24 +46,27 @@
 #' in the denominator when calculating percentages.  The default is to examine
 #' valid responses only.  Default: FALSE.
 #'
-#'
 #' @return Returns a data frame, with data formatted for visualization by lapop_dumb()
 #'
 #' @examples
-#' \dontrun{
-#'  # Single outcome over years
-#' lpr_dumb(ym2123,
+#'
+#' require(lapop); data(cm23)
+#'
+#' # Set Survey Context
+#' cm23lpr <- lpr_data(cm23)
+#'
+#' # Single outcome over years
+#' lpr_dumb(cm23lpr,
 #' outcome = "ing4",
 #' rec = c(5, 7),
-#' over = c(2021, 2023),
-#' sort = "diff",
-#' ttest = TRUE)}
+#' over = c("2018/19", "2023"),
+#' sort = "diff")
 #'
 #' # Multiple outcomes over years
-#'\dontrun{lpr_dumb(ym2123,
-#' outcome=c("b21", "b13", "b31", "b47a"),
+#' lpr_dumb(cm23lpr,
+#' outcome=c("b13","b21", "b31"),
 #' rec=c(5,7),
-#' over=c(2021, 2023))}
+#' over=c("2018/19", "2023"))
 #'
 #'@export
 #'@import dplyr
@@ -232,75 +235,84 @@ lpr_dumb <- function(data,
   }
 
 
-  if (ttest) {
-    # Compute standard errors
-    t_test_results <- dumb %>%
-      mutate(se1 = (ub1 - lb1) / (2 * 1.96),
-             se2 = (ub2 - lb2) / (2 * 1.96))
+ if (ttest) {
+   # Nothing to test?
+   if (!nrow(dumb)) {
+     attr(dumb, "t_test_results") <- tibble::tibble(
+       test = character(), diff = numeric(), ttest = numeric(), pval = numeric()
+     )
+   } else {
+     # Check we have CIs
+     need <- c("lb1","ub1","lb2","ub2")
+     if (!all(need %in% names(dumb))) {
+       warning("CI columns not found (lb1/ub1/lb2/ub2). Cannot compute t-tests.")
+       attr(dumb, "t_test_results") <- tibble::tibble(
+         test = character(), diff = numeric(), ttest = numeric(), pval = numeric()
+       )
+     } else {
+       zcrit <- qnorm(1 - (1 - ci_level)/2)
+       t_test_results <- dumb %>%
+         mutate(se1 = (ub1 - lb1) / (2 * zcrit),
+                se2 = (ub2 - lb2) / (2 * zcrit))
 
-    # Initialize an empty dataframe for storing test results
-    t_test_results_df <- data.frame(test = character(),
-                                    diff = numeric(),
-                                    ttest = numeric(),
-                                    pval = numeric(),
-                                    stringsAsFactors = FALSE)
+       out_df <- tibble::tibble(test = character(), diff = numeric(),
+                                ttest = numeric(), pval = numeric())
 
-    # Within-country t-tests: Compare prop1 vs. prop2 for each country
-    for (i in 1:nrow(t_test_results)) {
-      diff <- round(t_test_results$prop1[i] - t_test_results$prop2[i], 3)
-      t_stat <- round(diff / sqrt(t_test_results$se1[i]^2 + t_test_results$se2[i]^2), 3)
-      df <- (t_test_results$se1[i]^2 + t_test_results$se2[i]^2)^2 /
-        ((t_test_results$se1[i]^4 / (nrow(data) - 1)) + (t_test_results$se2[i]^4 / (nrow(data) - 1)))
-      p_value <- round(2 * pt(-abs(t_stat), df), 3)
+       # Within-unit (wave1 vs wave2 for the same pais)
+       for (i in seq_len(nrow(t_test_results))) {
+         # Skip if any ingredient is missing
+         if (any(is.na(t_test_results[i, c("prop1","prop2","se1","se2")]))) next
 
-      t_test_results_df <- rbind(t_test_results_df,
-                                 data.frame(test = paste(t_test_results$pais[i], t_test_results$wave1[i], "vs",
-                                                         t_test_results$pais[i], t_test_results$wave2[i]),
-                                            diff = diff,
-                                            ttest = t_stat,
-                                            pval = p_value))
-    }
+         d  <- round(t_test_results$prop2[i] - t_test_results$prop1[i], 3)
+         se <- sqrt(t_test_results$se1[i]^2 + t_test_results$se2[i]^2)
+         t  <- round(d / se, 3)
+         # Normal approx for survey estimates
+         p  <- round(2 * pnorm(-abs(t)), 3)
 
-    # Pairwise comparisons across all rows for prop1
-    for (i in 1:(nrow(t_test_results) - 1)) {
-      for (j in (i + 1):nrow(t_test_results)) {
-        diff <- round(t_test_results$prop1[i] - t_test_results$prop1[j], 3)
-        t_stat <- round(diff / sqrt(t_test_results$se1[i]^2 + t_test_results$se1[j]^2), 3)
-        df <- (t_test_results$se1[i]^2 + t_test_results$se1[j]^2)^2 /
-          ((t_test_results$se1[i]^4 / (nrow(data) - 1)) + (t_test_results$se1[j]^4 / (nrow(data) - 1)))
-        p_value <- round(2 * pt(-abs(t_stat), df), 3)
+         out_df <- dplyr::bind_rows(out_df, tibble::tibble(
+           test  = paste(t_test_results$pais[i], t_test_results$wave1[i], "vs",
+                         t_test_results$pais[i], t_test_results$wave2[i]),
+           diff  = d, ttest = t, pval = p
+         ))
+       }
 
-        t_test_results_df <- rbind(t_test_results_df,
-                                   data.frame(test = paste(t_test_results$pais[i], t_test_results$wave1[i], "vs",
-                                                           t_test_results$pais[j], t_test_results$wave1[j]),
-                                              diff = diff,
-                                              ttest = t_stat,
-                                              pval = p_value))
-      }
-    }
+       # Pairwise across rows for wave1
+       if (nrow(t_test_results) > 1) {
+         for (i in 1:(nrow(t_test_results)-1)) {
+           for (j in (i+1):nrow(t_test_results)) {
+             if (any(is.na(t_test_results[c(i,j), c("prop1","se1")]))) next
+             d  <- round(t_test_results$prop1[i] - t_test_results$prop1[j], 3)
+             se <- sqrt(t_test_results$se1[i]^2 + t_test_results$se1[j]^2)
+             t  <- round(d / se, 3)
+             p  <- round(2 * pnorm(-abs(t)), 3)
+             out_df <- dplyr::bind_rows(out_df, tibble::tibble(
+               test = paste(t_test_results$pais[i], t_test_results$wave1[i], "vs",
+                            t_test_results$pais[j], t_test_results$wave1[j]),
+               diff = d, ttest = t, pval = p
+             ))
+           }
+         }
+         # Pairwise across rows for wave2
+         for (i in 1:(nrow(t_test_results)-1)) {
+           for (j in (i+1):nrow(t_test_results)) {
+             if (any(is.na(t_test_results[c(i,j), c("prop2","se2")]))) next
+             d  <- round(t_test_results$prop2[i] - t_test_results$prop2[j], 3)
+             se <- sqrt(t_test_results$se2[i]^2 + t_test_results$se2[j]^2)
+             t  <- round(d / se, 3)
+             p  <- round(2 * pnorm(-abs(t)), 3)
+             out_df <- dplyr::bind_rows(out_df, tibble::tibble(
+               test = paste(t_test_results$pais[i], t_test_results$wave2[i], "vs",
+                            t_test_results$pais[j], t_test_results$wave2[j]),
+               diff = d, ttest = t, pval = p
+             ))
+           }
+         }
+       }
 
-    # Pairwise comparisons across all rows for prop2
-    for (i in 1:(nrow(t_test_results) - 1)) {
-      for (j in (i + 1):nrow(t_test_results)) {
-        diff <- round(t_test_results$prop2[i] - t_test_results$prop2[j], 3)
-        t_stat <- round(diff / sqrt(t_test_results$se2[i]^2 + t_test_results$se2[j]^2), 3)
-        df <- (t_test_results$se2[i]^2 + t_test_results$se2[j]^2)^2 /
-          ((t_test_results$se2[i]^4 / (nrow(data) - 1)) + (t_test_results$se2[j]^4 / (nrow(data) - 1)))
-        p_value <- round(2 * pt(-abs(t_stat), df), 3)
-
-        t_test_results_df <- rbind(t_test_results_df,
-                                   data.frame(test = paste(t_test_results$pais[i], t_test_results$wave2[i], "vs",
-                                                           t_test_results$pais[j], t_test_results$wave2[j]),
-                                              diff = round(diff, 3),
-                                              ttest = round(t_stat, 3),
-                                              pval = round(p_value, 3)))
-      }
-    }
-
-    # Store the results as an attribute
-    attr(dumb, "t_test_results") <- t_test_results_df
-  }
-
+       attr(dumb, "t_test_results") <- out_df
+     }
+   }
+ }
 
   if (filesave != "") write.csv(dumb, filesave, row.names = FALSE)
   return(dumb)

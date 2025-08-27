@@ -10,7 +10,7 @@ library(dplyr)
 # # -----------------------------------------------------------------------
 # GRAND-MERGE (TOO LARGE FOR R PACKAGE)
 # # -----------------------------------------------------------------------
-#gm <- readstata13::read.dta13("C:/users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/GM/Grand Merge 2004-2023 LAPOP AmericasBarometer (v1.1s).dta", generate.factors=T) # grand-merge v1.1 wealth variable fix
+#gm <- readstata13::read.dta13("C:/users/vidigar/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/GM/Grand Merge 2004-2023 LAPOP AmericasBarometer (v1.1s).dta", generate.factors=T) # grand-merge v1.1 wealth variable fix
 #gm <- lpr_data("C:/users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/GM/Grand Merge 2004-2023 LAPOP AmericasBarometer (v1.1s).dta") # grand-merge v1.1 wealth variable fix
 
 # Filter Countries and Variables
@@ -26,41 +26,30 @@ library(dplyr)
 # # -----------------------------------------------------------------------
 # BRAZIL SINGLE-COUNTRY SINGLE-YEAR MERGE
 # # -----------------------------------------------------------------------
-bra <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing/BRA merge 2007-2023 LAPOP AmericasBarometer (v1.0s).dta")
-bra23 <- bra %>% select("ing4", "b13", "b21", "b31", "b12",
+bra <- readstata13::read.dta13("C:/Users/vidigar/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing/BRA merge 2007-2023 LAPOP AmericasBarometer (v1.0s).dta")
+bra23 <- bra %>% select("ing4", "b13", "b21", "b31", "b12", "fs2", "idio2", "wealth",
                         "wave", "pais", "year", "upm", "strata", "wt") %>%
                                                         filter(wave==2023)
-#bra23<-lpr_data(bra23, wt = TRUE)
-
-bra23
+bra23lpr<-lpr_data(bra23, wt = TRUE)
 
 # rda
-save(bra23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\bra23.rda"))
-# dta
-#readstata13::save.dta13(bra23, file = "~/GitHub/lapop/data/bra23.dta",
-#                        convert.factors = "label")
+save(bra23, file="C:\\Users\\vidigar\\Documents\\GitHub\\lapop\\data\\bra23.rda")
 
 # # -----------------------------------------------------------------------
 # BRAZIL SINGLE-COUNTRY MULTI-YEAR MERGE
 # # -----------------------------------------------------------------------
-cm <- readstata13::read.dta13("C:/Users/rob/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing/BRA merge 2007-2023 LAPOP AmericasBarometer (v1.0s).dta")
-cm23 <- cm %>% select("ing4", "b13", "b21", "b31", "wave", "pais", "year",
-                      "upm", "strata", "weight1500")
+cm <- readstata13::read.dta13("C:/Users/vidigar/Box/LAPOP Shared/2_Projects/2023 AB/BRA/Data Processing/BRA merge 2007-2023 LAPOP AmericasBarometer (v1.0s).dta")
+cm23 <- cm %>% select("ing4", "b13", "b21", "b31",
+                      "wave", "pais", "year","upm", "strata", "weight1500")
 
-#cm23<-lpr_data(cm23)
-
-cm23
+cm23lpr<-lpr_data(cm23)
 
 # rda
-save(cm23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\cm23.rda"))
-# dta
-#readstata13::save.dta13(cm23, file = "~/GitHub/lapop/data/cm23.dta",
-#                        convert.factors = "label")
+save(cm23, file="C:\\Users\\vidigar\\Documents\\GitHub\\lapop\\data\\cm23.rda")
 
 # # -----------------------------------------------------------------------
 # MULTI-COUNTRY SINGLE-YEAR AB 2023 MERGE
 # # -----------------------------------------------------------------------
-
 # GRAND MERGE
 #gm <- haven::read_dta("C:/users/rob/Box/LAPOP Shared/2_Projects/2023 AB/Core_Regional/Data Processing/GM/Grand Merge 2004-2023 LAPOP AmericasBarometer (v1.1s).dta") # grand-merge v1.1 wealth variable fix
 
@@ -69,14 +58,15 @@ ym23 <- gm %>%
   filter(!(pais %in% c(26, 40, 41)) & wave %in% c(2018, 2023))
 
 ym23 <- ym23 %>% select("b12", "b18",
-                        "wave", "pais", "year",
+                        "wave", "pais", "pais_lab",
+                        "year",
                         "ing4", "pn4",
                         "vb21n", "q14f",
                         "edre", "wealth", "q1tc_r",
                         "upm", "strata", "weight1500")
 
 #rda
-save(ym23, file=paste0(Sys.getenv("HOME"), "\\GitHub\\lapop\\data\\ym23.rda"))
+save(ym23, file="C:\\Users\\vidigar\\Documents\\GitHub\\lapop\\data\\ym23.rda")
 
 # # -----------------------------------------------------------------------
 # EXPORTING

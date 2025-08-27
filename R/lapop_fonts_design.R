@@ -18,7 +18,7 @@
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
 #'@return No return value, called for side effects
 #'@examples
-#'\dontrun{lapop_fonts_design()}
+#'\donttest{require(lapop); lapop_fonts_design()}
 #'
 
 lapop_fonts_design <- function(){

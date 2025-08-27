@@ -75,24 +75,27 @@ using LAPOP formatting.
 }
 \examples{
 
-\dontrun{
-# Multiple outcomes
-lpr_ccm(gm23,
-outcome_vars = c("vic1ext", "aoj11"),
-rec1 = c(1, 1),
-rec2 = c(3, 4),
-ttest = TRUE)}
+require(lapop); data(ym23)
 
-\dontrun{
+# Set Survey Context
+ym23lpr <- lpr_data(ym23)
+
+# Multiple outcomes over countries
+lpr_ccm(ym23lpr,
+outcome_vars = c("b12", "b18"),
+rec1 = c(1, 3),
+rec2 = c(5, 7),
+ttest = TRUE)
+
 # Multiple outcomes over years
-lpr_ccm(gm23,
-outcome_vars = c("vic1ext", "aoj11"),
+lpr_ccm(ym23lpr,
+outcome_vars = c("b12", "b18"),
 xvar = "wave",
-rec1 = c(1, 1),
-rec2 = c(3, 4),
-ttest = TRUE)}
+rec1 = c(1, 3),
+rec2 = c(5, 7),
+ttest = TRUE)
 
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

@@ -75,11 +75,11 @@ NULL
 #' a large number of bars (> 10).  Default: TRUE.
 #' @param rev_variables Logical.  Should the order of the variables be reversed?  Default: FALSE.
 #' @param rev_values Logical.  Should the order of the values for each variable be reversed?  Default: FALSE.
-#' @return Returns an object of class \code{ggplot}, a ggplot stacked bar graph
 #' @param hide_small_values Logical.  Should labels for categories with less than 5 percent be hidden?  Default: TRUE.
 #' @param order_bars Logical.  Should categories be placed in descending order for each bar?  Default: FALSE.
 #' showing the distributions of multiple categorical variables.
 #' @param legendnrow Numeric.  How many rows for legend labels. Default: 1.
+#' @return Returns an object of class \code{ggplot}, a ggplot stacked bar graph
 #'
 #' @examples
 #'df <- data.frame(varlabel = c(rep("Politicians can\nidentify voters", 5),

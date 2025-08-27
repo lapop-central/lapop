@@ -86,6 +86,8 @@ NULL
 #' @param all_labels Logical.  If TRUE, show text above all points, instead of only those in the most recent wave. Default: FALSE.
 #' @param ci Logical.  Add "tie fighter" confidence intervals.  Only recommended when each line represents a different variable.
 #' @param legendnrow Numeric.  How many rows for legend labels. Default: 1.
+#' @return Returns an object of class \code{ggplot}, a ggplot line graph showing values of a variable over time.
+#'
 #'@examples
 #' df <- data.frame(varlabel = c(rep("Honduras", 9), rep("El Salvador", 9),
 #'                               rep("Mexico", 9), rep("Guatemala", 9)),

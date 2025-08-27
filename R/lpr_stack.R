@@ -28,13 +28,18 @@
 #'
 #' @examples
 #'
-#' \dontrun{lpr_stack(data = gm, outcome = c("countfair1", "countfair3"))}
-#' \dontrun{lpr_stack(data = gm, outcome = "pese1", xvar="year")}
+#' require(lapop); data(ym23)
+#'
+#' # Set Survey Context
+#' ym23lpr<-lpr_data(ym23)
+#' lpr_stack(data = ym23lpr, outcome = c("b12", "b18"))
+#' lpr_stack(data = ym23lpr, outcome = "q14f", xvar="year")
 #'
 #'@export
 #'@import dplyr
 #'@import srvyr
 #'@import purrr
+#'@import haven
 #'
 #'@author Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
@@ -73,7 +78,7 @@ lpr_stack <- function(data,
         }
       } %>%
       summarise(
-        prop = survey_mean(proportion = TRUE, na.rm = TRUE),
+        prop = survey_mean(proportion = TRUE),
         .groups = "drop"
       ) %>%
       mutate(

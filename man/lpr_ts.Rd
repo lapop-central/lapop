@@ -54,7 +54,7 @@ in the denominator when calculating percentages.  The default is to examine
 valid responses only.  Default: FALSE.}
 }
 \value{
-Returns a data frame, with data formatted for visualization by lapop_ts
+Returns a data frame, with data formatted for visualization by lapop_ts()
 }
 \description{
 This function creates dataframes which can then be input in lapop_ts for
@@ -62,14 +62,19 @@ comparing values across time with a line graph using LAPOP formatting.
 }
 \examples{
 
-\dontrun{lpr_ts(bra23,
+require(lapop); data(ym23)
+
+# Set Survey Context
+ym23lpr<-lpr_data(ym23)
+
+# Run lpr_ts
+lpr_ts(ym23lpr,
 outcome = "ing4",
 use_wave = TRUE,
 mean = TRUE,
-ttest = TRUE)}
+ttest = TRUE)
 
 }
 \author{
-Berta Diaz, \email{berta.diaz.martinez@vanderbilt.edu} &
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+Berta Diaz, \email{berta.diaz.martinez@vanderbilt.edu} & Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
 }

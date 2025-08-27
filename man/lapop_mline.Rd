@@ -73,6 +73,9 @@ means of the raw values, so that the y-axis adjusts accordingly. Default: TRUE.}
 
 \item{legendnrow}{Numeric.  How many rows for legend labels. Default: 1.}
 }
+\value{
+Returns an object of class \code{ggplot}, a ggplot line graph showing values of a variable over time.
+}
 \description{
 This function creates a time series graph utilizing multiple lines representing values of
 an outcome variable for different values of a secondary variable -- for example, support for

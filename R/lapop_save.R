@@ -18,7 +18,7 @@
 #' @return Saves a file (in either .svg or .png format) to provided directory.
 #'
 #' @examples
-#' \dontrun{df <- data.frame(
+#' \donttest{df <- data.frame(
 #'cat = c("Far Left", 1, 2, 3, 4, "Center", 6, 7, 8, 9, "Far Right"),
 #'prop = c(4, 3, 5, 12, 17, 23, 15, 11, 5, 4, 1),
 #'proplabel = c("4%", "3%", "5%", "12%", "17%", "23%", "15%", "11%", "5%", "4%", "1%")

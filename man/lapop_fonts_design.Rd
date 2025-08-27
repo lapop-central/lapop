@@ -14,7 +14,7 @@ This function loads fonts needed for LAPOP graph formatting.  In contrast to lap
 this renders text as text instead of polygons, which allows post-hoc editing.
 }
 \examples{
-\dontrun{lapop_fonts_design()}
+\donttest{require(lapop); lapop_fonts_design()}
 
 }
 \author{

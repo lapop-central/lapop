@@ -16,7 +16,7 @@
 #' @param attribute_name The name of the attribute where the formatted response
 #'        options string will be stored. Default is "roslabel".
 #'
-#' @return The input data frame with response option labels added to variables
+#' @return The input data frame with response option labels added to variables as attributes
 #'
 #' @details
 #' The function looks for label tables stored as attributes of the data frame,
@@ -27,8 +27,10 @@
 #' Special codes (values >= 1000) are excluded from the response options string.
 #'
 #' @examples
+#'
+#' require(lapop); data(bra23)
+#'
 #' # Apply the function
-#' \dontrun{
 #' bra23 <- lpr_set_ros(bra23) # Default English
 #' bra23 <- lpr_set_ros(bra23, lang_id = "es", attribute_name = "respuestas") # Spanish
 #' bra23 <- lpr_set_ros(bra23, lang_id = "pt", attribute_name = "ROsLabels_pt") # Portuguese
@@ -37,7 +39,6 @@
 #' attr(bra23$ing4, "roslabel")
 #' attr(bra23$ing4, "respuestas")
 #' attr(bra23$ing4, "ROsLabels_pt")
-#' }
 #'
 #' @export
 

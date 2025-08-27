@@ -71,35 +71,41 @@ This function creates a dataframe which can then be input in lapop_mover() for
 comparing means across values of secondary variable(s) using LAPOP formatting.
 }
 \examples{
-# Single DV
-\dontrun{lpr_mover(data = ym23,
- outcome = "ing4",
- grouping_vars = c("q1tc_r", "edre", "wealth"),
- rec = c(5, 7))}
 
- # Multiple DV
- \dontrun{lpr_mover(data = ym23,
- outcome = c("ing4", "pn4"),
- grouping_vars = c("q1tc_r", "edre", "wealth"),
- rec = c(5, 7), rec2 = c(1, 2))}
+require(lapop); data(ym23)
+
+# Set SUrvey Context
+ym23lpr<-lpr_data(ym23)
+
+# Single DV
+lpr_mover(data = ym23lpr,
+ outcome = "ing4",
+ grouping_vars = c("q1tc_r", "edre"),
+ rec = c(5, 7))
+
+# Multiple DV
+lpr_mover(data = ym23lpr,
+outcome = c("ing4", "pn4"),
+grouping_vars = c("q1tc_r", "edre"),
+rec = c(5, 7), rec2 = c(1, 2))
 
 # Single DV X Single IV
-\dontrun{lpr_mover(data = ym23,
+lpr_mover(data = ym23lpr,
 outcome="ing4",
 grouping_vars="pn4",
-rec=c(5,7), ttest=T)}
+rec=c(5,7), ttest=T)
 
 # Multiple DV X Single IV
-\dontrun{lpr_mover(data = ym23,
+lpr_mover(data = ym23lpr,
 outcome=c("ing4", "pn4"),
 grouping_vars="edre",
-rec=c(5,7), rec2=c(1,2), ttest=T)}
+rec=c(5,7), rec2=c(1,2), ttest=T)
 
 # Multiple DV X Multiple IV
-\dontrun{lpr_mover(data = ym23,
+lpr_mover(data = ym23lpr,
 outcome=c("ing4", "pn4"),
 grouping_vars=c("edre", "q1tc_r"),
-rec=c(5,7), rec2=c(1,2), ttest=T)}
+rec=c(5,7), rec2=c(1,2), ttest=T)
 
 }
 \author{

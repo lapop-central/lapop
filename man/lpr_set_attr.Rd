@@ -31,7 +31,7 @@ Useful for nominal variables or multiple response options variables. Default TRU
 \item{overwrite}{logical; if FALSE, do not overwrite existing attribute on a variable. Default TRUE.}
 }
 \value{
-data frame with attributes applied
+The input data frame with attributes applied (i.e., question wording)
 }
 \description{
 Applies notes stored in a data frame as attributes to variables in `data`.

@@ -52,35 +52,38 @@
 #' @return Returns a data frame, with data formatted for visualization by lapop_mline
 #'
 #' @examples
+#'require(lapop); data(ym23)
 #'
-#' # Single Variable
-#'\dontrun{
-#'lpr_mline(ym23,
+#'# Set Survey Context
+#'ym23lpr <- lpr_data(ym23)
+#'
+#' # Single Variable by Country and Year
+#' lpr_mline(ym23lpr,
 #' outcome = "ing4",
 #' rec = c(5, 7),
-#' use_wave = FALSE)
+#' xvar = "pais",
+#' use_wave = TRUE)
 #'
 #' # Multiple Variables
-#' lpr_mline(cm23,
-#' outcome = c("b13", "b18", "b21"),
+#' lpr_mline(ym23lpr,
+#' outcome = c("b12", "b18"),
 #' rec = c(5, 7),
 #' rec2 = c(1, 2),
 #' rec3 = c(5, 7),
-#' rec4 = c(1, 1),
 #' use_wave = TRUE)
 #'
 #' # Binary Single Variable by Category
-#' lpr_mline(bra23,
-#' outcome = "jc1",
+#' lpr_mline(ym23lpr,
+#' outcome = "pn4",
 #' use_cat = TRUE,
 #' use_wave = TRUE)
 #'
 #' # Recode Categorical Variable (max 4-categories)
-#' lpr_mline(gm,
-#' outcome = "a4n",
-#' rec = c(1,4),
+#' lpr_mline(ym23lpr,
+#' outcome = "ing4",
+#' rec = c(5, 7),
 #' use_cat = TRUE,
-#' use_wave = TRUE)}
+#' use_wave = TRUE)
 #'
 #'@export
 #'@import dplyr

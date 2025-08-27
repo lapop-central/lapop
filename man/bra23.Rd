@@ -12,6 +12,9 @@ A data frame
 \item{b13}{Trust in the National Legislature}
 \item{b21}{Trust in Political Parties}
 \item{b31}{Trust in the Supreme Court of Justice}
+\item{fs2}{Food security}
+\item{idio2}{Personal economic situation}
+\item{wealth}{Wealth}
 \item{wave}{Survey round year for regional or multi-country data}
 \item{pais}{Country of survey}
 \item{year}{Survey round year for single-country data}

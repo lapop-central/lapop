@@ -45,8 +45,12 @@ plotting variables categories with a stacked bar graph using LAPOP formatting.
 }
 \examples{
 
-\dontrun{lpr_stack(data = gm, outcome = c("countfair1", "countfair3"))}
-\dontrun{lpr_stack(data = gm, outcome = "pese1", xvar="year")}
+require(lapop); data(ym23)
+
+# Set Survey Context
+ym23lpr<-lpr_data(ym23)
+lpr_stack(data = ym23lpr, outcome = c("b12", "b18"))
+lpr_stack(data = ym23lpr, outcome = "q14f", xvar="year")
 
 }
 \author{

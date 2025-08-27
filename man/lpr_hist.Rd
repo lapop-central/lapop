@@ -45,13 +45,17 @@ showing a bar graph using LAPOP formatting.
 }
 \examples{
 
-\dontrun{lpr_hist(bra23,
-outcome = "aoj11",
+require(lapop); data(bra23)
+
+# Set Survey Context: single country and year (requires wt = T)
+bra23lpr <- lpr_data(bra23, wt = T)
+
+lpr_hist(bra23lpr,
+outcome = "ing4",
 sort = "xv",
-order = "hi-lo")}
+order = "hi-lo")
 
 }
 \author{
-Shashwat Dhar \email{shashwat.dhar@vanderbilt.edu},
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+Shashwat Dhar \email{shashwat.dhar@vanderbilt.edu} & Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
 }

@@ -24,23 +24,25 @@
 #' and "no response" (missing code .b) into valid data (value = 99).
 #' The default is to examine valid responses only.  Default: FALSE.
 #'
-#'
 #' @return Returns a data frame, with data formatted for visualization by lapop_hist
 #'
 #' @examples
 #'
-#' \dontrun{lpr_hist(bra23,
-#' outcome = "aoj11",
+#' require(lapop); data(bra23)
+#'
+#' # Set Survey Context: single country and year (requires wt = T)
+#' bra23lpr <- lpr_data(bra23, wt = T)
+#'
+#' lpr_hist(bra23lpr,
+#' outcome = "ing4",
 #' sort = "xv",
-#' order = "hi-lo")}
+#' order = "hi-lo")
 #'
 #'@export
 #'@import dplyr
 #'@import srvyr
 #'
-#'@author Shashwat Dhar \email{shashwat.dhar@@vanderbilt.edu},
-#'Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
-
+#'@author Shashwat Dhar \email{shashwat.dhar@@vanderbilt.edu} & Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
 
 lpr_hist <- function(data,
                      outcome,

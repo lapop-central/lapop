@@ -30,8 +30,11 @@ as a list where each element contains exactly three components: variable name, n
 and note value.
 }
 \examples{
+
+require(lapop); data(bra23)
+
 # Extract the notes
-notes <- lpr_extract_notes(df)
-print(notes)
+notesBRA23 <- lpr_extract_notes(bra23)
+tail(notesBRA23[notesBRA23$variable_name=="ing4",]) # for ing4 variable
 
 }

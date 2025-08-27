@@ -18,7 +18,9 @@
 #' @param propagate logical; if TRUE, also set on <varname>_* children.
 #' Useful for nominal variables or multiple response options variables. Default TRUE.
 #' @param overwrite logical; if FALSE, do not overwrite existing attribute on a variable. Default TRUE.
-#' @return data frame with attributes applied
+#'
+#' @return The input data frame with attributes applied (i.e., question wording)
+#'
 #' @export
 
 lpr_set_attr <- function(data,

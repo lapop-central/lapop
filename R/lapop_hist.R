@@ -32,6 +32,7 @@ NULL
 #' Takes hex numbers, beginning with "#". Default: "#008381".
 #' @param order Logical.  Should bars be ordered from most frequent response to least?  Default: FALSE.
 #' @return Returns an object of class \code{ggplot}, a ggplot bar graph.
+#'
 #' @examples
 #' df <- data.frame(
 #' cat = c("Far Left", 1, 2, 3, 4, "Center", 6, 7, 8, 9, "Far Right"),

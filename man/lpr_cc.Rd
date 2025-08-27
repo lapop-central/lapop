@@ -78,14 +78,22 @@ comparing values across countries with a bar graph using LAPOP formatting.
 }
 \examples{
 
-\dontrun{lpr_cc(data = cm23,
-outcome = "ing4",
-rec = c(5, 7),
-xvar = "pais_lab")}
+require(lapop); data(ym23)
 
-\dontrun{lpr_cc(data = cm23,
-outcome = c("sd2new2", "sd3new2", "sd5new2", "sd6new2"),
-rec = c(5, 7))}
+# Set Survey Context
+bra23lpr <- lpr_data(bra23)
+ym23lpr <- lpr_data(ym23)
+
+# Multiple variables in Single Country
+lpr_cc(data = bra23lpr,
+outcome = c("b12", "b13"),
+rec = c(5, 7))
+
+# Single variable in Multiple Countries
+pr_cc(data = ym23lpr,
+      outcome = "ing4",
+      rec = c(5, 7),
+      xvar = "pais")
 
 }
 \author{
