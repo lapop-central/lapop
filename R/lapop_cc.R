@@ -64,7 +64,7 @@ NULL
 #'          source_info = "LAPOP Lab, AmericasBarometer 2021",
 #'          highlight = "BR",
 #'          ymax = 50)
-
+#'
 #'@export
 #'@import ggplot2
 #'@import ggtext

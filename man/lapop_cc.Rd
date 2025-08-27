@@ -95,6 +95,7 @@ lapop_cc(df,
          source_info = "LAPOP Lab, AmericasBarometer 2021",
          highlight = "BR",
          ymax = 50)
+
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}

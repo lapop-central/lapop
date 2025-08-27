@@ -7,27 +7,27 @@
 #'
 #' This function loads fonts needed for LAPOP graph formatting.  In contrast to lapop_fonts(),
 #' this renders text as text instead of polygons, which allows post-hoc editing.
-#'@import sysfonts
-#'@import systemfonts
-#'@import showtext
-#'@export
 #'
 #'@return No return value, called for side effects
-#'
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
 #'@examples
 #'
 #' require(lapop); lapop_fonts_design()
 #'
-#' lapop_fonts_design <- function(){
-#'   showtext::showtext_auto(enable = FALSE)
-#'   systemfonts::register_variant(
-#'     name = "roboto-light",
-#'     family = "roboto",
-#'     weight = "light")
-#'
-#'   systemfonts::register_variant(
-#'     name = "nunito-light",
-#'     family = "nunito",
-#'     weight = "light")
-#'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
+#'@import sysfonts
+#'@import systemfonts
+#'@import showtext
+#'@export
+
+ lapop_fonts_design <- function() {
+   showtext::showtext_auto(enable = FALSE)
+   systemfonts::register_variant(
+     name = "roboto-light",
+     family = "roboto",
+     weight = "light")
+
+   systemfonts::register_variant(
+     name = "nunito-light",
+     family = "nunito",
+     weight = "light")
+}
