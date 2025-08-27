@@ -15,7 +15,6 @@
 #' @param interact Interaction terms (e.g., "xvar1`*`xvar2 + xvar3`:`xvar4"). Supports `:` and `*` operators for interacting variables. Optional, default is NULL.
 #' @param model Model family object for glm. Default is gaussian regression (i.e., "linear"). For a logit model, use model="binomial"
 #' @param estimate Character. Graph either the coefficients (i.e., `coef`) or the change in probabilities (i.e., `contrast`). Default is "coef."
-#' @param est Character. Shortcut for `estimate`; identical options.
 #' @param vlabs Character. Rename variable labels to be displayed in the graph produced by lapop_coef(). For instance, vlabs=c("old_varname" = "new_varname").
 #' @param omit Character. Do not display coefficients for these independent variables. Default is to display all variables included in the model. To omit any variables you need to include the raw "varname" in the omit argument.
 #' @param filesave Character. Path and file name with csv extension to save the dataframe output.
@@ -36,14 +35,14 @@
 #'  outcome = "ing4",
 #'  xvar = "wealth+idio2",
 #'  model = "linear",
-#'  est = "coef")
+#'  estimate = "coef")
 #'
 #' # Example 2: Logit model with contrasts
 #' lpr_coef(data = bra23lpr,
 #'  outcome = "fs2",
 #'  xvar = "wealth+idio2",
 #'  model = "binomial",
-#'  est = "contrast")
+#'  estimate = "contrast")
 #'
 #' # Example 3: Interactive linear model
 #' lpr_coef(data = bra23lpr,
@@ -51,7 +50,7 @@
 #'  xvar = "wealth+idio2",
 #'  interact = "wealth*idio2",
 #'  model = "linear",
-#'  est = "coef")
+#'  estimate = "coef")
 #'
 #' # Example 4: Interactive logit model
 #' lpr_coef(data = bra23lpr,
@@ -59,13 +58,13 @@
 #'          xvar = "wealth+idio2",
 #'          interact = "wealth*idio2",
 #'          model = "binomial",
-#'          est = "contrast")
+#'          estimate = "contrast")
 #'
 #'@export
 #'@import dplyr
 #'@import srvyr
 #'@import marginaleffects
-#'@import stats
+#'@importFrom stats Gamma gaussian poisson quasibinomial quasipoisson
 #'
 #'@author Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
@@ -99,7 +98,7 @@ lpr_coef <- function(
                   "poisson"       = poisson(),
                   "quasipoisson"  = quasipoisson(),
                   "gamma"         = Gamma(link = "log"),
-                  stop("Unknown model: ", model)
+                  stop("Unknown model to git: ", model)
     )
   }
 

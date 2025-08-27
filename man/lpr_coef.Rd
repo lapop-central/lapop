@@ -40,8 +40,6 @@ lpr_coef(
 \item{replace}{Logical. Replace the dataset output if it already exists. Default is FALSE.}
 
 \item{level}{Numeric. Set confidence level in numeric values; default is 95 percent.}
-
-\item{est}{Character. Shortcut for `estimate`; identical options.}
 }
 \value{
 Returns a data frame, with data formatted for visualization by lapop_coef
@@ -62,14 +60,14 @@ lpr_coef(data = bra23lpr,
  outcome = "ing4",
  xvar = "wealth+idio2",
  model = "linear",
- est = "coef")
+ estimate = "coef")
 
 # Example 2: Logit model with contrasts
 lpr_coef(data = bra23lpr,
  outcome = "fs2",
  xvar = "wealth+idio2",
  model = "binomial",
- est = "contrast")
+ estimate = "contrast")
 
 # Example 3: Interactive linear model
 lpr_coef(data = bra23lpr,
@@ -77,7 +75,7 @@ lpr_coef(data = bra23lpr,
  xvar = "wealth+idio2",
  interact = "wealth*idio2",
  model = "linear",
- est = "coef")
+ estimate = "coef")
 
 # Example 4: Interactive logit model
 lpr_coef(data = bra23lpr,
@@ -85,7 +83,7 @@ lpr_coef(data = bra23lpr,
          xvar = "wealth+idio2",
          interact = "wealth*idio2",
          model = "binomial",
-         est = "contrast")
+         estimate = "contrast")
 
 }
 \author{
