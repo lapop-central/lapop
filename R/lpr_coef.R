@@ -29,7 +29,7 @@
 #' require(lapop); data(bra23)
 #'
 #' # Set Survey Context
-#' bra23lpr <- lpr_data(bra23, wt=T)
+#' bra23lpr <- lpr_data(bra23, wt = TRUE)
 #'
 #' # Example 1: Linear model
 #' lpr_coef(data = bra23lpr,

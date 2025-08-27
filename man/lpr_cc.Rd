@@ -81,7 +81,7 @@ comparing values across countries with a bar graph using LAPOP formatting.
 require(lapop); data(ym23); data(bra23)
 
 # Set Survey Context
-bra23lpr <- lpr_data(bra23, wt=TRUE)
+bra23lpr <- lpr_data(bra23, wt = TRUE)
 ym23lpr <- lpr_data(ym23)
 
 # Multiple variables in Single Country
