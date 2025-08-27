@@ -12,7 +12,7 @@
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
 #'@examples
 #'
-#' require(lapop); lapop_fonts_design()
+#' \donttest{require(lapop); lapop_fonts_design()}
 #'
 #'@import sysfonts
 #'@import systemfonts

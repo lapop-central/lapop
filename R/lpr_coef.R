@@ -104,7 +104,7 @@
 
    # ---- Fit model ------------------------------------------------------------
    svyglm_object <- tryCatch(
-     survey::svyglm(formula, design = data, family = family_obj),
+     survey::svyglm(formula, design = data, family = model),
      error = function(e) stop("Error in svyglm: ", e$message)
    )
 
