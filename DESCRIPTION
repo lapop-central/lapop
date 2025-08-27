@@ -18,7 +18,7 @@ Depends:
     R (>= 3.5.0)
 Imports: ggplot2, ggtext, ggrepel, showtext, grid, gridtext, gridExtra,
     sysfonts, systemfonts, svglite, dplyr, tidyr, srvyr, survey, codebook,
-    haven, stats, purrr, marginaleffects, stringr, zoo
+    haven, stats, purrr, tibble, marginaleffects, stringr, zoo
 VignetteBuilder: knitr
 Suggests: 
     readstata13,

@@ -65,6 +65,7 @@
 #'@import dplyr
 #'@import srvyr
 #'@import marginaleffects
+#'@import tibble
 #'
 #'@author Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
@@ -165,7 +166,7 @@
        coef_data <- coef_data %>% select(varlabel, coef, lb, ub, pvalue, proplabel)
      } else {
        warning("No contrasts were produced; check variable types and model.")
-       coef_data <- tibble::tibble(
+       coef_data <- tibble(
          varlabel = character(), coef = numeric(),
          lb = numeric(), ub = numeric(),
          pvalue = numeric(), proplabel = numeric()

@@ -72,6 +72,7 @@
 #'@import dplyr
 #'@import tidyr
 #'@import srvyr
+#'@import tibble
 #'
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
@@ -238,7 +239,7 @@ lpr_dumb <- function(data,
  if (ttest) {
    # Nothing to test?
    if (!nrow(dumb)) {
-     attr(dumb, "t_test_results") <- tibble::tibble(
+     attr(dumb, "t_test_results") <- tibble(
        test = character(), diff = numeric(), ttest = numeric(), pval = numeric()
      )
    } else {
@@ -246,7 +247,7 @@ lpr_dumb <- function(data,
      need <- c("lb1","ub1","lb2","ub2")
      if (!all(need %in% names(dumb))) {
        warning("CI columns not found (lb1/ub1/lb2/ub2). Cannot compute t-tests.")
-       attr(dumb, "t_test_results") <- tibble::tibble(
+       attr(dumb, "t_test_results") <- tibble(
          test = character(), diff = numeric(), ttest = numeric(), pval = numeric()
        )
      } else {
@@ -255,7 +256,7 @@ lpr_dumb <- function(data,
          mutate(se1 = (ub1 - lb1) / (2 * zcrit),
                 se2 = (ub2 - lb2) / (2 * zcrit))
 
-       out_df <- tibble::tibble(test = character(), diff = numeric(),
+       out_df <- tibble(test = character(), diff = numeric(),
                                 ttest = numeric(), pval = numeric())
 
        # Within-unit (wave1 vs wave2 for the same pais)
@@ -269,7 +270,7 @@ lpr_dumb <- function(data,
          # Normal approx for survey estimates
          p  <- round(2 * pnorm(-abs(t)), 3)
 
-         out_df <- dplyr::bind_rows(out_df, tibble::tibble(
+         out_df <- dplyr::bind_rows(out_df, tibble(
            test  = paste(t_test_results$pais[i], t_test_results$wave1[i], "vs",
                          t_test_results$pais[i], t_test_results$wave2[i]),
            diff  = d, ttest = t, pval = p
@@ -285,7 +286,7 @@ lpr_dumb <- function(data,
              se <- sqrt(t_test_results$se1[i]^2 + t_test_results$se1[j]^2)
              t  <- round(d / se, 3)
              p  <- round(2 * pnorm(-abs(t)), 3)
-             out_df <- dplyr::bind_rows(out_df, tibble::tibble(
+             out_df <- dplyr::bind_rows(out_df, tibble(
                test = paste(t_test_results$pais[i], t_test_results$wave1[i], "vs",
                             t_test_results$pais[j], t_test_results$wave1[j]),
                diff = d, ttest = t, pval = p
@@ -300,7 +301,7 @@ lpr_dumb <- function(data,
              se <- sqrt(t_test_results$se2[i]^2 + t_test_results$se2[j]^2)
              t  <- round(d / se, 3)
              p  <- round(2 * pnorm(-abs(t)), 3)
-             out_df <- dplyr::bind_rows(out_df, tibble::tibble(
+             out_df <- dplyr::bind_rows(out_df, tibble(
                test = paste(t_test_results$pais[i], t_test_results$wave2[i], "vs",
                             t_test_results$pais[j], t_test_results$wave2[j]),
                diff = d, ttest = t, pval = p
