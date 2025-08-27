@@ -64,7 +64,6 @@ The preferred method for loading LAPOP Lab datasets is to use the `read.dta13()`
 
 In the R programming language, attributes are additional metadata that can be attached to R objects. Attributes provide a way to store extra information about an object beyond its basic data structure. To access the attributes of an object, you can use the `attr()` or `attributes()` base functions. 
 
-
 ```{r, LOAD DATA CHUNK, eval = FALSE}
 # READSTATA13 PACKAGE (RECOMMENDED FOR LABELS)
 data1 <- read.dta13("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta")

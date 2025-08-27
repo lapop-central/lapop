@@ -31,7 +31,7 @@
 #' require(lapop); data(bra23)
 #'
 #' # Set Survey Context: single country and year (requires wt = T)
-#' bra23lpr <- lpr_data(bra23, wt = T)
+#' bra23lpr <- lpr_data(bra23, wt = TRUE)
 #'
 #' lpr_hist(bra23lpr,
 #' outcome = "ing4",

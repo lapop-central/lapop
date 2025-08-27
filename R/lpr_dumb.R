@@ -74,7 +74,7 @@
 #'@import srvyr
 #'@import tibble
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 lpr_dumb <- function(data,
                      outcome,
@@ -196,124 +196,115 @@ lpr_dumb <- function(data,
     dumb <- merge(wave1, wave2, by = "pais")
   }
 
- dumb = dumb %>%
-  {
-    if (sort == "prop1") {
-      if (order == "hi-lo") {
-        arrange(., desc(prop1))
-      } else if (order == "lo-hi") {
-        arrange(., prop1)
-      }
-    } else if (sort == "prop2") {
-      if (order == "hi-lo") {
-        arrange(., desc(prop2))
-      } else if (order == "lo-hi") {
-        arrange(., prop2)
-      }
-    } else if (sort == "xv") {
-      if (order == "hi-lo") {
-        arrange(., desc(match(pais, levels(pais))))
-      } else if (order == "lo-hi") {
-        arrange(., match(pais, levels(pais)))
-      }
-    } else if (sort == "diff") {
-      if (order == "hi-lo") {
-        mutate(., diff = prop2 - prop1) %>%
-          arrange(., desc(diff))
-      } else if (order == "lo-hi") {
-        mutate(., diff = prop2 - prop1) %>%
-          arrange(., diff)
-      }
-    } else if (sort == "xl") {
-      if (order == "hi-lo") {
-        arrange(., desc(as.character(xvar)))
-      } else if (order == "lo-hi") {
-        arrange(., as.character(xvar))
-      } else {
-        .  # Return unchanged
+  dumb = dumb %>%
+    {
+      if (sort == "prop1") {
+        if (order == "hi-lo") {
+          arrange(., desc(prop1))
+        } else if (order == "lo-hi") {
+          arrange(., prop1)
+        }
+      } else if (sort == "prop2") {
+        if (order == "hi-lo") {
+          arrange(., desc(prop2))
+        } else if (order == "lo-hi") {
+          arrange(., prop2)
+        }
+      } else if (sort == "xv") {
+        if (order == "hi-lo") {
+          arrange(., desc(match(pais, levels(pais))))
+        } else if (order == "lo-hi") {
+          arrange(., match(pais, levels(pais)))
+        }
+      } else if (sort == "diff") {
+        if (order == "hi-lo") {
+          mutate(., diff = prop2 - prop1) %>%
+            arrange(., desc(diff))
+        } else if (order == "lo-hi") {
+          mutate(., diff = prop2 - prop1) %>%
+            arrange(., diff)
+        }
+      } else if (sort == "xl") {
+        if (order == "hi-lo") {
+          arrange(., desc(as.character(xvar)))
+        } else if (order == "lo-hi") {
+          arrange(., as.character(xvar))
+        } else {
+          .  # Return unchanged
+        }
       }
     }
+
+
+  if (ttest) {
+    # Compute standard errors
+    t_test_results <- dumb %>%
+      mutate(se1 = (ub1 - lb1) / (2 * 1.96),
+             se2 = (ub2 - lb2) / (2 * 1.96))
+
+    # Initialize an empty dataframe for storing test results
+    t_test_results_df <- data.frame(test = character(),
+                                    diff = numeric(),
+                                    ttest = numeric(),
+                                    pval = numeric(),
+                                    stringsAsFactors = FALSE)
+
+    # Within-country t-tests: Compare prop1 vs. prop2 for each country
+    for (i in 1:nrow(t_test_results)) {
+      diff <- round(t_test_results$prop1[i] - t_test_results$prop2[i], 3)
+      t_stat <- round(diff / sqrt(t_test_results$se1[i]^2 + t_test_results$se2[i]^2), 3)
+      df <- (t_test_results$se1[i]^2 + t_test_results$se2[i]^2)^2 /
+        ((t_test_results$se1[i]^4 / (nrow(data) - 1)) + (t_test_results$se2[i]^4 / (nrow(data) - 1)))
+      p_value <- round(2 * pt(-abs(t_stat), df), 3)
+
+      t_test_results_df <- rbind(t_test_results_df,
+                                 data.frame(test = paste(t_test_results$pais[i], t_test_results$wave1[i], "vs",
+                                                         t_test_results$pais[i], t_test_results$wave2[i]),
+                                            diff = diff,
+                                            ttest = t_stat,
+                                            pval = p_value))
+    }
+
+    # Pairwise comparisons across all rows for prop1
+    for (i in 1:(nrow(t_test_results) - 1)) {
+      for (j in (i + 1):nrow(t_test_results)) {
+        diff <- round(t_test_results$prop1[i] - t_test_results$prop1[j], 3)
+        t_stat <- round(diff / sqrt(t_test_results$se1[i]^2 + t_test_results$se1[j]^2), 3)
+        df <- (t_test_results$se1[i]^2 + t_test_results$se1[j]^2)^2 /
+          ((t_test_results$se1[i]^4 / (nrow(data) - 1)) + (t_test_results$se1[j]^4 / (nrow(data) - 1)))
+        p_value <- round(2 * pt(-abs(t_stat), df), 3)
+
+        t_test_results_df <- rbind(t_test_results_df,
+                                   data.frame(test = paste(t_test_results$pais[i], t_test_results$wave1[i], "vs",
+                                                           t_test_results$pais[j], t_test_results$wave1[j]),
+                                              diff = diff,
+                                              ttest = t_stat,
+                                              pval = p_value))
+      }
+    }
+
+    # Pairwise comparisons across all rows for prop2
+    for (i in 1:(nrow(t_test_results) - 1)) {
+      for (j in (i + 1):nrow(t_test_results)) {
+        diff <- round(t_test_results$prop2[i] - t_test_results$prop2[j], 3)
+        t_stat <- round(diff / sqrt(t_test_results$se2[i]^2 + t_test_results$se2[j]^2), 3)
+        df <- (t_test_results$se2[i]^2 + t_test_results$se2[j]^2)^2 /
+          ((t_test_results$se2[i]^4 / (nrow(data) - 1)) + (t_test_results$se2[j]^4 / (nrow(data) - 1)))
+        p_value <- round(2 * pt(-abs(t_stat), df), 3)
+
+        t_test_results_df <- rbind(t_test_results_df,
+                                   data.frame(test = paste(t_test_results$pais[i], t_test_results$wave2[i], "vs",
+                                                           t_test_results$pais[j], t_test_results$wave2[j]),
+                                              diff = round(diff, 3),
+                                              ttest = round(t_stat, 3),
+                                              pval = round(p_value, 3)))
+      }
+    }
+
+    # Store the results as an attribute
+    attr(dumb, "t_test_results") <- t_test_results_df
   }
 
-
- if (ttest) {
-   # Nothing to test?
-   if (!nrow(dumb)) {
-     attr(dumb, "t_test_results") <- tibble(
-       test = character(), diff = numeric(), ttest = numeric(), pval = numeric()
-     )
-   } else {
-     # Check we have CIs
-     need <- c("lb1","ub1","lb2","ub2")
-     if (!all(need %in% names(dumb))) {
-       warning("CI columns not found (lb1/ub1/lb2/ub2). Cannot compute t-tests.")
-       attr(dumb, "t_test_results") <- tibble(
-         test = character(), diff = numeric(), ttest = numeric(), pval = numeric()
-       )
-     } else {
-       zcrit <- qnorm(1 - (1 - ci_level)/2)
-       t_test_results <- dumb %>%
-         mutate(se1 = (ub1 - lb1) / (2 * zcrit),
-                se2 = (ub2 - lb2) / (2 * zcrit))
-
-       out_df <- tibble(test = character(), diff = numeric(),
-                                ttest = numeric(), pval = numeric())
-
-       # Within-unit (wave1 vs wave2 for the same pais)
-       for (i in seq_len(nrow(t_test_results))) {
-         # Skip if any ingredient is missing
-         if (any(is.na(t_test_results[i, c("prop1","prop2","se1","se2")]))) next
-
-         d  <- round(t_test_results$prop2[i] - t_test_results$prop1[i], 3)
-         se <- sqrt(t_test_results$se1[i]^2 + t_test_results$se2[i]^2)
-         t  <- round(d / se, 3)
-         # Normal approx for survey estimates
-         p  <- round(2 * pnorm(-abs(t)), 3)
-
-         out_df <- dplyr::bind_rows(out_df, tibble(
-           test  = paste(t_test_results$pais[i], t_test_results$wave1[i], "vs",
-                         t_test_results$pais[i], t_test_results$wave2[i]),
-           diff  = d, ttest = t, pval = p
-         ))
-       }
-
-       # Pairwise across rows for wave1
-       if (nrow(t_test_results) > 1) {
-         for (i in 1:(nrow(t_test_results)-1)) {
-           for (j in (i+1):nrow(t_test_results)) {
-             if (any(is.na(t_test_results[c(i,j), c("prop1","se1")]))) next
-             d  <- round(t_test_results$prop1[i] - t_test_results$prop1[j], 3)
-             se <- sqrt(t_test_results$se1[i]^2 + t_test_results$se1[j]^2)
-             t  <- round(d / se, 3)
-             p  <- round(2 * pnorm(-abs(t)), 3)
-             out_df <- dplyr::bind_rows(out_df, tibble(
-               test = paste(t_test_results$pais[i], t_test_results$wave1[i], "vs",
-                            t_test_results$pais[j], t_test_results$wave1[j]),
-               diff = d, ttest = t, pval = p
-             ))
-           }
-         }
-         # Pairwise across rows for wave2
-         for (i in 1:(nrow(t_test_results)-1)) {
-           for (j in (i+1):nrow(t_test_results)) {
-             if (any(is.na(t_test_results[c(i,j), c("prop2","se2")]))) next
-             d  <- round(t_test_results$prop2[i] - t_test_results$prop2[j], 3)
-             se <- sqrt(t_test_results$se2[i]^2 + t_test_results$se2[j]^2)
-             t  <- round(d / se, 3)
-             p  <- round(2 * pnorm(-abs(t)), 3)
-             out_df <- dplyr::bind_rows(out_df, tibble(
-               test = paste(t_test_results$pais[i], t_test_results$wave2[i], "vs",
-                            t_test_results$pais[j], t_test_results$wave2[j]),
-               diff = d, ttest = t, pval = p
-             ))
-           }
-         }
-       }
-
-       attr(dumb, "t_test_results") <- out_df
-     }
-   }
- }
 
   if (filesave != "") write.csv(dumb, filesave, row.names = FALSE)
   return(dumb)

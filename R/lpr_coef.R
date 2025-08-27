@@ -65,7 +65,7 @@
 #'@import dplyr
 #'@import srvyr
 #'@import marginaleffects
-#'@import tibble
+#'@import stats
 #'
 #'@author Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
