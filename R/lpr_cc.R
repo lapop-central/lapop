@@ -57,7 +57,7 @@
 #' rec = c(5, 7))
 #'
 #' # Single variable in Multiple Countries
-#' pr_cc(data = ym23lpr,
+#' lpr_cc(data = ym23lpr,
 #'       outcome = "ing4",
 #'       rec = c(5, 7),
 #'       xvar = "pais")
