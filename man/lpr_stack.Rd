@@ -49,8 +49,13 @@ require(lapop); data(ym23)
 
 # Set Survey Context
 ym23lpr<-lpr_data(ym23)
-lpr_stack(data = ym23lpr, outcome = c("b12", "b18"))
-lpr_stack(data = ym23lpr, outcome = "q14f", xvar="year")
+
+lpr_stack(data = ym23lpr,
+outcome = c("b12", "b18"))
+
+lpr_stack(data = ym23lpr,
+outcome = "q14f",
+xvar="year")
 
 }
 \author{

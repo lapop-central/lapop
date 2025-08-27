@@ -52,35 +52,35 @@
 #' lpr_mover(data = ym23lpr,
 #'  outcome = "ing4",
 #'  grouping_vars = c("q1tc_r", "edre"),
-#'  rec = c(5, 7), ttest = TRUE)
+#'  rec = c(5, 7), ttest = FALSE)
 #'
 #' # Multiple DV
 #' lpr_mover(data = ym23lpr,
 #' outcome = c("ing4", "pn4"),
 #' grouping_vars = c("q1tc_r", "edre"),
 #' rec = c(5, 7), rec2 = c(1, 2),
-#' ttest = TRUE)
+#' ttest = FALSE)
 #'
 #' # Single DV X Single IV
 #' lpr_mover(data = ym23lpr,
 #' outcome="ing4",
 #' grouping_vars="pn4",
 #' rec=c(5,7),
-#' ttest = TRUE)
+#' ttest = FALSE)
 #'
 #' # Multiple DV X Single IV
 #' lpr_mover(data = ym23lpr,
 #' outcome=c("ing4", "pn4"),
 #' grouping_vars="edre",
 #' rec=c(5,7), rec2=c(1,2),
-#' ttest = TRUE)
+#' ttest = FALSE)
 #'
 #' # Multiple DV X Multiple IV
 #' lpr_mover(data = ym23lpr,
 #' outcome=c("ing4", "pn4"),
 #' grouping_vars=c("edre", "q1tc_r"),
 #' rec=c(5,7), rec2=c(1,2),
-#' ttest = TRUE)
+#' ttest = FALSE)
 #'
 #'@export
 #'@import dplyr
