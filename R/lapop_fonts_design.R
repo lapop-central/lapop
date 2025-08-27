@@ -10,9 +10,6 @@
 #'
 #'@return No return value, called for side effects
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
-#'@examples
-#'
-#' \donttest{require(lapop); lapop_fonts_design()}
 #'
 #'@import sysfonts
 #'@import systemfonts

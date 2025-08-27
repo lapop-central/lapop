@@ -13,11 +13,6 @@ No return value, called for side effects
 This function loads fonts needed for LAPOP graph formatting.  In contrast to lapop_fonts(),
 this renders text as text instead of polygons, which allows post-hoc editing.
 }
-\examples{
-
-require(lapop); lapop_fonts_design()
-
-}
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
 }
