@@ -137,7 +137,7 @@ plotting regression coefficients graph using LAPOP formatting.</p>
 <span class="r-in"><span> xvar <span class="op">=</span> <span class="st">"wealth+idio2"</span>,</span></span>
 <span class="r-in"><span> model <span class="op">=</span> <span class="st">"linear"</span>,</span></span>
 <span class="r-in"><span> est <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in value[[3L]](cond):</span> Error in svyglm: object 'family_obj' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in value[[3L]](cond):</span> Error in svyglm: object 'linear' of mode 'function' was not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example 2: Logit model with contrasts</span></span></span>
 <span class="r-in"><span><span class="fu">lpr_coef</span><span class="op">(</span>data <span class="op">=</span> <span class="va">bra23lpr</span>,</span></span>
@@ -145,7 +145,12 @@ plotting regression coefficients graph using LAPOP formatting.</p>
 <span class="r-in"><span> xvar <span class="op">=</span> <span class="st">"wealth+idio2"</span>,</span></span>
 <span class="r-in"><span> model <span class="op">=</span> <span class="st">"binomial"</span>,</span></span>
 <span class="r-in"><span> est <span class="op">=</span> <span class="st">"contrast"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in value[[3L]](cond):</span> Error in svyglm: object 'family_obj' not found</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>non-integer #successes in a binomial glm!</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> CSV output file not created.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               varlabel        coef          lb           ub pvalue proplabel</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    wealth: Max - Min -0.29702984 -0.34858146 -0.245478225 0.0000     -0.30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 idio2: Igual - Mejor -0.04387263 -0.08517791 -0.002567345 0.0374     -0.04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  idio2: Peor - Mejor  0.04304993 -0.01520201  0.101301867 0.1475      0.04</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example 3: Interactive linear model</span></span></span>
 <span class="r-in"><span><span class="fu">lpr_coef</span><span class="op">(</span>data <span class="op">=</span> <span class="va">bra23lpr</span>,</span></span>
@@ -154,7 +159,7 @@ plotting regression coefficients graph using LAPOP formatting.</p>
 <span class="r-in"><span> interact <span class="op">=</span> <span class="st">"wealth*idio2"</span>,</span></span>
 <span class="r-in"><span> model <span class="op">=</span> <span class="st">"linear"</span>,</span></span>
 <span class="r-in"><span> est <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in value[[3L]](cond):</span> Error in svyglm: object 'family_obj' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in value[[3L]](cond):</span> Error in svyglm: all variables must be in design= argument</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example 4: Interactive logit model</span></span></span>
 <span class="r-in"><span><span class="fu">lpr_coef</span><span class="op">(</span>data <span class="op">=</span> <span class="va">bra23lpr</span>,</span></span>
@@ -163,7 +168,12 @@ plotting regression coefficients graph using LAPOP formatting.</p>
 <span class="r-in"><span>         interact <span class="op">=</span> <span class="st">"wealth*idio2"</span>,</span></span>
 <span class="r-in"><span>         model <span class="op">=</span> <span class="st">"binomial"</span>,</span></span>
 <span class="r-in"><span>         est <span class="op">=</span> <span class="st">"contrast"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in value[[3L]](cond):</span> Error in svyglm: object 'family_obj' not found</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>non-integer #successes in a binomial glm!</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> CSV output file not created.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               varlabel        coef          lb           ub pvalue proplabel</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    wealth: Max - Min -0.29843627 -0.34983184 -0.247040698 0.0000     -0.30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 idio2: Igual - Mejor -0.04412517 -0.08593864 -0.002311692 0.0386     -0.04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  idio2: Peor - Mejor  0.04264438 -0.01579508  0.101083837 0.1527      0.04</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
