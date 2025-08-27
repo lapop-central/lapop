@@ -48,7 +48,7 @@
 #' # Example 3: Interactive linear model
 #' lpr_coef(data = bra23lpr,
 #'  outcome = "ing4",
-#'  xvar = "it1+idio2",
+#'  xvar = "wealth+idio2",
 #'  interact = "wealth*idio2",
 #'  model = "linear",
 #'  est = "coef")
@@ -69,157 +69,184 @@
 #'
 #'@author Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
- lpr_coef <- function(
-    outcome = NULL,
-    xvar = NULL,
+lpr_coef <- function(
+    outcome  = NULL,
+    xvar     = NULL,
     interact = NULL,
-    model = "linear",
-    data = NULL,
-    estimate = c("coef", "contrast"),
-    est = NULL,                      # <- new: alias for `estimate`
-    vlabs = NULL,
-    omit = NULL,
+    model    = "linear",
+    data     = NULL,
+    estimate = c("coef"),
+    vlabs    = NULL,
+    omit     = NULL,
     filesave = NULL,
-    replace = FALSE,
-    level = 95
- ) {
-   # ---- Basic checks ---------------------------------------------------------
-   if (is.null(outcome) || is.null(xvar) || is.null(model) || is.null(data)) {
-     stop("Error: One or more required inputs (outcome, xvar, model, data) are NULL.")
-   }
+    replace  = FALSE,
+    level    = 95
+) {
+  # Initialize an empty data frame
+  coef_data <- data.frame()
 
-   # ---- Parse estimate / est -------------------------------------------------
-   if (!is.null(est)) estimate <- est
-   estimate <- match.arg(estimate, c("coef", "contrast"))
+  # Mapper for model family
+  model <- model
+  if (is.character(model)) {
+    model <- switch(tolower(model),
+                  "linear"        = gaussian(),
+                  "gaussian"      = gaussian(),
+                  "identity"      = gaussian(),
+                  "binomial"      = quasibinomial(), # keep strict binomial (warns on non-integer)
+                  "logit"         = quasibinomial(),
+                  "logistic"      = quasibinomial(),
+                  "probit"        = quasibinomial(link = "probit"),
+                  "poisson"       = poisson(),
+                  "quasipoisson"  = quasipoisson(),
+                  "gamma"         = Gamma(link = "log"),
+                  stop("Unknown model: ", model)
+    )
+  }
 
-   # ---- Build formula --------------------------------------------------------
-   if (!is.null(interact)) {
-     # Normalize interaction syntax: user might provide "*"; we keep ":" because xvar already includes mains
-     interact_clean <- gsub("\\*", ":", interact)
-     interact_str   <- paste(interact_clean, collapse = "+")
-     full_formula   <- paste(outcome, "~", paste(xvar, interact_str, sep = "+"))
-   } else {
-     full_formula   <- paste(outcome, "~", xvar)
-   }
-   formula <- as.formula(full_formula)
+  # Basic checks
+  if (is.null(outcome) || is.null(xvar) || is.null(model) || is.null(data)) {
+    stop("Error: One or more required inputs (outcome, xvar, model, data) are NULL.")
+  }
 
-   # ---- Fit model ------------------------------------------------------------
-   svyglm_object <- tryCatch(
-     survey::svyglm(formula, design = data, family = model),
-     error = function(e) stop("Error in svyglm: ", e$message)
-   )
+  # Process interaction terms
+  if (!is.null(interact)) {
+    # Normalize interaction syntax: convert * to : to avoid redundancy
+    interact_clean <- gsub("\\*", ":", interact)
+    interact_str   <- paste(interact_clean, collapse = "+")
+    full_formula   <- paste(outcome, "~", paste(xvar, interact_str, sep = "+"))
+  } else {
+    full_formula   <- paste(outcome, "~", xvar)
+  }
 
-   # ---- Output container -----------------------------------------------------
-   coef_data <- data.frame()
+  # Fit model
+  formula <- as.formula(full_formula)
+  svyglm_object <- tryCatch({
+    survey::svyglm(formula, design = data, family = model)
+  }, error = function(e) {
+    stop("Error in svyglm: ", e$message)
+  })
 
-   # ---- ESTIMATE: contrasts via marginaleffects ------------------------------
-   if (estimate == "contrast") {
-     # predictors present in the model matrix/terms
-     predictors <- attr(svyglm_object$terms, "term.labels")
-     if (length(predictors) == 0) stop("No valid predictor variables found in the model.")
+  # Estimate type validation
+  if (estimate == "") {
+    stop("You need to define the type of estimate: coef or contrast")
+  }
 
-     for (Term in predictors) {
-       dataset <- svyglm_object$data
-       # Skip terms that aren't direct columns (e.g., interactions handled by the formula)
-       if (is.null(dataset) || !Term %in% colnames(dataset)) next
+  if (estimate == "contrast") {
+    # Get predictors from model
+    predictors <- attr(svyglm_object$terms, "term.labels")
+    if (length(predictors) == 0) {
+      stop("No valid predictor variables found in the model.")
+    }
 
-       comparison_type <- if (is.factor(dataset[[Term]])) "reference" else "minmax"
+    # Loop over predictors to compute marginal effects
+    for (Term in predictors) {
+      dataset <- svyglm_object$data
+      if (!Term %in% colnames(dataset)) {
+        next # Skip if term isn't in the data directly (e.g., interaction)
+      }
 
-       term_data <- tryCatch({
-         term_result <- suppressWarnings(
-           as.data.frame(
-             marginaleffects::avg_comparisons(
-               svyglm_object,
-               variables = stats::setNames(list(comparison_type), Term)
-             )
-           )
-         )
+      comparison_type <- if (is.factor(dataset[[Term]])) "reference" else "minmax"
 
-         term_result %>%
-           rename(varlabel = contrast, coef = estimate, ub = conf.high, lb = conf.low) %>%
-           mutate(
-             varterm   = Term,
-             varlabel  = paste(Term, varlabel, sep = ": "),
-             pvalue    = round(p.value, 4),
-             proplabel = round(coef, 2)
-           ) %>%
-           select(varterm, varlabel, coef, lb, ub, pvalue, proplabel)
-       }, error = function(e) {
-         # If avg_comparisons fails for this term, return an empty row we can drop
-         NULL
-       })
+      term_data <- tryCatch({
+        term_result <- suppressWarnings(
+          as.data.frame(
+            avg_comparisons(
+              svyglm_object,
+              variables = setNames(list(comparison_type), Term)
+            )
+          )
+        )
 
-       if (!is.null(term_data) && nrow(term_data)) {
-         coef_data <- bind_rows(coef_data, term_data)
-       }
-     }
+        term_result <- term_result %>%
+          rename(
+            varlabel = contrast,
+            coef     = estimate,
+            ub       = conf.high,
+            lb       = conf.low
+          ) %>%
+          mutate(
+            varterm   = Term,
+            varlabel  = paste(Term, varlabel, sep = ": "),
+            pvalue    = round(p.value, 4),
+            proplabel = round(coef, 2)
+          )
 
-     # Clean and relabel
-     if (!is.null(omit) && nrow(coef_data)) {
-       coef_data <- coef_data %>% filter(!varterm %in% omit)
-     }
-     if (!is.null(vlabs) && nrow(coef_data)) {
-       coef_data <- coef_data %>%
-         mutate(varlabel = ifelse(varterm %in% names(vlabs), vlabs[varterm], varlabel))
-     }
-     if (nrow(coef_data)) {
-       coef_data <- coef_data %>% select(varlabel, coef, lb, ub, pvalue, proplabel)
-     } else {
-       warning("No contrasts were produced; check variable types and model.")
-       coef_data <- tibble(
-         varlabel = character(), coef = numeric(),
-         lb = numeric(), ub = numeric(),
-         pvalue = numeric(), proplabel = numeric()
-       )
-     }
+        term_result
+      }, error = function(e) {
+        data.frame(
+          varterm   = NA,
+          varlabel  = NA,
+          coef      = NA,
+          lb        = NA,
+          ub        = NA,
+          pvalue    = NA,
+          proplabel = NA
+        )
+      })
 
-   } else {
-     # ---- ESTIMATE: raw coefficients -----------------------------------------
-     level_dec <- level / 100
-     coef_raw  <- summary(svyglm_object)$coefficients
-     if (nrow(coef_raw) == 0) {
-       stop("No coefficients returned from model. Check for convergence issues or empty formula.")
-     }
+      coef_data <- bind_rows(coef_data, term_data)
+    }
 
-     coef_data <- as.data.frame(coef_raw) %>%
-       mutate(Term = rownames(coef_raw)) %>%
-       select(Term, everything()) %>%
-       mutate(
-         lb = Estimate - stats::qt(1 - (1 - level_dec) / 2, df = svyglm_object$df.residual) * `Std. Error`,
-         ub = Estimate + stats::qt(1 - (1 - level_dec) / 2, df = svyglm_object$df.residual) * `Std. Error`,
-         `Pr(>|t|)` = as.numeric(format(`Pr(>|t|)`, scientific = FALSE, digits = 3)),
-         pvalue     = round(`Pr(>|t|)`, 3),
-         proplabel  = round(Estimate, 3)
-       )
+    # Clean and relabel
+    if (!is.null(omit)) {
+      coef_data <- coef_data %>% filter(!varterm %in% omit)
+    }
+    if (!is.null(vlabs)) {
+      coef_data <- coef_data %>%
+        mutate(varlabel = ifelse(varterm %in% names(vlabs), vlabs[varterm], varlabel))
+    }
 
-     if (!is.null(omit)) {
-       coef_data <- coef_data %>% filter(!Term %in% omit)
-     }
+    coef_data <- coef_data %>%
+      select(varlabel, coef, lb, ub, pvalue, proplabel)
 
-     coef_data <- coef_data %>%
-       rename(varlabel = Term, coef = Estimate) %>%
-       select(varlabel, coef, lb, ub, pvalue, proplabel)
+  } else {
+    # Coefficient-based summary
+    level <- level / 100
+    coef_raw <- summary(svyglm_object)$coefficients
 
-     if (!is.null(vlabs)) {
-       coef_data <- coef_data %>%
-         mutate(varlabel = ifelse(varlabel %in% names(vlabs), vlabs[varlabel], varlabel))
-     }
-   }
+    if (nrow(coef_raw) == 0) {
+      stop("No coefficients returned from model. Check for convergence issues or empty formula.")
+    }
 
-   # ---- Optional file output -------------------------------------------------
-   if (!is.null(filesave)) {
-     if (dir.exists(filesave)) {
-       stop("You provided a directory for 'filesave'. Please provide a valid file path, including the file name.")
-     }
-     if (file.exists(filesave) && !replace) {
-       stop("File already exists. Use `replace = TRUE` to overwrite.")
-     } else {
-       utils::write.csv(coef_data, file = filesave, row.names = FALSE)
-       message("File saved to ", filesave)
-     }
-   } else {
-     message("CSV output file not created.")
-   }
+    coef_data <- as.data.frame(coef_raw) %>%
+      mutate(Term = rownames(coef_raw)) %>%
+      select(Term, everything()) %>%
+      mutate(
+        lb         = Estimate - qt(1 - (1 - level) / 2, df = svyglm_object$df.residual) * `Std. Error`,
+        ub         = Estimate + qt(1 - (1 - level) / 2, df = svyglm_object$df.residual) * `Std. Error`,
+        `Pr(>|t|)` = as.numeric(format(`Pr(>|t|)`, scientific = FALSE, digits = 3)),
+        pvalue     = round(`Pr(>|t|)`, 3),
+        proplabel  = round(Estimate, 3)
+      )
 
-   return(coef_data)
- }
+    if (!is.null(omit)) {
+      coef_data <- coef_data %>% filter(!Term %in% omit)
+    }
+
+    coef_data <- coef_data %>%
+      rename(varlabel = Term, coef = Estimate) %>%
+      select(varlabel, coef, lb, ub, pvalue, proplabel)
+
+    if (!is.null(vlabs)) {
+      coef_data <- coef_data %>%
+        mutate(varlabel = ifelse(varlabel %in% names(vlabs), vlabs[varlabel], varlabel))
+    }
+  }
+
+  # File output
+  if (!is.null(filesave)) {
+    if (dir.exists(filesave)) {
+      stop("You provided a directory for 'filesave'. Please provide a valid file path, including the file name.")
+    }
+    if (file.exists(filesave) && !replace) {
+      stop("File already exists. Use replace = TRUE to overwrite.")
+    } else {
+      write.csv(coef_data, file = filesave, row.names = FALSE)
+      message("File saved to ", filesave)
+    }
+  } else {
+    message("CSV output file not created.")
+  }
+
+  return(coef_data)
+}

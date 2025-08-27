@@ -10,8 +10,7 @@ lpr_coef(
   interact = NULL,
   model = "linear",
   data = NULL,
-  estimate = c("coef", "contrast"),
-  est = NULL,
+  estimate = c("coef"),
   vlabs = NULL,
   omit = NULL,
   filesave = NULL,
@@ -32,8 +31,6 @@ lpr_coef(
 
 \item{estimate}{Character. Graph either the coefficients (i.e., `coef`) or the change in probabilities (i.e., `contrast`). Default is "coef."}
 
-\item{est}{Character. Shortcut for `estimate`; identical options.}
-
 \item{vlabs}{Character. Rename variable labels to be displayed in the graph produced by lapop_coef(). For instance, vlabs=c("old_varname" = "new_varname").}
 
 \item{omit}{Character. Do not display coefficients for these independent variables. Default is to display all variables included in the model. To omit any variables you need to include the raw "varname" in the omit argument.}
@@ -43,6 +40,8 @@ lpr_coef(
 \item{replace}{Logical. Replace the dataset output if it already exists. Default is FALSE.}
 
 \item{level}{Numeric. Set confidence level in numeric values; default is 95 percent.}
+
+\item{est}{Character. Shortcut for `estimate`; identical options.}
 }
 \value{
 Returns a data frame, with data formatted for visualization by lapop_coef
@@ -75,7 +74,7 @@ lpr_coef(data = bra23lpr,
 # Example 3: Interactive linear model
 lpr_coef(data = bra23lpr,
  outcome = "ing4",
- xvar = "it1+idio2",
+ xvar = "wealth+idio2",
  interact = "wealth*idio2",
  model = "linear",
  est = "coef")
