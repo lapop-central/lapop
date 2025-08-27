@@ -112,6 +112,10 @@ value labels of old variable.</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>The input variable rescaled</p>
+    </div>
+    <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
     <p>Luke Plutowski, <a href="mailto:luke.plutowski@vanderbilt.edu">luke.plutowski@vanderbilt.edu</a></p>
     </div>
@@ -119,10 +123,30 @@ value labels of old variable.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="va">cm23</span><span class="op">$</span><span class="va">aoj11r</span> <span class="op">&lt;-</span> <span class="fu">lpr_resc</span><span class="op">(</span><span class="va">cm23</span><span class="op">$</span><span class="va">aoj11</span>,</span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://lapop-central.github.io/lapop/">lapop</a></span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ym23</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Regular data.frame</span></span></span>
+<span class="r-in"><span><span class="va">ym23</span><span class="op">$</span><span class="va">pn4r</span> <span class="op">&lt;-</span> <span class="fu">lpr_resc</span><span class="op">(</span><span class="va">ym23</span><span class="op">$</span><span class="va">pn4</span>,</span></span>
 <span class="r-in"><span>reverse <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>map<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span> <span class="co"># \dontrun{}</span></span></span>
+<span class="r-in"><span>map <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                           0 0.333333333333333 0.666666666666667     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Muy satisfecho(a)       0                 0                 0  3735</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Satisfecho(a)           0                 0             20398     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Insatisfecho(a)         0             27707                 0     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Muy insatisfecho(a)  9105                 0                 0     0</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># LPR data.frame</span></span></span>
+<span class="r-in"><span><span class="va">ym23lpr</span><span class="op">&lt;-</span><span class="fu"><a href="lpr_data.html">lpr_data</a></span><span class="op">(</span><span class="va">ym23</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ym23lpr</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">pn4r</span> <span class="op">&lt;-</span> <span class="fu">lpr_resc</span><span class="op">(</span><span class="va">ym23lpr</span><span class="op">$</span><span class="va">variables</span><span class="op">$</span><span class="va">pn4</span>,</span></span>
+<span class="r-in"><span>reverse <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>map <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                           0 0.333333333333333 0.666666666666667     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Muy satisfecho(a)       0                 0                 0  3735</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Satisfecho(a)           0                 0             20398     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Insatisfecho(a)         0             27707                 0     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Muy insatisfecho(a)  9105                 0                 0     0</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -120,33 +120,72 @@ plotting regression coefficients graph using LAPOP formatting.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># Example 1: Linear model using lpr_coef()</span></span></span>
-<span class="r-in"><span><span class="fu">lpr_coef</span><span class="op">(</span></span></span>
-<span class="r-in"><span> outcome <span class="op">=</span> <span class="st">"l1"</span>,</span></span>
-<span class="r-in"><span> xvar <span class="op">=</span> <span class="st">"it1+idio2"</span>,</span></span>
-<span class="r-in"><span> data <span class="op">=</span> <span class="va">dataLAPOP</span>,</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://lapop-central.github.io/lapop/">lapop</a></span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">bra23</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Set Survey Context</span></span></span>
+<span class="r-in"><span><span class="va">bra23lpr</span> <span class="op">&lt;-</span> <span class="fu"><a href="lpr_data.html">lpr_data</a></span><span class="op">(</span><span class="va">bra23</span>, wt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 1: Linear model</span></span></span>
+<span class="r-in"><span><span class="fu">lpr_coef</span><span class="op">(</span>data <span class="op">=</span> <span class="va">bra23lpr</span>,</span></span>
+<span class="r-in"><span> outcome <span class="op">=</span> <span class="st">"ing4"</span>,</span></span>
+<span class="r-in"><span> xvar <span class="op">=</span> <span class="st">"wealth+idio2"</span>,</span></span>
 <span class="r-in"><span> model <span class="op">=</span> <span class="st">"linear"</span>,</span></span>
-<span class="r-in"><span> est <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span><span class="op">}</span> <span class="co"># }</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># Example 2: Logit model using lpr_coef()</span></span></span>
-<span class="r-in"><span><span class="fu">lpr_coef</span><span class="op">(</span></span></span>
+<span class="r-in"><span> estimate <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> CSV output file not created.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                varlabel         coef         lb        ub pvalue proplabel</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) (Intercept)  4.475856131  4.2348361 4.7168762  0.000     4.476</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wealth           wealth  0.191626610  0.1209251 0.2623281  0.000     0.192</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> idio2Igual   idio2Igual -0.003091333 -0.2199569 0.2137742  0.978    -0.003</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> idio2Peor     idio2Peor -0.040723473 -0.2730561 0.1916092  0.729    -0.041</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 2: Logit model with contrasts</span></span></span>
+<span class="r-in"><span><span class="fu">lpr_coef</span><span class="op">(</span>data <span class="op">=</span> <span class="va">bra23lpr</span>,</span></span>
 <span class="r-in"><span> outcome <span class="op">=</span> <span class="st">"fs2"</span>,</span></span>
-<span class="r-in"><span> xvar <span class="op">=</span> <span class="st">"it1+idio2"</span>,</span></span>
-<span class="r-in"><span> data <span class="op">=</span> <span class="va">dataLAPOP</span>,</span></span>
+<span class="r-in"><span> xvar <span class="op">=</span> <span class="st">"wealth+idio2"</span>,</span></span>
 <span class="r-in"><span> model <span class="op">=</span> <span class="st">"binomial"</span>,</span></span>
-<span class="r-in"><span> est <span class="op">=</span> <span class="st">"contrast"</span><span class="op">)</span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span> estimate <span class="op">=</span> <span class="st">"contrast"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> CSV output file not created.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               varlabel        coef          lb           ub pvalue proplabel</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    wealth: Max - Min -0.29702984 -0.34858163 -0.245478056 0.0000     -0.30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 idio2: Igual - Mejor -0.04387263 -0.08517793 -0.002567331 0.0374     -0.04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  idio2: Peor - Mejor  0.04304993 -0.01520202  0.101301880 0.1475      0.04</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># Example 3: Interactive model using lpr_coef()</span></span></span>
-<span class="r-in"><span><span class="fu">lpr_coef</span><span class="op">(</span></span></span>
-<span class="r-in"><span> outcome <span class="op">=</span> <span class="st">"fs2"</span>,</span></span>
-<span class="r-in"><span> xvar <span class="op">=</span> <span class="st">"it1+idio2"</span>,</span></span>
-<span class="r-in"><span> interact <span class="op">=</span> <span class="st">"it1*idio2"</span>,</span></span>
-<span class="r-in"><span> data <span class="op">=</span> <span class="va">dataLAPOP</span>,</span></span>
+<span class="r-in"><span><span class="co"># Example 3: Interactive linear model</span></span></span>
+<span class="r-in"><span><span class="fu">lpr_coef</span><span class="op">(</span>data <span class="op">=</span> <span class="va">bra23lpr</span>,</span></span>
+<span class="r-in"><span> outcome <span class="op">=</span> <span class="st">"ing4"</span>,</span></span>
+<span class="r-in"><span> xvar <span class="op">=</span> <span class="st">"wealth+idio2"</span>,</span></span>
+<span class="r-in"><span> interact <span class="op">=</span> <span class="st">"wealth*idio2"</span>,</span></span>
 <span class="r-in"><span> model <span class="op">=</span> <span class="st">"linear"</span>,</span></span>
-<span class="r-in"><span> est <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span> estimate <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> CSV output file not created.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            varlabel       coef          lb         ub pvalue</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)             (Intercept)  4.6564528  4.29602602 5.01687967  0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wealth                       wealth  0.1288742  0.01061972 0.24712865  0.033</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> idio2Igual               idio2Igual -0.1525902 -0.62365454 0.31847412  0.522</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> idio2Peor                 idio2Peor -0.5220352 -1.13114788 0.08707742  0.092</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wealth:idio2Igual wealth:idio2Igual  0.0523350 -0.09917669 0.20384670  0.495</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wealth:idio2Peor   wealth:idio2Peor  0.1638380 -0.02525802 0.35293398  0.089</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   proplabel</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           4.656</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wealth                0.129</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> idio2Igual           -0.153</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> idio2Peor            -0.522</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wealth:idio2Igual     0.052</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wealth:idio2Peor      0.164</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 4: Interactive logit model</span></span></span>
+<span class="r-in"><span><span class="fu">lpr_coef</span><span class="op">(</span>data <span class="op">=</span> <span class="va">bra23lpr</span>,</span></span>
+<span class="r-in"><span>         outcome <span class="op">=</span> <span class="st">"fs2"</span>,</span></span>
+<span class="r-in"><span>         xvar <span class="op">=</span> <span class="st">"wealth+idio2"</span>,</span></span>
+<span class="r-in"><span>         interact <span class="op">=</span> <span class="st">"wealth*idio2"</span>,</span></span>
+<span class="r-in"><span>         model <span class="op">=</span> <span class="st">"binomial"</span>,</span></span>
+<span class="r-in"><span>         estimate <span class="op">=</span> <span class="st">"contrast"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> CSV output file not created.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               varlabel        coef          lb           ub pvalue proplabel</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    wealth: Max - Min -0.29843627 -0.34983185 -0.247040692 0.0000     -0.30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 idio2: Igual - Mejor -0.04412517 -0.08593867 -0.002311663 0.0386     -0.04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  idio2: Peor - Mejor  0.04264438 -0.01579508  0.101083836 0.1527      0.04</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
