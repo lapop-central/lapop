@@ -33,25 +33,23 @@ NULL
 #' @param order Logical.  Should bars be ordered from most frequent response to least?  Default: FALSE.
 #' @return Returns an object of class \code{ggplot}, a ggplot bar graph.
 #' @examples
-#'
-#'\dontrun{df <- data.frame(
-#'cat = c("Far Left", 1, 2, 3, 4, "Center", 6, 7, 8, 9, "Far Right"),
-#'prop = c(4, 3, 5, 12, 17, 23, 15, 11, 5, 4, 1),
-#'proplabel = c("4%", "3%", "5%", "12%", "17%", "23%", "15%", "11%", "5%", "4%", "1%")
-#')
-#'lapop_hist(df,
-#'           main_title = "Centrists are a plurality among Peruvians",
-#'           subtitle = "Distribution of ideological preferences",
-#'           source_info = "Peru, 2019",
-#'           ymax = 27)}
+#' df <- data.frame(
+#' cat = c("Far Left", 1, 2, 3, 4, "Center", 6, 7, 8, 9, "Far Right"),
+#' prop = c(4, 3, 5, 12, 17, 23, 15, 11, 5, 4, 1),
+#' proplabel = c("4%", "3%", "5%", "12%", "17%", "23%", "15%", "11%", "5%", "4%", "1%")
+#' )
+#' lapop_hist(df,
+#'            main_title = "Centrists are a plurality among Peruvians",
+#'            subtitle = "Distribution of ideological preferences",
+#'            source_info = "Source: LAPOP Lab, AmericasBarometer Peru 2019",
+#'            ymax = 27)
 #'
 #'@export
 #'@import ggplot2
 #'@import ggtext
 #'@importFrom stringr str_wrap
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
-#'
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 lapop_hist <- function(data, outcome_var = data$prop, label_var = data$proplabel,
                        cat_var = data$cat,

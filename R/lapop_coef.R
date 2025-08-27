@@ -40,8 +40,8 @@ NULL
 #' coefficients or predicted probabilities from a multivariate regression.
 #'
 #' @examples
-#'
-#' \dontrun{df <- data.frame(
+#' require(lapop); lapop_fonts()
+#' df <- data.frame(
 #'   varlabel = c("Intimate\nPartner", "wealth", "Education", "Age", "Male"),
 #'   coef = c(0.02, -0.07, -0.24, 0.01, 0.11),
 #'   lb = c(-0.002, -0.110, -0.295, -0.060, 0.085),
@@ -53,9 +53,9 @@ NULL
 #' lapop_coef(df,
 #'            main_title = "Demographic and Socioeconomic Predictors of Normalizing IPV",
 #'            pred_prob = TRUE,
-#'            source_info = "2021",
+#'            source_info = ", AmericasBarometer 2021",
 #'            ymin = -0.3,
-#'            ymax = 0.2)}
+#'            ymax = 0.2)
 #'
 #'@export
 #'@import ggplot2

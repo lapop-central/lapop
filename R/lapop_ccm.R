@@ -45,8 +45,7 @@ NULL
 #' average values of some variables across multiple countries.
 #'
 #' @examples
-#'
-#'\dontrun{lapop_fonts()
+#' require(lapop); lapop_fonts()
 #'
 #' df <- data.frame(pais = c(rep("HT", 2), rep("PE", 2), rep("HN", 2), rep("CO", 2),
 #'              rep("UY", 2), rep("CR", 2), rep("EC", 2), rep("CL", 2),
@@ -63,7 +62,7 @@ NULL
 #'               ub = c(33, 41, 43, 52, 60, 36, 83, 57, 33, 46, 64, 45,
 #'                      41, 57, 77, 64, 53, 37, 51, 37, 75, 44, 61, 60))
 #'
-#'lapop_ccm(df, sort = "var")}
+#' lapop_ccm(df, sort = "var", source_info = ", AmericasBarometer")
 #'
 #'@export
 #'@import ggplot2

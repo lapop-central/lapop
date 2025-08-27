@@ -87,24 +87,27 @@ NULL
 #' @param ci Logical.  Add "tie fighter" confidence intervals.  Only recommended when each line represents a different variable.
 #' @param legendnrow Numeric.  How many rows for legend labels. Default: 1.
 #'@examples
-#'\dontrun{df <- data.frame(varlabel = c(rep("Honduras", 9), rep("El Salvador", 9),
-#'                              rep("Mexico", 9), rep("Guatemala", 9)),
-#'                 wave = rep(c("2004", "2006", "2008", "2010", "2012",
-#'                              "2014", "2016/17", "2018/19", "2021"), 4),
-#'                 prop = c(19, 24, 21, 15, 11, 32, 41, 38, 54, 29, 29, 25,
-#'                          24, 24, 28, 36, 26, 32, 14, 16, 14, 16, 9, 14,
-#'                          18, 19, 26, 21, 15, 18, 20, 14, 18, 17, 25, 36),
-#'                 proplabel = c("19%", "24%", "21%", "15%", "11%", "32%",
-#'                               "41%", "38%", "54%", "29%", "29%", "25%",
-#'                               "24%", "24%", "28%", "36%", "26%", "32%",
-#'                               "14%", "16%", "14%", "16%", "9%", "14%",
-#'                               "18%", "19%", "26%", "21%", "15%", "18%",
-#'                               "20%", "14%", "18%", "17%", "25%", "36%"))
+#' df <- data.frame(varlabel = c(rep("Honduras", 9), rep("El Salvador", 9),
+#'                               rep("Mexico", 9), rep("Guatemala", 9)),
+#'                  wave = rep(c("2004", "2006", "2008", "2010", "2012",
+#'                               "2014", "2016/17", "2018/19", "2021"), 4),
+#'                  prop = c(19, 24, 21, 15, 11, 32, 41, 38, 54,
+#'                           29, 29, 25, 24, 24, 28, 36, 26, 32,
+#'                           14, 16, 14, 16, 9, 14, 18, 19, 26,
+#'                           21, 15, 18, 20, 14, 18, 17, 25, 36),
+#'                  proplabel = c("19%", "24%", "21%", "15%", "11%", "32%",
+#'                                "41%", "38%", "54%",
+#'                                "29%", "29%", "25%", "24%", "24%", "28%",
+#'                                "36%", "26%", "32%",
+#'                                "14%", "16%", "14%", "16%", "9%", "14%",
+#'                                "18%", "19%", "26%",
+#'                                "21%", "15%", "18%", "20%", "14%", "18%",
+#'                                "17%", "25%", "36%"))
 #'
-#'lapop_mline(df,
-#'      main_title = "Intentions to emigrate in Guatemala, Honduras and Mexico reached their highs",
-#'      subtitle = "% who intend to migrate in:",
-#'      source_info = "GM 2004-2021")}
+#' lapop_mline(df,
+#'       main_title = "Intentions to emigrate in Guatemala, Honduras and Mexico reached their highs",
+#'       subtitle = "% who intend to migrate in:",
+#'       source_info = ", AmericasBarometer 2004-2021")
 #'
 #'@export
 #'@import ggplot2
@@ -115,9 +118,7 @@ NULL
 #'@import showtext
 #'@import dplyr
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
-#'
-
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 lapop_mline <- function(data, varlabel = data$varlabel, wave_var = as.character(data$wave),
                         outcome_var = data$prop, label_var = data$proplabel,
@@ -166,7 +167,8 @@ lapop_mline <- function(data, varlabel = data$varlabel, wave_var = as.character(
       geom_errorbar(aes(ymin=lb, ymax=ub), width = 0.2, show.legend = FALSE)
       }
     } +
-    geom_point(aes(y = point_var, color = varlabel), size = 3.5, alpha=0.48, key_glyph = draw_key_blank) +
+    geom_point(aes(y = point_var, color = varlabel), size = 3.5, alpha=0.48,
+               key_glyph = draw_key_blank) +
     scale_color_manual(breaks = levels(varlabel),
                        labels = paste("<span style='color:",
                                       mycolors,
@@ -175,14 +177,28 @@ lapop_mline <- function(data, varlabel = data$varlabel, wave_var = as.character(
                                       "</span>"),
                        values = mycolors,
                        guide=guide_legend(nrow = legendnrow)) +
+
+    scale_x_discrete(limits = unique(wave_var),
+                     expand = expansion(mult = c(0.02, 0.06))) +
+    coord_cartesian(clip = "off") +
+
     {if(all_labels){
       geom_text(aes(label=label_var, color = varlabel),
                 family = "roboto", fontface = "bold", size = 5, vjust = -2,
                 show.legend = FALSE)
     }
       else{
-        ggrepel::geom_text_repel(aes(label = end_labels, fontface= "bold"), color = textcolors, family = "roboto",
-                                 size = 4.5, nudge_x = 1, direction = "y")
+        ggrepel::geom_text_repel(
+          aes(label = end_labels),            # fontface can be set outside aes
+          fontface = "bold",
+          color = textcolors,
+          family = "roboto",
+          size = 4.5,
+          nudge_x = 0.35,                     # small nudge to the right
+          direction = "y",
+          segment.color = NA                  # <-- hides the “continuation” line
+        )
+
       }
     } +
     {

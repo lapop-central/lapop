@@ -27,28 +27,27 @@ NULL
 #' @return Returns an object of class \code{ggplot}, a ggplot bar graph.
 #'
 #' @examples
-#' \dontrun{
-#'df1 <- data.frame(vallabel = c("Crime victim", "Non-victim"),
-#'prop = c(36.1, 19.3),
-#'proplabel = c("36%" ,"19%"),
-#'lb = c(34.9, 18.1),
-#'ub = c(37.3, 20.5))
+#' require(lapop); lapop_fonts()
+#' df1 <- data.frame(vallabel = c("Crime victim", "Non-victim"),
+#' prop = c(36.1, 19.3),
+#' proplabel = c("36%" ,"19%"),
+#' lb = c(34.9, 18.1),
+#' ub = c(37.3, 20.5))
 #'
-#'df2 <- data.frame(vallabel = c("Crime victim", "Non-victim"),
-#'prop = c(45, 15),
-#'proplabel = c("45%" ,"15%"),
-#'lb = c(43, 13),
-#'ub = c(47, 16))
+#' df2 <- data.frame(vallabel = c("Crime victim", "Non-victim"),
+#' prop = c(45, 15),
+#' proplabel = c("45%" ,"15%"),
+#' lb = c(43, 13),
+#' ub = c(47, 16))
 #'
-#'ccx <- lapop_cc(df1)
-#'ccy <- lapop_cc(df2)
+#' ccx <- lapop_cc(df1)
+#' ccy <- lapop_cc(df2)
 #'
-#'lapop_cccomb(ccx, ccy,
-#'subtitle1 = "% who support democracy",
-#'subtitle2 = "% who are satisfied with democracy",
-#'main_title = "Crime victims are more supportive of and satisfied with democracy",
-#'source_info = ", AmericasBarometer 2023")
-#'}
+#' lapop_cccomb(ccx, ccy,
+#' subtitle1 = "% who support democracy",
+#' subtitle2 = "% who are satisfied with democracy",
+#' main_title = "Crime victims are more supportive of and satisfied with democracy",
+#' source_info = ", AmericasBarometer 2023")
 #'
 #'@export
 #'@import ggplot2

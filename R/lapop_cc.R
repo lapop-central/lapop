@@ -44,7 +44,7 @@ NULL
 #'
 #' @examples
 #'
-#'\dontrun{lapop_fonts()
+#'require(lapop); lapop_fonts()
 #'
 #' df <- data.frame(vallabel = c("PE", "CO", "BR", "PN", "GT", "DO", "MX", "BO", "EC",
 #'                           "PY", "CL", "HN", "CR", "SV", "JA", "AR", "UY", "NI"),
@@ -61,18 +61,17 @@ NULL
 #' lapop_cc(df,
 #'          main_title = "Normalization of Initimate Partner Violence in Seven LAC Countries",
 #'          subtitle = "% who say domestic violence is private matter",
-#'          source_info = ", 2021",
+#'          source_info = "LAPOP Lab, AmericasBarometer 2021",
 #'          highlight = "BR",
-#'          ymax = 50)}
-#'
+#'          ymax = 50)
+
 #'@export
 #'@import ggplot2
 #'@import ggtext
 #'@import sysfonts
 #'@import showtext
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
-
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, vallabel = data$vallabel,
                      upper_bound = data$ub, label_var = data$proplabel,

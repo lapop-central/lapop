@@ -82,22 +82,21 @@ NULL
 #' @param legendnrow Numeric.  How many rows for legend labels. Default: 1.
 #'
 #' @examples
+#'df <- data.frame(varlabel = c(rep("Politicians can\nidentify voters", 5),
+#'                              rep("Wealthy can\nbuy results", 5),
+#'                              rep("Votes are\ncounted correctly", 5)),
+#'                 vallabel = rep(c("Always", "Often", "Sometimes",
+#'                                  "Never", "Other"), 3),
+#'                 prop = c(36, 10, 19, 25, 10, 46, 10, 23, 11, 10, 35,
+#'                          10, 32, 13, 10),
+#'                 proplabel = c("36%", "10%", "19%", "25%", "10%", "46%",
+#'                               "10%", "23%", "11%", "10%", "35%", "10%",
+#'                               "32%", "13%", "10%"))
 #'
-#' \dontrun{df <- data.frame(varlabel = c(rep("Politicians can\nidentify voters", 5),
-#'                               rep("Wealthy can\nbuy results", 5),
-#'                               rep("Votes are\ncounted correctly", 5)),
-#'                  vallabel = rep(c("Always", "Often", "Sometimes",
-#'                                   "Never", "Other"), 3),
-#'                  prop = c(36, 10, 19, 25, 10, 46, 10, 23, 11, 10, 35,
-#'                           10, 32, 13, 10),
-#'                  proplabel = c("36%", "10%", "19%", "25%", "10%", "46%",
-#'                                "10%", "23%", "11%", "10%", "35%", "10%",
-#'                                "32%", "13%", "10%"))
-#'
-#' lapop_stack(df,
-#'          main_title = "Trust in key features of the electoral process is low in Latin America",
-#'          subtitle = "% believing it happens:",
-#'          source_info = "2019")}
+#'lapop_stack(df,
+#'         main_title = "Trust in key features of the electoral process is low in Latin America",
+#'         subtitle = "% believing it happens:",
+#'         source_info = "Source: LAPOP Lab, AmericasBarometer 2019")
 #'
 #'@export
 #'@import ggplot2
@@ -106,7 +105,7 @@ NULL
 #'@importFrom stats reorder
 
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 lapop_stack <- function(data,
                         outcome_var = data$prop,
@@ -216,13 +215,13 @@ lapop_stack <- function(data,
       geom_bar(position = "stack", stat = "identity", width = 0.6) +
       geom_text(aes(label = ifelse(outcome_var >= 5, prop_labels, NA)),
                 position = position_stack(vjust = 0.5), color = "#FFFFFF",
-                fontface = "bold", size = 5) +
+                fontface = "bold", size = 5, na.rm=T) +
       ggrepel::geom_text_repel(aes(label = ifelse(outcome_var < 5 & hide_small_values == FALSE, prop_labels, NA)),
                                position = position_stack(vjust = 0.5),
                                color = "#FFFFFF", segment.color = 'transparent',
                                fontface = "bold", size = 4, family = "roboto",
                                direction = "y",
-                               force_pull = 0.2, force = 5) +
+                               force_pull = 0.2, force = 5, na.rm=T) +
       coord_flip() +
       scale_fill_manual(values = mycolors, guide = guide_legend(reverse = TRUE, nrow = legendnrow), na.translate = FALSE) +
       scale_x_discrete(limits = positions, expand = c(0, 0)) +
@@ -260,13 +259,13 @@ lapop_stack <- function(data,
       geom_bar(position = "stack", stat = "identity", width = 0.6) +
       geom_text(aes(label = ifelse(outcome_var >= 5, prop_labels, NA)),
                 position = position_stack(vjust = 0.5), color = "#FFFFFF",
-                fontface = "bold", size = 5) +
+                fontface = "bold", size = 5, na.rm=T) +
       ggrepel::geom_text_repel(aes(label = ifelse(outcome_var < 5 & hide_small_values == FALSE, prop_labels, NA)),
                                position = position_stack(vjust = 0.5),
                                color = "#FFFFFF", segment.color = 'transparent',
                                fontface = "bold", size = 4, family = "nunito",
                                direction = "y",
-                               force_pull = 0.2, force = 5) +
+                               force_pull = 0.2, force = 5, na.rm=T) +
       coord_flip() +
       scale_fill_manual(values = mycolors, guide=guide_legend(reverse = TRUE, nrow = legendnrow)) +
       scale_x_discrete(limits = positions, expand = c(0, 0)) +
@@ -297,6 +296,8 @@ lapop_stack <- function(data,
             legend.justification='left',
             legend.key.size = unit(1, "line"),
             legend.margin = margin(t=5,b=5, 0, subtitle_h_just)) +
-      {if(fixed_aspect_ratio)theme(aspect.ratio = 0.35)}
+      {
+        if (fixed_aspect_ratio) theme(aspect.ratio = 0.35)
+        }
   }
 }

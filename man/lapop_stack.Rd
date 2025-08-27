@@ -82,24 +82,23 @@ Returns an object of class \code{ggplot}, a ggplot stacked bar graph
 This function shows a stacked bar graph using LAPOP formatting.
 }
 \examples{
-
-\dontrun{df <- data.frame(varlabel = c(rep("Politicians can\nidentify voters", 5),
-                              rep("Wealthy can\nbuy results", 5),
-                              rep("Votes are\ncounted correctly", 5)),
-                 vallabel = rep(c("Always", "Often", "Sometimes",
-                                  "Never", "Other"), 3),
-                 prop = c(36, 10, 19, 25, 10, 46, 10, 23, 11, 10, 35,
-                          10, 32, 13, 10),
-                 proplabel = c("36\%", "10\%", "19\%", "25\%", "10\%", "46\%",
-                               "10\%", "23\%", "11\%", "10\%", "35\%", "10\%",
-                               "32\%", "13\%", "10\%"))
+df <- data.frame(varlabel = c(rep("Politicians can\nidentify voters", 5),
+                             rep("Wealthy can\nbuy results", 5),
+                             rep("Votes are\ncounted correctly", 5)),
+                vallabel = rep(c("Always", "Often", "Sometimes",
+                                 "Never", "Other"), 3),
+                prop = c(36, 10, 19, 25, 10, 46, 10, 23, 11, 10, 35,
+                         10, 32, 13, 10),
+                proplabel = c("36\%", "10\%", "19\%", "25\%", "10\%", "46\%",
+                              "10\%", "23\%", "11\%", "10\%", "35\%", "10\%",
+                              "32\%", "13\%", "10\%"))
 
 lapop_stack(df,
-         main_title = "Trust in key features of the electoral process is low in Latin America",
-         subtitle = "\% believing it happens:",
-         source_info = "2019")}
+        main_title = "Trust in key features of the electoral process is low in Latin America",
+        subtitle = "\% believing it happens:",
+        source_info = "Source: LAPOP Lab, AmericasBarometer 2019")
 
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

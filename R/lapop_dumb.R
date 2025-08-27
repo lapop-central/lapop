@@ -78,8 +78,8 @@ NULL
 #'  (a dumbbell plot).
 #'
 #' @examples
-#'
-#'\dontrun{df <- data.frame(pais = c("Haiti", "Peru", "Honduras", "Colombia", "Ecuador",
+#' require(lapop); lapop_fonts()
+#' df <- data.frame(pais = c("Haiti", "Peru", "Honduras", "Colombia", "Ecuador",
 #'                           "Panama", "Bolivia", "Argentina", "Paraguay",
 #'                           "Dom. Rep.", "Brazil", "Jamaica", "Nicaragua",
 #'                           "Guyana", "Costa Rica", "Mexico", "Guatemala",
@@ -100,13 +100,13 @@ NULL
 #' lapop_dumb(df,
 #' main_title = paste0("Personal economic conditions worsened across LAC"),
 #'          subtitle = "% personal economic situation worsened",
-#'          source_info = "AmericasBarometer 2018/19-2021")}
+#'          source_info = "Source: LAPOP Lab, AmericasBarometer 2018/19-2021")
 #'
 #'@export
 #'@import ggplot2
 #'@import ggtext
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 lapop_dumb <- function(data,
                       ymin = 0,
@@ -152,22 +152,30 @@ lapop_dumb <- function(data,
 
   update_geom_defaults("text", list(family = "roboto"))
     ggplot(data, aes(y=pais)) +
-      geom_point(aes(x = prop1, color = names(color_scheme)[1]), size=4) +
-      geom_point(aes(x = prop2, color = names(color_scheme)[2]), size=4) +
+      geom_point(aes(x = prop1, color = names(color_scheme)[1]),
+                 size=4, na.rm=T) +
+      geom_point(aes(x = prop2, color = names(color_scheme)[2]),
+                 size=4, na.rm=T) +
       geom_text(data = data[data$max1 == FALSE, ],
                 aes(x = prop1, label = proplabel1),
-                nudge_x = -text_nudge, color = color_scheme[1], size = 5, fontface = "bold") +
+                nudge_x = -text_nudge, color = color_scheme[1],
+                size = 5, fontface = "bold", na.rm=T) +
       geom_text(data = data[data$max1 == TRUE, ],
                 aes(x = prop1, label = proplabel1),
-                nudge_x = text_nudge, color = color_scheme[1], size = 5, fontface = "bold") +
+                nudge_x = text_nudge, color = color_scheme[1],
+                size = 5, fontface = "bold", na.rm=T) +
       geom_text(data = data[data$max1 == TRUE, ],
                 aes(x = prop2, label = proplabel2),
-                nudge_x = -text_nudge, color = color_scheme[2], size = 5, fontface = "bold") +
+                nudge_x = -text_nudge, color = color_scheme[2],
+                size = 5, fontface = "bold", na.rm=T) +
       geom_text(data = data[data$max1 == FALSE, ],
                 aes(x = prop2, label = proplabel2),
-                nudge_x = text_nudge, color = color_scheme[2], size = 5, fontface = "bold") +
+                nudge_x = text_nudge, color = color_scheme[2],
+                size = 5, fontface = "bold", na.rm=T) +
       geom_vline(xintercept = 0, color = "#dddddf") +
-      scale_x_continuous(limits=c(ymin, ymax), breaks=seq(ymin, ymax, 20), labels = paste(seq(ymin,ymax, 20), "%", sep=""), expand = c(0,0)) +
+      scale_x_continuous(limits=c(ymin, ymax), breaks=seq(ymin, ymax, 20),
+                         labels = paste(seq(ymin,ymax, 20), "%", sep=""),
+                         expand = c(0,0)) +
       scale_color_manual(values = color_scheme) +
       labs(title = main_title,
            y = "",
@@ -178,14 +186,19 @@ lapop_dumb <- function(data,
            subtitle = subtitle) +
       theme(text = element_text(size = 14, family = "roboto"),
             plot.title = element_text(size = 17, family = "nunito", face = "bold"),
-            plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "nunito", color="#585860"),
-            plot.subtitle = element_text(size = 14, family = "nunito-light", color="#585860"),
+            plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2,
+                                        family = "nunito", color="#585860"),
+            plot.subtitle = element_text(size = 14,
+                                         family = "nunito-light", color="#585860"),
             plot.margin = margin(5.5, 20, 5.5, 5.5, "points"),
             axis.title.y = element_blank(),
             axis.ticks = element_blank(),
             plot.title.position = "plot",
             plot.caption.position = "plot",
-            axis.text = element_text(size = 12, family = "roboto", color = "#585860", margin=margin(r=5)),
+            axis.text = element_text(size = 12,
+                                     family = "roboto",
+                                     color = "#585860",
+                                     margin=margin(r=5)),
             panel.grid.major.y = element_line(color = "#dddddf"),
             panel.background = element_rect(fill = "white"),
             legend.position="top",

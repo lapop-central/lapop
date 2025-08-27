@@ -82,26 +82,29 @@ single-line time series graph, this function will not print confidence lines nor
 it show text values for each year (just the final/most recent year).
 }
 \examples{
-\dontrun{df <- data.frame(varlabel = c(rep("Honduras", 9), rep("El Salvador", 9),
-                             rep("Mexico", 9), rep("Guatemala", 9)),
-                wave = rep(c("2004", "2006", "2008", "2010", "2012",
-                             "2014", "2016/17", "2018/19", "2021"), 4),
-                prop = c(19, 24, 21, 15, 11, 32, 41, 38, 54, 29, 29, 25,
-                         24, 24, 28, 36, 26, 32, 14, 16, 14, 16, 9, 14,
-                         18, 19, 26, 21, 15, 18, 20, 14, 18, 17, 25, 36),
-                proplabel = c("19\%", "24\%", "21\%", "15\%", "11\%", "32\%",
-                              "41\%", "38\%", "54\%", "29\%", "29\%", "25\%",
-                              "24\%", "24\%", "28\%", "36\%", "26\%", "32\%",
-                              "14\%", "16\%", "14\%", "16\%", "9\%", "14\%",
-                              "18\%", "19\%", "26\%", "21\%", "15\%", "18\%",
-                              "20\%", "14\%", "18\%", "17\%", "25\%", "36\%"))
+df <- data.frame(varlabel = c(rep("Honduras", 9), rep("El Salvador", 9),
+                              rep("Mexico", 9), rep("Guatemala", 9)),
+                 wave = rep(c("2004", "2006", "2008", "2010", "2012",
+                              "2014", "2016/17", "2018/19", "2021"), 4),
+                 prop = c(19, 24, 21, 15, 11, 32, 41, 38, 54,
+                          29, 29, 25, 24, 24, 28, 36, 26, 32,
+                          14, 16, 14, 16, 9, 14, 18, 19, 26,
+                          21, 15, 18, 20, 14, 18, 17, 25, 36),
+                 proplabel = c("19\%", "24\%", "21\%", "15\%", "11\%", "32\%",
+                               "41\%", "38\%", "54\%",
+                               "29\%", "29\%", "25\%", "24\%", "24\%", "28\%",
+                               "36\%", "26\%", "32\%",
+                               "14\%", "16\%", "14\%", "16\%", "9\%", "14\%",
+                               "18\%", "19\%", "26\%",
+                               "21\%", "15\%", "18\%", "20\%", "14\%", "18\%",
+                               "17\%", "25\%", "36\%"))
 
 lapop_mline(df,
-     main_title = "Intentions to emigrate in Guatemala, Honduras and Mexico reached their highs",
-     subtitle = "\% who intend to migrate in:",
-     source_info = "GM 2004-2021")}
+      main_title = "Intentions to emigrate in Guatemala, Honduras and Mexico reached their highs",
+      subtitle = "\% who intend to migrate in:",
+      source_info = ", AmericasBarometer 2004-2021")
 
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

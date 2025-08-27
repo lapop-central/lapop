@@ -56,19 +56,18 @@ Returns an object of class \code{ggplot}, a ggplot bar graph.
 This function shows a bar graph for categorical variables using LAPOP formatting.
 }
 \examples{
-
-\dontrun{df <- data.frame(
+df <- data.frame(
 cat = c("Far Left", 1, 2, 3, 4, "Center", 6, 7, 8, 9, "Far Right"),
 prop = c(4, 3, 5, 12, 17, 23, 15, 11, 5, 4, 1),
 proplabel = c("4\%", "3\%", "5\%", "12\%", "17\%", "23\%", "15\%", "11\%", "5\%", "4\%", "1\%")
 )
 lapop_hist(df,
-          main_title = "Centrists are a plurality among Peruvians",
-          subtitle = "Distribution of ideological preferences",
-          source_info = "Peru, 2019",
-          ymax = 27)}
+           main_title = "Centrists are a plurality among Peruvians",
+           subtitle = "Distribution of ideological preferences",
+           source_info = "Source: LAPOP Lab, AmericasBarometer Peru 2019",
+           ymax = 27)
 
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }

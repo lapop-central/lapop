@@ -68,7 +68,7 @@ This function shows the values of an outcome variable for subgroups of a seconda
 }
 \examples{
 
-\dontrun{df <- data.frame(varlabel = c(rep("Gender", 2), rep("Age", 6),
+df <- data.frame(varlabel = c(rep("Gender", 2), rep("Age", 6),
                               rep("Education", 4), rep("Wealth", 5)),
                  vallabel = c("Women", "Men", "18-25", "26-35", "36-45",
                               "46-55", "56-65", "66+", "  None", "Primary",
@@ -89,10 +89,11 @@ lapop_mover(df,
                                 " in the LAC region are the\nmost likely",
                                   " to be crime victims"),
             subtitle = "\% victim of a crime", qword = "",
+            source_info = "Source: LAPOP Lab, AmericasBarometer",
             ymin = 0,
-            ymax = 40)}
+            ymax = 40)
 
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }
