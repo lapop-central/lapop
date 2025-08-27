@@ -108,10 +108,6 @@ plotting regression coefficients graph using LAPOP formatting.</p>
 <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
 <dd><p>Numeric. Set confidence level in numeric values; default is 95 percent.</p></dd>
 
-
-<dt id="arg-est">est<a class="anchor" aria-label="anchor" href="#arg-est"></a></dt>
-<dd><p>Character. Shortcut for `estimate`; identical options.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -135,7 +131,7 @@ plotting regression coefficients graph using LAPOP formatting.</p>
 <span class="r-in"><span> outcome <span class="op">=</span> <span class="st">"ing4"</span>,</span></span>
 <span class="r-in"><span> xvar <span class="op">=</span> <span class="st">"wealth+idio2"</span>,</span></span>
 <span class="r-in"><span> model <span class="op">=</span> <span class="st">"linear"</span>,</span></span>
-<span class="r-in"><span> est <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span></span></span>
+<span class="r-in"><span> estimate <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> CSV output file not created.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                varlabel         coef         lb        ub pvalue proplabel</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) (Intercept)  4.475856131  4.2348361 4.7168762  0.000     4.476</span>
@@ -148,7 +144,7 @@ plotting regression coefficients graph using LAPOP formatting.</p>
 <span class="r-in"><span> outcome <span class="op">=</span> <span class="st">"fs2"</span>,</span></span>
 <span class="r-in"><span> xvar <span class="op">=</span> <span class="st">"wealth+idio2"</span>,</span></span>
 <span class="r-in"><span> model <span class="op">=</span> <span class="st">"binomial"</span>,</span></span>
-<span class="r-in"><span> est <span class="op">=</span> <span class="st">"contrast"</span><span class="op">)</span></span></span>
+<span class="r-in"><span> estimate <span class="op">=</span> <span class="st">"contrast"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> CSV output file not created.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               varlabel        coef          lb           ub pvalue proplabel</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    wealth: Max - Min -0.29702984 -0.34858146 -0.245478225 0.0000     -0.30</span>
@@ -161,7 +157,7 @@ plotting regression coefficients graph using LAPOP formatting.</p>
 <span class="r-in"><span> xvar <span class="op">=</span> <span class="st">"wealth+idio2"</span>,</span></span>
 <span class="r-in"><span> interact <span class="op">=</span> <span class="st">"wealth*idio2"</span>,</span></span>
 <span class="r-in"><span> model <span class="op">=</span> <span class="st">"linear"</span>,</span></span>
-<span class="r-in"><span> est <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span></span></span>
+<span class="r-in"><span> estimate <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> CSV output file not created.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                            varlabel       coef          lb         ub pvalue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)             (Intercept)  4.6564528  4.29602602 5.01687967  0.000</span>
@@ -184,7 +180,7 @@ plotting regression coefficients graph using LAPOP formatting.</p>
 <span class="r-in"><span>         xvar <span class="op">=</span> <span class="st">"wealth+idio2"</span>,</span></span>
 <span class="r-in"><span>         interact <span class="op">=</span> <span class="st">"wealth*idio2"</span>,</span></span>
 <span class="r-in"><span>         model <span class="op">=</span> <span class="st">"binomial"</span>,</span></span>
-<span class="r-in"><span>         est <span class="op">=</span> <span class="st">"contrast"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>         estimate <span class="op">=</span> <span class="st">"contrast"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> CSV output file not created.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               varlabel        coef          lb           ub pvalue proplabel</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    wealth: Max - Min -0.29843627 -0.34983184 -0.247040698 0.0000     -0.30</span>
