@@ -133,13 +133,13 @@ average values of some variable broken down by one or more secondary variables
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
-    <p>Luke Plutowski, <a href="mailto:luke.plutowski@vanderbilt.edu">luke.plutowski@vanderbilt.edu</a> &amp;&amp; Robert Vidigal, <a href="mailto:robert.vidigal@vanderbilt.edu">robert.vidigal@vanderbilt.edu</a></p>
+    <p>Luke Plutowski, <a href="mailto:luke.plutowski@vanderbilt.edu">luke.plutowski@vanderbilt.edu</a> &amp; Robert Vidigal, <a href="mailto:robert.vidigal@vanderbilt.edu">robert.vidigal@vanderbilt.edu</a></p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>varlabel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"Gender"</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"Age"</span>, <span class="fl">6</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>varlabel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"Gender"</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"Age"</span>, <span class="fl">6</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                              <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"Education"</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"Wealth"</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                 vallabel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Women"</span>, <span class="st">"Men"</span>, <span class="st">"18-25"</span>, <span class="st">"26-35"</span>, <span class="st">"36-45"</span>,</span></span>
 <span class="r-in"><span>                              <span class="st">"46-55"</span>, <span class="st">"56-65"</span>, <span class="st">"66+"</span>, <span class="st">"  None"</span>, <span class="st">"Primary"</span>,</span></span>
@@ -160,9 +160,10 @@ average values of some variable broken down by one or more secondary variables
 <span class="r-in"><span>                                <span class="st">" in the LAC region are the\nmost likely"</span>,</span></span>
 <span class="r-in"><span>                                  <span class="st">" to be crime victims"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>            subtitle <span class="op">=</span> <span class="st">"% victim of a crime"</span>, qword <span class="op">=</span> <span class="st">""</span>,</span></span>
+<span class="r-in"><span>            source_info <span class="op">=</span> <span class="st">"Source: LAPOP Lab, AmericasBarometer"</span>,</span></span>
 <span class="r-in"><span>            ymin <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>            ymax <span class="op">=</span> <span class="fl">40</span><span class="op">)</span> <span class="co"># \dontrun{}</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in data$varlabel:</span> object of type 'closure' is not subsettable</span>
+<span class="r-in"><span>            ymax <span class="op">=</span> <span class="fl">40</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="lapop_mover-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
