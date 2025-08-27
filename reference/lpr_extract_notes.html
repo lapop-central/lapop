@@ -84,11 +84,26 @@ and note value.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Extract the notes</span></span></span>
-<span class="r-in"><span><span class="va">notes</span> <span class="op">&lt;-</span> <span class="fu">lpr_extract_notes</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">notes</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] variable_name noteid        note_value   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;0 rows&gt; (or 0-length row.names)</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://lapop-central.github.io/lapop/">lapop</a></span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">bra23</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Extract the notes</span></span></span>
+<span class="r-in"><span><span class="va">notesBRA23</span> <span class="op">&lt;-</span> <span class="fu">lpr_extract_notes</span><span class="op">(</span><span class="va">bra23</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">notesBRA23</span><span class="op">[</span><span class="va">notesBRA23</span><span class="op">$</span><span class="va">variable_name</span><span class="op">==</span><span class="st">"ing4"</span>,<span class="op">]</span><span class="op">)</span> <span class="co"># for ing4 variable</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      variable_name         note_id</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4201          ing4 _lang_l_default</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4202          ing4 _lang_v_default</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5953          ing4           note1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5954          ing4           note2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7422          ing4      _lang_v_pt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7423          ing4      _lang_l_pt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                         note_value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4201                                                                                                                                                    labels2670</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4202                                                                               ING4. A democracia tem seus problemas, mas é melhor que qualquer outra forma de</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5953 Puede que la democracia tenga problemas, pero es mejor que cualquier otra forma de gobierno. ¿Hasta qué punto está de acuerdo o en desacuerdo con esta frase?</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5954                Democracy may have problems, but it is better than any other form of government.  To what extent do you agree or disagree with this statement?</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7422                                                                                                                                            Apoio à democracia</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7423                                                                                                                                                       ing4_pt</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

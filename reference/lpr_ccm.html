@@ -144,28 +144,54 @@ valid responses only.  Default: FALSE.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
-    <p>Luke Plutowski, <a href="mailto:luke.plutowski@vanderbilt.edu">luke.plutowski@vanderbilt.edu</a> &amp;&amp; Robert Vidigal, <a href="mailto:robert.vidigal@vanderbilt.edu">robert.vidigal@vanderbilt.edu</a></p>
+    <p>Luke Plutowski, <a href="mailto:luke.plutowski@vanderbilt.edu">luke.plutowski@vanderbilt.edu</a> &amp; Robert Vidigal, <a href="mailto:robert.vidigal@vanderbilt.edu">robert.vidigal@vanderbilt.edu</a></p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># Multiple outcomes</span></span></span>
-<span class="r-in"><span><span class="fu">lpr_ccm</span><span class="op">(</span><span class="va">gm23</span>,</span></span>
-<span class="r-in"><span>outcome_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vic1ext"</span>, <span class="st">"aoj11"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>rec1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>rec2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>ttest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://lapop-central.github.io/lapop/">lapop</a></span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ym23</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># Set Survey Context</span></span></span>
+<span class="r-in"><span><span class="va">ym23lpr</span> <span class="op">&lt;-</span> <span class="fu"><a href="lpr_data.html">lpr_data</a></span><span class="op">(</span><span class="va">ym23</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Multiple outcomes over countries</span></span></span>
+<span class="r-in"><span><span class="fu">lpr_ccm</span><span class="op">(</span><span class="va">ym23lpr</span>,</span></span>
+<span class="r-in"><span>outcome_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b12"</span>, <span class="st">"b18"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>rec1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>rec2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>ttest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 41 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   var [2]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pais   prop    lb    ub proplabel var      se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> TT     44.5  42.4  46.7 45%       b12   1.12 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> NI     43.3  41.0  45.5 43%       b12   1.15 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> BO     37.7  35.6  39.7 38%       b12   1.05 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> DO     37.0  35.1  38.9 37%       b12   0.950</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> HN     36.2  34.1  38.3 36%       b12   1.05 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> AR     34.9  32.9  36.9 35%       b12   1.03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> UY     34.3  32.4  36.3 34%       b12   1.01 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> SR     33.6  31.2  35.9 34%       b12   1.19 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> PY     31.0  29.4  32.6 31%       b12   0.826</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> CO     30.5  28.7  32.3 31%       b12   0.931</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 31 more rows</span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Multiple outcomes over years</span></span></span>
-<span class="r-in"><span><span class="fu">lpr_ccm</span><span class="op">(</span><span class="va">gm23</span>,</span></span>
-<span class="r-in"><span>outcome_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vic1ext"</span>, <span class="st">"aoj11"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span><span class="fu">lpr_ccm</span><span class="op">(</span><span class="va">ym23lpr</span>,</span></span>
+<span class="r-in"><span>outcome_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b12"</span>, <span class="st">"b18"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>xvar <span class="op">=</span> <span class="st">"wave"</span>,</span></span>
-<span class="r-in"><span>rec1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>rec2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>ttest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span>rec1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>rec2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>ttest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   var [2]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   pais     prop    lb    ub proplabel var      se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2023     31.1  30.5  31.7 31%       b12   0.310</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2018/19  29.7  29.1  30.4 30%       b12   0.322</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2018/19  38.4  37.7  39.0 38%       b18   0.338</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2023     38.2  37.6  38.7 38%       b18   0.289</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
