@@ -43,7 +43,7 @@ NULL
 #' average values of some variables across multiple countries.
 #'
 #' @examples
-#'
+#'\donttest{
 #' require(lapop); lapop_fonts()
 #'
 #' df <- data.frame(vallabel = c("PE", "CO", "BR", "PN", "GT", "DO", "MX", "BO", "EC",
@@ -63,7 +63,7 @@ NULL
 #'          source_info = "LAPOP Lab, AmericasBarometer 2021",
 #'          highlight = "PE",
 #'          ymax = 50)
-#'
+#'}
 #'@export
 #'@import ggplot2
 #'@import ggtext

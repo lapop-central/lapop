@@ -52,6 +52,7 @@
 #' @return Returns a data frame, with data formatted for visualization by lapop_mline
 #'
 #' @examples
+#'\donttest{
 #'require(lapop); data(ym23)
 #'
 #'# Set Survey Context
@@ -84,7 +85,7 @@
 #' rec = c(5, 7),
 #' use_cat = TRUE,
 #' use_wave = TRUE)
-#'
+#'}
 #'@export
 #'@import dplyr
 #'@import srvyr

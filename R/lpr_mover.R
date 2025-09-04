@@ -42,7 +42,7 @@
 #' @return Returns a data frame, with data formatted for visualization by lapop_mover
 #'
 #' @examples
-#'
+#'\donttest{
 #' require(lapop); data(ym23)
 #'
 #' # Set SUrvey Context
@@ -81,6 +81,7 @@
 #' grouping_vars=c("edre", "q1tc_r"),
 #' rec=c(5,7), rec2=c(1,2),
 #' ttest = FALSE)
+#'}
 #'
 #'@export
 #'@import dplyr

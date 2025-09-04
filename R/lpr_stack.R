@@ -27,18 +27,21 @@
 #' @return Returns a data frame, with data formatted for visualization by lapop_stack
 #'
 #' @examples
-#'
+#'\donttest{
 #' require(lapop); data(ym23)
 #'
 #' # Set Survey Context
 #' ym23lpr<-lpr_data(ym23)
 #'
+#' # Multiple outcomes stacked
 #' lpr_stack(data = ym23lpr,
 #' outcome = c("b12", "b18"))
 #'
+#' # Single outcome over years
 #' lpr_stack(data = ym23lpr,
 #' outcome = "q14f",
 #' xvar="year")
+#'}
 #'
 #'@export
 #'@import dplyr

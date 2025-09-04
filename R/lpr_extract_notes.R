@@ -27,13 +27,13 @@
 #' and note value.
 #'
 #' @examples
-#'
+#'\donttest{
 #' require(lapop); data(bra23)
 #'
 #' # Extract the notes
 #' notesBRA23 <- lpr_extract_notes(bra23)
 #' tail(notesBRA23[notesBRA23$variable_name=="ing4",]) # for ing4 variable
-#'
+#'}
 #' @export
 
 lpr_extract_notes <- function(data) { # Extract notes from expansion.fields

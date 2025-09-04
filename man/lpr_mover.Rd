@@ -71,7 +71,7 @@ This function creates a dataframe which can then be input in lapop_mover() for
 comparing means across values of secondary variable(s) using LAPOP formatting.
 }
 \examples{
-
+\donttest{
 require(lapop); data(ym23)
 
 # Set SUrvey Context
@@ -110,6 +110,7 @@ outcome=c("ing4", "pn4"),
 grouping_vars=c("edre", "q1tc_r"),
 rec=c(5,7), rec2=c(1,2),
 ttest = FALSE)
+}
 
 }
 \author{

@@ -74,7 +74,7 @@ average values of some variables across multiple countries.
 This function creates bar graphs for comparing values across countries using LAPOP formatting.
 }
 \examples{
-
+\donttest{
 require(lapop); lapop_fonts()
 
 df <- data.frame(vallabel = c("PE", "CO", "BR", "PN", "GT", "DO", "MX", "BO", "EC",
@@ -94,7 +94,7 @@ lapop_cc(df,
          source_info = "LAPOP Lab, AmericasBarometer 2021",
          highlight = "PE",
          ymax = 50)
-
+}
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}

@@ -44,18 +44,21 @@ This function creates dataframes which can then be input in lapop_stack() for
 plotting variables categories with a stacked bar graph using LAPOP formatting.
 }
 \examples{
-
+\donttest{
 require(lapop); data(ym23)
 
 # Set Survey Context
 ym23lpr<-lpr_data(ym23)
 
+# Multiple outcomes stacked
 lpr_stack(data = ym23lpr,
 outcome = c("b12", "b18"))
 
+# Single outcome over years
 lpr_stack(data = ym23lpr,
 outcome = "q14f",
 xvar="year")
+}
 
 }
 \author{

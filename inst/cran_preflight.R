@@ -1,6 +1,5 @@
 # 1. Full CRAN check
 devtools::document()
-
 devtools::check(args = "--as-cran") # ✅ REQUIRED
 
 # 2. Unit tests

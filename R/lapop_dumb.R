@@ -78,6 +78,7 @@ NULL
 #'  (a dumbbell plot).
 #'
 #' @examples
+#'\donttest{
 #' require(lapop); lapop_fonts()
 #' df <- data.frame(pais = c("Haiti", "Peru", "Honduras", "Colombia", "Ecuador",
 #'                           "Panama", "Bolivia", "Argentina", "Paraguay",
@@ -101,6 +102,7 @@ NULL
 #' main_title = paste0("Personal economic conditions worsened across LAC"),
 #'          subtitle = "% personal economic situation worsened",
 #'          source_info = "Source: LAPOP Lab, AmericasBarometer 2018/19-2021")
+#'}
 #'
 #'@export
 #'@import ggplot2

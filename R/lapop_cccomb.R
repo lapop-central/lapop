@@ -27,6 +27,7 @@ NULL
 #' @return Returns an object of class \code{ggplot}, a ggplot bar graph.
 #'
 #' @examples
+#'\donttest{
 #' require(lapop); lapop_fonts()
 #' df1 <- data.frame(vallabel = c("Crime victim", "Non-victim"),
 #' prop = c(36.1, 19.3),
@@ -48,6 +49,7 @@ NULL
 #' subtitle2 = "% who are satisfied with democracy",
 #' main_title = "Crime victims are more supportive of and satisfied with democracy",
 #' source_info = ", AmericasBarometer 2023")
+#'}
 #'
 #'@export
 #'@import ggplot2

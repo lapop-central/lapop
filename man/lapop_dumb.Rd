@@ -70,6 +70,7 @@ average values of some variable in two time periods across multiple countries
 This function creates "dumbbell" graphs, which show averages for a variable across countries over two time periods, using LAPOP formatting.
 }
 \examples{
+\donttest{
 require(lapop); lapop_fonts()
 df <- data.frame(pais = c("Haiti", "Peru", "Honduras", "Colombia", "Ecuador",
                           "Panama", "Bolivia", "Argentina", "Paraguay",
@@ -93,6 +94,7 @@ lapop_dumb(df,
 main_title = paste0("Personal economic conditions worsened across LAC"),
          subtitle = "\% personal economic situation worsened",
          source_info = "Source: LAPOP Lab, AmericasBarometer 2018/19-2021")
+}
 
 }
 \author{
