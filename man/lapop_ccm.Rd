@@ -80,6 +80,7 @@ average values of some variables across multiple countries.
 This function creates bar graphs for comparing values across countries using LAPOP formatting.
 }
 \examples{
+\donttest{
 require(lapop); lapop_fonts()
 
 df <- data.frame(pais = c(rep("HT", 2), rep("PE", 2), rep("HN", 2), rep("CO", 2),
@@ -98,7 +99,7 @@ df <- data.frame(pais = c(rep("HT", 2), rep("PE", 2), rep("HN", 2), rep("CO", 2)
                      41, 57, 77, 64, 53, 37, 51, 37, 75, 44, 61, 60))
 
 lapop_ccm(df, sort = "var", source_info = ", AmericasBarometer")
-
+}
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
