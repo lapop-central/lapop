@@ -40,6 +40,7 @@ NULL
 #' coefficients or predicted probabilities from a multivariate regression.
 #'
 #' @examples
+#' \donttest{
 #' require(lapop); lapop_fonts()
 #' df <- data.frame(
 #'   varlabel = c("Intimate\nPartner", "wealth", "Education", "Age", "Male"),
@@ -56,7 +57,7 @@ NULL
 #'            source_info = ", AmericasBarometer 2021",
 #'            ymin = -0.3,
 #'            ymax = 0.2)
-#'
+#'}
 #'@export
 #'@import ggplot2
 #'@import ggtext

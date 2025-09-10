@@ -13,7 +13,7 @@
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 #'
 #'@examples
-#'require(lapop); lapop_fonts()
+#'\donttest{require(lapop); lapop_fonts()}
 #'
 #'@import showtext sysfonts
 #'@export

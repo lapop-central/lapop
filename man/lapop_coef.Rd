@@ -67,6 +67,7 @@ coefficients or predicted probabilities from a multivariate regression.
 This function creates plots of regression coefficients and predicted probabilities using LAPOP formatting.
 }
 \examples{
+\donttest{
 require(lapop); lapop_fonts()
 df <- data.frame(
   varlabel = c("Intimate\nPartner", "wealth", "Education", "Age", "Male"),
@@ -83,7 +84,7 @@ lapop_coef(df,
            source_info = ", AmericasBarometer 2021",
            ymin = -0.3,
            ymax = 0.2)
-
+}
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}

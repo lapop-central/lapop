@@ -8,7 +8,7 @@ These are helper functions to wrangle labels and produce visualizations of 'Amer
 
 ## 🛠️ Installation
 
-To install the package in your R console, run:
+To install the package in your console, run:
 
 ```r
 devtools::install_github("lapop-central/lapop", 
