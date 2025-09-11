@@ -28,8 +28,7 @@
 #'
 #' @examples
 #'
-#'\donttest{require(lapop); data(bra23)
-#'lapop_fonts()
+#'require(lapop); data(bra23)
 #'
 #' # Set Survey Context: single country and year (requires wt = T)
 #' bra23lpr <- lpr_data(bra23, wt = TRUE)
@@ -37,7 +36,7 @@
 #' lpr_hist(bra23lpr,
 #' outcome = "ing4",
 #' sort = "xv",
-#' order = "hi-lo")}
+#' order = "hi-lo")
 #'
 #'@export
 #'@import dplyr
