@@ -75,7 +75,7 @@ NULL
 #' (commonly, demographic variables).
 #'
 #' @examples
-#'
+#'\donttest{
 #' df <- data.frame(varlabel = c(rep("Gender", 2), rep("Age", 6),
 #'                               rep("Education", 4), rep("Wealth", 5)),
 #'                  vallabel = c("Women", "Men", "18-25", "26-35", "36-45",
@@ -91,7 +91,7 @@ NULL
 #'                         20, 20, 20, 21),
 #'                  ub = c(21, 23, 22, 25, 23, 22, 19, 17, 24, 19, 22, 26, 22,
 #'                         22, 22, 22, 23))
-#'
+#'require(lapop); lapop_fonts
 #' lapop_mover(df,
 #'             main_title = paste0("More educated, men, and younger individuals",
 #'                                 " in the LAC region are the\nmost likely",
@@ -100,7 +100,7 @@ NULL
 #'             source_info = "Source: LAPOP Lab, AmericasBarometer",
 #'             ymin = 0,
 #'             ymax = 40)
-#'
+#'}
 #'@export
 #'@import ggplot2
 #'@import stringr
