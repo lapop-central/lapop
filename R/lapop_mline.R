@@ -89,6 +89,7 @@ NULL
 #' @return Returns an object of class \code{ggplot}, a ggplot line graph showing values of a variable over time.
 #'
 #'@examples
+#'\donttest{
 #' df <- data.frame(varlabel = c(rep("Honduras", 9), rep("El Salvador", 9),
 #'                               rep("Mexico", 9), rep("Guatemala", 9)),
 #'                  wave = rep(c("2004", "2006", "2008", "2010", "2012",
@@ -105,12 +106,12 @@ NULL
 #'                                "18%", "19%", "26%",
 #'                                "21%", "15%", "18%", "20%", "14%", "18%",
 #'                                "17%", "25%", "36%"))
-#'
+#' require(lapop); lapop_fonts()
 #' lapop_mline(df,
 #'       main_title = "Intentions to emigrate in Guatemala, Honduras and Mexico reached their highs",
 #'       subtitle = "% who intend to migrate in:",
 #'       source_info = ", AmericasBarometer 2004-2021")
-#'
+#'}
 #'@export
 #'@import ggplot2
 #'@importFrom ggtext element_markdown

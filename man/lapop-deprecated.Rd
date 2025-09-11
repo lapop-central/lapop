@@ -76,6 +76,9 @@ lapop_sb(
   color_scheme = c("#2D708E", "#1F9689", "#00ADA9", "#21A356", "#568424", "#ACB014")
 )
 }
+\value{
+No return value, called for side effects
+}
 \description{
 The functions listed below are deprecated and will be defunct in
   the near future. When possible, alternative functions with similar

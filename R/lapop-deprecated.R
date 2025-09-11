@@ -6,4 +6,5 @@
 #'   available at \code{help("<function>-deprecated")}.
 #' @name lapop-deprecated
 #' @keywords internal
+#' @return No return value, called for side effects
 NULL

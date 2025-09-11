@@ -12,7 +12,7 @@ Authors@R: c(person(given = "Robert", family = "Vidigal",
              comment = c(ORCID = "0000-0001-8240-6722")))
 Date: 2025
 Maintainer: Robert Vidigal <robert.vidigal@vanderbilt.edu>
-Description: Labeling, weighting, and plotting data following custom style guidelines for use in LAPOP Lab reports, presentations, and social media posts. The Center for Global Democracy (formerly the Latin American Public Opinion Project) at Vanderbilt University is a leader in public survey research, best known for the Americas Barometer project. The publicly available data can be downloaded from: <https://www.vanderbilt.edu/lapop/data-access.php>.
+Description: Labeling, weighting, and plotting data following custom style guidelines for use in reports, presentations, and social media posts. The Center for Global Democracy (formerly the Latin American Public Opinion Project) at Vanderbilt University is a leader in public survey research, best known for the Americas Barometer project. The publicly available data can be downloaded from: <https://www.vanderbilt.edu/lapop/data-access.php>.
 URL: https://lapop-central.github.io/lapop/
 Depends: 
     R (>= 3.5.0)

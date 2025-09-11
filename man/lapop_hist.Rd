@@ -56,6 +56,7 @@ Returns an object of class \code{ggplot}, a ggplot bar graph.
 This function shows a bar graph for categorical variables using LAPOP formatting.
 }
 \examples{
+\donttest{
 require(lapop); lapop_fonts()
 
 df <- data.frame(
@@ -68,7 +69,7 @@ lapop_hist(df,
            subtitle = "Distribution of ideological preferences",
            source_info = "Source: LAPOP Lab, AmericasBarometer Peru 2019",
            ymax = 27)
-
+}
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}

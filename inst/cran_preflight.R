@@ -30,13 +30,3 @@ pkgdown::clean_site(); pkgdown::build_site() # ❌ Not needed for CRAN
 
 # Final reminders
 cat("Check DESCRIPTION, NEWS.md, cran-comments.md\n")
-
-
-isPal<-function(string) {
-  splitstring<-stringr::str_split(string,  pattern = "")
-  reversed<-rev(splitstring);
-  result<-ifelse(reversed==string,TRUE,FALSE)
-  print(reversed); print(result)
-}
-
-isPal("abccbax")
