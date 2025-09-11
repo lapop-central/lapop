@@ -180,7 +180,7 @@ lapop_mover <- function(data,
       labels = function(x) stringr::str_wrap(data$vallabel[match(x, data$order)], width = 12),
       expand = expansion(add = 0.5)
     ) +
-    geom_vline(xintercept = seq(0.5, length(data$vallabel), by = 1), color = "#dddddf", size = 0.5) +
+    geom_vline(xintercept = seq(0.5, length(data$vallabel), by = 1), color = "#dddddf", linewidth = 0.5) +
     labs(title = main_title,
          y = "",
          x = " ",
@@ -192,7 +192,7 @@ lapop_mover <- function(data,
           plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "nunito", color = "#585860"),
           plot.subtitle = element_text(size = 14, family = "nunito", color = "#585860"),
           panel.grid.major.x = element_blank(),
-          panel.grid.major.y = element_line(size = .5, color = "#dddddf"),
+          panel.grid.major.y = element_line(linewidth = 0.5, color = "#dddddf"),
           panel.background = element_rect(fill = "white"),
           panel.border = element_rect(linetype = "solid", color = "#dddddf", fill = NA, linewidth = 1),
           axis.text.y = element_blank(),
