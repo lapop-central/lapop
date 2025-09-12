@@ -53,6 +53,7 @@ NULL
 #' values of a variable over time.
 #'
 #' @examples
+#' \dontest{
 #' require(lapop); lapop_fonts()
 #'
 #' df <- data.frame(wave = c("2008", "2010", "2016/17", "2018/19", "2021"),
@@ -68,7 +69,7 @@ NULL
 #' source_info = "Source: LAPOP Lab, AmericasBarometer Ecuador 2006-2021",
 #' ymin = 0,
 #' ymax = 55)
-#'
+#'}
 #'@export
 #'@import ggplot2
 #'@importFrom ggtext element_markdown

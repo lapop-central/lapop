@@ -82,6 +82,7 @@ the survey wave (wave), the outcome variable (prop), the lower bound of the esti
 the upper bound of the estimate (ub), and a string for the outcome variable label (proplabel).
 }
 \examples{
+\dontest{
 require(lapop); lapop_fonts()
 
 df <- data.frame(wave = c("2008", "2010", "2016/17", "2018/19", "2021"),
@@ -97,7 +98,7 @@ subtitle = "\% politically interested",
 source_info = "Source: LAPOP Lab, AmericasBarometer Ecuador 2006-2021",
 ymin = 0,
 ymax = 55)
-
+}
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
