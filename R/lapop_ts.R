@@ -53,7 +53,7 @@ NULL
 #' values of a variable over time.
 #'
 #' @examples
-#' \dontest{
+#' \donttest{
 #' require(lapop); lapop_fonts()
 #'
 #' df <- data.frame(wave = c("2008", "2010", "2016/17", "2018/19", "2021"),
