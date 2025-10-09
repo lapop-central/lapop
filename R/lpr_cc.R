@@ -66,7 +66,7 @@
 #'@import dplyr
 #'@import srvyr
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} && Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 lpr_cc <- function(data,
                    outcome,
                    xvar = "pais_lab",

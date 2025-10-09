@@ -146,7 +146,7 @@ valid responses only.  Default: FALSE.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://lapop-central.github.io/lapop/">lapop</a></span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ym23</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Set SUrvey Context</span></span></span>
@@ -156,118 +156,119 @@ valid responses only.  Default: FALSE.</p></dd>
 <span class="r-in"><span><span class="fu">lpr_mover</span><span class="op">(</span>data <span class="op">=</span> <span class="va">ym23lpr</span>,</span></span>
 <span class="r-in"><span> outcome <span class="op">=</span> <span class="st">"ing4"</span>,</span></span>
 <span class="r-in"><span> grouping_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"q1tc_r"</span>, <span class="st">"edre"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span> rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>, ttest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    outcome               varlabel     vallabel  prop proplabel    lb    ub    se</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Apoyo a la democracia Género       Hombre/…  59.3 59%        58.6  60.1 0.399</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Apoyo a la democracia Género       Mujer/f…  58.0 58%        57.2  58.7 0.396</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Apoyo a la democracia Género       No se i…  55.4 55%        40.6  70.2 7.56 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Apoyo a la democracia Nivel de ed… Ninguna   55.1 55%        51.6  58.7 1.81 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Apoyo a la democracia Nivel de ed… Primari…  54.5 55%        52.7  56.4 0.942</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Apoyo a la democracia Nivel de ed… Primari…  56.9 57%        55.4  58.4 0.782</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Apoyo a la democracia Nivel de ed… Secunda…  56.2 56%        54.9  57.6 0.681</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Apoyo a la democracia Nivel de ed… Secunda…  56.6 57%        55.7  57.6 0.490</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Apoyo a la democracia Nivel de ed… Terciar…  63.3 63%        61.7  64.9 0.809</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Apoyo a la democracia Nivel de ed… Terciar…  66.3 66%        65.0  67.6 0.670</span>
+<span class="r-in"><span> rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>, ttest <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    outcome               varlabel           vallabel  prop proplabel    lb    ub</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Apoyo a la democracia Género             Hombre/…  59.3 59%        58.6  60.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Apoyo a la democracia Género             Mujer/f…  58.0 58%        57.2  58.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Apoyo a la democracia Género             No se i…  55.4 55%        40.6  70.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Apoyo a la democracia Nivel de educación Ninguna   55.1 55%        51.6  58.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Apoyo a la democracia Nivel de educación Primari…  54.5 55%        52.7  56.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Apoyo a la democracia Nivel de educación Primari…  56.9 57%        55.4  58.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Apoyo a la democracia Nivel de educación Secunda…  56.2 56%        54.9  57.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Apoyo a la democracia Nivel de educación Secunda…  56.6 57%        55.7  57.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Apoyo a la democracia Nivel de educación Terciar…  63.3 63%        61.7  64.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Apoyo a la democracia Nivel de educación Terciar…  66.3 66%        65.0  67.6</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Multiple DV</span></span></span>
 <span class="r-in"><span><span class="fu">lpr_mover</span><span class="op">(</span>data <span class="op">=</span> <span class="va">ym23lpr</span>,</span></span>
 <span class="r-in"><span>outcome <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ing4"</span>, <span class="st">"pn4"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>grouping_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"q1tc_r"</span>, <span class="st">"edre"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>, rec2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>ttest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 20 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    outcome                   varlabel vallabel  prop proplabel    lb    ub    se</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Apoyo a la democracia     q1tc_r … Hombre/…  59.3 59%        58.6  60.1 0.399</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Apoyo a la democracia     q1tc_r … Mujer/f…  58.0 58%        57.2  58.7 0.396</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Apoyo a la democracia     q1tc_r … No se i…  55.4 55%        40.6  70.2 7.56 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Satisfacción con democra… q1tc_r … Hombre/…  42.1 42%        41.4  42.9 0.387</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Satisfacción con democra… q1tc_r … Mujer/f…  37.5 38%        36.7  38.3 0.410</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Satisfacción con democra… q1tc_r … No se i…  43.4 43%        27.8  58.9 7.94 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Apoyo a la democracia     edre x … Ninguna   55.1 55%        51.6  58.7 1.81 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Apoyo a la democracia     edre x … Primari…  54.5 55%        52.7  56.4 0.942</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Apoyo a la democracia     edre x … Primari…  56.9 57%        55.4  58.4 0.782</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Apoyo a la democracia     edre x … Secunda…  56.2 56%        54.9  57.6 0.681</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Apoyo a la democracia     edre x … Secunda…  56.6 57%        55.7  57.6 0.490</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Apoyo a la democracia     edre x … Terciar…  63.3 63%        61.7  64.9 0.809</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> Apoyo a la democracia     edre x … Terciar…  66.3 66%        65.0  67.6 0.670</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> Satisfacción con democra… edre x … Ninguna   51.7 52%        47.9  55.5 1.95 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> Satisfacción con democra… edre x … Primari…  46.2 46%        44.3  48.0 0.943</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> Satisfacción con democra… edre x … Primari…  43.5 44%        42.0  45.0 0.762</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> Satisfacción con democra… edre x … Secunda…  38.1 38%        36.9  39.4 0.641</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> Satisfacción con democra… edre x … Secunda…  38.3 38%        37.4  39.3 0.497</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> Satisfacción con democra… edre x … Terciar…  37.0 37%        35.4  38.7 0.836</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">20</span> Satisfacción con democra… edre x … Terciar…  38.9 39%        37.4  40.3 0.739</span>
+<span class="r-in"><span>ttest <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 20 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    outcome                         varlabel vallabel  prop proplabel    lb    ub</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Apoyo a la democracia           q1tc_r … Hombre/…  59.3 59%        58.6  60.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Apoyo a la democracia           q1tc_r … Mujer/f…  58.0 58%        57.2  58.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Apoyo a la democracia           q1tc_r … No se i…  55.4 55%        40.6  70.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Satisfacción con democracia de… q1tc_r … Hombre/…  42.1 42%        41.4  42.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Satisfacción con democracia de… q1tc_r … Mujer/f…  37.5 38%        36.7  38.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Satisfacción con democracia de… q1tc_r … No se i…  43.4 43%        27.8  58.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Apoyo a la democracia           edre x … Ninguna   55.1 55%        51.6  58.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Apoyo a la democracia           edre x … Primari…  54.5 55%        52.7  56.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Apoyo a la democracia           edre x … Primari…  56.9 57%        55.4  58.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Apoyo a la democracia           edre x … Secunda…  56.2 56%        54.9  57.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Apoyo a la democracia           edre x … Secunda…  56.6 57%        55.7  57.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Apoyo a la democracia           edre x … Terciar…  63.3 63%        61.7  64.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> Apoyo a la democracia           edre x … Terciar…  66.3 66%        65.0  67.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> Satisfacción con democracia de… edre x … Ninguna   51.7 52%        47.9  55.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> Satisfacción con democracia de… edre x … Primari…  46.2 46%        44.3  48.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> Satisfacción con democracia de… edre x … Primari…  43.5 44%        42.0  45.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> Satisfacción con democracia de… edre x … Secunda…  38.1 38%        36.9  39.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> Satisfacción con democracia de… edre x … Secunda…  38.3 38%        37.4  39.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> Satisfacción con democracia de… edre x … Terciar…  37.0 37%        35.4  38.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">20</span> Satisfacción con democracia de… edre x … Terciar…  38.9 39%        37.4  40.3</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Single DV X Single IV</span></span></span>
 <span class="r-in"><span><span class="fu">lpr_mover</span><span class="op">(</span>data <span class="op">=</span> <span class="va">ym23lpr</span>,</span></span>
 <span class="r-in"><span>outcome<span class="op">=</span><span class="st">"ing4"</span>,</span></span>
 <span class="r-in"><span>grouping_vars<span class="op">=</span><span class="st">"pn4"</span>,</span></span>
 <span class="r-in"><span>rec<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">7</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>ttest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   outcome               varlabel      vallabel  prop proplabel    lb    ub    se</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Apoyo a la democracia Satisfacción… Muy sat…  64.9 65%        63.3  66.4 0.812</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Apoyo a la democracia Satisfacción… Satisfe…  68.2 68%        67.6  68.9 0.348</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Apoyo a la democracia Satisfacción… Insatis…  53.3 53%        52.7  53.9 0.314</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Apoyo a la democracia Satisfacción… Muy ins…  49.1 49%        48.0  50.2 0.550</span>
+<span class="r-in"><span>ttest <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   outcome               varlabel            vallabel  prop proplabel    lb    ub</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Apoyo a la democracia Satisfacción con d… Muy sat…  64.9 65%        63.3  66.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Apoyo a la democracia Satisfacción con d… Satisfe…  68.2 68%        67.6  68.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Apoyo a la democracia Satisfacción con d… Insatis…  53.3 53%        52.7  53.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Apoyo a la democracia Satisfacción con d… Muy ins…  49.1 49%        48.0  50.2</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Multiple DV X Single IV</span></span></span>
 <span class="r-in"><span><span class="fu">lpr_mover</span><span class="op">(</span>data <span class="op">=</span> <span class="va">ym23lpr</span>,</span></span>
 <span class="r-in"><span>outcome<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ing4"</span>, <span class="st">"pn4"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>grouping_vars<span class="op">=</span><span class="st">"edre"</span>,</span></span>
 <span class="r-in"><span>rec<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">7</span><span class="op">)</span>, rec2<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>ttest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 14 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    outcome                   varlabel vallabel  prop proplabel    lb    ub    se</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Apoyo a la democracia     edre x … Ninguna   55.1 55%        51.6  58.7 1.81 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Apoyo a la democracia     edre x … Primari…  54.5 55%        52.7  56.4 0.942</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Apoyo a la democracia     edre x … Primari…  56.9 57%        55.4  58.4 0.782</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Apoyo a la democracia     edre x … Secunda…  56.2 56%        54.9  57.6 0.681</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Apoyo a la democracia     edre x … Secunda…  56.6 57%        55.7  57.6 0.490</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Apoyo a la democracia     edre x … Terciar…  63.3 63%        61.7  64.9 0.809</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Apoyo a la democracia     edre x … Terciar…  66.3 66%        65.0  67.6 0.670</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Satisfacción con democra… edre x … Ninguna   51.7 52%        47.9  55.5 1.95 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Satisfacción con democra… edre x … Primari…  46.2 46%        44.3  48.0 0.943</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Satisfacción con democra… edre x … Primari…  43.5 44%        42.0  45.0 0.762</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Satisfacción con democra… edre x … Secunda…  38.1 38%        36.9  39.4 0.641</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Satisfacción con democra… edre x … Secunda…  38.3 38%        37.4  39.3 0.497</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> Satisfacción con democra… edre x … Terciar…  37.0 37%        35.4  38.7 0.836</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> Satisfacción con democra… edre x … Terciar…  38.9 39%        37.4  40.3 0.739</span>
+<span class="r-in"><span>ttest <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 14 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    outcome                         varlabel vallabel  prop proplabel    lb    ub</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Apoyo a la democracia           edre x … Ninguna   55.1 55%        51.6  58.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Apoyo a la democracia           edre x … Primari…  54.5 55%        52.7  56.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Apoyo a la democracia           edre x … Primari…  56.9 57%        55.4  58.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Apoyo a la democracia           edre x … Secunda…  56.2 56%        54.9  57.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Apoyo a la democracia           edre x … Secunda…  56.6 57%        55.7  57.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Apoyo a la democracia           edre x … Terciar…  63.3 63%        61.7  64.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Apoyo a la democracia           edre x … Terciar…  66.3 66%        65.0  67.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Satisfacción con democracia de… edre x … Ninguna   51.7 52%        47.9  55.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Satisfacción con democracia de… edre x … Primari…  46.2 46%        44.3  48.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Satisfacción con democracia de… edre x … Primari…  43.5 44%        42.0  45.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Satisfacción con democracia de… edre x … Secunda…  38.1 38%        36.9  39.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Satisfacción con democracia de… edre x … Secunda…  38.3 38%        37.4  39.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> Satisfacción con democracia de… edre x … Terciar…  37.0 37%        35.4  38.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> Satisfacción con democracia de… edre x … Terciar…  38.9 39%        37.4  40.3</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Multiple DV X Multiple IV</span></span></span>
 <span class="r-in"><span><span class="fu">lpr_mover</span><span class="op">(</span>data <span class="op">=</span> <span class="va">ym23lpr</span>,</span></span>
 <span class="r-in"><span>outcome<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ing4"</span>, <span class="st">"pn4"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>grouping_vars<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"edre"</span>, <span class="st">"q1tc_r"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>rec<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">7</span><span class="op">)</span>, rec2<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>ttest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 20 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    outcome                   varlabel vallabel  prop proplabel    lb    ub    se</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Apoyo a la democracia     edre x … Ninguna   55.1 55%        51.6  58.7 1.81 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Apoyo a la democracia     edre x … Primari…  54.5 55%        52.7  56.4 0.942</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Apoyo a la democracia     edre x … Primari…  56.9 57%        55.4  58.4 0.782</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Apoyo a la democracia     edre x … Secunda…  56.2 56%        54.9  57.6 0.681</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Apoyo a la democracia     edre x … Secunda…  56.6 57%        55.7  57.6 0.490</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Apoyo a la democracia     edre x … Terciar…  63.3 63%        61.7  64.9 0.809</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Apoyo a la democracia     edre x … Terciar…  66.3 66%        65.0  67.6 0.670</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Satisfacción con democra… edre x … Ninguna   51.7 52%        47.9  55.5 1.95 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Satisfacción con democra… edre x … Primari…  46.2 46%        44.3  48.0 0.943</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Satisfacción con democra… edre x … Primari…  43.5 44%        42.0  45.0 0.762</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Satisfacción con democra… edre x … Secunda…  38.1 38%        36.9  39.4 0.641</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Satisfacción con democra… edre x … Secunda…  38.3 38%        37.4  39.3 0.497</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> Satisfacción con democra… edre x … Terciar…  37.0 37%        35.4  38.7 0.836</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> Satisfacción con democra… edre x … Terciar…  38.9 39%        37.4  40.3 0.739</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> Apoyo a la democracia     q1tc_r … Hombre/…  59.3 59%        58.6  60.1 0.399</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> Apoyo a la democracia     q1tc_r … Mujer/f…  58.0 58%        57.2  58.7 0.396</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> Apoyo a la democracia     q1tc_r … No se i…  55.4 55%        40.6  70.2 7.56 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> Satisfacción con democra… q1tc_r … Hombre/…  42.1 42%        41.4  42.9 0.387</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> Satisfacción con democra… q1tc_r … Mujer/f…  37.5 38%        36.7  38.3 0.410</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">20</span> Satisfacción con democra… q1tc_r … No se i…  43.4 43%        27.8  58.9 7.94 </span>
+<span class="r-in"><span>ttest <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 20 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    outcome                         varlabel vallabel  prop proplabel    lb    ub</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Apoyo a la democracia           edre x … Ninguna   55.1 55%        51.6  58.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Apoyo a la democracia           edre x … Primari…  54.5 55%        52.7  56.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Apoyo a la democracia           edre x … Primari…  56.9 57%        55.4  58.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Apoyo a la democracia           edre x … Secunda…  56.2 56%        54.9  57.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Apoyo a la democracia           edre x … Secunda…  56.6 57%        55.7  57.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Apoyo a la democracia           edre x … Terciar…  63.3 63%        61.7  64.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Apoyo a la democracia           edre x … Terciar…  66.3 66%        65.0  67.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Satisfacción con democracia de… edre x … Ninguna   51.7 52%        47.9  55.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Satisfacción con democracia de… edre x … Primari…  46.2 46%        44.3  48.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Satisfacción con democracia de… edre x … Primari…  43.5 44%        42.0  45.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Satisfacción con democracia de… edre x … Secunda…  38.1 38%        36.9  39.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Satisfacción con democracia de… edre x … Secunda…  38.3 38%        37.4  39.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> Satisfacción con democracia de… edre x … Terciar…  37.0 37%        35.4  38.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> Satisfacción con democracia de… edre x … Terciar…  38.9 39%        37.4  40.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> Apoyo a la democracia           q1tc_r … Hombre/…  59.3 59%        58.6  60.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> Apoyo a la democracia           q1tc_r … Mujer/f…  58.0 58%        57.2  58.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> Apoyo a la democracia           q1tc_r … No se i…  55.4 55%        40.6  70.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> Satisfacción con democracia de… q1tc_r … Hombre/…  42.1 42%        41.4  42.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> Satisfacción con democracia de… q1tc_r … Mujer/f…  37.5 38%        36.7  38.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">20</span> Satisfacción con democracia de… q1tc_r … No se i…  43.4 43%        27.8  58.9</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
