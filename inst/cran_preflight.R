@@ -26,7 +26,8 @@ devtools::build_vignettes()
 devtools::build() # ✅ REQUIRED for submission
 
 # 8. (Optional) Build pkgdown site
-pkgdown::clean_site(); pkgdown::build_site() # ❌ Not needed for CRAN
+pkgdown::clean_site();
+pkgdown::build_site() # ❌ Not needed for CRAN
 
 # Final reminders
 cat("Check DESCRIPTION, NEWS.md, cran-comments.md\n")
