@@ -141,6 +141,15 @@ lapop_mover <- function(data,
 
   update_geom_defaults("text", list(family = "roboto"))
 
+  # Build per-facet vertical line positions based on the number of values in each varlabel
+  vline_df <- do.call(rbind, lapply(split(data, data$varlabel), function(df) {
+    n <- nrow(df)
+    data.frame(
+      varlabel = unique(df$varlabel)[1],
+      xint = if (n > 1) seq(0.5, n - 0.5, by = 1) else numeric(0)
+    )
+  }))
+
   # Create a color map based on unique levels in varlabel
   color_map <- setNames(mycolors[1:length(unique(data$varlabel))], unique(data$varlabel))
 
@@ -180,7 +189,12 @@ lapop_mover <- function(data,
       labels = function(x) stringr::str_wrap(data$vallabel[match(x, data$order)], width = 12),
       expand = expansion(add = 0.5)
     ) +
-    geom_vline(xintercept = seq(0.5, length(data$vallabel), by = 1), color = "#dddddf", linewidth = 0.5) +
+    geom_vline(
+      data = vline_df,
+      aes(xintercept = xint),
+      color = "#dddddf",
+      linewidth = 0.5,
+      show.legend = FALSE) +
     labs(title = main_title,
          y = "",
          x = " ",
