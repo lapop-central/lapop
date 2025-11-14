@@ -77,17 +77,13 @@ This function creates bar graphs for comparing values across countries using LAP
 \donttest{
 require(lapop); lapop_fonts()
 
-df <- data.frame(vallabel = c("PE", "CO", "BR", "PN", "GT", "DO", "MX", "BO", "EC",
-                          "PY", "CL", "HN", "CR"),
-                 prop = c(36.1, 19.3, 16.6, 13.3, 13, 11.1, 9.5, 9, 8.1, 8, 6.6,
-                          5.7, 5.1),
-                 proplabel = c("36\%" ,"19\%" ,"17\%" ,"13\%" ,"13\%" ,"11\%" ,"10\%",
-                               "9\%", "8\%", "8\%", "7\%", "6\%", "5\%"),
-                 lb = c(34.9, 18.1, 15.4, 12.1, 11.8, 9.9, 8.3, 7.8, 6.9, 6.8,
-                        5.4, 4.5, 3.9),
-                 ub = c(37.3, 20.5, 17.8, 14.5, 14.2, 12.3, 10.7, 10.2, 9.3,
-                        9.2, 7.8, 6.9, 6.3))
-
+df <- data.frame(
+vallabel = c("PE", "CO", "BR", "PN", "GT", "DO", "MX", "BO", "EC"),
+prop      = c(36.1, 19.3, 16.6, 13.3, 13.0, 11.1,  9.5,  9.0,  8.1),
+proplabel = c("36\%" ,"19\%" ,"17\%" ,"13\%" ,"13\%" ,"11\%" ,"10\%", "9\%", "8\%"),
+lb        = c(34.9, 18.1, 15.4, 12.1, 11.8,  9.9,  8.3,  7.8,  6.9),
+ub        = c(37.3, 20.5, 17.8, 14.5, 14.2, 12.3, 10.7, 10.2,  9.3)
+)
 lapop_cc(df,
          main_title = "Normalization of Intimate Partner Violence in LAC Countries",
          subtitle = "\% who say domestic violence is private matter",

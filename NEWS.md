@@ -1,3 +1,7 @@
+# lapop 2.1.1
+
+* include lpr_extract_ros 
+
 # lapop 2.1.0
 
 * include vignettes 

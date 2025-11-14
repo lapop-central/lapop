@@ -56,6 +56,7 @@ Collate:
     'lpr_data.R'
     'lpr_dumb.R'
     'lpr_extract_notes.R'
+    'lpr_extract_ros.R'
     'lpr_hist.R'
     'lpr_mline.R'
     'lpr_mover.R'
