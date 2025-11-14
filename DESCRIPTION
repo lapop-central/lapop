@@ -15,7 +15,7 @@ Maintainer: Robert Vidigal <robert.vidigal@vanderbilt.edu>
 Description: Labeling, weighting, and plotting data following custom style guidelines for use in reports, presentations, and social media posts. The Center for Global Democracy (formerly the Latin American Public Opinion Project) at Vanderbilt University is a leader in public survey research, best known for the Americas Barometer project. The publicly available data can be downloaded from: <https://www.vanderbilt.edu/lapop/data-access.php>.
 URL: https://lapop-central.github.io/lapop/
 Depends: 
-    R (>= 3.5.0)
+    R (>= 4.1.0)
 Imports: ggplot2, ggtext, ggrepel, showtext, grid, gridtext, gridExtra,
     sysfonts, systemfonts, svglite, dplyr, tidyr, srvyr, survey, codebook,
     haven, stats, purrr, tibble, marginaleffects, stringr, zoo
