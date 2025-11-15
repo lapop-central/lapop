@@ -47,10 +47,8 @@
 #'
 #'@export
 #'@import haven
-#'@import codebook
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
-
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 lpr_resc <- function(var,
                      min = 0L,
@@ -62,55 +60,67 @@ lpr_resc <- function(var,
                      new_varlabel = NULL,
                      new_vallabels = NULL) {
 
-  og_var = var
+  og_var <- var
 
   if (is.character(var)) {
-    stop("Cannot rescale character variable")
+    stop("Cannot rescale character variable.")
   }
 
-  # Store original levels and labels if factor or labelled
+  # Extract labels if haven_labelled
   if (inherits(var, c("haven_labelled", "labelled"))) {
     original_labels <- attr(haven::zap_missing(var), "labels")
   }
 
-  # Store original levels and labels if factor
+  # Convert factor to numeric
   if (is.factor(var)) {
-    original_levels = levels(var)
-    var = as.numeric(var)
+    original_levels <- levels(var)
+    var <- as.numeric(var)
   }
 
-  if (reverse) {
-    var = codebook::reverse_labelled_values(var)
+  # Internal reverse helper
+  reverse_values <- function(x) {
+    if (all(is.na(x))) return(x)
+    rng <- range(x, na.rm = TRUE)
+    reversed <- (rng[2] + rng[1]) - x
+    return(reversed)
   }
 
-  if (only_reverse) {
-    var = codebook::reverse_labelled_values(var)
+  # Reverse logic
+  if (reverse || only_reverse) {
+    var <- reverse_values(var)
   } else if (only_flip) {
     unique_vals <- sort(unique(var))
     flipped_vals <- rev(unique_vals)
     var <- flipped_vals[match(var, unique_vals)]
 
-    # Reverse the labels if variable is labelled
+    # Flip labels if available
     if (exists("original_labels")) {
       flipped_labels <- rev(original_labels)
       names(flipped_labels) <- names(original_labels)
       attr(var, "labels") <- flipped_labels
     }
   } else {
-    var = (var - min(var, na.rm = TRUE)) / (max(var, na.rm = TRUE) - min(var, na.rm = TRUE)) * (max - min) + min
+    # Rescale to [min, max]
+    var <- (var - min(var, na.rm = TRUE)) /
+      (max(var, na.rm = TRUE) - min(var, na.rm = TRUE)) *
+      (max - min) + min
   }
 
+  # Optional mapping table
   if (map) {
     print(table(haven::as_factor(haven::zap_missing(og_var)),
                 haven::as_factor(haven::zap_missing(var))))
   }
 
+  # Update variable label
   if (!is.null(new_varlabel)) {
-    attr(var, "label") = as.character(new_varlabel)
+    attr(var, "label") <- as.character(new_varlabel)
   }
 
-  if (!is.null(new_vallabels)) {
-    names(attr(x, "labels")) <- new_vallabels
+  # Update value labels
+  if (!is.null(new_vallabels) && exists("original_labels")) {
+    names(original_labels) <- new_vallabels
+    attr(var, "labels") <- original_labels
   }
 
   return(var)

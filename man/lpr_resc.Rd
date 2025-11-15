@@ -69,5 +69,5 @@ map = TRUE)
 
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }
