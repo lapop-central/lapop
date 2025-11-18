@@ -1,3 +1,7 @@
+# lapop 2.1.2
+
+* include ci_type to lapop_ts 
+
 # lapop 2.1.1
 
 * include lpr_extract_ros 

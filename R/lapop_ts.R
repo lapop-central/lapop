@@ -48,7 +48,18 @@ NULL
 #' country labels exceeds this value, labels will be smaller and if necessary rotated for better readability.
 #' Default: 15 years.
 #' @param label_angle Numeric. Angle (in degrees) to rotate x-axis labels when max_years is exceeded. Default: 0.
-
+#' @param ci_type Character. Controls how confidence intervals are displayed in the
+#' time-series plot. This parameter only affects how the confidence interval is visualized;
+#' the point estimate and line plot remain unchanged. Options:
+#' \itemize{
+#'   \item \code{"linerange"} (default): Draws upper and lower bounds as dashed lines.
+#'   \item \code{"errorbar"}: Displays confidence intervals using vertical error bars
+#'         centered on the point estimate.
+#'   \item \code{"ribbon"}: Shows a shaded confidence band between the lower and
+#'         upper bounds.
+#'   \item \code{"none"}: Suppresses confidence interval display.
+#' }
+#'
 #' @return Returns an object of class \code{ggplot}, a ggplot line graph showing
 #' values of a variable over time.
 #'
@@ -81,105 +92,120 @@ NULL
 lapop_ts <- function(data, outcome_var = data$prop, lower_bound = data$lb,
                      upper_bound = data$ub, wave_var = as.character(data$wave),
                      label_var = data$proplabel, point_var = data$prop,
-                     ymin = 0,
-                     ymax = 100,
-                     main_title = "",
-                     source_info = "LAPOP",
-                     subtitle = "",
-                     lang = "en",
-                     color_scheme = "#A43D6A",
-                     percentages = TRUE,
-                     label_vjust = -2.1,
-                     max_years = 15,
-                     label_angle = 0) {
+                     ymin = 0, ymax = 100, main_title = "",
+                     source_info = "LAPOP", subtitle = "",
+                     lang = "en", color_scheme = "#A43D6A",
+                     percentages = TRUE, label_vjust = -2.1,
+                     max_years = 15, label_angle = 0,
+                     ci_type = "linerange") {   # <<< NEW PARAM
 
-
-  # Check if we need to rotate labels based on number of unique countries
   rotate_labels <- length(unique(data$wave)) > max_years
-
-  # Adjust label size if rotation is needed
   label_size = 5
   current_label_size <- ifelse(rotate_labels, (label_size * 0.5), label_size)
 
-  #interpolate data for missing waves are still plotted on the x-axis (without data)
   if(sum(is.na(outcome_var)) > 0) {
     outcome_var = zoo::na.approx(outcome_var)
     lower_bound = zoo::na.approx(lower_bound)
     upper_bound = zoo::na.approx(upper_bound)
   }
-  #now we stop dealing with missing data
+
   ci_text = ifelse(lang == "es",
-                   paste0(" <span style='color:", color_scheme, "; font-size:18pt'> \u2013 \u2013 \u2013</span> ",
+                   paste0(" <span style='color:", color_scheme,
+                          "; font-size:18pt'> \u2013 \u2013 \u2013</span> ",
                           "<span style='color:#585860; font-size:13pt'>95% intervalo de confianza </span>"),
                    ifelse(lang == "fr",
-                          paste0(" <span style='color:", color_scheme, "; font-size:18pt'> \u2013 \u2013 \u2013</span> ",
+                          paste0(" <span style='color:", color_scheme,
+                                 "; font-size:18pt'> \u2013 \u2013 \u2013</span> ",
                                  "<span style='color:#585860; font-size:13pt'>Intervalle de confiance de 95% </span>"),
-                          paste0(" <span style='color:", color_scheme, "; font-size:18pt'> \u2013 \u2013 \u2013</span> ",
+                          paste0(" <span style='color:", color_scheme,
+                                 "; font-size:18pt'> \u2013 \u2013 \u2013</span> ",
                                  "<span style='color:#585860; font-size:13pt'>95% confidence </span>",
                                  "<span style='color:#585860'>interval</span>")))
-  #and turn to creating the graph
+
   update_geom_defaults("text", list(family = "roboto"))
-  ts <- ggplot(data=data, aes(x=wave_var, y=outcome_var)) +
-    geom_line(aes(group = 1), color=color_scheme, linewidth = 1, alpha=0.48) +
-    geom_line(aes(group = 1, y =lower_bound), color=color_scheme, linewidth = 1, alpha=0.48, lty="dashed") +
-    geom_line(aes(group = 1, y= upper_bound), color=color_scheme, linewidth = 1, alpha=0.48, lty="dashed") +
-    geom_point(aes(y = point_var, color = " "), size = 3.5, alpha=0.48, key_glyph = "point") +
+
+  ts <- ggplot(data=data, aes(x=wave_var, y=outcome_var, group = 1)) +
+
+    geom_line(color=color_scheme, linewidth = 1, alpha=0.48) +
+
+  # CI TYPES
+  # --------------------------------------------------------------
+  {
+    if (ci_type == "linerange") {
+      list(
+        geom_line(aes(y = lower_bound, group = 1),
+                  color=color_scheme, linewidth = 1, alpha=0.48, linetype="dashed"),
+        geom_line(aes(y = upper_bound, group = 1),
+                  color=color_scheme, linewidth = 1, alpha=0.48, linetype="dashed")
+      )
+    } else if (ci_type == "errorbar") {
+      geom_errorbar(aes(ymin = lower_bound, ymax = upper_bound),
+                    width = 0.1, color = color_scheme, alpha = 0.75, linewidth = 1)
+    } else if (ci_type == "ribbon") {
+      geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound),
+                  fill = color_scheme, alpha = 0.48, color = NA)
+    } else if (ci_type == "none") {
+      NULL
+    }
+  } +
+
+    geom_point(aes(y = point_var, color = " "), size = 3.5,
+               alpha=0.48, key_glyph = "point") +
+
     scale_color_manual(values = color_scheme,
                        labels = paste0("<span style='color:#585860; font-size:13pt'> ",
                                        subtitle,
                                        "<span style='color:#FFFFFF00'>-----------</span>",
                                        ci_text)) +
 
-    geom_text(aes(label=label_var), family = "roboto", color=color_scheme,
-              fontface = "bold", size = 5, vjust = label_vjust) +
+    geom_text(aes(label = label_var), family = "roboto",
+              color=color_scheme, fontface="bold",
+              size=5, vjust=label_vjust) +
+
     scale_x_discrete(limits = wave_var) +
+
     {
       if (percentages) {
         scale_y_continuous(limits=c(ymin, ymax),
-                           breaks = seq(ymin, ymax, ifelse(ymax - ymin <= 50, 10, 20)),
-                           labels = paste(seq(ymin,ymax, ifelse(ymax - ymin <= 50, 10, 20)),
-                                          "%", sep=""),
+                           breaks = seq(ymin, ymax,
+                                        ifelse(ymax - ymin <= 50, 10, 20)),
+                           labels = paste0(seq(ymin, ymax,
+                                               ifelse(ymax - ymin <= 50, 10, 20)), "%"),
                            expand = c(0,0))
-      }
-      else {
-        scale_y_continuous(limits=c(ymin, ymax),
-                           expand = c(0,0))
+      } else {
+        scale_y_continuous(limits=c(ymin, ymax), expand = c(0,0))
       }
     } +
+
     labs(title = main_title,
          caption = paste0(ifelse(lang == "es" & source_info == "LAPOP", "Fuente: LAPOP Lab",
                                  ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
                                         source_info))),
-         x = " ",
-         y = " ") +
+         x = " ", y = " ") +
+
     theme_minimal() +
-    theme(text = element_text(size = 14, family = "roboto"),
-          plot.title = element_text(size = 18, family = "nunito", face = "bold"),
-          plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "nunito", color="#585860"),
-          axis.title.y = element_blank(),
-          axis.text = element_text(size = ifelse(rotate_labels, 10, 14), color = "#585860"),
-          panel.grid.major = element_line(color = "#dddddf", linewidth = 0.5),
-          panel.grid.minor = element_line(color = "#dddddf", linewidth = 0.5),
-          panel.border = element_rect(color = "#dddddf", fill = NA, linewidth = 1.0),
-          legend.position = "top",
-          plot.title.position = "plot",
-          plot.caption.position = "plot",
-          legend.title = element_blank(),
+    theme(text = element_text(size=14, family="roboto"),
+          plot.title = element_text(size=18, family="nunito", face="bold"),
+          plot.caption = element_text(size=10.5, vjust=2, hjust=0,
+                                      family="nunito", color="#585860"),
+          axis.text = element_text(size = ifelse(rotate_labels, 10, 14),
+                                   color="#585860"),
+          panel.grid.major = element_line(color="#dddddf", linewidth=0.5),
+          panel.grid.minor = element_line(color="#dddddf", linewidth=0.5),
+          panel.border = element_rect(color="#dddddf", fill=NA, linewidth=1.0),
+          legend.position="top",
+          legend.title=element_blank(),
           legend.justification='left',
           legend.margin = margin(t=0, b=0, l=-40, r=0),
-          legend.text=element_markdown(family = "nunito-light"))
+          legend.text = ggtext::element_markdown(family="nunito-light"))
 
-
-  # Apply label rotation if needed
   if(rotate_labels) {
-    ts <- ts + theme(axis.text.x = element_text(angle = label_angle,
-                                                hjust = 0.5, vjust = 1))
-
-    # Adjust plot margins to accommodate rotated labels
-    ts <-  ts + theme(plot.margin = margin(t = 10, r = 10, b = max(10, current_label_size*5), l = 10))
+    ts <- ts +
+      theme(axis.text.x = element_text(angle = label_angle,
+                                       hjust = 0.5, vjust = 1)) +
+      theme(plot.margin = margin(t=10, r=10,
+                                 b=max(10, current_label_size*5), l=10))
   }
+
   return(ts)
 }
-
-
-
