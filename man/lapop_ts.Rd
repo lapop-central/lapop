@@ -22,7 +22,8 @@ lapop_ts(
   percentages = TRUE,
   label_vjust = -2.1,
   max_years = 15,
-  label_angle = 0
+  label_angle = 0,
+  ci_type = "linerange"
 )
 }
 \arguments{
@@ -64,6 +65,18 @@ country labels exceeds this value, labels will be smaller and if necessary rotat
 Default: 15 years.}
 
 \item{label_angle}{Numeric. Angle (in degrees) to rotate x-axis labels when max_years is exceeded. Default: 0.}
+
+\item{ci_type}{Character. Controls how confidence intervals are displayed in the
+time-series plot. This parameter only affects how the confidence interval is visualized;
+the point estimate and line plot remain unchanged. Options:
+\itemize{
+  \item \code{"linerange"} (default): Draws upper and lower bounds as dashed lines.
+  \item \code{"errorbar"}: Displays confidence intervals using vertical error bars
+        centered on the point estimate.
+  \item \code{"ribbon"}: Shows a shaded confidence band between the lower and
+        upper bounds.
+  \item \code{"none"}: Suppresses confidence interval display.
+}}
 }
 \value{
 Returns an object of class \code{ggplot}, a ggplot line graph showing
