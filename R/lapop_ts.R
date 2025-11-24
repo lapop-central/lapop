@@ -132,35 +132,19 @@ lapop_ts <- function(data, outcome_var = data$prop, lower_bound = data$lb,
   # --------------------------------------------------------------
   {
     if (ci_type == "linerange") {
-
       list(
         geom_line(aes(y = lower_bound, group = 1),
                   color=color_scheme, linewidth = 1, alpha=0.48, linetype="dashed"),
         geom_line(aes(y = upper_bound, group = 1),
                   color=color_scheme, linewidth = 1, alpha=0.48, linetype="dashed")
       )
-
     } else if (ci_type == "errorbar") {
-
-      geom_errorbar(
-        data = subset(data,
-                      !is.na(point_var) &
-                        !is.na(lower_bound) &
-                        !is.na(upper_bound)),
-        aes(ymin = lower_bound, ymax = upper_bound),
-        width = 0.1,
-        color = color_scheme,
-        alpha = 0.75,
-        linewidth = 1
-      )
-
+      geom_errorbar(aes(ymin = lower_bound, ymax = upper_bound),
+                    width = 0.1, color = color_scheme, alpha = 0.75, linewidth = 1)
     } else if (ci_type == "ribbon") {
-
       geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound),
                   fill = color_scheme, alpha = 0.48, color = NA)
-
     } else if (ci_type == "none") {
-
       NULL
     }
   } +
