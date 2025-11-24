@@ -11,13 +11,13 @@
 ## Citation
 
 Vidigal R, Plutowski L (2025). *lapop: Processing, Visualizing, and
-Labeling Americas Barometer Data*. R package version 2.1.0,
+Labeling Americas Barometer Data*. R package version 2.1.2,
 <https://lapop-central.github.io/lapop/>.
 
     @Manual{,
       title = {lapop: Processing, Visualizing, and Labeling Americas Barometer Data},
       author = {Robert Vidigal and Luke Plutowski},
       year = {2025},
-      note = {R package version 2.1.0},
+      note = {R package version 2.1.2},
       url = {https://lapop-central.github.io/lapop/},
     }

@@ -28,7 +28,8 @@ lapop_ts(
   percentages = TRUE,
   label_vjust = -2.1,
   max_years = 15,
-  label_angle = 0
+  label_angle = 0,
+  ci_type = "linerange"
 )
 ```
 
@@ -103,6 +104,24 @@ lapop_ts(
 
   Numeric. Angle (in degrees) to rotate x-axis labels when max_years is
   exceeded. Default: 0.
+
+- ci_type:
+
+  Character. Controls how confidence intervals are displayed in the
+  time-series plot. This parameter only affects how the confidence
+  interval is visualized; the point estimate and line plot remain
+  unchanged. Options:
+
+  - `"linerange"` (default): Draws upper and lower bounds as dashed
+    lines.
+
+  - `"errorbar"`: Displays confidence intervals using vertical error
+    bars centered on the point estimate.
+
+  - `"ribbon"`: Shows a shaded confidence band between the lower and
+    upper bounds.
+
+  - `"none"`: Suppresses confidence interval display.
 
 ## Value
 

@@ -15,7 +15,7 @@ shown."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">lapop</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,8 @@ shown.</p>
 <span>  percentages <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  label_vjust <span class="op">=</span> <span class="op">-</span><span class="fl">2.1</span>,</span>
 <span>  max_years <span class="op">=</span> <span class="fl">15</span>,</span>
-<span>  label_angle <span class="op">=</span> <span class="fl">0</span></span>
+<span>  label_angle <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  ci_type <span class="op">=</span> <span class="st">"linerange"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -142,6 +143,18 @@ Default: 15 years.</p></dd>
 
 <dt id="arg-label-angle">label_angle<a class="anchor" aria-label="anchor" href="#arg-label-angle"></a></dt>
 <dd><p>Numeric. Angle (in degrees) to rotate x-axis labels when max_years is exceeded. Default: 0.</p></dd>
+
+
+<dt id="arg-ci-type">ci_type<a class="anchor" aria-label="anchor" href="#arg-ci-type"></a></dt>
+<dd><p>Character. Controls how confidence intervals are displayed in the
+time-series plot. This parameter only affects how the confidence interval is visualized;
+the point estimate and line plot remain unchanged. Options:</p><ul><li><p><code>"linerange"</code> (default): Draws upper and lower bounds as dashed lines.</p></li>
+<li><p><code>"errorbar"</code>: Displays confidence intervals using vertical error bars
+        centered on the point estimate.</p></li>
+<li><p><code>"ribbon"</code>: Shows a shaded confidence band between the lower and
+        upper bounds.</p></li>
+<li><p><code>"none"</code>: Suppresses confidence interval display.</p></li>
+</ul></dd>
 
 </dl></div>
     <div class="section level2">
