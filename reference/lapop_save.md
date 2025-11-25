@@ -62,6 +62,6 @@ myfigure <- lapop_hist(df,
 
 f <- file.path(tempdir(), "fig1.svg")
 lapop_save(myfigure, f, format = "svg", width_px = 800)
-#> agg_record_1522022033 
-#>                     2 
+#> agg_record_903219743 
+#>                    2 
 ```
