@@ -1,10 +1,13 @@
+# lapop 2.1.3
+* include lapop_map()
+
 # lapop 2.1.2
 
-* include ci_type to lapop_ts 
+* include ci_type to lapop_ts()
 
 # lapop 2.1.1
 
-* include lpr_extract_ros 
+* include lpr_extract_ros()
 
 # lapop 2.1.0
 
