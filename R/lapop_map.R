@@ -16,9 +16,15 @@
 #' @param outcome String. Column name containing the numeric or categorical variable to visualize.
 #' @param survey Either `"CSES"` (full world map) or `"AmericasBarometer"` (Americas only).
 #' @param zoom Numeric (0–1). Controls how tightly the map zooms when `survey = "AmericasBarometer"`. Default is `1`.
-#' @param title Optional plot title.
 #' @param palette Vector of up to 5 colors for continuous and factor variables.
-#'
+#' @param main_title Character. Title of graph.  Default: None.
+#' @param source_info Character. Information on dataset used (country, years, version, etc.),
+#' which is added to the bottom-left corner of the graph. Default: LAPOP ("Source: LAPOP Lab" will be printed).
+#' @param subtitle Character.  Describes the values/data shown in the graph, e.g., "percentage of Mexicans who say...)".
+#' Default: None.
+#' @param lang Character.  Changes default subtitle text and source info to either Spanish or English.
+#' Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
+#' or "es" (Spanish).  Default: "en".
 #' @return A `ggplot2` choropleth map object.
 #'
 #' @examples
@@ -28,16 +34,18 @@
 #'   vallabel = c("US", "AR", "VE", "CH", "EC"),
 #'   prop = c(37, 52, 94, 17, 69)
 #' )
-#' lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop",
-#'           survey = "AmericasBarometer", zoom = 0.9)
+#' lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
+#'           survey = "AmericasBarometer", main_title = "LAC Countries",
+#'           subtitle = "% of respondents")
 #'
 #' # Factor variable example
 #' data_fact <- data.frame(
-#'   valalbel = c("CA", "BR", "MX", "PE", "CO"),
+#'   vallabel = c("CA", "BR", "MX", "PE", "CO"),
 #'   group = c("A","A","B","B","C")
 #' )
-#' lapop_map(data_fact, pais_lab = "vallabel", outcome = "group",
-#'           survey = "AmericasBarometer")
+#' lapop_map(data_fact, pais_lab = "vallabel", outcome = "group", zoom = 0.9,
+#'           survey = "AmericasBarometer", main_title = "LAC Countries",
+#'           subtitle = "% of respondents")
 #' }
 #'
 #' @export
@@ -53,12 +61,16 @@ lapop_map <- function(data,
                       pais_lab = "pais_lab",
                       survey = c("CSES", "AmericasBarometer"),
                       zoom = 1,
-                      title = NULL,
-                      palette = c("#F2A344", "#D97A1E", "#BF5A00", "#8A3900", "#4A1E00")) {
+                      main_title = "",
+                      subtitle = "",
+                      palette = c("#F2A344", "#D97A1E", "#BF5A00", "#8A3900", "#4A1E00"),
+                      source_info = "LAPOP",
+                      lang = "en") {
 
   survey <- match.arg(survey)
   zoom <- max(0, min(1, zoom))
 
+  # Americas-only ISO2 vector
   americas_iso2 <- c(
     "US","CA","MX",
     "CR","SV","GT","HN","NI","PA","BZ",
@@ -66,6 +78,7 @@ lapop_map <- function(data,
     "AR","BO","BR","CL","CO","EC","GY","PE","PY","SR","UY","VE"
   )
 
+  # Base world map
   world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf") %>%
     dplyr::select(iso2 = iso_a2, name, geometry) %>%
     dplyr::filter(iso2 != "AQ")
@@ -74,6 +87,7 @@ lapop_map <- function(data,
     world <- world %>% dplyr::filter(iso2 %in% americas_iso2)
   }
 
+  # Merge data
   df <- data %>%
     dplyr::rename(
       iso2  = !!sym(pais_lab),
@@ -84,6 +98,7 @@ lapop_map <- function(data,
 
   value_is_factor <- is.factor(merged$value) || is.character(merged$value)
 
+  # Base plot
   p <- ggplot2::ggplot() +
     ggplot2::geom_sf(
       data = merged %>% dplyr::filter(is.na(value)),
@@ -95,7 +110,7 @@ lapop_map <- function(data,
       size = 0.25
     )
 
-  # --- SINGLE PALETTE LOGIC ---------------------------------------------------
+  # Palette logic
   if (value_is_factor) {
     p <- p +
       ggplot2::scale_fill_manual(values = palette, drop = FALSE) +
@@ -106,7 +121,7 @@ lapop_map <- function(data,
       ggplot2::scale_color_gradientn(colors = palette, guide = "none")
   }
 
-  # --- ZOOM LOGIC -------------------------------------------------------------
+  # Zoom logic for better presentation
   if (survey == "AmericasBarometer") {
 
     world_xlim <- c(-180, 180)
@@ -125,11 +140,27 @@ lapop_map <- function(data,
     )
   }
 
-  p +
-    ggplot2::theme_void() +
-    ggplot2::labs(title = title, fill = "") +
+# SOURCE INFO LOGIC (matches lapop_cc) ------------------------------
+
+  caption_text <- if (source_info == "LAPOP") {
+    if (lang == "es") "Fuente: LAPOP Lab" else "Source: LAPOP Lab"
+  } else {
+    source_info
+  }
+
+  # OUTPUT ------------------------------------------------------
+  p + ggplot2::theme_void() +
+    ggplot2::labs(
+      title    = main_title,
+      subtitle = subtitle,
+      fill     = "",
+      caption  = caption_text) +
     ggplot2::theme(
       legend.position = "left",
-      plot.title = ggplot2::element_text(size = 18, face = "bold", hjust = 0.5)
-    )
+      legend.title = element_blank(),
+      legend.text = element_markdown(family = "nunito-light"),
+      plot.title = element_text(size = 18, family = "nunito", face = "bold"),
+      plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "nunito", color="#585860"),
+      plot.subtitle = element_text(size = 13, hjust = 0.5, family = "nunito", color = "#585860"),
+      )
 }

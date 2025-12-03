@@ -10,8 +10,11 @@ lapop_map(
   pais_lab = "pais_lab",
   survey = c("CSES", "AmericasBarometer"),
   zoom = 1,
-  title = NULL,
-  palette = c("#F2A344", "#D97A1E", "#BF5A00", "#8A3900", "#4A1E00")
+  main_title = "",
+  subtitle = "",
+  palette = c("#F2A344", "#D97A1E", "#BF5A00", "#8A3900", "#4A1E00"),
+  source_info = "LAPOP",
+  lang = "en"
 )
 }
 \arguments{
@@ -25,9 +28,19 @@ lapop_map(
 
 \item{zoom}{Numeric (0–1). Controls how tightly the map zooms when `survey = "AmericasBarometer"`. Default is `1`.}
 
-\item{title}{Optional plot title.}
+\item{main_title}{Character. Title of graph.  Default: None.}
+
+\item{subtitle}{Character.  Describes the values/data shown in the graph, e.g., "percentage of Mexicans who say...)".
+Default: None.}
 
 \item{palette}{Vector of up to 5 colors for continuous and factor variables.}
+
+\item{source_info}{Character. Information on dataset used (country, years, version, etc.),
+which is added to the bottom-left corner of the graph. Default: LAPOP ("Source: LAPOP Lab" will be printed).}
+
+\item{lang}{Character.  Changes default subtitle text and source info to either Spanish or English.
+Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
+or "es" (Spanish).  Default: "en".}
 }
 \value{
 A `ggplot2` choropleth map object.
@@ -45,16 +58,18 @@ data_cont <- data.frame(
   vallabel = c("US", "AR", "VE", "CH", "EC"),
   prop = c(37, 52, 94, 17, 69)
 )
-lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop",
-          survey = "AmericasBarometer", zoom = 0.9)
+lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
+          survey = "AmericasBarometer", main_title = "LAC Countries",
+          subtitle = "\% of respondents")
 
 # Factor variable example
 data_fact <- data.frame(
-  valalbel = c("CA", "BR", "MX", "PE", "CO"),
+  vallabel = c("CA", "BR", "MX", "PE", "CO"),
   group = c("A","A","B","B","C")
 )
-lapop_map(data_fact, pais_lab = "vallabel", outcome = "group",
-          survey = "AmericasBarometer")
+lapop_map(data_fact, pais_lab = "vallabel", outcome = "group", zoom = 0.9,
+          survey = "AmericasBarometer", main_title = "LAC Countries",
+          subtitle = "\% of respondents")
 }
 
 }
