@@ -2,7 +2,11 @@
 % Please edit documentation in R/lapop_map.R
 \name{lapop_map}
 \alias{lapop_map}
-\title{LAPOP Map Graph}
+\title{LAPOP World and Americas Map Graph
+`lapop_map()` generates a stylized choropleth map using ISO2 country codes
+from both continuous and factor variables. It is designed to map cross-country
+results from `lpr_cc()` and supports either a full world map (`survey = "CSES"`)
+# or an Americas-only map (`survey = "AmericasBarometer"`).}
 \usage{
 lapop_map(
   data,
@@ -46,6 +50,7 @@ or "es" (Spanish).  Default: "en".}
 A `ggplot2` choropleth map object.
 }
 \description{
+LAPOP World and Americas Map Graph
 `lapop_map()` generates a stylized choropleth map using ISO2 country codes
 from both continuous and factor variables. It is designed to map cross-country
 results from `lpr_cc()` and supports either a full world map (`survey = "CSES"`)
