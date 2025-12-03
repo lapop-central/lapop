@@ -49,6 +49,7 @@
 #'
 #' @export
 #' @import ggplot2
+#' @import ggtext
 #' @import sf
 #' @import rnaturalearth
 #' @importFrom dplyr filter select left_join rename
@@ -110,13 +111,29 @@ lapop_map <- function(data,
     )
 
   # Palette logic
+
   if (value_is_factor) {
     p <- p +
       ggplot2::scale_fill_manual(values = palette, drop = FALSE) +
-      ggplot2::scale_color_manual(values = palette, guide = "none")
+      ggplot2::scale_color_manual(values = palette, guide = guide_colorbar(
+        direction = "horizontal",
+        barwidth  = unit(80, "pt"),
+        barheight = unit(12, "pt"),
+        label.position = "top"
+      )
+      )
   } else {
     p <- p +
-      ggplot2::scale_fill_gradientn(colors = palette, na.value = "#dddddf") +
+      scale_fill_gradientn(
+        colors = palette,
+        na.value = "#dddddf",
+        guide = guide_colorbar(
+          direction = "horizontal",
+          barwidth  = unit(80, "pt"),
+          barheight = unit(12, "pt"),
+          label.position = "top"
+        )
+      ) +
       ggplot2::scale_color_gradientn(colors = palette, guide = "none")
   }
 
@@ -152,11 +169,11 @@ lapop_map <- function(data,
       fill     = "",
       caption  = caption_text) +
     ggplot2::theme(
-      legend.position = "left",
+      legend.position = "bottom",
       legend.title = element_blank(),
       legend.text = element_markdown(family = "nunito-light"),
       plot.title = element_text(size = 18, family = "nunito", face = "bold"),
       plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "nunito", color="#585860"),
-      plot.subtitle = element_text(size = 13, hjust = 0.5, family = "nunito", color = "#585860"),
+      plot.subtitle = element_text(size = 13, hjust = 0, family = "nunito", color = "#585860"),
       )
 }
