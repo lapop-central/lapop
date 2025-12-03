@@ -115,13 +115,7 @@ lapop_map <- function(data,
   if (value_is_factor) {
     p <- p +
       ggplot2::scale_fill_manual(values = palette, drop = FALSE) +
-      ggplot2::scale_color_manual(values = palette, guide = guide_colorbar(
-        direction = "horizontal",
-        barwidth  = unit(80, "pt"),
-        barheight = unit(12, "pt"),
-        label.position = "top"
-      )
-      )
+      ggplot2::scale_color_manual(values = palette, guide = "none")
   } else {
     p <- p +
       scale_fill_gradientn(
