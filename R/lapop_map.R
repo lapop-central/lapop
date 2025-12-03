@@ -141,12 +141,9 @@ lapop_map <- function(data,
   }
 
 # SOURCE INFO LOGIC (matches lapop_cc) ------------------------------
-
-  caption_text <- if (source_info == "LAPOP") {
-    if (lang == "es") "Fuente: LAPOP Lab" else "Source: LAPOP Lab"
-  } else {
-    source_info
-  }
+  caption_text <- ifelse(lang == "es" & source_info == "LAPOP", "Fuente: LAPOP Lab",
+                         ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
+                                source_info))
 
   # OUTPUT ------------------------------------------------------
   p + ggplot2::theme_void() +
