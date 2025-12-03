@@ -12,7 +12,7 @@
 #' # or an Americas-only map (`survey = "AmericasBarometer"`).
 #'
 #' @param data A data frame containing ISO2 country codes and a value to map.
-#' @param iso_col String. Column name containing ISO2 country codes (e.g., `"US"`, `"BR"`).
+#' @param pais_lab String. Column name containing ISO2 country codes (e.g., `"US"`, `"BR"`).
 #' @param outcome String. Column name containing the numeric or categorical variable to visualize.
 #' @param survey Either `"CSES"` (full world map) or `"AmericasBarometer"` (Americas only).
 #' @param zoom Numeric (0–1). Controls how tightly the map zooms when `survey = "AmericasBarometer"`. Default is `1`.
@@ -25,18 +25,18 @@
 #' \dontrun{
 #' # Continuous variable example
 #' data_cont <- data.frame(
-#'   vallabel = c("CA", "BR", "MX", "PE", "CO"),
+#'   vallabel = c("US", "AR", "VE", "CH", "EC"),
 #'   prop = c(37, 52, 94, 17, 69)
 #' )
-#' lapop_map(data_cont, country = "vallabel", outcome = "prop",
+#' lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop",
 #'           survey = "AmericasBarometer", zoom = 0.9)
 #'
 #' # Factor variable example
 #' data_fact <- data.frame(
-#'   vallabel = c("CA", "BR", "MX", "PE", "CO"),
+#'   valalbel = c("CA", "BR", "MX", "PE", "CO"),
 #'   group = c("A","A","B","B","C")
 #' )
-#' lapop_map(data_fact, iso_col = "vallabel", outcome = "group",
+#' lapop_map(data_fact, pais_lab = "vallabel", outcome = "group",
 #'           survey = "AmericasBarometer")
 #' }
 #'
@@ -49,8 +49,8 @@
 #' @author Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
 lapop_map <- function(data,
-                      iso_col = "iso2",
                       outcome = "value",
+                      pais_lab = "pais_lab",
                       survey = c("CSES", "AmericasBarometer"),
                       zoom = 1,
                       title = NULL,
@@ -76,7 +76,7 @@ lapop_map <- function(data,
 
   df <- data %>%
     dplyr::rename(
-      iso2  = !!sym(iso_col),
+      iso2  = !!sym(pais_lab),
       value = !!sym(outcome)
     )
 
