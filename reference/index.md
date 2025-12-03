@@ -23,7 +23,12 @@
 - [`lapop_hist()`](https://lapop-central.github.io/lapop/reference/lapop_hist.md)
   : LAPOP Bar Graphs
 - [`lapop_map()`](https://lapop-central.github.io/lapop/reference/lapop_map.md)
-  : LAPOP Map Graph
+  : LAPOP World and Americas Map Graph \`lapop_map()\` generates a
+  stylized choropleth map using ISO2 country codes from both continuous
+  and factor variables. It is designed to map cross-country results from
+  \`lpr_cc()\` and supports either a full world map (\`survey =
+  "CSES"\`) \# or an Americas-only map (\`survey =
+  "AmericasBarometer"\`).
 - [`lapop_mline()`](https://lapop-central.github.io/lapop/reference/lapop_mline.md)
   : LAPOP Multi-line Time-Series Graphs
 - [`lapop_mover()`](https://lapop-central.github.io/lapop/reference/lapop_mover.md)
