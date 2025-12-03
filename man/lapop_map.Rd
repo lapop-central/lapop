@@ -7,20 +7,19 @@
 lapop_map(
   data,
   iso_col = "iso2",
-  value_col = "value",
+  outcome = "value",
   survey = c("CSES", "AmericasBarometer"),
   zoom = 1,
   title = NULL,
-  palette_cont = c("#F2A344", "#D97A1E", "#BF5A00", "#8A3900", "#4A1E00"),
-  palette_disc = c("#F2A344", "#D97A1E", "#BF5A00", "#8A3900", "#4A1E00")
+  palette = c("#F2A344", "#D97A1E", "#BF5A00", "#8A3900", "#4A1E00")
 )
 }
 \arguments{
-\item{data}{A data frame containing ISO2 codes and a value to map.}
+\item{data}{A data frame containing ISO2 country codes and a value to map.}
 
 \item{iso_col}{String. Column name containing ISO2 country codes (e.g., `"US"`, `"BR"`).}
 
-\item{value_col}{String. Column name containing the numeric or categorical variable to visualize.}
+\item{outcome}{String. Column name containing the numeric or categorical variable to visualize.}
 
 \item{survey}{Either `"CSES"` (full world map) or `"AmericasBarometer"` (Americas only).}
 
@@ -28,18 +27,16 @@ lapop_map(
 
 \item{title}{Optional plot title.}
 
-\item{palette_cont}{Vector of 5 colors for continuous variables.}
-
-\item{palette_disc}{Vector of up to 5 colors for discrete variables.}
+\item{palette}{Vector of up to 5 colors for continuous and factor variables.}
 }
 \value{
 A `ggplot2` choropleth map object.
 }
 \description{
-`lapop_map()` generates a stylized choropleth map using ISO2 country codes.
-It is designed to map cross-country results from `lpr_cc()` and supports
-either a full world map (`survey = "CSES"`) or an Americas-only map
-(`survey = "AmericasBarometer"`).
+`lapop_map()` generates a stylized choropleth map using ISO2 country codes
+from both continuous and factor variables. It is designed to map cross-country
+results from `lpr_cc()` and supports either a full world map (`survey = "CSES"`)
+# or an Americas-only map (`survey = "AmericasBarometer"`).
 }
 \examples{
 \dontrun{
@@ -48,7 +45,7 @@ data_cont <- data.frame(
   vallabel = c("CA", "BR", "MX", "PE", "CO"),
   prop = c(37, 52, 94, 17, 69)
 )
-lapop_map(data_cont, iso_col = "vallabel", value_col = "prop",
+lapop_map(data_cont, country = "vallabel", outcome = "prop",
           survey = "AmericasBarometer", zoom = 0.9)
 
 # Factor variable example
@@ -56,7 +53,7 @@ data_fact <- data.frame(
   vallabel = c("CA", "BR", "MX", "PE", "CO"),
   group = c("A","A","B","B","C")
 )
-lapop_map(data_fact, iso_col = "vallabel", value_col = "group",
+lapop_map(data_fact, iso_col = "vallabel", outcome = "group",
           survey = "AmericasBarometer")
 }
 

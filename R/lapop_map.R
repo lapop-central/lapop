@@ -6,19 +6,18 @@
 
 #' LAPOP Map Graph
 #'
-#' `lapop_map()` generates a stylized choropleth map using ISO2 country codes.
-#' It is designed to map cross-country results from `lpr_cc()` and supports
-#' either a full world map (`survey = "CSES"`) or an Americas-only map
-#' (`survey = "AmericasBarometer"`).
+#' `lapop_map()` generates a stylized choropleth map using ISO2 country codes
+#' from both continuous and factor variables. It is designed to map cross-country
+#' results from `lpr_cc()` and supports either a full world map (`survey = "CSES"`)
+#' # or an Americas-only map (`survey = "AmericasBarometer"`).
 #'
-#' @param data A data frame containing ISO2 codes and a value to map.
+#' @param data A data frame containing ISO2 country codes and a value to map.
 #' @param iso_col String. Column name containing ISO2 country codes (e.g., `"US"`, `"BR"`).
-#' @param value_col String. Column name containing the numeric or categorical variable to visualize.
+#' @param outcome String. Column name containing the numeric or categorical variable to visualize.
 #' @param survey Either `"CSES"` (full world map) or `"AmericasBarometer"` (Americas only).
 #' @param zoom Numeric (0–1). Controls how tightly the map zooms when `survey = "AmericasBarometer"`. Default is `1`.
 #' @param title Optional plot title.
-#' @param palette_cont Vector of 5 colors for continuous variables.
-#' @param palette_disc Vector of up to 5 colors for discrete variables.
+#' @param palette Vector of up to 5 colors for continuous and factor variables.
 #'
 #' @return A `ggplot2` choropleth map object.
 #'
@@ -29,7 +28,7 @@
 #'   vallabel = c("CA", "BR", "MX", "PE", "CO"),
 #'   prop = c(37, 52, 94, 17, 69)
 #' )
-#' lapop_map(data_cont, iso_col = "vallabel", value_col = "prop",
+#' lapop_map(data_cont, country = "vallabel", outcome = "prop",
 #'           survey = "AmericasBarometer", zoom = 0.9)
 #'
 #' # Factor variable example
@@ -37,7 +36,7 @@
 #'   vallabel = c("CA", "BR", "MX", "PE", "CO"),
 #'   group = c("A","A","B","B","C")
 #' )
-#' lapop_map(data_fact, iso_col = "vallabel", value_col = "group",
+#' lapop_map(data_fact, iso_col = "vallabel", outcome = "group",
 #'           survey = "AmericasBarometer")
 #' }
 #'
@@ -48,14 +47,14 @@
 #' @importFrom dplyr filter select left_join rename
 #'
 #' @author Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
+
 lapop_map <- function(data,
                       iso_col = "iso2",
-                      value_col = "value",
+                      outcome = "value",
                       survey = c("CSES", "AmericasBarometer"),
                       zoom = 1,
                       title = NULL,
-                      palette_cont = c("#F2A344", "#D97A1E", "#BF5A00", "#8A3900", "#4A1E00"),
-                      palette_disc = c("#F2A344", "#D97A1E", "#BF5A00", "#8A3900", "#4A1E00")) {
+                      palette = c("#F2A344", "#D97A1E", "#BF5A00", "#8A3900", "#4A1E00")) {
 
   survey <- match.arg(survey)
   zoom <- max(0, min(1, zoom))
@@ -78,7 +77,7 @@ lapop_map <- function(data,
   df <- data %>%
     dplyr::rename(
       iso2  = !!sym(iso_col),
-      value = !!sym(value_col)
+      value = !!sym(outcome)
     )
 
   merged <- world %>% dplyr::left_join(df, by = "iso2")
@@ -96,14 +95,15 @@ lapop_map <- function(data,
       size = 0.25
     )
 
+  # --- SINGLE PALETTE LOGIC ---------------------------------------------------
   if (value_is_factor) {
     p <- p +
-      ggplot2::scale_fill_manual(values = palette_disc, drop = FALSE) +
-      ggplot2::scale_color_manual(values = palette_disc, guide = "none")
+      ggplot2::scale_fill_manual(values = palette, drop = FALSE) +
+      ggplot2::scale_color_manual(values = palette, guide = "none")
   } else {
     p <- p +
-      ggplot2::scale_fill_gradientn(colors = palette_cont, na.value = "#dddddf") +
-      ggplot2::scale_color_gradientn(colors = palette_cont, guide = "none")
+      ggplot2::scale_fill_gradientn(colors = palette, na.value = "#dddddf") +
+      ggplot2::scale_color_gradientn(colors = palette, guide = "none")
   }
 
   # --- ZOOM LOGIC -------------------------------------------------------------
