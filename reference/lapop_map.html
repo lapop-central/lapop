@@ -58,8 +58,11 @@ results from `lpr_cc()` and supports either a full world map (`survey = "CSES"`)
 <span>  pais_lab <span class="op">=</span> <span class="st">"pais_lab"</span>,</span>
 <span>  survey <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CSES"</span>, <span class="st">"AmericasBarometer"</span><span class="op">)</span>,</span>
 <span>  zoom <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#F2A344"</span>, <span class="st">"#D97A1E"</span>, <span class="st">"#BF5A00"</span>, <span class="st">"#8A3900"</span>, <span class="st">"#4A1E00"</span><span class="op">)</span></span>
+<span>  main_title <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  subtitle <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#F2A344"</span>, <span class="st">"#D97A1E"</span>, <span class="st">"#BF5A00"</span>, <span class="st">"#8A3900"</span>, <span class="st">"#4A1E00"</span><span class="op">)</span>,</span>
+<span>  source_info <span class="op">=</span> <span class="st">"LAPOP"</span>,</span>
+<span>  lang <span class="op">=</span> <span class="st">"en"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -87,12 +90,28 @@ results from `lpr_cc()` and supports either a full world map (`survey = "CSES"`)
 <dd><p>Numeric (0–1). Controls how tightly the map zooms when `survey = "AmericasBarometer"`. Default is `1`.</p></dd>
 
 
-<dt id="arg-title">title<a class="anchor" aria-label="anchor" href="#arg-title"></a></dt>
-<dd><p>Optional plot title.</p></dd>
+<dt id="arg-main-title">main_title<a class="anchor" aria-label="anchor" href="#arg-main-title"></a></dt>
+<dd><p>Character. Title of graph.  Default: None.</p></dd>
+
+
+<dt id="arg-subtitle">subtitle<a class="anchor" aria-label="anchor" href="#arg-subtitle"></a></dt>
+<dd><p>Character.  Describes the values/data shown in the graph, e.g., "percentage of Mexicans who say...)".
+Default: None.</p></dd>
 
 
 <dt id="arg-palette">palette<a class="anchor" aria-label="anchor" href="#arg-palette"></a></dt>
 <dd><p>Vector of up to 5 colors for continuous and factor variables.</p></dd>
+
+
+<dt id="arg-source-info">source_info<a class="anchor" aria-label="anchor" href="#arg-source-info"></a></dt>
+<dd><p>Character. Information on dataset used (country, years, version, etc.),
+which is added to the bottom-left corner of the graph. Default: LAPOP ("Source: LAPOP Lab" will be printed).</p></dd>
+
+
+<dt id="arg-lang">lang<a class="anchor" aria-label="anchor" href="#arg-lang"></a></dt>
+<dd><p>Character.  Changes default subtitle text and source info to either Spanish or English.
+Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
+or "es" (Spanish).  Default: "en".</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -112,16 +131,18 @@ results from `lpr_cc()` and supports either a full world map (`survey = "CSES"`)
 <span class="r-in"><span>  vallabel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"US"</span>, <span class="st">"AR"</span>, <span class="st">"VE"</span>, <span class="st">"CH"</span>, <span class="st">"EC"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">37</span>, <span class="fl">52</span>, <span class="fl">94</span>, <span class="fl">17</span>, <span class="fl">69</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">lapop_map</span><span class="op">(</span><span class="va">data_cont</span>, pais_lab <span class="op">=</span> <span class="st">"vallabel"</span>, outcome <span class="op">=</span> <span class="st">"prop"</span>,</span></span>
-<span class="r-in"><span>          survey <span class="op">=</span> <span class="st">"AmericasBarometer"</span>, zoom <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">lapop_map</span><span class="op">(</span><span class="va">data_cont</span>, pais_lab <span class="op">=</span> <span class="st">"vallabel"</span>, outcome <span class="op">=</span> <span class="st">"prop"</span>, zoom <span class="op">=</span> <span class="fl">0.9</span>,</span></span>
+<span class="r-in"><span>          survey <span class="op">=</span> <span class="st">"AmericasBarometer"</span>, main_title <span class="op">=</span> <span class="st">"LAC Countries"</span>,</span></span>
+<span class="r-in"><span>          subtitle <span class="op">=</span> <span class="st">"% of respondents"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Factor variable example</span></span></span>
 <span class="r-in"><span><span class="va">data_fact</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  valalbel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CA"</span>, <span class="st">"BR"</span>, <span class="st">"MX"</span>, <span class="st">"PE"</span>, <span class="st">"CO"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  vallabel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CA"</span>, <span class="st">"BR"</span>, <span class="st">"MX"</span>, <span class="st">"PE"</span>, <span class="st">"CO"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"B"</span>,<span class="st">"C"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">lapop_map</span><span class="op">(</span><span class="va">data_fact</span>, pais_lab <span class="op">=</span> <span class="st">"vallabel"</span>, outcome <span class="op">=</span> <span class="st">"group"</span>,</span></span>
-<span class="r-in"><span>          survey <span class="op">=</span> <span class="st">"AmericasBarometer"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">lapop_map</span><span class="op">(</span><span class="va">data_fact</span>, pais_lab <span class="op">=</span> <span class="st">"vallabel"</span>, outcome <span class="op">=</span> <span class="st">"group"</span>, zoom <span class="op">=</span> <span class="fl">0.9</span>,</span></span>
+<span class="r-in"><span>          survey <span class="op">=</span> <span class="st">"AmericasBarometer"</span>, main_title <span class="op">=</span> <span class="st">"LAC Countries"</span>,</span></span>
+<span class="r-in"><span>          subtitle <span class="op">=</span> <span class="st">"% of respondents"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

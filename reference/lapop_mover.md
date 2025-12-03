@@ -137,7 +137,7 @@ require(lapop); lapop_fonts
 #>     showtext::showtext_auto()
 #>     message("LAPOP fonts loaded successfully: Inter, Roboto, and Nunito (regular and light).")
 #> }
-#> <bytecode: 0x5616b978c8a0>
+#> <bytecode: 0x562136c92740>
 #> <environment: namespace:lapop>
 lapop_mover(df,
             main_title = paste0("More educated, men, and younger individuals",
