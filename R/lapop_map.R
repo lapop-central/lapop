@@ -50,6 +50,7 @@
 #' @export
 #' @import ggplot2
 #' @import ggtext
+#' @import grid
 #' @importFrom dplyr filter left_join rename
 #'
 #' @author Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
@@ -146,8 +147,8 @@ lapop_map <- function(data,
         na.value = "#dddddf",
         guide = ggplot2::guide_colorbar(
           direction = "horizontal",
-          barwidth  = unit(80, "pt"),
-          barheight = unit(12, "pt"),
+          barwidth  = grid::unit(80, "pt"),
+          barheight = grid::unit(12, "pt"),
           label.position = "top"
         )
       )
