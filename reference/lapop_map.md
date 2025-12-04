@@ -93,7 +93,7 @@ data_cont <- data.frame(
   prop = c(37, 52, 94, 17, 69)
 )
 lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
-          survey = "AmericasBarometer", main_title = "LAC Countries",
+          survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
           subtitle = "% of respondents")
 
 # Factor variable example
@@ -102,7 +102,7 @@ data_fact <- data.frame(
   group = c("A","A","B","B","C")
 )
 lapop_map(data_fact, pais_lab = "vallabel", outcome = "group", zoom = 0.9,
-          survey = "AmericasBarometer", main_title = "LAC Countries",
+          survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
           subtitle = "% of respondents")
 } # }
 ```
