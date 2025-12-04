@@ -34,7 +34,7 @@
 #'   prop = c(37, 52, 94, 17, 69)
 #' )
 #' lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
-#'           survey = "AmericasBarometer", main_title = "LAC Countries",
+#'           survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
 #'           subtitle = "% of respondents")
 #'
 #' # Factor variable example
@@ -43,19 +43,16 @@
 #'   group = c("A","A","B","B","C")
 #' )
 #' lapop_map(data_fact, pais_lab = "vallabel", outcome = "group", zoom = 0.9,
-#'           survey = "AmericasBarometer", main_title = "LAC Countries",
+#'           survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
 #'           subtitle = "% of respondents")
 #' }
 #'
 #' @export
 #' @import ggplot2
 #' @import ggtext
-#' @import sf
-#' @import rnaturalearth
-#' @importFrom dplyr filter select left_join rename
+#' @importFrom dplyr filter left_join rename
 #'
 #' @author Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
-
 lapop_map <- function(data,
                       outcome = "value",
                       pais_lab = "pais_lab",
@@ -70,7 +67,9 @@ lapop_map <- function(data,
   survey <- match.arg(survey)
   zoom <- max(0, min(1, zoom))
 
+  # ---------------------------------------------------------------
   # Americas-only ISO2 vector
+  # ---------------------------------------------------------------
   americas_iso2 <- c(
     "US","CA","MX",
     "CR","SV","GT","HN","NI","PA","BZ",
@@ -78,16 +77,25 @@ lapop_map <- function(data,
     "AR","BO","BR","CL","CO","EC","GY","PE","PY","SR","UY","VE"
   )
 
-  # Base world map
-  world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf") %>%
-    dplyr::select(iso2 = iso_a2, name, geometry) %>%
-    dplyr::filter(iso2 != "AQ")
+  # ---------------------------------------------------------------
+  # Shinyapps-safe world map (pre-saved sf object)
+  # ---------------------------------------------------------------
+  # SAVE MAP LOCALLY TO AVOID BREAKS
+  #library(rnaturalearth); library(sf); library(dplyr)
+  # world_sf <- ne_countries(scale = "medium", returnclass = "sf") %>%
+  # select(iso2 = iso_a2, name, geometry) %>%
+  # filter(iso2 != "AQ")
+  #saveRDS(world_sf, "world_sf.rds")
+
+  world <- readRDS("world_sf.rds")
 
   if (survey == "AmericasBarometer") {
     world <- world %>% dplyr::filter(iso2 %in% americas_iso2)
   }
 
-  # Merge data
+  # ---------------------------------------------------------------
+  # Merge user data
+  # ---------------------------------------------------------------
   df <- data %>%
     dplyr::rename(
       iso2  = !!sym(pais_lab),
@@ -95,43 +103,59 @@ lapop_map <- function(data,
     )
 
   merged <- world %>% dplyr::left_join(df, by = "iso2")
-
   value_is_factor <- is.factor(merged$value) || is.character(merged$value)
 
-  # Base plot
+  # ---------------------------------------------------------------
+  # BASE MAP (fixed black borders)
+  # ---------------------------------------------------------------
   p <- ggplot2::ggplot() +
+
+    # Countries with no data (gray)
     ggplot2::geom_sf(
       data = merged %>% dplyr::filter(is.na(value)),
-      fill = "#dddddf", color = NA
+      fill = "#dddddf",
+      color = "black",
+      size = 0.25
     ) +
+
+    # Countries with data (colored)
     ggplot2::geom_sf(
       data = merged %>% dplyr::filter(!is.na(value)),
-      ggplot2::aes(fill = value, color = value),
+      ggplot2::aes(fill = value),
+      color = "black",           # IMPORTANT: fixed border
       size = 0.25
     )
 
-  # Palette logic
-
+  # ---------------------------------------------------------------
+  # FILL SCALES (NO COLOR SCALES ANYMORE)
+  # ---------------------------------------------------------------
   if (value_is_factor) {
+
     p <- p +
-      ggplot2::scale_fill_manual(values = palette, drop = FALSE) +
-      ggplot2::scale_color_manual(values = palette, guide = "none")
+      ggplot2::scale_fill_manual(
+        values = palette,
+        drop = FALSE,
+        na.value = "#dddddf"      # keeps missing countries gray
+      )
+
   } else {
+
     p <- p +
-      scale_fill_gradientn(
+      ggplot2::scale_fill_gradientn(
         colors = palette,
         na.value = "#dddddf",
-        guide = guide_colorbar(
+        guide = ggplot2::guide_colorbar(
           direction = "horizontal",
           barwidth  = unit(80, "pt"),
           barheight = unit(12, "pt"),
           label.position = "top"
         )
-      ) +
-      ggplot2::scale_color_gradientn(colors = palette, guide = "none")
+      )
   }
 
-  # Zoom logic for better presentation
+  # ---------------------------------------------------------------
+  # Zoom logic for Americas
+  # ---------------------------------------------------------------
   if (survey == "AmericasBarometer") {
 
     world_xlim <- c(-180, 180)
@@ -150,24 +174,34 @@ lapop_map <- function(data,
     )
   }
 
-# SOURCE INFO LOGIC (matches lapop_cc) ------------------------------
-  caption_text <- ifelse(lang == "es" & source_info == "LAPOP", "Fuente: LAPOP Lab",
-                         ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
-                                source_info))
+  # ---------------------------------------------------------------
+  # Caption logic
+  # ---------------------------------------------------------------
+  caption_text <- ifelse(
+    lang == "es" & source_info == "LAPOP", "Fuente: LAPOP Lab",
+    ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
+           source_info)
+  )
 
-  # OUTPUT ------------------------------------------------------
-  p + ggplot2::theme_void() +
+  # ---------------------------------------------------------------
+  # Final theme
+  # ---------------------------------------------------------------
+  p +
+    ggplot2::theme_void() +
     ggplot2::labs(
       title    = main_title,
       subtitle = subtitle,
       fill     = "",
-      caption  = caption_text) +
+      caption  = caption_text
+    ) +
     ggplot2::theme(
       legend.position = "bottom",
-      legend.title = element_blank(),
-      legend.text = element_markdown(family = "nunito-light"),
-      plot.title = element_text(size = 18, family = "nunito", face = "bold"),
-      plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "nunito", color="#585860"),
-      plot.subtitle = element_text(size = 13, hjust = 0, family = "nunito", color = "#585860"),
-      )
+      legend.title = ggplot2::element_blank(),
+      legend.text = ggtext::element_markdown(family = "nunito-light"),
+      plot.title = ggplot2::element_text(size = 18, family = "nunito", face = "bold"),
+      plot.caption = ggplot2::element_text(size = 10.5, vjust = 2, hjust = 0,
+                                           family = "nunito", color = "#585860"),
+      plot.subtitle = ggplot2::element_text(size = 13, hjust = 0,
+                                            family = "nunito", color = "#585860")
+    )
 }
