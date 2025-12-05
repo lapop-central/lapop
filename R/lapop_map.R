@@ -82,11 +82,11 @@ lapop_map <- function(data,
   # Shinyapps-safe world map (pre-saved sf object)
   # ---------------------------------------------------------------
   # SAVE MAP LOCALLY TO AVOID BREAKS
-  #library(rnaturalearth); library(sf); library(dplyr)
-  # world_sf <- ne_countries(scale = "medium", returnclass = "sf") %>%
-  # select(iso2 = iso_a2, name, geometry) %>%
-  # filter(iso2 != "AQ")
-  #saveRDS(world_sf, "world_sf.rds")
+ #library(rnaturalearth); library(sf); library(dplyr)
+ #world_sf <- ne_countries(scale = "medium", returnclass = "sf") %>%
+ #select(iso2 = iso_a2, name, geometry) %>%
+ #filter(iso2 != "AQ" & iso2 != -99) %>% mutate(iso2 = recode(iso2, "CN-TW"="TW"))
+ #saveRDS(world_sf, "world_sf.rds")
 
   world <- readRDS("world_sf.rds")
 
