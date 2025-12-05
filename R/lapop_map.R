@@ -81,12 +81,13 @@ lapop_map <- function(data,
   # ---------------------------------------------------------------
   # Shinyapps-safe world map (pre-saved sf object)
   # ---------------------------------------------------------------
-  # SAVE MAP LOCALLY TO AVOID BREAKS
- #library(rnaturalearth); library(sf); library(dplyr)
- #world_sf <- ne_countries(scale = "medium", returnclass = "sf") %>%
- #select(iso2 = iso_a2, name, geometry) %>%
- #filter(iso2 != "AQ" & iso2 != -99) %>% mutate(iso2 = recode(iso2, "CN-TW"="TW"))
- #saveRDS(world_sf, "world_sf.rds")
+  ### SAVE MAP LOCALLY TO AVOID BREAKS ON APP
+  # library(rnaturalearth); library(sf); library(dplyr)
+  # world_sf <- ne_countries(scale = "medium", returnclass = "sf") %>%
+  # select(iso2 = iso_a2, name, geometry) %>%
+  # filter(iso2 != "AQ" & iso2 != -99) %>%
+  # mutate(iso2 = recode(iso2, "CN-TW"="TW")) #%>% rename(pais_lab = iso2, pais =name)
+  # saveRDS(world_sf, "world_sf.rds"); names(world_sf)
 
   world <- readRDS("world_sf.rds")
 
@@ -99,12 +100,12 @@ lapop_map <- function(data,
   # ---------------------------------------------------------------
   df <- data %>%
     dplyr::rename(
-      iso2  = !!sym(pais_lab),
-      value = !!sym(outcome)
+      iso2 = !!sym(pais_lab),
+      value  = !!sym(outcome)
     )
 
-  merged <- world %>% dplyr::left_join(df, by = "iso2")
-  value_is_factor <- is.factor(merged$value) || is.character(merged$value)
+  merged <- world %>% dplyr::left_join(df, by = "iso2")  %>% sf::st_as_sf()
+  outcome_is_factor <- is.factor(merged$value) || is.character(merged$value)
 
   # ---------------------------------------------------------------
   # BASE MAP (fixed black borders)
@@ -130,7 +131,7 @@ lapop_map <- function(data,
   # ---------------------------------------------------------------
   # FILL SCALES (NO COLOR SCALES ANYMORE)
   # ---------------------------------------------------------------
-  if (value_is_factor) {
+  if (outcome_is_factor) {
 
     p <- p +
       ggplot2::scale_fill_manual(
