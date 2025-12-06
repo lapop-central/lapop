@@ -17,7 +17,7 @@ URL: https://lapop-central.github.io/lapop/
 Depends: 
     R (>= 4.1.0)
 Imports: ggplot2, ggtext, ggrepel, showtext, grid, gridtext, gridExtra, sf,
-    sysfonts, systemfonts, svglite, dplyr, tidyr, srvyr, survey, rnaturalearth,
+    sysfonts, systemfonts, svglite, dplyr, tidyr, srvyr, survey,
     haven, stats, purrr, tibble, marginaleffects, stringr, zoo
 VignetteBuilder: knitr
 Suggests: 
