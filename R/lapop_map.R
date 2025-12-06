@@ -29,18 +29,21 @@
 #' @examples
 #' \dontrun{
 #' # Continuous variable example
-#' data_cont <- data.frame(
-#'   vallabel = c("US", "AR", "VE", "CH", "EC"),
-#'   prop = c(37, 52, 94, 17, 69)
+#' lapop_fonts()
+#'  data_cont <- data.frame(
+#'   vallabel = c("US", "AR", "VE", "CH", "EC", "BO"),
+#'   prop = c(37, 52, 80, 17, 69, 94)
 #' )
+
 #' lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
 #'           survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
 #'           subtitle = "% of respondents")
 #'
 #' # Factor variable example
+#' lapop_fonts()
 #' data_fact <- data.frame(
-#'   vallabel = c("CA", "BR", "MX", "PE", "CO"),
-#'   group = c("A","A","B","B","C")
+#'   vallabel = c("CA", "BR", "MX", "PE", "CO", "PY"),
+#'   group = c("A","A","B","B","C", "C")
 #' )
 #' lapop_map(data_fact, pais_lab = "vallabel", outcome = "group", zoom = 0.9,
 #'           survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
@@ -94,25 +97,22 @@ lapop_map <- function(data,
   #filter(iso2 != "AQ" & iso2 != -99) %>%
   #mutate(iso2 = recode(iso2, "CN-TW"="TW")) %>% rename(pais_lab = iso2, pais =name)
   #names(world); save(world, file="./data/world.rda")
+  #saveRDS(world, file = "data/world.rds", compress = FALSE)
   #tools::resaveRdaFiles("./data/world.rda", compress = "xz")
   #tools::checkRdaFiles("./data/world.rda")
 
-  world <- load(file="./data/world.rda")
+  data(world)
 
   if (survey == "AmericasBarometer") {
-    world <- world %>% dplyr::filter(iso2 %in% americas_iso2)
+    world <- world %>% dplyr::filter(pais_lab %in% americas_iso2)
   }
 
   # ---------------------------------------------------------------
   # Merge user data
   # ---------------------------------------------------------------
-  df <- data %>%
-    dplyr::rename(
-      iso2 = !!sym(pais_lab),
-      value  = !!sym(outcome)
-    )
+  df <- data %>% dplyr::rename(value  = !!sym(outcome), pais_lab = !!sym(pais_lab))
 
-  merged <- world %>% dplyr::left_join(df, by = "iso2")  %>% sf::st_as_sf()
+  merged <- world %>% dplyr::left_join(df, by = "pais_lab")  %>% sf::st_as_sf()
   outcome_is_factor <- is.factor(merged$value) || is.character(merged$value)
 
   # ---------------------------------------------------------------
