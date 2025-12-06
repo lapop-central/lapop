@@ -69,7 +69,7 @@ lapop_map <- function(data,
   zoom <- max(0, min(1, zoom))
 
   # ---------------------------------------------------------------
-  # Americas-only ISO2 vector
+  # ISO2 vectors
   # ---------------------------------------------------------------
   americas_iso2 <- c(
     "US","CA","MX",
@@ -78,18 +78,26 @@ lapop_map <- function(data,
     "AR","BO","BR","CL","CO","EC","GY","PE","PY","SR","UY","VE"
   )
 
+  #cses_iso <- c(
+  #  "AL","AR","AT","AU","BE","BG","BR","BY","CA","CH","CL","CR","CZ","DE","DK","EE","ES","FI","FR","GB","GR",
+  #  "HK","HR","HU","IE","IL","IN","IS","IT","JP","KE","KG","KR","LT","LV","ME","MX","NL","NO","NZ","PE","PH",
+  #  "PL","PT","RO","RS","RU","SE","SI","SK","SV","TH","TN","TR","TW","UA","US","UY","ZA"
+  #); all_iso2 <- unique(c(cses_iso, americas_iso2))
+
   # ---------------------------------------------------------------
   # Shinyapps-safe world map (pre-saved sf object)
   # ---------------------------------------------------------------
-  ### SAVE MAP LOCALLY TO AVOID BREAKS ON APP
-  # library(rnaturalearth); library(sf); library(dplyr)
-  # world_sf <- ne_countries(scale = "medium", returnclass = "sf") %>%
-  # select(iso2 = iso_a2, name, geometry) %>%
-  # filter(iso2 != "AQ" & iso2 != -99) %>%
-  # mutate(iso2 = recode(iso2, "CN-TW"="TW")) #%>% rename(pais_lab = iso2, pais =name)
-  # saveRDS(world_sf, "world_sf.rds"); names(world_sf)
+  ### SAVE MAP LOCALLY WITH PACKAGE
+  #library(rnaturalearth); library(sf); library(dplyr)
+  #world <- ne_countries(scale = "medium", returnclass = "sf") %>%
+  #select(iso2 = iso_a2, name, geometry) %>%
+  #filter(iso2 != "AQ" & iso2 != -99) %>%
+  #mutate(iso2 = recode(iso2, "CN-TW"="TW")) %>% rename(pais_lab = iso2, pais =name)
+  #names(world); save(world, file="./data/world.rda")
+  #tools::resaveRdaFiles("./data/world.rda", compress = "xz")
+  #tools::checkRdaFiles("./data/world.rda")
 
-  world <- readRDS("world_sf.rds")
+  world <- load(file="./data/world.rda")
 
   if (survey == "AmericasBarometer") {
     world <- world %>% dplyr::filter(iso2 %in% americas_iso2)

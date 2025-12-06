@@ -66,5 +66,6 @@ Collate:
     'lpr_set_ros.R'
     'lpr_stack.R'
     'lpr_ts.R'
+    'world.R'
     'ym23.R'
     'zzz.R'
