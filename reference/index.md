@@ -72,5 +72,7 @@
   : LAPOP Stacked Bar Graph Pre-Processing
 - [`lpr_ts()`](https://lapop-central.github.io/lapop/reference/lpr_ts.md)
   : LAPOP Time-Series Line Graph Pre-Processing
+- [`world`](https://lapop-central.github.io/lapop/reference/world.md) :
+  bra23: Single-country Single-year Dataset
 - [`ym23`](https://lapop-central.github.io/lapop/reference/ym23.md) :
   ym23: Multi-country Single-year Dataset
