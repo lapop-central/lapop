@@ -3,7 +3,7 @@
 \name{lapop_map}
 \alias{lapop_map}
 \title{LAPOP World and Americas Map Graph
-`lapop_map()` generates a stylized choropleth map using ISO2 country codes
+The `lapop_map()` generates a stylized choropleth map using ISO2 country codes
 from both continuous and factor variables. It is designed to map cross-country
 results from `lpr_cc()` and supports either a full world map (`survey = "CSES"`)
 # or an Americas-only map (`survey = "AmericasBarometer"`).}
@@ -51,7 +51,7 @@ A `ggplot2` choropleth map object.
 }
 \description{
 LAPOP World and Americas Map Graph
-`lapop_map()` generates a stylized choropleth map using ISO2 country codes
+The `lapop_map()` generates a stylized choropleth map using ISO2 country codes
 from both continuous and factor variables. It is designed to map cross-country
 results from `lpr_cc()` and supports either a full world map (`survey = "CSES"`)
 # or an Americas-only map (`survey = "AmericasBarometer"`).
@@ -59,22 +59,21 @@ results from `lpr_cc()` and supports either a full world map (`survey = "CSES"`)
 \examples{
 \dontrun{
 # Continuous variable example
-data_cont <- data.frame(
-  vallabel = c("US", "AR", "VE", "CH", "EC"),
-  prop = c(37, 52, 94, 17, 69)
-)
 lapop_fonts()
+ data_cont <- data.frame(
+  vallabel = c("US", "AR", "VE", "CH", "EC", "BO"),
+  prop = c(37, 52, 80, 17, 69, 94)
+)
 lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
           survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
           subtitle = "\% of respondents")
 
 # Factor variable example
-
-data_fact <- data.frame(
-  vallabel = c("CA", "BR", "MX", "PE", "CO"),
-  group = c("A","A","B","B","C")
-)
 lapop_fonts()
+data_fact <- data.frame(
+  vallabel = c("CA", "BR", "MX", "PE", "CO", "PY"),
+  group = c("A","A","B","B","C", "C")
+)
 lapop_map(data_fact, pais_lab = "vallabel", outcome = "group", zoom = 0.9,
           survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
           subtitle = "\% of respondents")

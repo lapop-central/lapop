@@ -4,8 +4,12 @@
 
 #######################################
 
+#' @include lapop_fonts.R
+NULL
+
 #' LAPOP World and Americas Map Graph
-#' `lapop_map()` generates a stylized choropleth map using ISO2 country codes
+
+#' The `lapop_map()` generates a stylized choropleth map using ISO2 country codes
 #' from both continuous and factor variables. It is designed to map cross-country
 #' results from `lpr_cc()` and supports either a full world map (`survey = "CSES"`)
 #' # or an Americas-only map (`survey = "AmericasBarometer"`).
@@ -54,9 +58,11 @@
 #' @import ggplot2
 #' @import ggtext
 #' @import grid
+#' @importFrom sf st_bbox st_drop_geometry
 #' @importFrom dplyr filter left_join rename
 #'
 #' @author Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
+
 lapop_map <- function(data,
                       outcome = "value",
                       pais_lab = "pais_lab",
@@ -93,15 +99,19 @@ lapop_map <- function(data,
   ### SAVE MAP LOCALLY WITH PACKAGE
   #library(rnaturalearth); library(sf); library(dplyr)
   #world <- ne_countries(scale = "medium", returnclass = "sf") %>%
-  #select(iso2 = iso_a2, name, geometry) %>%
-  #filter(iso2 != "AQ" & iso2 != -99) %>%
-  #mutate(iso2 = recode(iso2, "CN-TW"="TW")) %>% rename(pais_lab = iso2, pais =name)
+  #  select(pais_lab = iso_a2, pais = name, geometry) %>%
+  #  filter(!is.na(pais_lab), pais_lab != "AQ")
+  #
+  #save(world, file = "data/world.rda", compress = "xz")
   #names(world); save(world, file="./data/world.rda")
-  #saveRDS(world, file = "data/world.rds", compress = FALSE)
   #tools::resaveRdaFiles("./data/world.rda", compress = "xz")
   #tools::checkRdaFiles("./data/world.rda")
 
-  data(world)
+  if (!exists("world", inherits = TRUE)) {
+    stop("world is not loaded. The package .onLoad() loader must load world.rda.")
+  }
+
+  world <- world_sf
 
   if (survey == "AmericasBarometer") {
     world <- world %>% dplyr::filter(pais_lab %in% americas_iso2)

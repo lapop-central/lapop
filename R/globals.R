@@ -6,11 +6,8 @@ utils::globalVariables(
     "Estimate", "Pr(>|t|)", "Std. Error", "conf.high", "conf.low",
     ".", "x_display", ":=", "label_table_names", "alpha_value",
 
-    "iso_a2",      # used by rnaturalearth before renaming
-    "name",        # from world map
     "geometry",    # sf object
-    "iso2",        # renamed polygon + user data join key
-    "value",        # renamed user input variable to map
+    "value", # renamed user input variable to map
 
     "contrast", "hl_var", "lb", "note_id", "p.value", "prop",
     "prop2_low", "prop2_upp", "prop_low", "prop_upp", "proplabel",
