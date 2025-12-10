@@ -35,6 +35,7 @@
 #'@author Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 #'
 #' @export
+#' @import tibble
 lpr_extract_ros <- function(data,
                             lang_id = "en",
                             include_special = FALSE,
@@ -108,7 +109,7 @@ lpr_extract_ros <- function(data,
       label_table_name <- resolve_label_name(VAR, lang_id, names(dict_at_data))
       if (!is.na(label_table_name)) {
         lt <- dict_at_data[[label_table_name]]
-        if (is.null(lt)) return(NULL)
+        if (is.null(lt)) return(tibble::tibble(variable_name = VAR,value = NA_integer_,answer_text = NA_character_ ))
 
         # Try common shapes:
         if (!is.null(names(lt)) && (is.numeric(lt) || is.integer(lt))) {
@@ -117,7 +118,7 @@ lpr_extract_ros <- function(data,
           df <- build_df_from_named_labels(VAR, lt)
         } else {
           warning(sprintf("Unrecognized label table format for '%s'. Skipping.", label_table_name))
-          return(NULL)
+          return(tibble::tibble(variable_name = VAR,value = NA_integer_,answer_text = NA_character_))
         }
 
       } else {
@@ -160,7 +161,7 @@ lpr_extract_ros <- function(data,
           df <- build_df_from_levels(VAR, x_attr)
         } else {
           warning(sprintf("Attribute '%s' for '%s' has unsupported format; skipping.", attr_name, VAR))
-          return(NULL)
+          return(tibble::tibble(variable_name = VAR,value = NA_integer_,answer_text = NA_character_))
         }
       }
     } else {
@@ -168,7 +169,7 @@ lpr_extract_ros <- function(data,
       if (attr_name == "levels" && is.factor(x)) {
         df <- build_df_from_levels(VAR, levels(x))
       } else {
-        return(NULL)
+        return(tibble::tibble(   variable_name = VAR,   value = NA_integer_,   answer_text = NA_character_ ))
       }
     }
 
@@ -200,10 +201,12 @@ lpr_extract_ros <- function(data,
   out <- dplyr::bind_rows(out)
 
   if (nrow(out) == 0) {
-    stop(sprintf(
-      "No RO tables found using attr_name='%s'. If using per-variable levels, ensure variables are factors or carry a '%s' attribute.",
-      attr_name, attr_name
-    ))
+    warning("No ROS found; returning NA placeholders for all variables.")
+    out <- tibble(
+      variable_name = vars,
+      value = NA_integer_,
+      answer_text = NA_character_
+    )
   }
 
   out <- dplyr::arrange(out, .data$variable_name, suppressWarnings(as.numeric(.data$value)))
