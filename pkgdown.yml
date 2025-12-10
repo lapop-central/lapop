@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   lapop-r-labels: lapop-r-labels.html
   lapop-visualization: lapop-visualization.html
-last_built: 2025-12-08T20:45Z
+last_built: 2025-12-10T16:45Z
 urls:
   reference: https://lapop-central.github.io/lapop/reference
   article: https://lapop-central.github.io/lapop/articles
