@@ -113,7 +113,7 @@ Luke Plutowski, <luke.plutowski@vanderbilt.edu> & Robert Vidigal,
 ``` r
 # \donttest{
 require(lapop); lapop_fonts()
-#> LAPOP fonts loaded successfully: Inter, Roboto, and Nunito (regular and light).
+#> LAPOP fonts loaded successfully: Nunito (regular and light).
 df <- data.frame(pais = c("Haiti", "Peru", "Honduras", "Colombia", "Ecuador",
                           "Panama", "Bolivia", "Argentina", "Paraguay",
                           "Dom. Rep.", "Brazil", "Jamaica", "Nicaragua",

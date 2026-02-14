@@ -77,7 +77,7 @@ Luke Plutowski, <luke.plutowski@vanderbilt.edu>
 ``` r
 # \donttest{
 require(lapop); lapop_fonts()
-#> LAPOP fonts loaded successfully: Inter, Roboto, and Nunito (regular and light).
+#> LAPOP fonts loaded successfully: Nunito (regular and light).
 df1 <- data.frame(vallabel = c("Crime victim", "Non-victim"),
 prop = c(36.1, 19.3),
 proplabel = c("36%" ,"19%"),
@@ -98,6 +98,56 @@ subtitle1 = "% who support democracy",
 subtitle2 = "% who are satisfied with democracy",
 main_title = "Crime victims are more supportive of and satisfied with democracy",
 source_info = ", AmericasBarometer 2023")
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
+#> Warning: font family 'nunito' not found, will use 'sans' instead
 
 # }
 ```

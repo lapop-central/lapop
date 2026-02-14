@@ -120,7 +120,7 @@ Luke Plutowski, <luke.plutowski@vanderbilt.edu> & Robert Vidigal,
 ``` r
 # \donttest{
 require(lapop); lapop_fonts()
-#> LAPOP fonts loaded successfully: Inter, Roboto, and Nunito (regular and light).
+#> LAPOP fonts loaded successfully: Nunito (regular and light).
 
 df <- data.frame(
 vallabel = c("PE", "CO", "BR", "PN", "GT", "DO", "MX", "BO", "EC"),

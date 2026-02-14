@@ -89,7 +89,7 @@ Luke Plutowski, <luke.plutowski@vanderbilt.edu> & Robert Vidigal,
 ``` r
 # \donttest{
 require(lapop); lapop_fonts()
-#> LAPOP fonts loaded successfully: Inter, Roboto, and Nunito (regular and light).
+#> LAPOP fonts loaded successfully: Nunito (regular and light).
 
 df <- data.frame(
 cat = c("Far Left", 1, 2, 3, 4, "Center", 6, 7, 8, 9, "Far Right"),

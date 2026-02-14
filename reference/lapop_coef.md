@@ -102,7 +102,7 @@ Luke Plutowski, <luke.plutowski@vanderbilt.edu>
 ``` r
 # \donttest{
 require(lapop); lapop_fonts()
-#> LAPOP fonts loaded successfully: Inter, Roboto, and Nunito (regular and light).
+#> LAPOP fonts loaded successfully: Nunito (regular and light).
 df <- data.frame(
   varlabel = c("Intimate\nPartner", "wealth", "Education", "Age", "Male"),
   coef = c(0.02, -0.07, -0.24, 0.01, 0.11),
