@@ -116,7 +116,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                                  "<span style='color:#585860; font-size:13pt'>95% confidence </span>",
                                  "<span style='color:#585860'>interval</span>")))
 
-  update_geom_defaults("text", list(family = "roboto"))
+  update_geom_defaults("text", list(family = "inter")) # roboto
 
   # Create base plot
    cc <- ggplot(data=data, aes(x=factor(vallabel, levels = vallabel), y=prop, fill = hl_var)) +
@@ -138,9 +138,9 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
          caption = paste0(ifelse(lang == "es" & source_info == "LAPOP", "Fuente: LAPOP Lab",
                                  ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
                                         source_info)))) +
-    theme(text = element_text(size = 14, family = "roboto"),
-          plot.title = element_text(size = 18, family = "nunito", face = "bold"),
-          plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "nunito", color="#585860"),
+    theme(text = element_text(size = 14, family = "inter"), # roboto
+          plot.title = element_text(size = 18, family = "inter", face = "bold"), # nunito
+          plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "inter", color="#585860"), # nunito
           panel.background = element_blank(),
           panel.border = element_blank(),
           axis.line.x = element_line(linewidth = 0.6, linetype = "solid", colour = "#dddddf"),
@@ -151,7 +151,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
           legend.title = element_blank(),
           legend.justification='left',
           legend.margin = margin(t=0, b=0, l=0, r=0),
-          legend.text = element_markdown(family = "nunito-light"))
+          legend.text = element_markdown(family = "inter-light")) # nunito-light
 
   # Apply label rotation if needed
   if(rotate_labels) {

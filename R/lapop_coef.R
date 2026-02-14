@@ -86,7 +86,7 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
                    paste0(" <span style='color:", color_scheme, "; font-size:18pt'> \u0131\u2014\u0131</span> ",
                           "<span style='color:#585860; font-size:13pt'>95% confidence </span>",
                           "<span style='color:#585860'>interval</span>"))
-  update_geom_defaults("text", list(family = "roboto"))
+  update_geom_defaults("text", list(family = "inter"))# roboto
   ggplot(data, aes(x = varlabel_var, y = coef_var)) +
     geom_hline(yintercept = 0, color = "#dddddf", lty = 2) +
     geom_errorbar(aes(x=varlabel_var, ymin = lb, ymax = ub), width = 0.3, lty = 1, color = color_scheme) +
@@ -107,13 +107,13 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
          x = " ",
          caption = paste0(ifelse(lang == "es", "Fuente: LAPOP Lab", "Source: LAPOP Lab"),
                           source_info)) +
-    theme(text = element_text(size = 14, family = "roboto"),
-          plot.title = element_text(size = 18, family = "nunito", face = "bold"),
-          plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "nunito", color="#585860"),
-          plot.subtitle = element_text(size = 14, family = "nunito-light", color="#585860"),
+    theme(text = element_text(size = 14, family = "inter"), # roboto
+          plot.title = element_text(size = 18, family = "inter", face = "bold"), # nunito
+          plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "inter", color="#585860"), # nunito
+          plot.subtitle = element_text(size = 14, family = "inter-light", color="#585860"), # nunito-light
           axis.title.y = element_blank(),
           axis.ticks = element_blank(),
-          axis.text = element_text(size = 14, family = "roboto", color = "#585860"),
+          axis.text = element_text(size = 14, family = "inter", color = "#585860"), # roboto
           panel.background = element_rect(fill = "white"),
           panel.grid = element_blank(),
           legend.position = "top",
@@ -121,8 +121,8 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
           plot.title.position = "plot",
           plot.caption.position = "plot",
           legend.justification='left',
-          # legend.margin = margin(t=0, b=0),
-          legend.text = element_markdown(family = "nunito-light"),
+          #legend.margin = margin(t=0, b=0),
+          legend.text = element_markdown(family = "inter-light"), # nunito-light
           legend.key=element_blank(),
           legend.margin=margin(0, 0, 0, -30-subtitle_h_just))
   }

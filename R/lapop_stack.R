@@ -191,7 +191,7 @@ lapop_stack <- function(data,
     plot_data$x_display <- plot_data$var_labels
   }
 
-  update_geom_defaults("text", list(family = "roboto"))
+  update_geom_defaults("text", list(family = "inter")) # roboto
 
   # Handle ordering of bars if requested
   if(order_bars == TRUE){
@@ -220,7 +220,7 @@ lapop_stack <- function(data,
       ggrepel::geom_text_repel(aes(label = ifelse(outcome_var < 5 & hide_small_values == FALSE, prop_labels, NA)),
                                position = position_stack(vjust = 0.5),
                                color = "#FFFFFF", segment.color = 'transparent',
-                               fontface = "bold", size = 4, family = "roboto",
+                               fontface = "bold", size = 4, family = "inter", # roboto
                                direction = "y",
                                force_pull = 0.2, force = 5, na.rm=T) +
       coord_flip() +
@@ -234,21 +234,21 @@ lapop_stack <- function(data,
                                    ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
                                           source_info))),
            subtitle = subtitle) +
-      theme(text = element_text(size = 14, family = "roboto"),
-            plot.title = element_text(size = 17, family = "nunito", face = "bold"),
-            plot.caption = element_text(size = 10.5, hjust = 0.02, vjust = 2, family = "nunito", color="#585860"),
-            plot.subtitle = element_text(size = 14, family = "nunito-light", color="#585860"),
+      theme(text = element_text(size = 14, family = "inter"), # roboto
+            plot.title = element_text(size = 17, family = "inter", face = "bold"), # nunito
+            plot.caption = element_text(size = 10.5, hjust = 0.02, vjust = 2, family = "inter", color="#585860"), # nunito
+            plot.subtitle = element_text(size = 14, family = "inter-light", color="#585860"), # nunito-light
             axis.title.y = element_blank(),
             axis.text.x = element_blank(),
             axis.text.y = element_text(margin=margin(r=0)),
             axis.ticks = element_blank(),
-            axis.text = element_text(size = 14, family = "roboto", color = "#585860", margin=margin(r=5)),
+            axis.text = element_text(size = 14, family = "inter", color = "#585860", margin=margin(r=5)), # roboto
             panel.background = element_rect(fill = "white"),
             panel.grid = element_blank(),
             legend.position = "top",
             plot.title.position = "plot",
             plot.caption.position = "plot",
-            legend.text = element_text(family = "roboto", color = "#585860"),
+            legend.text = element_text(family = "inter", color = "#585860"), # roboto
             legend.title = element_blank(),
             legend.justification='left',
             legend.key.size = unit(1, "line"),
@@ -264,7 +264,7 @@ lapop_stack <- function(data,
       ggrepel::geom_text_repel(aes(label = ifelse(outcome_var < 5 & hide_small_values == FALSE, prop_labels, NA)),
                                position = position_stack(vjust = 0.5),
                                color = "#FFFFFF", segment.color = 'transparent',
-                               fontface = "bold", size = 4, family = "nunito",
+                               fontface = "bold", size = 4, family = "inter", # nunito
                                direction = "y",
                                force_pull = 0.2, force = 5, na.rm=T) +
       coord_flip() +
@@ -278,21 +278,21 @@ lapop_stack <- function(data,
                                    ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
                                           source_info))),
            subtitle = subtitle) +
-      theme(text = element_text(size = 14, family = "roboto"),
-            plot.title = element_text(size = 17, family = "nunito", face = "bold"),
-            plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "roboto-light", color="#585860"),
-            plot.subtitle = element_text(size = 14, family = "nunito-light", color="#585860"),
+      theme(text = element_text(size = 14, family = "inter"), # roboto
+            plot.title = element_text(size = 17, family = "inter", face = "bold"), # nunito
+            plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "inter-light", color="#585860"), # roboto
+            plot.subtitle = element_text(size = 14, family = "inter-light", color="#585860"), # nunito
             axis.title.y = element_blank(),
             axis.text.x = element_blank(),
             axis.text.y = element_text(margin=margin(r=0)),
             axis.ticks = element_blank(),
-            axis.text = element_text(size = 14, family = "roboto", color = "#585860", margin=margin(r=5)),
+            axis.text = element_text(size = 14, family = "inter", color = "#585860", margin=margin(r=5)), # roboto
             panel.background = element_rect(fill = "white"),
             panel.grid = element_blank(),
             legend.position = "top",
             plot.title.position = "plot",
             plot.caption.position = "plot",
-            legend.text = element_text(family = "roboto", color = "#585860"),
+            legend.text = element_text(family = "inter", color = "#585860"), # roboto
             legend.title = element_blank(),
             legend.justification='left',
             legend.key.size = unit(1, "line"),

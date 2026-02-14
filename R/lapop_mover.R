@@ -139,7 +139,7 @@ lapop_mover <- function(data,
                           paste0(" <span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131 </span> ",
                                  "<span style='color:#585860; font-size:13pt'>95% confidence interval</span>")))
 
-  update_geom_defaults("text", list(family = "roboto"))
+  update_geom_defaults("text", list(family = "inter")) # roboto
 
   # Build per-facet vertical line positions based on the number of values in each varlabel
   vline_df <- do.call(rbind, lapply(split(data, data$varlabel), function(df) {
@@ -201,10 +201,10 @@ lapop_mover <- function(data,
          caption = paste0(ifelse(lang == "es" & source_info == "LAPOP", "Fuente: LAPOP Lab",
                                  ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
                                         source_info)))) +
-    theme(text = element_text(size = 14, family = "roboto"),
-          plot.title = element_text(size = 17, family = "nunito", face = "bold"),
-          plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "nunito", color = "#585860"),
-          plot.subtitle = element_text(size = 14, family = "nunito", color = "#585860"),
+    theme(text = element_text(size = 14, family = "inter"), # roboto
+          plot.title = element_text(size = 17, family = "inter", face = "bold"), # nunito
+          plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "inter", color = "#585860"), # nunito
+          plot.subtitle = element_text(size = 14, family = "inter", color = "#585860"), # nunito
           panel.grid.major.x = element_blank(),
           panel.grid.major.y = element_line(linewidth = 0.5, color = "#dddddf"),
           panel.background = element_rect(fill = "white"),
@@ -212,12 +212,12 @@ lapop_mover <- function(data,
           axis.text.y = element_blank(),
           axis.text.x = element_text(angle = x_lab_angle, vjust = 0.5),
           axis.ticks = element_blank(),
-          axis.text = element_text(size = 14, family = "roboto", color = "#585860"),
+          axis.text = element_text(size = 14, family = "inter", color = "#585860"), # roboto
           legend.position = "top",
           legend.title = element_blank(),
           legend.justification = 'left',
           legend.margin = margin(0, 0, -5, 0 - subtitle_h_just),
-          legend.text = element_markdown(family = "nunito-light"),
+          legend.text = element_markdown(family = "inter-light"), # nunito
           legend.key = element_blank(),
           strip.text = element_markdown(size = 14),
           strip.background = element_blank()

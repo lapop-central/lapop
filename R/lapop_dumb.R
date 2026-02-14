@@ -152,7 +152,7 @@ lapop_dumb <- function(data,
 
   names(color_scheme) = c(unique(data$wave1), unique(data$wave2))
 
-  update_geom_defaults("text", list(family = "roboto"))
+  update_geom_defaults("text", list(family = "inter")) # roboto
     ggplot(data, aes(y=pais)) +
       geom_point(aes(x = prop1, color = names(color_scheme)[1]),
                  size=4, na.rm=T) +
@@ -186,25 +186,25 @@ lapop_dumb <- function(data,
                                    ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
                             source_info))),
            subtitle = subtitle) +
-      theme(text = element_text(size = 14, family = "roboto"),
-            plot.title = element_text(size = 17, family = "nunito", face = "bold"),
+      theme(text = element_text(size = 14, family = "inter"), # roboto
+            plot.title = element_text(size = 17, family = "inter", face = "bold"), # nunito
             plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2,
-                                        family = "nunito", color="#585860"),
+                                        family = "inter", color="#585860"), # nunito
             plot.subtitle = element_text(size = 14,
-                                         family = "nunito-light", color="#585860"),
+                                         family = "inter-light", color="#585860"), # nunito-light
             plot.margin = margin(5.5, 20, 5.5, 5.5, "points"),
             axis.title.y = element_blank(),
             axis.ticks = element_blank(),
             plot.title.position = "plot",
             plot.caption.position = "plot",
             axis.text = element_text(size = 12,
-                                     family = "roboto",
+                                     family = "inter", # roboto
                                      color = "#585860",
                                      margin=margin(r=5)),
             panel.grid.major.y = element_line(color = "#dddddf"),
             panel.background = element_rect(fill = "white"),
             legend.position="top",
-            legend.text = element_text(family = "roboto", color = "#585860"),
+            legend.text = element_text(family = "inter", color = "#585860"), # roboto
             legend.title = element_blank(),
             legend.justification='right',
             legend.key.size = unit(1, "line"),

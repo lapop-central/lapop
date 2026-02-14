@@ -18,13 +18,18 @@
 
  lapop_fonts_design <- function() {
    showtext::showtext_auto(enable = FALSE)
-   systemfonts::register_variant(
-     name = "roboto-light",
-     family = "roboto",
-     weight = "light")
+   #systemfonts::register_variant(
+     #name = "roboto-light",
+     #family = "roboto",
+     #weight = "light")
+
+   #systemfonts::register_variant(
+     #name = "nunito-light",
+     #family = "nunito",
+     #weight = "light")
 
    systemfonts::register_variant(
-     name = "nunito-light",
-     family = "nunito",
+     name = "inter-light",
+     family = "inter",
      weight = "light")
 }

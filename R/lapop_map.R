@@ -217,11 +217,11 @@ lapop_map <- function(data,
     ggplot2::theme(
       legend.position = "bottom",
       legend.title = ggplot2::element_blank(),
-      legend.text = ggtext::element_markdown(family = "nunito-light"),
-      plot.title = ggplot2::element_text(size = 18, family = "nunito", face = "bold"),
+      legend.text = ggtext::element_markdown(family = "inter-light"), # nunito
+      plot.title = ggplot2::element_text(size = 18, family = "inter", face = "bold"), # nunito
       plot.caption = ggplot2::element_text(size = 10.5, vjust = 2, hjust = 0,
-                                           family = "nunito", color = "#585860"),
+                                           family = "inter", color = "#585860"), # nunito
       plot.subtitle = ggplot2::element_text(size = 13, hjust = 0,
-                                            family = "nunito", color = "#585860")
+                                            family = "inter", color = "#585860") # nunito
     )
 }

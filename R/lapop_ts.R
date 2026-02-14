@@ -122,7 +122,7 @@ lapop_ts <- function(data, outcome_var = data$prop, lower_bound = data$lb,
                                  "<span style='color:#585860; font-size:13pt'>95% confidence </span>",
                                  "<span style='color:#585860'>interval</span>")))
 
-  update_geom_defaults("text", list(family = "roboto"))
+  update_geom_defaults("text", list(family = "inter")) # roboto
 
   ts <- ggplot(data=data, aes(x=wave_var, y=outcome_var, group = 1)) +
 
@@ -158,7 +158,7 @@ lapop_ts <- function(data, outcome_var = data$prop, lower_bound = data$lb,
                                        "<span style='color:#FFFFFF00'>-----------</span>",
                                        ci_text)) +
 
-    geom_text(aes(label = label_var), family = "roboto",
+    geom_text(aes(label = label_var), family = "inter", # roboto
               color=color_scheme, fontface="bold",
               size=5, vjust=label_vjust) +
 
@@ -184,10 +184,10 @@ lapop_ts <- function(data, outcome_var = data$prop, lower_bound = data$lb,
          x = " ", y = " ") +
 
     theme_minimal() +
-    theme(text = element_text(size=14, family="roboto"),
-          plot.title = element_text(size=18, family="nunito", face="bold"),
+    theme(text = element_text(size=14, family="inter"), # roboto
+          plot.title = element_text(size=18, family="inter", face="bold"), # nunito
           plot.caption = element_text(size=10.5, vjust=2, hjust=0,
-                                      family="nunito", color="#585860"),
+                                      family="inter", color="#585860"), # nunito
           axis.text = element_text(size = ifelse(rotate_labels, 10, 14),
                                    color="#585860"),
           panel.grid.major = element_line(color="#dddddf", linewidth=0.5),
@@ -197,7 +197,7 @@ lapop_ts <- function(data, outcome_var = data$prop, lower_bound = data$lb,
           legend.title=element_blank(),
           legend.justification='left',
           legend.margin = margin(t=0, b=0, l=-40, r=0),
-          legend.text = ggtext::element_markdown(family="nunito-light"))
+          legend.text = ggtext::element_markdown(family="inter-light")) # nunito-light
 
   if(rotate_labels) {
     ts <- ts +

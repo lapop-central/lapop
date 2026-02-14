@@ -163,7 +163,7 @@ lapop_mline <- function(data, varlabel = data$varlabel, wave_var = as.character(
            end_labels = ifelse(seq_along(wave) == last, proplabel, NA)) %>%
     ungroup() %>%
     pull(end_labels)
-  update_geom_defaults("text", list(family = "roboto"))
+  update_geom_defaults("text", list(family = "inter")) # roboto
   ggplot(data, aes(x = wave_var, y = outcome_var, group = varlabel, color = varlabel)) +
     geom_line(aes(color = varlabel), linewidth = 1, alpha=0.48, show.legend = FALSE) +
     {if(ci == TRUE){
@@ -187,21 +187,20 @@ lapop_mline <- function(data, varlabel = data$varlabel, wave_var = as.character(
 
     {if(all_labels){
       geom_text(aes(label=label_var, color = varlabel),
-                family = "roboto", fontface = "bold", size = 5, vjust = -2,
-                show.legend = FALSE)
+                family = "inter", fontface = "bold", size = 5, vjust = -2,
+                show.legend = FALSE) # roboto
     }
       else{
         ggrepel::geom_text_repel(
-          aes(label = end_labels),            # fontface can be set outside aes
+          aes(label = end_labels), # fontface can be set outside aes
           fontface = "bold",
           color = textcolors,
-          family = "roboto",
+          family = "inter", # roboto
           size = 4.5,
-          nudge_x = 0.35,                     # small nudge to the right
+          nudge_x = 0.35, # small nudge to the right
           direction = "y",
-          segment.color = NA                  # <-- hides the “continuation” line
+          segment.color = NA # hides the “continuation” line
         )
-
       }
     } +
     {
@@ -223,10 +222,10 @@ lapop_mline <- function(data, varlabel = data$varlabel, wave_var = as.character(
          y = " ",
          subtitle = subtitle) +
     theme_minimal() +
-    theme(text = element_text(size = 14, family = "roboto"),
-          plot.title = element_text(size = 18, family = "nunito", face = "bold"),
-          plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "nunito", color="#585860"),
-          plot.subtitle = element_text(size = 14, family = "nunito-light", color="#585860", hjust = subtitle_h_just),
+    theme(text = element_text(size = 14, family = "inter"), # roboto
+          plot.title = element_text(size = 18, family = "inter", face = "bold"), # nunito
+          plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "inter", color="#585860"), # nunito
+          plot.subtitle = element_text(size = 14, family = "inter-light", color="#585860", hjust = subtitle_h_just), # nunito-light
           axis.title.y = element_blank(),
           axis.text = element_text(size = 14, color = "#585860"),
           panel.grid = element_line(color = "#dddddf"),
@@ -238,6 +237,6 @@ lapop_mline <- function(data, varlabel = data$varlabel, wave_var = as.character(
           legend.justification='right',
           legend.margin = margin(t=legend_v_just,b=0, legend_h_just, 0),
           legend.spacing.x = unit(0.2, 'cm'),
-          legend.text=element_markdown(family = "nunito", face = "bold"))
+          legend.text=element_markdown(family = "inter", face = "bold")) # nunito
 }
 

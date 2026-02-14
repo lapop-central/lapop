@@ -71,7 +71,7 @@ lapop_hist <- function(data, outcome_var = data$prop, label_var = data$proplabel
     label_var = label_var[order(-outcome_var)]
     outcome_var = outcome_var[order(-outcome_var)]
   }
-  update_geom_defaults("text", list(family = "roboto"))
+  update_geom_defaults("text", list(family = "inter")) # roboto
   ggplot(data, aes(x=factor(cat_var, levels = cat_var), y = outcome_var)) +
     geom_bar(stat = "identity", color = color_scheme, fill = paste0(color_scheme, "28"), width = 0.75) +
     geom_text(aes(label=label_var), vjust=-0.5, size = 5, fontface = "bold", color = color_scheme) +
@@ -84,18 +84,17 @@ lapop_hist <- function(data, outcome_var = data$prop, label_var = data$proplabel
          x = "",
          caption = paste0(ifelse(lang == "es" & source_info == "LAPOP", "Fuente: LAPOP Lab",
                                  ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
-                                        source_info))
-                          ),
+                                        source_info))),
          subtitle = subtitle) +
-    theme(text = element_text(size = 14, family = "roboto"),
-          plot.title = element_text(size = 18, family = "nunito", face = "bold"),
-          plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "nunito", color="#585860"),
-          plot.subtitle = element_text(size = 13, family = "nunito-light", color="#585860", margin=margin(b = 10)),
+    theme(text = element_text(size = 14, family = "inter"), # roboto
+          plot.title = element_text(size = 18, family = "inter", face = "bold"), # nunito
+          plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "inter", color="#585860"), # nunito
+          plot.subtitle = element_text(size = 13, family = "inter-light", color="#585860", margin=margin(b = 10)), # nunito
           axis.title.y = element_blank(),
           axis.ticks = element_blank(),
           plot.title.position = "plot",
           plot.caption.position = "plot",
-          axis.text = element_text(size = 14, family = "roboto-light", color = "#585860"),
+          axis.text = element_text(size = 14, family = "inter-light", color = "#585860"), # roboto
           panel.grid = element_line(color = "#dddddf"),
           panel.background = element_rect(fill = "white"),
           panel.grid.major.x = element_blank())

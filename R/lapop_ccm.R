@@ -152,7 +152,7 @@ lapop_ccm <- function(data,
   }
 
   # Apply font
-  update_geom_defaults("text", list(family = "roboto"))
+  update_geom_defaults("text", list(family = "inter")) # roboto
 
   # Create ggplot
   ggplot(data = data,
@@ -177,9 +177,9 @@ lapop_ccm <- function(data,
                           source_info)) +
     { if (subtitle != "") labs(subtitle = subtitle) } +
     { if (x_label != "") theme(axis.title.x = element_text(margin = margin(b = 10, t = 10))) } +
-    theme(text = element_text(size = 14, family = "roboto"),
-          plot.title = element_text(size = 18, family = "nunito", face = "bold"),
-          plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "nunito", color = "#585860"),
+    theme(text = element_text(size = 14, family = "inter"), # roboto
+          plot.title = element_text(size = 18, family = "inter", face = "bold"), # nunito
+          plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "inter", color = "#585860"), # nunito
           panel.background = element_blank(),
           panel.border = element_blank(),
           axis.line.x = element_line(linewidth = 0.6, linetype = "solid", colour = "#dddddf"),
@@ -190,7 +190,7 @@ lapop_ccm <- function(data,
           legend.title = element_blank(),
           legend.justification = 'left',
           legend.margin = margin(t = 0, b = 0, l = 0),
-          legend.text = ggtext::element_markdown(family = "nunito-light")) + guides(alpha = "none")
+          legend.text = ggtext::element_markdown(family = "inter-light")) + guides(alpha = "none") # nunito-light
 }
 
 
