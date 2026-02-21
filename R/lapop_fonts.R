@@ -26,6 +26,6 @@ lapop_fonts <- function(){
   #sysfonts::font_add_google("nunito", "nunito")
   #sysfonts::font_add_google("nunito", family = "nunito-light", regular.wt = 300)
   showtext::showtext_auto()
-  message("LAPOP fonts loaded successfully: Nunito (regular and light).") # Inter, Roboto, and
+  message("LAPOP font loaded successfully: Nunito (regular and light).") # Inter, Roboto, and
 }
 

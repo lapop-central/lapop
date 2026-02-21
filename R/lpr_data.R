@@ -96,18 +96,22 @@ lpr_data = function (data_path, wt = FALSE)
     data$pais_lab <- country_codes_numbers[as.character(data$pais)]
   }
 
+  # ensure strata present
+  if (!"strata" %in% names(data)) {
+    print("Stratum variable 'strata' not found in dataset.")
+} else {
   data <- data[!is.na(data$upm), ]
-
+}
   # Check if the required weight variable is present
   if (wt == TRUE) {
     if (!"wt" %in% names(data)) stop("Weight variable 'wt' not found in dataset.")
-    datas <- data %>% as_survey(ids = upm, strata = strata,
+    datalpr <- data %>% as_survey(ids = upm, strata = strata,
                                 weights = wt, nest = TRUE)
   } else {
     if (!"weight1500" %in% names(data)) stop("Weight variable 'weight1500' not found in dataset.")
-    datas <- data %>% as_survey(ids = upm, strata = strata,
+    datalpr <- data %>% as_survey(ids = upm, strata = strata,
                                 weights = weight1500, nest = TRUE)
   }
 
-  return(datas)
+  return(datalpr)
 }
