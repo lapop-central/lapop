@@ -23,5 +23,5 @@ Luke Plutowski, <luke.plutowski@vanderbilt.edu> & Robert Vidigal,
 
 ``` r
 require(lapop); lapop_fonts()
-#> LAPOP fonts loaded successfully: Nunito (regular and light).
+#> LAPOP font loaded successfully: Nunito (regular and light).
 ```

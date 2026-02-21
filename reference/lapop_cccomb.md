@@ -77,7 +77,7 @@ Luke Plutowski, <luke.plutowski@vanderbilt.edu>
 ``` r
 # \donttest{
 require(lapop); lapop_fonts()
-#> LAPOP fonts loaded successfully: Nunito (regular and light).
+#> LAPOP font loaded successfully: Nunito (regular and light).
 df1 <- data.frame(vallabel = c("Crime victim", "Non-victim"),
 prop = c(36.1, 19.3),
 proplabel = c("36%" ,"19%"),

@@ -1,5 +1,9 @@
 # Changelog
 
+## lapop 2.1.4
+
+- Update fonts to Nunito
+
 ## lapop 2.1.3
 
 - include lapop_map()

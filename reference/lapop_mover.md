@@ -129,9 +129,9 @@ require(lapop); lapop_fonts
 #>     sysfonts::font_add_google("inter", family = "inter-light", 
 #>         regular.wt = 300)
 #>     showtext::showtext_auto()
-#>     message("LAPOP fonts loaded successfully: Nunito (regular and light).")
+#>     message("LAPOP font loaded successfully: Nunito (regular and light).")
 #> }
-#> <bytecode: 0x55d21355dba0>
+#> <bytecode: 0x55fb0c9c61f0>
 #> <environment: namespace:lapop>
 lapop_mover(df,
             main_title = paste0("More educated, men, and younger individuals",
