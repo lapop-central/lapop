@@ -1,6 +1,6 @@
 #######################################
 
-# LAPOP World / Americas-Only Map
+# LAPOP Map World / Americas-Only
 
 #######################################
 
@@ -28,11 +28,14 @@ NULL
 #' @param lang Character.  Changes default subtitle text and source info to either Spanish or English.
 #' Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
 #' or "es" (Spanish).  Default: "en".
+#' @param selected_countries Character or NULL. ISO2 code of the currently selected country (e.g. from
+#' `input$pais` in Shiny). When not `NULL`, countries with no data are rendered with diagonal stripes
+#' instead of solid gray. Default: `NULL` (solid `"#dddddf"`).
 #' @return A `ggplot2` choropleth map object.
 #'
 #' @examples
 #' \dontrun{
-#' # Continuous variable example
+#' # Standalone — solid gray for no-data countries
 #' lapop_fonts()
 #'  data_cont <- data.frame(
 #'   vallabel = c("US", "AR", "VE", "CH", "EC", "BO"),
@@ -42,21 +45,16 @@ NULL
 #'           survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
 #'           subtitle = "% of respondents")
 #'
-#' # Factor variable example
-#' lapop_fonts()
-#' data_fact <- data.frame(
-#'   vallabel = c("CA", "BR", "MX", "PE", "CO", "PY"),
-#'   group = c("A","A","B","B","C", "C")
-#' )
-#' lapop_map(data_fact, pais_lab = "vallabel", outcome = "group", zoom = 0.9,
-#'           survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
-#'           subtitle = "% of respondents")
+#' # Shiny — stripes for no-data countries when a country is selected
+#' lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
+#'           survey = "AmericasBarometer", selected_countries = input$pais)
 #' }
 #'
 #' @export
 #' @import ggplot2
 #' @import ggtext
 #' @import grid
+#' @import ggpattern geom_sf_pattern
 #' @importFrom sf st_bbox st_drop_geometry
 #' @importFrom dplyr filter left_join rename
 #'
@@ -71,7 +69,8 @@ lapop_map <- function(data,
                       subtitle = "",
                       palette = c("#F2A344", "#D97A1E", "#BF5A00", "#8A3900", "#4A1E00"),
                       source_info = "LAPOP",
-                      lang = "en") {
+                      lang = "en",
+                      selected_countries = NULL) {
 
   survey <- match.arg(survey)
   zoom <- max(0, min(1, zoom))
@@ -86,29 +85,9 @@ lapop_map <- function(data,
     "AR","BO","BR","CL","CO","EC","GY","PE","PY","SR","UY","VE"
   )
 
-  #cses_iso <- c(
-  #  "AL","AR","AT","AU","BE","BG","BR","BY","CA","CH","CL","CR","CZ","DE","DK","EE","ES","FI","FR","GB","GR",
-  #  "HK","HR","HU","IE","IL","IN","IS","IT","JP","KE","KG","KR","LT","LV","ME","MX","NL","NO","NZ","PE","PH",
-  #  "PL","PT","RO","RS","RU","SE","SI","SK","SV","TH","TN","TR","TW","UA","US","UY","ZA"
-  #); all_iso2 <- unique(c(cses_iso, americas_iso2))
-
-  # ---------------------------------------------------------------
-  # Shinyapps-safe world map (pre-saved sf object)
-  # ---------------------------------------------------------------
-  ### SAVE MAP LOCALLY WITH PACKAGE
-  #library(rnaturalearth); library(sf); library(dplyr)
-  #world <- ne_countries(scale = "medium", returnclass = "sf") %>%
-  #  select(pais_lab = iso_a2, pais = name, geometry) %>%
-  #  filter(!is.na(pais_lab), pais_lab != "AQ")
-  #
-  #save(world, file = "data/world.rda", compress = "xz")
-  #names(world); save(world, file="./data/world.rda")
-  #tools::resaveRdaFiles("./data/world.rda", compress = "xz")
-  #tools::checkRdaFiles("./data/world.rda")
-
   if (!exists("world", inherits = TRUE)) {
     stop("world is not loaded. The package .onLoad() loader must load world.rda.")
-  } # debugging
+  }
 
   world <- world_sf
 
@@ -119,55 +98,80 @@ lapop_map <- function(data,
   # ---------------------------------------------------------------
   # Merge user data
   # ---------------------------------------------------------------
-  df <- data %>% dplyr::rename(value  = !!sym(outcome), pais_lab = !!sym(pais_lab))
+  df <- data %>% dplyr::rename(value = !!sym(outcome), pais_lab = !!sym(pais_lab))
 
-  merged <- world %>% dplyr::left_join(df, by = "pais_lab")  %>% sf::st_as_sf()
+  merged <- world %>% dplyr::left_join(df, by = "pais_lab") %>% sf::st_as_sf()
   outcome_is_factor <- is.factor(merged$value) || is.character(merged$value)
 
   # ---------------------------------------------------------------
-  # BASE MAP (fixed black borders)
+  # Stripe flag: TRUE only when a country is selected (Shiny context)
+  # Standalone use: selected_countries = NULL → always solid gray
   # ---------------------------------------------------------------
-  p <- ggplot2::ggplot() +
+  use_stripes <- !is.null(selected_countries) && length(selected_countries) > 0 && any(nchar(selected_countries) > 0)
 
-    # Countries with no data (gray)
-    ggplot2::geom_sf(
-      data = merged %>% dplyr::filter(is.na(value)),
-      fill = "#dddddf",
-      color = "black",
-      size = 0.25
-    ) +
+  na_data  <- merged %>% dplyr::filter(is.na(value))
+  val_data <- merged %>% dplyr::filter(!is.na(value))
 
-    # Countries with data (colored)
+  # ---------------------------------------------------------------
+  # BASE MAP
+  # ---------------------------------------------------------------
+  p <- ggplot2::ggplot()
+
+  if (use_stripes && nrow(na_data) > 0) {
+    if (!requireNamespace("ggpattern", quietly = TRUE)) {
+      stop("Package 'ggpattern' is required for stripe rendering. Install with install.packages('ggpattern').")
+    }
+    p <- p +
+      ggpattern::geom_sf_pattern(
+        data            = na_data,
+        pattern         = "stripe",
+        pattern_colour  = "#aaaaaa",
+        pattern_fill    = "#aaaaaa",
+        pattern_density = 0.4,
+        pattern_spacing = 0.03,
+        pattern_angle   = 45,
+        fill            = "#ffffff",  # white base under stripes
+        color           = "black",
+        size            = 0.25
+      )
+  } else if (nrow(na_data) > 0) {
+    p <- p +
+      ggplot2::geom_sf(
+        data  = na_data,
+        fill  = "#dddddf",            # solid gray — default / standalone
+        color = "black",
+        size  = 0.25
+      )
+  }
+
+  p <- p +
     ggplot2::geom_sf(
-      data = merged %>% dplyr::filter(!is.na(value)),
+      data  = val_data,
       ggplot2::aes(fill = value),
-      color = "black",           # IMPORTANT: fixed border
-      size = 0.25
+      color = "black",
+      size  = 0.25
     )
 
   # ---------------------------------------------------------------
-  # FILL SCALES (NO COLOR SCALES ANYMORE)
+  # FILL SCALES
   # ---------------------------------------------------------------
   if (outcome_is_factor) {
-
     p <- p +
       ggplot2::scale_fill_manual(
         values = palette,
-        drop = FALSE,
-        na.value = "#dddddf"      # keeps missing countries gray
+        drop   = FALSE,
+        na.value = "#dddddf"
       )
-
   } else {
-    # Continuous
     p <- p +
       ggplot2::scale_fill_gradientn(
-        labels = function(x) formatC(x, format = "g"), # baseR for decimals
+        labels = function(x) formatC(x, format = "g"),
         colors = palette,
         na.value = "#dddddf",
         guide = ggplot2::guide_colorbar(
-          direction = "horizontal",
-          barwidth  = grid::unit(50, "pt"),
-          barheight = grid::unit(12, "pt"),
+          direction      = "horizontal",
+          barwidth       = grid::unit(50, "pt"),
+          barheight      = grid::unit(12, "pt"),
           label.position = "top"
         )
       )
@@ -177,13 +181,9 @@ lapop_map <- function(data,
   # Zoom logic for Americas
   # ---------------------------------------------------------------
   if (survey == "AmericasBarometer") {
-
-    americas_xlim <- c(-170, -25)
-    americas_ylim <- c(-60, 80)
-
     p <- p + ggplot2::coord_sf(
-      xlim = americas_xlim,
-      ylim = americas_ylim,
+      xlim   = c(-170, -25),
+      ylim   = c(-60, 80),
       expand = FALSE
     )
   }
@@ -208,21 +208,19 @@ lapop_map <- function(data,
       caption  = caption_text
     ) +
     ggplot2::theme(
-      plot.margin = ggplot2::margin(0, 200, 0, 0),
-      legend.position = "bottom",
-      legend.box = "vertical",
-      legend.box.just = "left",
+      plot.margin        = ggplot2::margin(0, 175, 0, 0),
+      legend.position    = "bottom",
+      legend.box         = "vertical",
+      legend.box.just    = "left",
       legend.justification = "left",
-      legend.title = ggplot2::element_blank(),
-      legend.key.width = grid::unit(16, "pt"),
-      legend.key.height = grid::unit(18, "pt"),
-      #legend.margin = ggplot2::margin(t = 0, r = 0, b = 0, l = 0),
-      #legend.box.margin = ggplot2::margin(t = 0, r = 0, b = 0, l = 0),
-      legend.text = ggtext::element_markdown(family = "inter-light"), # nunito
-      plot.title = ggplot2::element_text(size = 18, family = "inter", face = "bold"), # nunito
-      plot.caption = ggplot2::element_text(size = 10.5, vjust = 2, hjust = 0,
-                                           family = "inter", color = "#585860"), # nunito
-      plot.subtitle = ggplot2::element_text(size = 13, hjust = 0,
-                                            family = "inter", color = "#585860") # nunito
+      legend.title       = ggplot2::element_blank(),
+      legend.key.width   = grid::unit(16, "pt"),
+      legend.key.height  = grid::unit(18, "pt"),
+      legend.text        = ggtext::element_markdown(family = "inter-light"),
+      plot.title         = ggplot2::element_text(size = 18, family = "inter", face = "bold"),
+      plot.caption       = ggplot2::element_text(size = 10.5, vjust = 2, hjust = 0,
+                                                 family = "inter", color = "#585860"),
+      plot.subtitle      = ggplot2::element_text(size = 13, hjust = 0,
+                                                 family = "inter", color = "#585860")
     )
 }
