@@ -38,7 +38,6 @@ NULL
 #'   vallabel = c("US", "AR", "VE", "CH", "EC", "BO"),
 #'   prop = c(37, 52, 80, 17, 69, 94)
 #' )
-
 #' lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
 #'           survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
 #'           subtitle = "% of respondents")
@@ -109,7 +108,7 @@ lapop_map <- function(data,
 
   if (!exists("world", inherits = TRUE)) {
     stop("world is not loaded. The package .onLoad() loader must load world.rda.")
-  }
+  } # debugging
 
   world <- world_sf
 
@@ -159,14 +158,15 @@ lapop_map <- function(data,
       )
 
   } else {
-
+    # Continuous
     p <- p +
       ggplot2::scale_fill_gradientn(
+        labels = scales::label_number(accuracy = NULL),
         colors = palette,
         na.value = "#dddddf",
         guide = ggplot2::guide_colorbar(
           direction = "horizontal",
-          barwidth  = grid::unit(80, "pt"),
+          barwidth  = grid::unit(50, "pt"),
           barheight = grid::unit(12, "pt"),
           label.position = "top"
         )
