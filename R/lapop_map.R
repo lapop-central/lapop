@@ -54,7 +54,7 @@ NULL
 #' @import ggplot2
 #' @import ggtext
 #' @import grid
-#' @import ggpattern geom_sf_pattern
+#' @importFrom ggpattern geom_sf_pattern
 #' @importFrom sf st_bbox st_drop_geometry
 #' @importFrom dplyr filter left_join rename
 #'
