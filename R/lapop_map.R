@@ -161,7 +161,7 @@ lapop_map <- function(data,
     # Continuous
     p <- p +
       ggplot2::scale_fill_gradientn(
-        labels = scales::label_number(accuracy = NULL),
+        labels = function(x) formatC(x, format = "g"), # baseR for decimals
         colors = palette,
         na.value = "#dddddf",
         guide = ggplot2::guide_colorbar(
@@ -178,18 +178,12 @@ lapop_map <- function(data,
   # ---------------------------------------------------------------
   if (survey == "AmericasBarometer") {
 
-    world_xlim <- c(-180, 180)
-    world_ylim <- c(-90, 90)
-
     americas_xlim <- c(-170, -25)
     americas_ylim <- c(-60, 80)
 
-    final_xlim <- world_xlim * (1 - zoom) + americas_xlim * zoom
-    final_ylim <- world_ylim * (1 - zoom) + americas_ylim * zoom
-
     p <- p + ggplot2::coord_sf(
-      xlim = final_xlim,
-      ylim = final_ylim,
+      xlim = americas_xlim,
+      ylim = americas_ylim,
       expand = FALSE
     )
   }
@@ -206,8 +200,7 @@ lapop_map <- function(data,
   # ---------------------------------------------------------------
   # Final theme
   # ---------------------------------------------------------------
-  p +
-    ggplot2::theme_void() +
+  p + ggplot2::theme_void() +
     ggplot2::labs(
       title    = main_title,
       subtitle = subtitle,
@@ -215,8 +208,16 @@ lapop_map <- function(data,
       caption  = caption_text
     ) +
     ggplot2::theme(
+      plot.margin = ggplot2::margin(0, 200, 0, 0),
       legend.position = "bottom",
+      legend.box = "vertical",
+      legend.box.just = "left",
+      legend.justification = "left",
       legend.title = ggplot2::element_blank(),
+      legend.key.width = grid::unit(16, "pt"),
+      legend.key.height = grid::unit(18, "pt"),
+      #legend.margin = ggplot2::margin(t = 0, r = 0, b = 0, l = 0),
+      #legend.box.margin = ggplot2::margin(t = 0, r = 0, b = 0, l = 0),
       legend.text = ggtext::element_markdown(family = "inter-light"), # nunito
       plot.title = ggplot2::element_text(size = 18, family = "inter", face = "bold"), # nunito
       plot.caption = ggplot2::element_text(size = 10.5, vjust = 2, hjust = 0,
