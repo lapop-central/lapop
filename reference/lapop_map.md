@@ -19,7 +19,8 @@ lapop_map(
   subtitle = "",
   palette = c("#F2A344", "#D97A1E", "#BF5A00", "#8A3900", "#4A1E00"),
   source_info = "LAPOP",
-  lang = "en"
+  lang = "en",
+  selected_countries = NULL
 )
 ```
 
@@ -75,6 +76,13 @@ lapop_map(
   or variable labels. Takes either "en" (English) or "es" (Spanish).
   Default: "en".
 
+- selected_countries:
+
+  Character or NULL. ISO2 code of the currently selected country (e.g.
+  from \`input\$pais\` in Shiny). When not \`NULL\`, countries with no
+  data are rendered with diagonal stripes instead of solid gray.
+  Default: \`NULL\` (solid \`"#dddddf"\`).
+
 ## Value
 
 A \`ggplot2\` choropleth map object.
@@ -87,7 +95,7 @@ Robert Vidigal, <robert.vidigal@vanderbilt.edu>
 
 ``` r
 if (FALSE) { # \dontrun{
-# Continuous variable example
+# Standalone — solid gray for no-data countries
 lapop_fonts()
  data_cont <- data.frame(
   vallabel = c("US", "AR", "VE", "CH", "EC", "BO"),
@@ -97,14 +105,8 @@ lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
           survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
           subtitle = "% of respondents")
 
-# Factor variable example
-lapop_fonts()
-data_fact <- data.frame(
-  vallabel = c("CA", "BR", "MX", "PE", "CO", "PY"),
-  group = c("A","A","B","B","C", "C")
-)
-lapop_map(data_fact, pais_lab = "vallabel", outcome = "group", zoom = 0.9,
-          survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
-          subtitle = "% of respondents")
+# Shiny — stripes for no-data countries when a country is selected
+lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
+          survey = "AmericasBarometer", selected_countries = input$pais)
 } # }
 ```
