@@ -7,8 +7,9 @@
 #' @include lapop_fonts.R
 NULL
 
+#'
 #' LAPOP World and Americas Map Graph
-
+#'
 #' The `lapop_map()` generates a stylized choropleth map using ISO2 country codes
 #' from both continuous and factor variables. It is designed to map cross-country
 #' results from `lpr_cc()` and supports either a full world map (`survey = "CSES"`)
@@ -31,6 +32,7 @@ NULL
 #' @param selected_countries Character or NULL. ISO2 code of the currently selected country (e.g. from
 #' `input$pais` in Shiny). When not `NULL`, countries with no data are rendered with diagonal stripes
 #' instead of solid gray. Default: `NULL` (solid `"#dddddf"`).
+#'
 #' @return A `ggplot2` choropleth map object.
 #'
 #' @examples
@@ -49,7 +51,6 @@ NULL
 #' lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
 #'           survey = "AmericasBarometer", selected_countries = input$pais)
 #' }
-#'
 #' @export
 #' @import ggplot2
 #' @import ggtext

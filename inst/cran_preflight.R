@@ -5,8 +5,7 @@ devtools::check(args = "--as-cran") # ✅ REQUIRED
 # 2. Unit tests
 devtools::test() # ✅ Strongly Recommended
 
-# 3. Platform checks (uncomment to run)
-#hub::rhub_setup() # ✅ Strongly Recommended
+# 3. Platform checks
 urlchecker::url_check()
 urlchecker::url_update()
 
