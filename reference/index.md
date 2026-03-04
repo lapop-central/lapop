@@ -38,6 +38,8 @@
   : LAPOP Cross-Country Bar Graph Pre-Processing
 - [`lpr_ccm()`](https://lapop-central.github.io/lapop/reference/lpr_ccm.md)
   : LAPOP Grouped Bar Graph Pre-Processing
+- [`lpr_ci()`](https://lapop-central.github.io/lapop/reference/lpr_ci.md)
+  : Compute Design-Based Proportion and Confidence Interval
 - [`lpr_coef()`](https://lapop-central.github.io/lapop/reference/lpr_coef.md)
   : LAPOP Regression Coefficients Graph Pre-Processing
 - [`lpr_data()`](https://lapop-central.github.io/lapop/reference/lpr_data.md)

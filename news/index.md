@@ -1,8 +1,12 @@
 # Changelog
 
+## lapop 2.1.5
+
+- add lpr_ci() for data playground design-based confidence intervals
+
 ## lapop 2.1.4
 
-- Update fonts to Nunito
+- update fonts to Nunito
 
 ## lapop 2.1.3
 
