@@ -125,8 +125,12 @@ lapop_dumb <- function(data,
                       text_nudge = 6,
                       drop_singles = FALSE){
 
-  if(drop_singles == TRUE) {
-    data = complete.cases(data)
+  # ---- drop_singles fix ----
+  if (drop_singles) {
+    data$usable1 <- !is.na(data$prop1) & data$prop1 != 0
+    data$usable2 <- !is.na(data$prop2) & data$prop2 != 0
+    data$usable_both <- data$usable1 & data$usable2
+    data <- data[data$usable_both, , drop = FALSE]
   }
 
   if(sort == "diff"){
@@ -154,6 +158,13 @@ lapop_dumb <- function(data,
 
   update_geom_defaults("text", list(family = "inter")) # roboto
     ggplot(data, aes(y=pais)) +
+      # connecting segment ONLY when both values exist
+      ggplot2::geom_segment(
+        ggplot2::aes(x = prop1, xend = prop2, y = pais, yend = pais),
+        color = "#bdbdc3",
+        linewidth = 1.5,
+        lineend = "round"
+      ) +
       geom_point(aes(x = prop1, color = names(color_scheme)[1]),
                  size=4, na.rm=T) +
       geom_point(aes(x = prop2, color = names(color_scheme)[2]),
