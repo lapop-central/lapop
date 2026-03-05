@@ -136,6 +136,8 @@ lapop_dumb(df,
 main_title = paste0("Personal economic conditions worsened across LAC"),
          subtitle = "% personal economic situation worsened",
          source_info = "Source: LAPOP Lab, AmericasBarometer 2018/19-2021")
+#> Warning: Removed 2 rows containing missing values or values outside the scale range
+#> (`geom_segment()`).
 
 # }
 ```

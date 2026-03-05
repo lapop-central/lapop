@@ -131,7 +131,7 @@ require(lapop); lapop_fonts
 #>     showtext::showtext_auto()
 #>     message("LAPOP font loaded successfully: Nunito (regular and light).")
 #> }
-#> <bytecode: 0x5568cfcfc1a8>
+#> <bytecode: 0x561b87a90a18>
 #> <environment: namespace:lapop>
 lapop_mover(df,
             main_title = paste0("More educated, men, and younger individuals",
