@@ -145,7 +145,7 @@ Luke Plutowski, <luke.plutowski@vanderbilt.edu> & Robert Vidigal,
 ``` r
 # \donttest{
 require(lapop); lapop_fonts()
-#> LAPOP font loaded successfully: Nunito (regular and light).
+#> LAPOP font loaded successfully: Inter (regular and light).
 
 df <- data.frame(wave = c("2008", "2010", "2016/17", "2018/19", "2021"),
 prop = c(23.2, 14.4, 35.8, 36.6, 40),

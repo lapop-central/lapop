@@ -146,7 +146,7 @@ df <- data.frame(varlabel = c(rep("Honduras", 9), rep("El Salvador", 9),
                                "21%", "15%", "18%", "20%", "14%", "18%",
                                "17%", "25%", "36%"))
 require(lapop); lapop_fonts()
-#> LAPOP font loaded successfully: Nunito (regular and light).
+#> LAPOP font loaded successfully: Inter (regular and light).
 lapop_mline(df,
       main_title = "Intentions to emigrate in Guatemala, Honduras and Mexico reached their highs",
       subtitle = "% who intend to migrate in:",

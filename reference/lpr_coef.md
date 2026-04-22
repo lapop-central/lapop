@@ -120,9 +120,9 @@ lpr_coef(data = bra23lpr,
  estimate = "contrast")
 #> CSV output file not created.
 #>               varlabel        coef          lb           ub pvalue proplabel
-#> 1    wealth: Max - Min -0.29702984 -0.34858146 -0.245478225 0.0000     -0.30
+#> 1    wealth: Max - Min -0.29702984 -0.34858163 -0.245478055 0.0000     -0.30
 #> 2 idio2: Igual - Mejor -0.04387263 -0.08517791 -0.002567345 0.0374     -0.04
-#> 3  idio2: Peor - Mejor  0.04304993 -0.01520201  0.101301867 0.1475      0.04
+#> 3  idio2: Peor - Mejor  0.04304993 -0.01520200  0.101301853 0.1475      0.04
 
 # Example 3: Interactive linear model
 lpr_coef(data = bra23lpr,
@@ -156,7 +156,7 @@ lpr_coef(data = bra23lpr,
          estimate = "contrast")
 #> CSV output file not created.
 #>               varlabel        coef          lb           ub pvalue proplabel
-#> 1    wealth: Max - Min -0.29843627 -0.34983184 -0.247040698 0.0000     -0.30
-#> 2 idio2: Igual - Mejor -0.04412517 -0.08593864 -0.002311692 0.0386     -0.04
-#> 3  idio2: Peor - Mejor  0.04264438 -0.01579508  0.101083837 0.1527      0.04
+#> 1    wealth: Max - Min -0.29843627 -0.34983185 -0.247040693 0.0000     -0.30
+#> 2 idio2: Igual - Mejor -0.04412517 -0.08593863 -0.002311707 0.0386     -0.04
+#> 3  idio2: Peor - Mejor  0.04264438 -0.01579508  0.101083836 0.1527      0.04
 ```
