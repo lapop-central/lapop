@@ -23,5 +23,5 @@ Luke Plutowski, <luke.plutowski@vanderbilt.edu> & Robert Vidigal,
 
 ``` r
 require(lapop); lapop_fonts()
-#> LAPOP font loaded successfully: Inter (regular and light).
+#> LAPOP fonts loaded successfully: Inter and Inter Light.
 ```

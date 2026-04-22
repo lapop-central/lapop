@@ -157,13 +157,12 @@ average values of some variable broken down by one or more secondary variables
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://lapop-central.github.io/lapop/">lapop</a></span><span class="op">)</span>; <span class="va">lapop_fonts</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     sysfonts::font_add_google("inter", "inter")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     sysfonts::font_add_google("inter", family = "inter-light", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         regular.wt = 300)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     showtext::showtext_auto()</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     message("LAPOP font loaded successfully: Inter (regular and light).")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     .lapop_register_fonts()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     showtext::showtext_auto(enable = TRUE)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     message("LAPOP fonts loaded successfully: Inter and Inter Light.")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     invisible(TRUE)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x56157f91db98&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x556ba98a00b0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:lapop&gt;</span>
 <span class="r-in"><span><span class="fu">lapop_mover</span><span class="op">(</span><span class="va">df</span>,</span></span>
 <span class="r-in"><span>            main_title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"More educated, men, and younger individuals"</span>,</span></span>

@@ -125,13 +125,12 @@ df <- data.frame(varlabel = c(rep("Gender", 2), rep("Age", 6),
 require(lapop); lapop_fonts
 #> function () 
 #> {
-#>     sysfonts::font_add_google("inter", "inter")
-#>     sysfonts::font_add_google("inter", family = "inter-light", 
-#>         regular.wt = 300)
-#>     showtext::showtext_auto()
-#>     message("LAPOP font loaded successfully: Inter (regular and light).")
+#>     .lapop_register_fonts()
+#>     showtext::showtext_auto(enable = TRUE)
+#>     message("LAPOP fonts loaded successfully: Inter and Inter Light.")
+#>     invisible(TRUE)
 #> }
-#> <bytecode: 0x56157f91db98>
+#> <bytecode: 0x556ba98a00b0>
 #> <environment: namespace:lapop>
 lapop_mover(df,
             main_title = paste0("More educated, men, and younger individuals",

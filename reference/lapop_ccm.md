@@ -126,7 +126,7 @@ Luke Plutowski, <luke.plutowski@vanderbilt.edu> & Robert Vidigal,
 ``` r
 # \donttest{
 require(lapop); lapop_fonts()
-#> LAPOP font loaded successfully: Inter (regular and light).
+#> LAPOP fonts loaded successfully: Inter and Inter Light.
 
 df <- data.frame(pais = c(rep("HT", 2), rep("PE", 2), rep("HN", 2), rep("CO", 2),
              rep("UY", 2), rep("CR", 2), rep("EC", 2), rep("CL", 2),

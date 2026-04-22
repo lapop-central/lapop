@@ -141,7 +141,7 @@ df <- data.frame(varlabel = c(rep("Politicians can\nidentify voters", 5),
                               "10%", "23%", "11%", "10%", "35%", "10%",
                               "32%", "13%", "10%"))
 require(lapop); lapop_fonts()
-#> LAPOP font loaded successfully: Inter (regular and light).
+#> LAPOP fonts loaded successfully: Inter and Inter Light.
 lapop_stack(df,
         main_title = "Trust in key features of the electoral process is low in Latin America",
         subtitle = "% believing it happens:",

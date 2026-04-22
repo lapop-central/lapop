@@ -102,7 +102,7 @@ Luke Plutowski, <luke.plutowski@vanderbilt.edu>
 ``` r
 # \donttest{
 require(lapop); lapop_fonts()
-#> LAPOP font loaded successfully: Inter (regular and light).
+#> LAPOP fonts loaded successfully: Inter and Inter Light.
 df <- data.frame(
   varlabel = c("Intimate\nPartner", "wealth", "Education", "Age", "Male"),
   coef = c(0.02, -0.07, -0.24, 0.01, 0.11),
