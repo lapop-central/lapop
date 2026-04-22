@@ -21,11 +21,11 @@
 lapop_fonts <- function(){
   sysfonts::font_add_google("inter", "inter")
   sysfonts::font_add_google("inter", family = "inter-light", regular.wt = 300)
-  #sysfonts::font_add_google("roboto", "roboto")
+  #sysfonts::font_add_google("roboto", "roboto") # old
   #sysfonts::font_add_google("roboto", family = "roboto-light", regular.wt = 300)
-  #sysfonts::font_add_google("nunito", "nunito")
+  #sysfonts::font_add_google("nunito", "nunito") # old
   #sysfonts::font_add_google("nunito", family = "nunito-light", regular.wt = 300)
   showtext::showtext_auto()
-  message("LAPOP font loaded successfully: Nunito (regular and light).") # Inter, Roboto, and
+  message("LAPOP font loaded successfully: Inter (regular and light).") # Inter
 }
 
