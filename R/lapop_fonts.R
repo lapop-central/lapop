@@ -18,14 +18,74 @@
 #'@import showtext sysfonts
 #'@export
 
-lapop_fonts <- function(){
-  sysfonts::font_add_google("inter", "inter")
-  sysfonts::font_add_google("inter", family = "inter-light", regular.wt = 300)
-  #sysfonts::font_add_google("roboto", "roboto") # old
-  #sysfonts::font_add_google("roboto", family = "roboto-light", regular.wt = 300)
-  #sysfonts::font_add_google("nunito", "nunito") # old
-  #sysfonts::font_add_google("nunito", family = "nunito-light", regular.wt = 300)
-  showtext::showtext_auto()
-  message("LAPOP font loaded successfully: Inter (regular and light).") # Inter
+.lapop_font_paths <- function(pkg = "lapop") {
+  regular_path <- system.file("fonts", "Inter-Regular.ttf", package = pkg)
+  light_path <- system.file("fonts", "Inter-Light.ttf", package = pkg)
+
+  if (identical(regular_path, "") || identical(light_path, "")) {
+    local_fonts_dir <- file.path(getwd(), "inst", "fonts")
+    regular_fallback <- file.path(local_fonts_dir, "Inter-Regular.ttf")
+    light_fallback <- file.path(local_fonts_dir, "Inter-Light.ttf")
+
+    if (file.exists(regular_fallback) && file.exists(light_fallback)) {
+      regular_path <- regular_fallback
+      light_path <- light_fallback
+    }
+  }
+
+  list(
+    regular = regular_path,
+    light = light_path
+  )
+}
+
+.lapop_register_fonts <- function(pkg = "lapop") {
+  font_paths <- .lapop_font_paths(pkg = pkg)
+
+  if (!file.exists(font_paths$regular) || !file.exists(font_paths$light)) {
+    stop("Bundled Inter font files were not found.")
+  }
+
+  existing_families <- sysfonts::font_families()
+
+  if (!("inter" %in% existing_families)) {
+    sysfonts::font_add(family = "inter", regular = font_paths$regular)
+  }
+
+  if (!("inter-light" %in% existing_families)) {
+    sysfonts::font_add(family = "inter-light", regular = font_paths$light)
+  }
+
+  if ("register_font" %in% getNamespaceExports("systemfonts")) {
+    try(
+      systemfonts::register_font(
+        name = "inter",
+        plain = font_paths$regular,
+        bold = font_paths$regular,
+        italic = font_paths$regular,
+        bolditalic = font_paths$regular
+      ),
+      silent = TRUE
+    )
+    try(
+      systemfonts::register_font(
+        name = "inter-light",
+        plain = font_paths$light,
+        bold = font_paths$light,
+        italic = font_paths$light,
+        bolditalic = font_paths$light
+      ),
+      silent = TRUE
+    )
+  }
+
+  invisible(TRUE)
+}
+
+lapop_fonts <- function() {
+  .lapop_register_fonts()
+  showtext::showtext_auto(enable = TRUE)
+  message("LAPOP fonts loaded successfully: Inter and Inter Light.")
+  invisible(TRUE)
 }
 

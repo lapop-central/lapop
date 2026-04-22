@@ -44,12 +44,28 @@ lapop_save <- function(figure, filename,
                        logo = FALSE,
                        width_px = 895,
                        height_px = 500){
-  dev.new()
-  if(format == "svg"){
-    ggsave(filename, width = width_px/96, height = height_px/96, device = svglite)
-  } else if(format == "png"){
-    png(filename, width = width_px/96, height = height_px/96)
+  format <- match.arg(format, choices = c("svg", "png"))
+
+  if (format == "svg") {
+    ggplot2::ggsave(
+      filename = filename,
+      plot = figure,
+      width = width_px / 96,
+      height = height_px / 96,
+      units = "in",
+      device = svglite::svglite
+    )
+  } else {
+    ggplot2::ggsave(
+      filename = filename,
+      plot = figure,
+      width = width_px / 96,
+      height = height_px / 96,
+      units = "in",
+      dpi = 96,
+      device = "png"
+    )
   }
-  print(figure)
-  dev.off()
+
+  invisible(filename)
 }

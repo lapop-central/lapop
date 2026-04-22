@@ -6,6 +6,7 @@
 ^CRAN-SUBMISSION$
 ^Meta$
 ^doc$
+^inst/docs$
 ^\.inst\.extdata$
 ^docs$
 ^_pkgdown\.yml$
@@ -17,6 +18,14 @@
 ^vignettes/.*\.qmd$
 ^\.gitlab-ci\.yml$
 ^\.gitignore$
+^\.gitattributes$
+^\.git$
+^\.DS_Store$
+^\.Rhistory$
+^R/\.Rhistory$
+^inst/\.Rhistory$
+^vignettes/\.Rhistory$
+^\.\.Rcheck$
 ^cran-comments\.md$
 
 

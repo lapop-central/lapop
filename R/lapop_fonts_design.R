@@ -17,19 +17,7 @@
 #'@export
 
  lapop_fonts_design <- function() {
+   .lapop_register_fonts()
    showtext::showtext_auto(enable = FALSE)
-   #systemfonts::register_variant(
-     #name = "roboto-light",
-     #family = "roboto",
-     #weight = "light")
-
-   #systemfonts::register_variant(
-     #name = "nunito-light",
-     #family = "nunito",
-     #weight = "light")
-
-   systemfonts::register_variant(
-     name = "inter-light",
-     family = "inter",
-     weight = "light")
+   invisible(TRUE)
 }

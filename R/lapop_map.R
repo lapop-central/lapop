@@ -86,8 +86,8 @@ lapop_map <- function(data,
     "AR","BO","BR","CL","CO","EC","GY","PE","PY","SR","UY","VE"
   )
 
-  if (!exists("world", inherits = TRUE)) {
-    stop("world is not loaded. The package .onLoad() loader must load world.rda.")
+  if (is.null(world_sf)) {
+    stop("world map data is not loaded. Restart R and load `lapop` again.")
   }
 
   world <- world_sf
@@ -99,7 +99,15 @@ lapop_map <- function(data,
   # ---------------------------------------------------------------
   # Merge user data
   # ---------------------------------------------------------------
-  df <- data %>% dplyr::rename(value = !!sym(outcome), pais_lab = !!sym(pais_lab))
+  if (!all(c(outcome, pais_lab) %in% names(data))) {
+    stop("`outcome` and `pais_lab` must refer to columns in `data`.")
+  }
+
+  df <- data.frame(
+    pais_lab = data[[pais_lab]],
+    value = data[[outcome]],
+    stringsAsFactors = FALSE
+  )
 
   merged <- world %>% dplyr::left_join(df, by = "pais_lab") %>% sf::st_as_sf()
   outcome_is_factor <- is.factor(merged$value) || is.character(merged$value)
