@@ -5,14 +5,17 @@ world_sf <- NULL
       {
          .lapop_register_fonts(pkg = pkg)
          showtext::showtext_auto(enable = TRUE)
-         TRUE
+         "LAPOP fonts loaded successfully: Inter and Inter Light."
       },
-      error = function(e) FALSE
+      error = function(e) NULL
    )
 }
 
 .onAttach <- function(lib, pkg, ...){
-   .lapop_try_autoload_fonts(pkg)
+   font_message <- .lapop_try_autoload_fonts(pkg)
+   if (!is.null(font_message)) {
+      packageStartupMessage(font_message)
+   }
    packageStartupMessage(lapopWelcomeMessage(pkg))
 }
 
