@@ -13,10 +13,10 @@ world_sf <- NULL
 
 .onAttach <- function(lib, pkg, ...){
    font_message <- .lapop_try_autoload_fonts(pkg)
+   packageStartupMessage(lapopWelcomeMessage(pkg))
    if (!is.null(font_message)) {
       packageStartupMessage(font_message)
    }
-   packageStartupMessage(lapopWelcomeMessage(pkg))
 }
 
 # Package startup message
