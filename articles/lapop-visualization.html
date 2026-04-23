@@ -160,12 +160,13 @@ reflecting the survey’s hierarchical sampling structure. The
 <div class="section level2">
 <h2 id="fonts-for-2023-pulse-of-democracy-report-">Fonts for 2023 <em>Pulse of Democracy</em> report.<a class="anchor" aria-label="anchor" href="#fonts-for-2023-pulse-of-democracy-report-"></a>
 </h2>
-<p>Running <code><a href="../reference/lapop_fonts.html">lapop_fonts()</a></code> at the start of your analysis
-ensures that all exported charts have a polished, standardized
-appearance to ensure consistent and professional typography in all LAPOP
-plots. This function loads Nunito and Roboto fonts.</p>
+<p>When you load <code>lapop</code> with <code><a href="https://lapop-central.github.io/lapop/">library(lapop)</a></code>,
+the package now auto-registers the bundled LAPOP fonts and enables the
+standard plotting setup. You can still call
+<code><a href="../reference/lapop_fonts.html">lapop::lapop_fonts()</a></code> manually if you want to re-run font
+registration in the current session.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/lapop_fonts.html">lapop_fonts</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Load fonts</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">lapop</span><span class="fu">::</span><span class="fu"><a href="../reference/lapop_fonts.html">lapop_fonts</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Re-run font registration explicitly if needed</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="figure-1-1-time-series">Figure 1.1: Time Series<a class="anchor" aria-label="anchor" href="#figure-1-1-time-series"></a>

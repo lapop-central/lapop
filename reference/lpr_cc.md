@@ -121,37 +121,27 @@ Luke Plutowski, <luke.plutowski@vanderbilt.edu> & Robert Vidigal,
 ``` r
 require(lapop); data(ym23); data(bra23)
 
-# Set Survey Context
-bra23lpr <- lpr_data(bra23, wt = TRUE)
-ym23lpr <- lpr_data(ym23)
-
-# Multiple variables in Single Country
-lpr_cc(data = bra23lpr,
-outcome = c("b12", "b13"),
-rec = c(5, 7))
-#> # A tibble: 2 × 5
-#>   vallabel  prop proplabel    lb    ub
-#>   <chr>    <dbl> <chr>     <dbl> <dbl>
-#> 1 b12       57.4 57%        54.6  60.2
-#> 2 b13       35.3 35%        32.2  38.3
+# Set Survey Context on a small cross-country subset
+ym23_small <- subset(ym23, pais %in% c(1, 15, 17))
+ym23lpr <- lpr_data(ym23_small)
 
 # Single variable in Multiple Countries
 lpr_cc(data = ym23lpr,
       outcome = "ing4",
       rec = c(5, 7),
       xvar = "pais")
-#> # A tibble: 23 × 5
-#>    vallabel              prop proplabel    lb    ub
-#>    <fct>                <dbl> <chr>     <dbl> <dbl>
-#>  1 Uruguay               75.8 76%        73.8  77.9
-#>  2 Costa Rica            72.2 72%        70.3  74.1
-#>  3 Argentina             69.4 69%        67.5  71.4
-#>  4 Chile                 66.7 67%        64.9  68.6
-#>  5 Bahamas               64.9 65%        62.3  67.5
-#>  6 El Salvador           62.9 63%        61.1  64.7
-#>  7 México                62.2 62%        60.5  63.9
-#>  8 Brasil                61.9 62%        59.8  64.0
-#>  9 República Dominicana  61.5 62%        59.9  63.1
-#> 10 Grenada               58.7 59%        56.1  61.3
-#> # ℹ 13 more rows
+#> # A tibble: 3 × 5
+#>   vallabel   prop proplabel    lb    ub
+#>   <fct>     <dbl> <chr>     <dbl> <dbl>
+#> 1 Argentina  69.4 69%        67.5  71.4
+#> 2 México     62.2 62%        60.5  63.9
+#> 3 Brasil     61.9 62%        59.8  64.0
+
+# Multiple variables in Single Country
+if (FALSE) { # \dontrun{
+bra23lpr <- lpr_data(bra23, wt = TRUE)
+lpr_cc(data = bra23lpr,
+outcome = c("b12", "b13"),
+rec = c(5, 7))
+} # }
 ```

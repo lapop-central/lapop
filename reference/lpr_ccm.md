@@ -110,44 +110,33 @@ Luke Plutowski, <luke.plutowski@vanderbilt.edu> & Robert Vidigal,
 ``` r
 require(lapop); data(ym23)
 
-# Set Survey Context
-ym23lpr <- lpr_data(ym23)
+# Set Survey Context on a small cross-country subset
+ym23_small <- subset(ym23, pais %in% c(1, 15, 17))
+ym23lpr <- lpr_data(ym23_small)
 
 # Multiple outcomes over countries
 lpr_ccm(ym23lpr,
 outcome_vars = c("b12", "b18"),
 rec1 = c(1, 3),
-rec2 = c(5, 7),
-ttest = TRUE)
-#> # A tibble: 41 × 7
+rec2 = c(5, 7))
+#> # A tibble: 6 × 6
 #> # Groups:   var [2]
-#>    pais   prop    lb    ub proplabel var      se
-#>    <fct> <dbl> <dbl> <dbl> <chr>     <chr> <dbl>
-#>  1 TT     44.5  42.4  46.7 45%       b12   1.12 
-#>  2 NI     43.3  41.0  45.5 43%       b12   1.15 
-#>  3 BO     37.7  35.6  39.7 38%       b12   1.05 
-#>  4 DO     37.0  35.1  38.9 37%       b12   0.950
-#>  5 HN     36.2  34.1  38.3 36%       b12   1.05 
-#>  6 AR     34.9  32.9  36.9 35%       b12   1.03 
-#>  7 UY     34.3  32.4  36.3 34%       b12   1.01 
-#>  8 SR     33.6  31.2  35.9 34%       b12   1.19 
-#>  9 PY     31.0  29.4  32.6 31%       b12   0.826
-#> 10 CO     30.5  28.7  32.3 31%       b12   0.931
-#> # ℹ 31 more rows
+#>   pais   prop    lb    ub proplabel var  
+#>   <fct> <dbl> <dbl> <dbl> <chr>     <chr>
+#> 1 AR     34.9  32.9  36.9 35%       b12  
+#> 2 BR     25.1  23.4  26.9 25%       b12  
+#> 3 MX     21.3  19.7  22.9 21%       b12  
+#> 4 BR     51.0  48.7  53.3 51%       b18  
+#> 5 AR     34.4  32.2  36.6 34%       b18  
+#> 6 MX     26.7  24.8  28.5 27%       b18  
 
 # Multiple outcomes over years
+if (FALSE) { # \dontrun{
 lpr_ccm(ym23lpr,
 outcome_vars = c("b12", "b18"),
 xvar = "wave",
 rec1 = c(1, 3),
 rec2 = c(5, 7),
 ttest = TRUE)
-#> # A tibble: 4 × 7
-#> # Groups:   var [2]
-#>   pais     prop    lb    ub proplabel var      se
-#>   <fct>   <dbl> <dbl> <dbl> <chr>     <chr> <dbl>
-#> 1 2023     31.1  30.5  31.7 31%       b12   0.310
-#> 2 2018/19  29.7  29.1  30.4 30%       b12   0.322
-#> 3 2018/19  38.4  37.7  39.0 38%       b18   0.338
-#> 4 2023     38.2  37.6  38.7 38%       b18   0.289
+} # }
 ```

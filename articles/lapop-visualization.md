@@ -102,15 +102,15 @@ print(ym23w)
 
 ## Fonts for 2023 *Pulse of Democracy* report.
 
-Running
-[`lapop_fonts()`](https://lapop-central.github.io/lapop/reference/lapop_fonts.md)
-at the start of your analysis ensures that all exported charts have a
-polished, standardized appearance to ensure consistent and professional
-typography in all LAPOP plots. This function loads Nunito and Roboto
-fonts.
+When you load `lapop` with
+[`library(lapop)`](https://lapop-central.github.io/lapop/), the package
+now auto-registers the bundled LAPOP fonts and enables the standard
+plotting setup. You can still call
+[`lapop::lapop_fonts()`](https://lapop-central.github.io/lapop/reference/lapop_fonts.md)
+manually if you want to re-run font registration in the current session.
 
 ``` r
-lapop_fonts() # Load fonts
+lapop::lapop_fonts() # Re-run font registration explicitly if needed
 ```
 
 ## Figure 1.1: Time Series
