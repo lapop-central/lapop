@@ -4,20 +4,6 @@
 
 #######################################
 
-#' LAPOP Fonts
-#'
-#' This function loads fonts needed for LAPOP graph formatting.
-#' No arguments needed; just run lapop_fonts() at the beginning of your session.
-#'
-#'@return No return value, called for side effects
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
-#'
-#'@examples
-#'\donttest{require(lapop); lapop_fonts()}
-#'
-#'@import showtext sysfonts
-#'@export
-
 .lapop_font_paths <- function(pkg = "lapop") {
   regular_path <- system.file("fonts", "Inter-Regular.ttf", package = pkg)
   light_path <- system.file("fonts", "Inter-Light.ttf", package = pkg)
@@ -82,6 +68,19 @@
   invisible(TRUE)
 }
 
+#' LAPOP Fonts
+#'
+#' This function loads fonts needed for LAPOP graph formatting.
+#' No arguments needed; just run lapop_fonts() at the beginning of your session.
+#'
+#'@return No return value, called for side effects
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
+#'
+#'@examples
+#'\donttest{require(lapop); lapop_fonts()}
+#'
+#'@import showtext sysfonts
+#'@export
 lapop_fonts <- function() {
   .lapop_register_fonts()
   showtext::showtext_auto(enable = TRUE)

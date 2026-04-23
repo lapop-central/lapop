@@ -70,7 +70,6 @@
 #'
 #'@export
 #'@import dplyr
-#'@import tidyr
 #'@import srvyr
 #'@import tibble
 #'

@@ -69,7 +69,7 @@ print(ym23w)
 ## Fonts for 2023 *Pulse of Democracy* report. 
 When you load `lapop` with `library(lapop)`, the package now auto-registers the bundled LAPOP fonts and enables the standard plotting setup. You can still call `lapop::lapop_fonts()` manually if you want to re-run font registration in the current session.
 
-```{r, lapop fonts}
+```{r, lapop fonts, eval=F}
 lapop::lapop_fonts() # Re-run font registration explicitly if needed
 ```
 

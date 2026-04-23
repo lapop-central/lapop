@@ -47,20 +47,23 @@
 #'
 #' require(lapop); data(ym23); data(bra23)
 #'
-#' # Set Survey Context
-#' bra23lpr <- lpr_data(bra23, wt = TRUE)
-#' ym23lpr <- lpr_data(ym23)
-#'
-#' # Multiple variables in Single Country
-#' lpr_cc(data = bra23lpr,
-#' outcome = c("b12", "b13"),
-#' rec = c(5, 7))
+#' # Set Survey Context on a small cross-country subset
+#' ym23_small <- subset(ym23, pais %in% c(1, 15, 17))
+#' ym23lpr <- lpr_data(ym23_small)
 #'
 #' # Single variable in Multiple Countries
 #' lpr_cc(data = ym23lpr,
 #'       outcome = "ing4",
 #'       rec = c(5, 7),
 #'       xvar = "pais")
+#'
+#' # Multiple variables in Single Country
+#' \dontrun{
+#' bra23lpr <- lpr_data(bra23, wt = TRUE)
+#' lpr_cc(data = bra23lpr,
+#' outcome = c("b12", "b13"),
+#' rec = c(5, 7))
+#' }
 #'
 #'@export
 #'@import dplyr

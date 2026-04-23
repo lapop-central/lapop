@@ -77,23 +77,25 @@ using LAPOP formatting.
 
 require(lapop); data(ym23)
 
-# Set Survey Context
-ym23lpr <- lpr_data(ym23)
+# Set Survey Context on a small cross-country subset
+ym23_small <- subset(ym23, pais \%in\% c(1, 15, 17))
+ym23lpr <- lpr_data(ym23_small)
 
 # Multiple outcomes over countries
 lpr_ccm(ym23lpr,
 outcome_vars = c("b12", "b18"),
 rec1 = c(1, 3),
-rec2 = c(5, 7),
-ttest = TRUE)
+rec2 = c(5, 7))
 
 # Multiple outcomes over years
+\dontrun{
 lpr_ccm(ym23lpr,
 outcome_vars = c("b12", "b18"),
 xvar = "wave",
 rec1 = c(1, 3),
 rec2 = c(5, 7),
 ttest = TRUE)
+}
 
 }
 \author{
