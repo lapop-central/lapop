@@ -78,7 +78,8 @@ Guide](https://lapop-central.github.io/lapop/articles/lapop-visualization.html)
     library(lapop)
     ```
 
-2.  Load LAPOP Lab fonts:
+2.  LAPOP Lab fonts is automatically loaded, yet you can also manually
+    if needed:
 
     ``` r
     lapop_fonts()
