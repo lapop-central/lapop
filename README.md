@@ -63,7 +63,7 @@ Other methods such as `haven::read_dta()` or `rio::import()` may fail to import 
    library(lapop)
    ```
 
-2. Load LAPOP Lab fonts:
+2. LAPOP Lab fonts is automatically loaded, yet you can also manually if needed:
 
    ```r
    lapop_fonts()
