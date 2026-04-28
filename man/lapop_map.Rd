@@ -67,6 +67,7 @@ lapop_fonts()
 lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
           survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
           subtitle = "\% of respondents")
+
 }
 if (interactive()) {
   lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,

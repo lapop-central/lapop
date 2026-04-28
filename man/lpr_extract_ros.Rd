@@ -51,6 +51,7 @@ attr(toy, "label.table") <- list(
 
 lpr_extract_ros(toy, lang_id = "pt")
 lpr_extract_ros(toy, lang_id = "pt", one_row_per_var = TRUE)
+
 }
 \author{
 Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
