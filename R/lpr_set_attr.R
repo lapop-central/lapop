@@ -58,7 +58,12 @@ lpr_set_attr <- function(data,
     }
 
     if (!length(targets) & verbose == TRUE) {
-      cat(paste("Variable", base_var, "not found in data (no base or expanded matches) but notes available.\n"))
+      message(
+        sprintf(
+          "Variable %s not found in data (no base or expanded matches) but notes are available.",
+          base_var
+        )
+      )
       next
     }
 

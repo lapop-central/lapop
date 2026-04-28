@@ -88,7 +88,7 @@ rec1 = c(1, 3),
 rec2 = c(5, 7))
 
 # Multiple outcomes over years
-\dontrun{
+\donttest{
 lpr_ccm(ym23lpr,
 outcome_vars = c("b12", "b18"),
 xvar = "wave",

@@ -91,7 +91,7 @@ lpr_cc(data = ym23lpr,
       xvar = "pais")
 
 # Multiple variables in Single Country
-\dontrun{
+\donttest{
 bra23lpr <- lpr_data(bra23, wt = TRUE)
 lpr_cc(data = bra23lpr,
 outcome = c("b12", "b13"),

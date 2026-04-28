@@ -40,14 +40,17 @@ Works with:
  (b) per-variable attributes (e.g., attr(data[[VAR]], "levels") or factor levels).
 }
 \examples{
-\donttest{
-# Data-level dictionary (default)
-#ros_long <- lpr_extract_ros(bra23, lang_id = "pt")
+toy <- data.frame(
+  ing4 = c(1L, 2L, 1L),
+  b12 = c(1L, 2L, NA_integer_)
+)
+attr(toy, "label.table") <- list(
+  ing4_pt = c("Apoia muito" = 1L, "Apoia" = 2L, "NS/NR" = 1000L),
+  b12_pt = c("Muito" = 1L, "Algo" = 2L, "NS/NR" = 1000L)
+)
 
-# Collapsed
-#ros_one  <- lpr_extract_ros(bra23, lang_id = "pt", one_row_per_var = TRUE)
-}
-
+lpr_extract_ros(toy, lang_id = "pt")
+lpr_extract_ros(toy, lang_id = "pt", one_row_per_var = TRUE)
 }
 \author{
 Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}

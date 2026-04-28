@@ -42,7 +42,7 @@
 #' simple random sample and estimates variance accordingly.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Design-based estimate
 #' data(cm23)
 #' lpr_ci(data = cm23,

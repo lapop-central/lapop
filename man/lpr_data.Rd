@@ -22,19 +22,12 @@ design effects, outputting a svy_tbl object that can then be analyzed using
 lpr_ wrangling commands.
 }
 \examples{
-\dontrun{
-# Single-country single-year (wt)
-#' bra23w <- lpr_data(bra23, wt = TRUE)
-print(bra23w)}
+\donttest{
+data(bra23)
+data(cm23)
 
-# Single-country  multi-year (weight1500)
-\dontrun{cm23w <- lpr_data(cm23)
-print(cm23w)}
-
-#' # Multi-country  single-year (weight1500)
-\dontrun{ym23w <- lpr_data(ym23)
-print(ym23w)}
-
+bra23w <- lpr_data(bra23, wt = TRUE)
+cm23w <- lpr_data(cm23)
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}

@@ -66,7 +66,7 @@ If `strata` and `psu` are not provided, the function assumes a weighted
 simple random sample and estimates variance accordingly.
 }
 \examples{
-\dontrun{
+\donttest{
 # Design-based estimate
 data(cm23)
 lpr_ci(data = cm23,

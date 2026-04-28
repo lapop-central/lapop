@@ -57,7 +57,7 @@ results from `lpr_cc()` and supports either a full world map (`survey = "CSES"`)
 # or an Americas-only map (`survey = "AmericasBarometer"`).
 }
 \examples{
-\dontrun{
+\donttest{
 # Standalone — solid gray for no-data countries
 lapop_fonts()
  data_cont <- data.frame(
@@ -67,10 +67,10 @@ lapop_fonts()
 lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
           survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
           subtitle = "\% of respondents")
-
-# Shiny — stripes for no-data countries when a country is selected
-lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
-          survey = "AmericasBarometer", selected_countries = input$pais)
+}
+if (interactive()) {
+  lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
+            survey = "AmericasBarometer", selected_countries = "BR")
 }
 }
 \author{
