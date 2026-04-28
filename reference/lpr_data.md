@@ -26,4 +26,19 @@ lpr_data(data_path, wt = FALSE)
 
 Returns a svy_tbl object
 
+## Author
+
+Luke Plutowski, <luke.plutowski@vanderbilt.edu> & Robert Vidigal,
+<robert.vidigal@vanderbilt.edu>
+
 ## Examples
+
+``` r
+# \donttest{
+data(bra23)
+data(cm23)
+
+bra23w <- lpr_data(bra23, wt = TRUE)
+cm23w <- lpr_data(cm23)
+# }
+```
