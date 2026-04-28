@@ -29,6 +29,7 @@ data(cm23)
 bra23w <- lpr_data(bra23, wt = TRUE)
 cm23w <- lpr_data(cm23)
 }
+}
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
 }
