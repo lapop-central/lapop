@@ -94,9 +94,10 @@ Robert Vidigal, <robert.vidigal@vanderbilt.edu>
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+# \donttest{
 # Standalone — solid gray for no-data countries
 lapop_fonts()
+#> LAPOP fonts loaded successfully: Inter and Inter Light.
  data_cont <- data.frame(
   vallabel = c("US", "AR", "VE", "CH", "EC", "BO"),
   prop = c(37, 52, 80, 17, 69, 94)
@@ -105,8 +106,9 @@ lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
           survey = "AmericasBarometer", main_title = "Latin America and Caribbean Countries",
           subtitle = "% of respondents")
 
-# Shiny — stripes for no-data countries when a country is selected
-lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
-          survey = "AmericasBarometer", selected_countries = input$pais)
-} # }
+# }
+if (interactive()) {
+  lapop_map(data_cont, pais_lab = "vallabel", outcome = "prop", zoom = 0.9,
+            survey = "AmericasBarometer", selected_countries = "BR")
+}
 ```

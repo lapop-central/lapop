@@ -94,7 +94,7 @@ weighted simple random sample and estimates variance accordingly.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+# \donttest{
 # Design-based estimate
 data(cm23)
 lpr_ci(data = cm23,
@@ -102,11 +102,15 @@ lpr_ci(data = cm23,
          weight = "weight1500",
          strata = "strata",
          psu = "upm")
+#>         prop       lb       ub         se
+#> b13 3.257317 3.207677 3.306956 0.02532658
 
 # Weighted SRS estimate
 data(bra23)
 lpr_ci(data = bra23,
          outcome = "b13",
          weight = "wt")
-} # }
+#>         prop      lb       ub         se
+#> b13 3.605202 3.49979 3.710614 0.05378264
+# }
 ```

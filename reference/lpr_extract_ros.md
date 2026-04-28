@@ -68,11 +68,27 @@ Robert Vidigal, <robert.vidigal@vanderbilt.edu>
 ## Examples
 
 ``` r
-# \donttest{
-# Data-level dictionary (default)
-#ros_long <- lpr_extract_ros(bra23, lang_id = "pt")
+toy <- data.frame(
+  ing4 = c(1L, 2L, 1L),
+  b12 = c(1L, 2L, NA_integer_)
+)
+attr(toy, "label.table") <- list(
+  ing4_pt = c("Apoia muito" = 1L, "Apoia" = 2L, "NS/NR" = 1000L),
+  b12_pt = c("Muito" = 1L, "Algo" = 2L, "NS/NR" = 1000L)
+)
 
-# Collapsed
-#ros_one  <- lpr_extract_ros(bra23, lang_id = "pt", one_row_per_var = TRUE)
-# }
+lpr_extract_ros(toy, lang_id = "pt")
+#> # A tibble: 4 × 3
+#>   variable_name value answer_text
+#>   <chr>         <int> <chr>      
+#> 1 b12               1 Muito      
+#> 2 b12               2 Algo       
+#> 3 ing4              1 Apoia muito
+#> 4 ing4              2 Apoia      
+lpr_extract_ros(toy, lang_id = "pt", one_row_per_var = TRUE)
+#> # A tibble: 2 × 2
+#>   variable_name answer_text                
+#>   <chr>         <chr>                      
+#> 1 b12           (1) Muito | (2) Algo       
+#> 2 ing4          (1) Apoia muito | (2) Apoia
 ```

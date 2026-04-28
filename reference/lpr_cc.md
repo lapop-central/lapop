@@ -138,10 +138,15 @@ lpr_cc(data = ym23lpr,
 #> 3 Brasil     61.9 62%        59.8  64.0
 
 # Multiple variables in Single Country
-if (FALSE) { # \dontrun{
+# \donttest{
 bra23lpr <- lpr_data(bra23, wt = TRUE)
 lpr_cc(data = bra23lpr,
 outcome = c("b12", "b13"),
 rec = c(5, 7))
-} # }
+#> # A tibble: 2 × 5
+#>   vallabel  prop proplabel    lb    ub
+#>   <chr>    <dbl> <chr>     <dbl> <dbl>
+#> 1 b12       57.4 57%        54.6  60.2
+#> 2 b13       35.3 35%        32.2  38.3
+# }
 ```
