@@ -67,6 +67,7 @@ Shashwat Dhar <shashwat.dhar@vanderbilt.edu> & Luke Plutowski,
 ## Examples
 
 ``` r
+
 require(lapop); data(bra23)
 
 # Set Survey Context: single country and year (requires wt = T)

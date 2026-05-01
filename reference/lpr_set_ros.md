@@ -47,6 +47,7 @@ string.
 ## Examples
 
 ``` r
+
 require(lapop); data(bra23)
 
 # Apply the function

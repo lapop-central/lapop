@@ -2,6 +2,8 @@
 
 ## lapop 2.1.5
 
+CRAN release: 2026-04-29
+
 - add lpr_ci() for data playground design-based confidence intervals
 
 ## lapop 2.1.4

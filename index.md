@@ -12,6 +12,7 @@ of ‘AmericasBarometer’ data following LAPOP Lab’s editorial guidelines.
 To install the package in your console, run:
 
 ``` r
+
 devtools::install_github("lapop-central/lapop", 
                          force = TRUE, 
                          build_vignettes = TRUE)
@@ -38,6 +39,7 @@ comparability.
 Use:
 
 ``` r
+
 readstata13::read.dta13()
 ```
 
@@ -75,6 +77,7 @@ Guide](https://lapop-central.github.io/lapop/articles/lapop-visualization.html)
 1.  Load the package in R:
 
     ``` r
+
     library(lapop)
     ```
 
@@ -82,12 +85,14 @@ Guide](https://lapop-central.github.io/lapop/articles/lapop-visualization.html)
     if needed:
 
     ``` r
+
     lapop_fonts()
     ```
 
 3.  Apply the ‘AmericasBarometer’ design effects with:
 
     ``` r
+
     lpr_data()
     ```
 
@@ -132,6 +137,7 @@ Guide](https://lapop-central.github.io/lapop/articles/lapop-visualization.html)
 
 7.  Export the figure to your machine with:
     ``` r
+
     lapop_save()
     ```
 
@@ -139,15 +145,22 @@ Guide](https://lapop-central.github.io/lapop/articles/lapop-visualization.html)
 
 ## 🤝 Workflow: Contributing to the `lapop` R Package
 
-1.  **Fork** the repository and clone it to your local machine.
-2.  **Create a new branch** for your feature or fix.
-3.  Add your new function in the `R/` folder.
-4.  Document the function with roxygen2 comments.
-5.  Run `devtools::document()` to generate `.Rd` files in `man/` and
-    update `NAMESPACE`.
-6.  Commit your changes and push the branch to your fork.
-7.  Submit a **pull request** to the main repository.
-8.  If you find a bug, please consider contributing to the lapop package
-    — we spent all our money on coffee and data cleaning.
+Create a new branch for your feature or bug fix.
+
+Document exported functions with roxygen2 comments. Add or update tests
+in tests/testthat/.
+
+Commit your changes and push the branch to your fork. Submit a pull
+request with a clear description of the change. 1. **Fork** the
+repository and clone it to your local machine. 2. **Create a new
+branch** for your feature or fix. 3. Add or modify code in `R/` folder.
+4. Document the function with roxygen2 comments. 5. Run
+`devtools::document()` to update `NAMESPACE` and `man/`. 6. Run
+`devtools::test()` and `devtools::check()` 7. Commit your changes and
+push the branch to your fork. 8. Submit a **pull request** with a clear
+description of the change.
+
+If you find a bug, please consider contributing to the lapop package —
+we spent all our money on coffee, empanadas, and data cleaning.
 
 ------------------------------------------------------------------------

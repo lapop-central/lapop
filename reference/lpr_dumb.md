@@ -114,6 +114,7 @@ Luke Plutowski, <luke.plutowski@vanderbilt.edu> & Robert Vidigal,
 ## Examples
 
 ``` r
+
 require(lapop); data(cm23)
 
 # Set Survey Context

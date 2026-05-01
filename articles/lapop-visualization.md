@@ -14,6 +14,7 @@ here](https://www.vanderbilt.edu/lapop/ab2023/AB2023-Pulse-of-Democracy-final-20
 ## Load Packages
 
 ``` r
+
 library(lapop)
 ```
 
@@ -21,6 +22,7 @@ The lapop package brings two datasets already with design effects
 (weighted).
 
 ``` r
+
 # Single-country Single-year AmericasBarometer 2023 Brazil
 data(bra23)
 
@@ -44,6 +46,7 @@ structure. The
 function apply survey design effects.
 
 ``` r
+
 # Single-Country Single-Year
 bra23w <- lpr_data(bra23, wt = TRUE)
 
@@ -63,6 +66,7 @@ print(bra23w)
     ##     (dbl), wt (dbl), pais_lab (chr)
 
 ``` r
+
 # Single-Country Multi-Year
 cm23w <- lpr_data(cm23)
 
@@ -81,6 +85,7 @@ print(cm23w)
     ##     (fct), upm (int), strata (dbl), weight1500 (dbl), pais_lab (chr)
 
 ``` r
+
 # Multi-Country Single-Year
 ym23w <- lpr_data(ym23)
 
@@ -110,12 +115,14 @@ plotting setup. You can still call
 manually if you want to re-run font registration in the current session.
 
 ``` r
+
 lapop::lapop_fonts() # Re-run font registration explicitly if needed
 ```
 
 ## Figure 1.1: Time Series
 
 ``` r
+
 fig1.1_data <- lpr_ts(cm23w, outcome = "ing4", rec = c(5, 7), use_wave = TRUE)
 
 lapop_ts(fig1.1_data,
@@ -132,6 +139,7 @@ Brazil](lapop-visualization_files/figure-html/time%20series-1.png)
 ## Figure 1.2: Cross-Country Comparison
 
 ``` r
+
 fig1.2_data <- lpr_cc(ym23w, outcome = "ing4", rec = c(5, 7))
 
 lapop_cc(fig1.2_data,
@@ -145,6 +153,7 @@ democracy](lapop-visualization_files/figure-html/cross%20country-1.png)
 ## Figure 2.1: Multi-line Over Time
 
 ``` r
+
 fig2.1_data <- lpr_mline(cm23w,
                          outcome = c("b13", "b21", "b31"),
                          rec = c(5, 7), rec2 = c(5, 7), rec3 = c(5, 7))
@@ -165,6 +174,7 @@ institutions](lapop-visualization_files/figure-html/mline-1.png)
 ## Figure 2.3: CC Multiple Variables
 
 ``` r
+
 fig2.3_data <- lpr_ccm(ym23w,
                        outcome_vars = c("b12", "b18"),
                        rec1 = c(5, 7),
@@ -185,6 +195,7 @@ vary](lapop-visualization_files/figure-html/ccm-1.png)
 ## Figure Mover Example: Satisfaction with Democracy
 
 ``` r
+
 library(dplyr)
 
 ym23w$variables <- ym23w$variables %>%
@@ -228,6 +239,7 @@ class](lapop-visualization_files/figure-html/mover-1.png)
 ## Figure Histogram: Citizens’ Views
 
 ``` r
+
 spot32_data <- lpr_hist(ym23w, outcome = "vb21n")
 
 # Translating to English
@@ -249,6 +261,7 @@ change](lapop-visualization_files/figure-html/histogram-1.png)
 ## Figure 3.5: Dumbell Plot
 
 ``` r
+
 fig3.5_data <- lpr_dumb(ym23w,
                         outcome = "q14f",
                         rec = c(1, 1),
@@ -272,6 +285,7 @@ Guatemala](lapop-visualization_files/figure-html/dumbell-1.png)
 ## Figure 3.8: Stack Plot by Country
 
 ``` r
+
 attributes(ym23w$variables$q14f)$label <- "Migration intentions"
 
 fig3.8_data <- lpr_stack(ym23w,
@@ -300,6 +314,7 @@ direction of responses. This makes it easier for readers to understand
 the findings.
 
 ``` r
+
 # For data.frames
 cm23$ing4r <- lpr_resc(cm23$ing4, reverse = TRUE, map=TRUE)
 ```
@@ -315,6 +330,7 @@ cm23$ing4r <- lpr_resc(cm23$ing4, reverse = TRUE, map=TRUE)
     ##   7 4952    0    0    0    0    0    0
 
 ``` r
+
 # For LPR_DATA() objects
 cm23w$variables$ing4r <- lpr_resc(cm23w$variables$ing4, reverse = TRUE, map=TRUE)
 ```

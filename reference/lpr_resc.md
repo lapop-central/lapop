@@ -81,6 +81,7 @@ Luke Plutowski, <luke.plutowski@vanderbilt.edu> & Robert Vidigal,
 ## Examples
 
 ``` r
+
 require(lapop); data(ym23)
 
 # Regular data.frame

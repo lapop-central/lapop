@@ -89,6 +89,7 @@ Berta Diaz, <berta.diaz.martinez@vanderbilt.edu> & Luke Plutowski,
 ## Examples
 
 ``` r
+
 require(lapop); data(ym23)
 
 # Set Survey Context

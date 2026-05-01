@@ -94,6 +94,7 @@ Robert Vidigal, <robert.vidigal@vanderbilt.edu>
 ## Examples
 
 ``` r
+
 require(lapop); data(bra23)
 
 # Set Survey Context

@@ -23,6 +23,7 @@ If you do not have the LAPOP Lab package already installed in your
 machine you can install it using the `devtools` package below:
 
 ``` r
+
 # Install the LAPOP Lab package:
 devtools::install_github("https://github.com/lapop-central/lapop", 
                          force=TRUE, 
@@ -33,6 +34,7 @@ After installation is successful, you will need to load the package into
 your library:
 
 ``` r
+
 library(lapop)
 # Note: no need for lapop_fonts() 
 # because we are not plotting figures
@@ -80,6 +82,7 @@ the attributes of an object, you can use the
 [`attributes()`](https://rdrr.io/r/base/attributes.html) base functions.
 
 ``` r
+
 # READSTATA13 PACKAGE (RECOMMENDED FOR LABELS)
 data1 <- read.dta13("./BRA 2023 LAPOP AmericasBarometer (v1.0s).dta")
 names(attributes(data1))
@@ -109,6 +112,7 @@ of each variable. For instance, for the variable `ing4` in the
 and lead-in in English, Spanish, and Portuguese.
 
 ``` r
+
 data(bra23)
 
 # Extracting attributes from expasion.fields
@@ -121,6 +125,7 @@ names(attributes(bra23))
     ## [13] "orig.dim"         "data.label"       "class"
 
 ``` r
+
 varlabels = attr(bra23, "expansion.fields")
 ```
 
@@ -144,6 +149,7 @@ element (x\[1\]) equals “ing4” (i.e., the variable of interest). Both
 produce a semi-structured list of matching third nested elements.
 
 ``` r
+
 # Base R approach:
 # The base R version uses lapply to iterate over the list and returns NULL when 
 # the condition isn't met, then Filter(Negate(is.null), ...) removes those NULLs.
@@ -177,6 +183,7 @@ head(
     ## [1] "7"
 
 ``` r
+
 # purrr package approach
 #  The purrr version uses map() to do the same, and also remove NULL results. 
 tail(
@@ -213,6 +220,7 @@ functions to deal with those labels in R. First, we will use
 contain 3 columns: `variable_name`, `note_id`, and `note_value`
 
 ``` r
+
 # Extract AB notes with lpr function
 BRA23notes <- lpr_extract_notes(bra23)
 head(BRA23notes, n = 10) # columns names
@@ -231,6 +239,7 @@ head(BRA23notes, n = 10) # columns names
     ## 10         q1tca _lang_v_en                           Gender
 
 ``` r
+
 table(BRA23notes$note_id) # note information available!
 ```
 
@@ -255,6 +264,7 @@ and than access it during data analysis without the need of an
 accompanying codebook.
 
 ``` r
+
 # English
 bra23<-lpr_set_attr(bra23, BRA23notes, verbose = F,
                     noteid = "note2", 
@@ -276,12 +286,14 @@ attr(bra23$ing4, "qwording_en") # English
     ## [1] "Democracy may have problems, but it is better than any other form of government.  To what extent do you agree or disagree with this statement?"
 
 ``` r
+
 attr(bra23$ing4, "qwording_es") # Spanish
 ```
 
     ## [1] "Puede que la democracia tenga problemas, pero es mejor que cualquier otra forma de gobierno. ¿Hasta qué punto está de acuerdo o en desacuerdo con esta frase?"
 
 ``` r
+
 attr(bra23$ing4, "qwording_pt") # Portuguese
 ```
 
@@ -298,6 +310,7 @@ attribute name is `roslabel` but the function allows custom attribute
 names as shown below:
 
 ``` r
+
 bra23 <- lpr_set_ros(bra23) # Default English
 
 bra23 <- lpr_set_ros(bra23, lang_id = "es", 
@@ -313,12 +326,14 @@ attr(bra23$ing4, "roslabel") # English
     ## [1] "Response Options: (1) Strongly disagree (7) Strongly agree"
 
 ``` r
+
 attr(bra23$ing4, "respuestas") # Spanish
 ```
 
     ## [1] "Opciones de Respuesta: (1) Muy en desacuerdo (7) Muy de acuerdo"
 
 ``` r
+
 attr(bra23$ing4, "ROsLabels_pt") # Portuguese
 ```
 
