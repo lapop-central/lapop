@@ -103,14 +103,23 @@ Other methods such as `haven::read_dta()` or `rio::import()` may fail to import 
 ---
 
 ## 🤝 Workflow: Contributing to the `lapop` R Package
+Create a new branch for your feature or bug fix.
 
+
+Document exported functions with roxygen2 comments.
+Add or update tests in tests/testthat/.
+
+Commit your changes and push the branch to your fork.
+Submit a pull request with a clear description of the change.
 1. **Fork** the repository and clone it to your local machine.
 2. **Create a new branch** for your feature or fix.
-3. Add your new function in the `R/` folder.
+3. Add or modify code in `R/` folder.
 4. Document the function with roxygen2 comments.
-5. Run `devtools::document()` to generate `.Rd` files in `man/` and update `NAMESPACE`.
-6. Commit your changes and push the branch to your fork.
-7. Submit a **pull request** to the main repository.
-8. If you find a bug, please consider contributing to the lapop package — we spent all our money on coffee and data cleaning.
+5. Run `devtools::document()` to update `NAMESPACE` and `man/`.
+6. Run `devtools::test()` and `devtools::check()`
+7. Commit your changes and push the branch to your fork.
+8. Submit a **pull request** with a clear description of the change.
+
+If you find a bug, please consider contributing to the lapop package — we spent all our money on coffee, empanadas, and data cleaning.
 
 ---
