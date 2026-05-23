@@ -130,7 +130,7 @@ require(lapop); lapop_fonts
 #>     message("LAPOP fonts loaded successfully: Inter and Inter Light.")
 #>     invisible(TRUE)
 #> }
-#> <bytecode: 0x55e0118a0240>
+#> <bytecode: 0x559ee6048490>
 #> <environment: namespace:lapop>
 lapop_mover(df,
             main_title = paste0("More educated, men, and younger individuals",
