@@ -123,3 +123,4 @@ Submit a pull request with a clear description of the change.
 If you find a bug, please consider contributing to the lapop package — we spent all our money on coffee, empanadas, and data cleaning.
 
 ---
+[![](https://cranlogs.r-pkg.org/badges/lapop)](https://cran.r-project.org/package=lapop)
