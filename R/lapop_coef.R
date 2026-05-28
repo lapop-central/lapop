@@ -63,7 +63,7 @@ NULL
 #'@import ggtext
 #'@import showtext
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 #'
 
 lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
@@ -88,7 +88,7 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
                           "<span style='color:#585860'>interval</span>"))
   update_geom_defaults("text", list(family = "inter"))# roboto
   ggplot(data, aes(x = varlabel_var, y = coef_var)) +
-    geom_hline(yintercept = 0, color = "#dddddf", lty = 2) +
+    geom_hline(yintercept = 0, color = "grey20", linetype = "dashed", linewidth = 0.75) +
     geom_errorbar(aes(x=varlabel_var, ymin = lb, ymax = ub), width = 0.3, lty = 1, color = color_scheme) +
     geom_point(aes(x = varlabel_var, y = coef_var, fill = sig), color = "black", size = 5.5, shape = 21) +
     geom_text(aes(label = label_var, vjust = -1.25), size = 5, color = color_scheme, fontface = "bold") +
@@ -100,8 +100,11 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
                                       ci_text),
                       limits = "FALSE",
                       na.value = "white") +
-    coord_flip() +
-    scale_y_continuous(limits = c(ymin, ymax)) +
+    coord_flip(clip = "off") +
+    scale_y_continuous(
+      limits = c(ymin, ymax),
+      expand = expansion(mult = c(0.02, 0.12))
+    ) +
     labs(title = main_title,
          y = " ",
          x = " ",
@@ -120,11 +123,12 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
           legend.title = element_blank(),
           plot.title.position = "plot",
           plot.caption.position = "plot",
+          plot.margin = margin(t = 10, r = 30, b = 5.5, l = 5.5),
           legend.justification='left',
           #legend.margin = margin(t=0, b=0),
           legend.text = element_markdown(family = "inter-light"), # nunito-light
           legend.key=element_blank(),
           legend.margin=margin(0, 0, 0, -30-subtitle_h_just))
-  }
+}
 
 
