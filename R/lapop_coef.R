@@ -88,7 +88,12 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
                           "<span style='color:#585860'>interval</span>"))
   update_geom_defaults("text", list(family = "inter"))# roboto
   ggplot(data, aes(x = varlabel_var, y = coef_var)) +
-    geom_hline(yintercept = 0, color = "grey20", linetype = "dashed", linewidth = 0.75) +
+    geom_hline(
+      yintercept = 0,
+      color = "#b8b8bf",
+      linetype = "dashed",
+      linewidth = 0.75
+    ) +
     geom_errorbar(aes(x=varlabel_var, ymin = lb, ymax = ub), width = 0.3, lty = 1, color = color_scheme) +
     geom_point(aes(x = varlabel_var, y = coef_var, fill = sig), color = "black", size = 5.5, shape = 21) +
     geom_text(aes(label = label_var, vjust = -1.25), size = 5, color = color_scheme, fontface = "bold") +
