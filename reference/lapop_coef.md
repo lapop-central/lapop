@@ -95,7 +95,8 @@ coefficients or predicted probabilities from a multivariate regression.
 
 ## Author
 
-Luke Plutowski, <luke.plutowski@vanderbilt.edu>
+Luke Plutowski, <luke.plutowski@vanderbilt.edu> & Robert Vidigal,
+<robert.vidigal@vanderbilt.edu>
 
 ## Examples
 
