@@ -20,6 +20,7 @@ lapop_cc(
   subtitle = "",
   sort = "",
   color_scheme = "#784885",
+  decimals = 0,
   label_size = 5,
   max_countries = 30,
   label_angle = 0
@@ -59,6 +60,9 @@ Default: None.}
 \item{color_scheme}{Character.  Color of bars.  Takes hex number, beginning with "#".
 Default: #784885.}
 
+\item{decimals}{Numeric. Number of decimals to display in default value labels.
+Must be an integer from 0 to 3. Default: 0.}
+
 \item{label_size}{Numeric.  Size of text for data labels (percentages above bars).  Default: 5.}
 
 \item{max_countries}{Numeric. Threshold for automatic x-axis label rotation. When the number of unique
@@ -89,6 +93,7 @@ lapop_cc(df,
          subtitle = "\% who say domestic violence is private matter",
          source_info = "LAPOP Lab, AmericasBarometer 2021",
          highlight = "PE",
+         decimals = 1,
          ymax = 50)
 }
 }

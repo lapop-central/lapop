@@ -34,6 +34,8 @@ NULL
 #' or "es" (Spanish).  Default: "en".
 #' @param color_scheme Character.  Color of bars.  Takes hex number, beginning with "#".
 #' Default: #784885.
+#' @param decimals Numeric. Number of decimals to display in default value labels.
+#' Must be an integer from 0 to 3. Default: 0.
 #' @param label_size Numeric.  Size of text for data labels (percentages above bars).  Default: 5.
 #' @param max_countries Numeric. Threshold for automatic x-axis label rotation. When the number of unique
 #' country labels exceeds this value, labels will be rotated for better readability. Default: 20.
@@ -58,6 +60,7 @@ NULL
 #'          subtitle = "% who say domestic violence is private matter",
 #'          source_info = "LAPOP Lab, AmericasBarometer 2021",
 #'          highlight = "PE",
+#'          decimals = 1,
 #'          ymax = 50)
 #'}
 #'@export
@@ -79,9 +82,19 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                      subtitle = "",
                      sort = "",
                      color_scheme = "#784885",
+                     decimals = 0,
                      label_size = 5,  # Default size
                      max_countries = 30,
                      label_angle = 0) {  # Removed label_adjust
+
+  if (!is.numeric(decimals) || length(decimals) != 1 || is.na(decimals) ||
+      decimals %% 1 != 0 || decimals < 0 || decimals > 3) {
+    stop("`decimals` must be a single integer between 0 and 3.")
+  }
+
+  if (missing(label_var)) {
+    label_var <- sprintf(paste0("%.", decimals, "f"), outcome_var)
+  }
 
   # Check if we need to rotate labels based on number of unique countries
   rotate_labels <- length(unique(data$vallabel)) > max_countries
@@ -106,6 +119,9 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
     data = data[order(data$vallabel),]
   }
 
+  data$label_y <- ifelse(data$prop < 0, data$lb, data$ub)
+  data$label_vjust <- ifelse(data$prop < 0, 1.4, -0.5)
+
   ci_text = ifelse(lang == "es",
                    paste0(" <span style='color:", color_scheme, "; font-size:18pt'> \u0131\u2014\u0131</span> ",
                           "<span style='color:#585860; font-size:13pt'>95% intervalo de confianza </span>"),
@@ -119,9 +135,9 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
   update_geom_defaults("text", list(family = "inter")) # roboto
 
   # Create base plot
-   cc <- ggplot(data=data, aes(x=factor(vallabel, levels = vallabel), y=prop, fill = hl_var)) +
+  cc <- ggplot(data=data, aes(x=factor(vallabel, levels = vallabel), y=prop, fill = hl_var)) +
     geom_bar(stat="identity", color = color_scheme, width = 0.6) +
-    geom_text(aes(label=label_var, y = upper_bound), vjust= -0.5,
+    geom_text(aes(label=label_var, y = label_y, vjust = label_vjust),
               size=current_label_size, fontface = "bold", color = color_scheme) +
     geom_errorbar(aes(ymin=lower_bound, ymax=upper_bound), width = 0.15, color = color_scheme, linetype = "solid") +
     scale_fill_manual(breaks = "other",
@@ -155,11 +171,11 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
 
   # Apply label rotation if needed
   if(rotate_labels) {
-   cc <- cc + theme(axis.text.x = element_text(angle = label_angle,
-                                              hjust = 0.5, vjust = 1))
+    cc <- cc + theme(axis.text.x = element_text(angle = label_angle,
+                                                hjust = 0.5, vjust = 1))
 
     # Adjust plot margins to accommodate rotated labels
-     cc <-  cc + theme(plot.margin = margin(t = 10, r = 10, b = max(10, current_label_size*5), l = 10))
+    cc <-  cc + theme(plot.margin = margin(t = 10, r = 10, b = max(10, current_label_size*5), l = 10))
   }
 
   return(cc)
