@@ -1,4 +1,4 @@
 # License
 
     YEAR: 2025
-    COPYRIGHT HOLDER: LAPOP Lab & Center for Global Democracy
+    COPYRIGHT HOLDER: LAPOP Lab and Center for Global Democracy
