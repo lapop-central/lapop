@@ -12,10 +12,10 @@
 #'
 #' @param data A survey object.  The data that should be analyzed.
 #' @param outcome_vars Character vector.  Outcome variable(s) of interest to be plotted
-#' across country (or other x variable). Max of 3 (three) variables.
+#' across country (or other x variable). Max of 4 (four) variables.
 #' @param xvar Character string. Outcome variables are broken down by this variable. You can set
 #' xvar to "wave" or "year" for cross-time comparisons. Default: pais_lab.
-#' @param rec1,rec2,rec3 Numeric. The minimum and maximum values of the outcome variable that
+#' @param rec1,rec2,rec3,rec4 Numeric. The minimum and maximum values of the outcome variable that
 #' should be included in the numerator of the percentage.  For example, if the variable
 #' is on a 1-7 scale and rec1 is c(5, 7), the function will show the percentage who chose
 #' an answer of 5, 6, 7 out of all valid answers.  Can also supply one value only,
@@ -81,6 +81,7 @@ lpr_ccm <- function(data,
                     rec1 = c(1, 1),
                     rec2 = c(1, 1),
                     rec3 = c(1, 1),
+                    rec4 = c(1, 1),
                     ci_level = 0.95,
                     mean = FALSE,
                     filesave = "",
@@ -99,9 +100,16 @@ lpr_ccm <- function(data,
   if (length(rec3) == 1) {
     rec3 = c(rec3, rec3)
   }
+  if (length(rec4) == 1) {
+    rec4 = c(rec4, rec4)
+  }
+
+  if (length(outcome_vars) > 4) {
+    stop("`outcome_vars` supports a maximum of 4 variables.")
+  }
 
   # Map rec arguments to outcome variables
-  rec_list <- list(rec1, rec2, rec3)
+  rec_list <- list(rec1, rec2, rec3, rec4)
   rec_map <- purrr::map2(outcome_vars, rec_list[1:length(outcome_vars)], ~ list(var = .x, rec = .y))
 
   # Handle NA recoding if keep_nr is TRUE

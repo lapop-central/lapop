@@ -22,6 +22,7 @@ NULL
 #' @param ymin,ymax Numeric.  Minimum and maximum values for y-axis. Default: 0 to 100.
 #' @param sort Character. Method of sorting bars.  Options: "var1" (highest to lowest on variable 1),
 #' "var2" (highest to lowest on variable 2), "var3" (highest to lowest on variable 3),
+#' "var4" (highest to lowest on variable 4),
 #' "alpha" (alphabetical along x-axis/pais). Default: Order of data frame.
 #' @param main_title Character.  Title of graph.  Default: None.
 #' @param source_info Character.  Information on dataset used (country, years, version, etc.),
@@ -37,9 +38,10 @@ NULL
 #' Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
 #' or "es" (Spanish).  Default: "en".
 #' @param color_scheme Character.  Color of bars.  Takes hex number, beginning with "#".
-#' Default: "#784885", "#008381", "#C74E49".
+#' Default: "#784885", "#008381", "#C74E49", "#2D708E".
 #' @param label_size Numeric.  Size of text for data labels (percentages above bars).  Default: 4.
 #' @param text_position Numeric.  Amount that text above error bars should be offset (to avoid overlap).  Default: 0.7
+#' @param horizontal Logical. If TRUE, display the grouped bars horizontally. Default: FALSE.
 #'
 #' @return Returns an object of class \code{ggplot}, a ggplot figure showing
 #' average values of some variables across multiple countries.
@@ -64,6 +66,7 @@ NULL
 #'                      41, 57, 77, 64, 53, 37, 51, 37, 75, 44, 61, 60))
 #'
 #' lapop_ccm(df, sort = "var", source_info = ", AmericasBarometer")
+#' lapop_ccm(df, sort = "var", source_info = ", AmericasBarometer", horizontal = TRUE)
 #'}
 #'@export
 #'@import ggplot2
@@ -88,9 +91,25 @@ lapop_ccm <- function(data,
                       y_label = "",
                       x_label = "",
                       highlight = "",
-                      color_scheme = c("#784885", "#008381", "#C74E49"),
+                      color_scheme = c("#784885", "#008381", "#C74E49", "#2D708E"),
                       label_size = 4,
-                      text_position = 0.7) {
+                      text_position = 0.7,
+                      horizontal = FALSE) {
+
+  data$pais <- pais
+  data$prop <- outcome_var
+  data$lb <- lower_bound
+  data$ub <- upper_bound
+  data$proplabel <- label_var
+  data$var <- var
+
+  if (length(unique(data$var)) > 4) {
+    stop("`lapop_ccm()` supports a maximum of 4 variables.")
+  }
+
+  if (length(color_scheme) < length(unique(data$var))) {
+    stop("`color_scheme` must have at least as many colors as the number of variables being plotted.")
+  }
 
   fill_colors = paste0(color_scheme, "52")
 
@@ -109,7 +128,7 @@ lapop_ccm <- function(data,
     data$var <- ifelse(data$var == unique(data$var)[length(unique(data$var))],
                        paste0(data$var,
                               "<span style='color:#FFFFFF00'>-------</span>",
-                              "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
+                              "<span style='color:#585860; font-size:18pt'> ı—ı</span>",
                               "<span style='color:#585860; font-size:13pt'>95% intervalo de confianza </span>"),
                        data$var)
     data$var <- factor(data$var, levels = unique(data$var))
@@ -117,7 +136,7 @@ lapop_ccm <- function(data,
     data$var <- ifelse(data$var == unique(data$var)[length(unique(data$var))],
                        paste0(data$var,
                               "<span style='color:#FFFFFF00'>-------</span>",
-                              "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
+                              "<span style='color:#585860; font-size:18pt'> ı—ı</span>",
                               "<span style='color:#585860; font-size:13pt'>Intervalle de confiance de 95% </span>"),
                        data$var)
     data$var <- factor(data$var, levels = unique(data$var))
@@ -125,7 +144,7 @@ lapop_ccm <- function(data,
     data$var <- ifelse(data$var == unique(data$var)[length(unique(data$var))],
                        paste0(data$var,
                               "<span style='color:#FFFFFF00'>-------</span>",
-                              "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
+                              "<span style='color:#585860; font-size:18pt'> ı—ı</span>",
                               "<span style='color:#585860; font-size:13pt'>95% confidence interval </span>"),
                        data$var)
     data$var <- factor(data$var, levels = unique(data$var))
@@ -147,36 +166,60 @@ lapop_ccm <- function(data,
       group_by(var) %>%
       mutate(rank = rank(-prop)) %>%
       arrange(match(var, unique(var)[3]), rank)
+  } else if (sort == "var4") {
+    data <- data %>%
+      group_by(var) %>%
+      mutate(rank = rank(-prop)) %>%
+      arrange(match(var, unique(var)[4]), rank)
   } else if (sort == "alpha") {
     data <- data[order(data$pais), ]
   }
 
+  data$label_position <- ifelse(data$prop < 0, data$lb - text_position, data$ub + text_position)
+  data$label_vjust <- ifelse(data$prop < 0, 1.4, -0.5)
+  data$label_hjust <- ifelse(data$prop < 0, 1, 0)
+
   # Apply font
   update_geom_defaults("text", list(family = "inter")) # roboto
 
-  # Create ggplot
-  ggplot(data = data,
-         aes(x = factor(pais, levels = unique(pais)),
-             y = prop,
-             fill = var,
-             color = var)) +
+  axis_labels <- if (horizontal) {
+    list(x = y_label, y = x_label)
+  } else {
+    list(x = x_label, y = y_label)
+  }
+
+  p <- ggplot(data = data,
+              aes(x = factor(pais, levels = unique(pais)),
+                  y = prop,
+                  fill = var,
+                  color = var)) +
     geom_bar(aes(alpha = alpha_value), position = "dodge", stat = "identity", width = 0.7) +
-    geom_text(aes(label = label_var, y = upper_bound, group = var),
-              position = position_dodge(width = text_position),
-              vjust = -0.5, size = label_size, fontface = "bold", show.legend = FALSE) +
+    geom_text(
+      aes(label = proplabel, y = label_position, group = var),
+      position = position_dodge(width = 0.7),
+      vjust = if (horizontal) 0.5 else data$label_vjust,
+      hjust = if (horizontal) data$label_hjust else 0.5,
+      size = label_size,
+      fontface = "bold",
+      show.legend = FALSE
+    ) +
     geom_errorbar(aes(ymin = lower_bound, ymax = upper_bound),
                   width = 0.15,
                   position = position_dodge(width = 0.7), linetype = "solid", show.legend = FALSE) +
     scale_fill_manual(values = fill_colors) +
     scale_color_manual(values = color_scheme) +
-    scale_y_continuous(limits = c(ymin, ymax), expand = expansion(mult = 0.002)) +
+    scale_y_continuous(
+      limits = c(ymin, ymax),
+      expand = if (horizontal) expansion(mult = c(0.002, 0.08)) else expansion(mult = c(0.002, 0.03))
+    ) +
     labs(title = main_title,
-         y = y_label,
-         x = x_label,
+         y = axis_labels$y,
+         x = axis_labels$x,
          caption = paste0(ifelse(lang == "es", "Fuente: LAPOP Lab", "Source: LAPOP Lab"),
                           source_info)) +
     { if (subtitle != "") labs(subtitle = subtitle) } +
-    { if (x_label != "") theme(axis.title.x = element_text(margin = margin(b = 10, t = 10))) } +
+    { if (!horizontal && x_label != "") theme(axis.title.x = element_text(margin = margin(b = 10, t = 10))) } +
+    { if (horizontal && y_label != "") theme(axis.title.x = element_text(margin = margin(b = 10, t = 10))) } +
     theme(text = element_text(size = 14, family = "inter"), # roboto
           plot.title = element_text(size = 18, family = "inter", face = "bold"), # nunito
           plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "inter", color = "#585860"), # nunito
@@ -184,13 +227,19 @@ lapop_ccm <- function(data,
           panel.border = element_blank(),
           axis.line.x = element_line(linewidth = 0.6, linetype = "solid", colour = "#dddddf"),
           axis.text = element_text(size = 14, color = "#585860", face = "bold"),
-          axis.text.y = element_blank(),
+          axis.text.y = if (horizontal) element_text(size = 14, color = "#585860", face = "bold") else element_blank(),
+          axis.text.x = if (horizontal) element_blank() else element_text(size = 14, color = "#585860", face = "bold"),
           axis.ticks = element_blank(),
           legend.position = "top",
           legend.title = element_blank(),
           legend.justification = 'left',
           legend.margin = margin(t = 0, b = 0, l = 0),
-          legend.text = ggtext::element_markdown(family = "inter-light")) + guides(alpha = "none") # nunito-light
+          plot.margin = if (horizontal) margin(t = 10, r = 50, b = 10, l = 10) else margin(t = 10, r = 10, b = 10, l = 10),
+          legend.text = ggtext::element_markdown(family = "inter-light")) + guides(alpha = "none")
+
+  if (horizontal) {
+    p <- p + coord_flip(clip = "off")
+  }
+
+  p
 }
-
-

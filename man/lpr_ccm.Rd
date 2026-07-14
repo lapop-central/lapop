@@ -11,6 +11,7 @@ lpr_ccm(
   rec1 = c(1, 1),
   rec2 = c(1, 1),
   rec3 = c(1, 1),
+  rec4 = c(1, 1),
   ci_level = 0.95,
   mean = FALSE,
   filesave = "",
@@ -25,12 +26,12 @@ lpr_ccm(
 \item{data}{A survey object.  The data that should be analyzed.}
 
 \item{outcome_vars}{Character vector.  Outcome variable(s) of interest to be plotted
-across country (or other x variable). Max of 3 (three) variables.}
+across country (or other x variable). Max of 4 (four) variables.}
 
 \item{xvar}{Character string. Outcome variables are broken down by this variable. You can set
 xvar to "wave" or "year" for cross-time comparisons. Default: pais_lab.}
 
-\item{rec1, rec2, rec3}{Numeric. The minimum and maximum values of the outcome variable that
+\item{rec1, rec2, rec3, rec4}{Numeric. The minimum and maximum values of the outcome variable that
 should be included in the numerator of the percentage.  For example, if the variable
 is on a 1-7 scale and rec1 is c(5, 7), the function will show the percentage who chose
 an answer of 5, 6, 7 out of all valid answers.  Can also supply one value only,
