@@ -1,6 +1,6 @@
 # 1. Full CRAN check
 unlink("lapop.Rcheck", recursive = TRUE, force = TRUE)
-unlink("lapop_2.1.5.tar.gz", force = TRUE)
+unlink("lapop_2.1.6.tar.gz", force = TRUE)
 
 devtools::document()
 Sys.setenv(TMPDIR = tempdir())
