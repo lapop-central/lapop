@@ -8,6 +8,7 @@ utils::globalVariables(
 
     "geometry",    # sf object
     "value", # renamed user input variable to map
+    "label_position", "label_vjust", "label_y",
 
     "contrast", "hl_var", "lb", "note_id", "p.value", "prop",
     "prop2_low", "prop2_upp", "prop_low", "prop_upp", "proplabel",

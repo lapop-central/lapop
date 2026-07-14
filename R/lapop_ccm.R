@@ -128,7 +128,7 @@ lapop_ccm <- function(data,
     data$var <- ifelse(data$var == unique(data$var)[length(unique(data$var))],
                        paste0(data$var,
                               "<span style='color:#FFFFFF00'>-------</span>",
-                              "<span style='color:#585860; font-size:18pt'> ı—ı</span>",
+                              "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
                               "<span style='color:#585860; font-size:13pt'>95% intervalo de confianza </span>"),
                        data$var)
     data$var <- factor(data$var, levels = unique(data$var))
@@ -136,7 +136,7 @@ lapop_ccm <- function(data,
     data$var <- ifelse(data$var == unique(data$var)[length(unique(data$var))],
                        paste0(data$var,
                               "<span style='color:#FFFFFF00'>-------</span>",
-                              "<span style='color:#585860; font-size:18pt'> ı—ı</span>",
+                              "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
                               "<span style='color:#585860; font-size:13pt'>Intervalle de confiance de 95% </span>"),
                        data$var)
     data$var <- factor(data$var, levels = unique(data$var))
@@ -144,7 +144,7 @@ lapop_ccm <- function(data,
     data$var <- ifelse(data$var == unique(data$var)[length(unique(data$var))],
                        paste0(data$var,
                               "<span style='color:#FFFFFF00'>-------</span>",
-                              "<span style='color:#585860; font-size:18pt'> ı—ı</span>",
+                              "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
                               "<span style='color:#585860; font-size:13pt'>95% confidence interval </span>"),
                        data$var)
     data$var <- factor(data$var, levels = unique(data$var))
