@@ -1,3 +1,6 @@
+# lapop 2.1.6
+* update lpr_ccm() an lapop_cmm() to plot 4-variables
+
 # lapop 2.1.5
 
 * add lpr_ci() for data playground design-based confidence intervals
