@@ -14,6 +14,7 @@ lpr_ccm(
   rec1 = c(1, 1),
   rec2 = c(1, 1),
   rec3 = c(1, 1),
+  rec4 = c(1, 1),
   ci_level = 0.95,
   mean = FALSE,
   filesave = "",
@@ -34,7 +35,7 @@ lpr_ccm(
 - outcome_vars:
 
   Character vector. Outcome variable(s) of interest to be plotted across
-  country (or other x variable). Max of 3 (three) variables.
+  country (or other x variable). Max of 4 (four) variables.
 
 - xvar:
 
@@ -42,7 +43,7 @@ lpr_ccm(
   You can set xvar to "wave" or "year" for cross-time comparisons.
   Default: pais_lab.
 
-- rec1, rec2, rec3:
+- rec1, rec2, rec3, rec4:
 
   Numeric. The minimum and maximum values of the outcome variable that
   should be included in the numerator of the percentage. For example, if

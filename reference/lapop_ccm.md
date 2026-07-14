@@ -24,9 +24,10 @@ lapop_ccm(
   y_label = "",
   x_label = "",
   highlight = "",
-  color_scheme = c("#784885", "#008381", "#C74E49"),
+  color_scheme = c("#784885", "#008381", "#C74E49", "#2D708E"),
   label_size = 4,
-  text_position = 0.7
+  text_position = 0.7,
+  horizontal = FALSE
 )
 ```
 
@@ -79,8 +80,9 @@ lapop_ccm(
 
   Character. Method of sorting bars. Options: "var1" (highest to lowest
   on variable 1), "var2" (highest to lowest on variable 2), "var3"
-  (highest to lowest on variable 3), "alpha" (alphabetical along
-  x-axis/pais). Default: Order of data frame.
+  (highest to lowest on variable 3), "var4" (highest to lowest on
+  variable 4), "alpha" (alphabetical along x-axis/pais). Default: Order
+  of data frame.
 
 - y_label:
 
@@ -99,7 +101,7 @@ lapop_ccm(
 - color_scheme:
 
   Character. Color of bars. Takes hex number, beginning with "#".
-  Default: "#784885", "#008381", "#C74E49".
+  Default: "#784885", "#008381", "#C74E49", "#2D708E".
 
 - label_size:
 
@@ -110,6 +112,11 @@ lapop_ccm(
 
   Numeric. Amount that text above error bars should be offset (to avoid
   overlap). Default: 0.7
+
+- horizontal:
+
+  Logical. If TRUE, display the grouped bars horizontally. Default:
+  FALSE.
 
 ## Value
 
@@ -144,6 +151,8 @@ df <- data.frame(pais = c(rep("HT", 2), rep("PE", 2), rep("HN", 2), rep("CO", 2)
                      41, 57, 77, 64, 53, 37, 51, 37, 75, 44, 61, 60))
 
 lapop_ccm(df, sort = "var", source_info = ", AmericasBarometer")
+
+lapop_ccm(df, sort = "var", source_info = ", AmericasBarometer", horizontal = TRUE)
 
 # }
 ```

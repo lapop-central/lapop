@@ -61,9 +61,10 @@
 <span>  y_label <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  x_label <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  highlight <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  color_scheme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#784885"</span>, <span class="st">"#008381"</span>, <span class="st">"#C74E49"</span><span class="op">)</span>,</span>
+<span>  color_scheme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#784885"</span>, <span class="st">"#008381"</span>, <span class="st">"#C74E49"</span>, <span class="st">"#2D708E"</span><span class="op">)</span>,</span>
 <span>  label_size <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>  text_position <span class="op">=</span> <span class="fl">0.7</span></span>
+<span>  text_position <span class="op">=</span> <span class="fl">0.7</span>,</span>
+<span>  horizontal <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -114,6 +115,7 @@ Default: None.</p></dd>
 <dt id="arg-sort">sort<a class="anchor" aria-label="anchor" href="#arg-sort"></a></dt>
 <dd><p>Character. Method of sorting bars.  Options: "var1" (highest to lowest on variable 1),
 "var2" (highest to lowest on variable 2), "var3" (highest to lowest on variable 3),
+"var4" (highest to lowest on variable 4),
 "alpha" (alphabetical along x-axis/pais). Default: Order of data frame.</p></dd>
 
 
@@ -132,7 +134,7 @@ Input must match entry in "vallabel" exactly. Default: None.</p></dd>
 
 <dt id="arg-color-scheme">color_scheme<a class="anchor" aria-label="anchor" href="#arg-color-scheme"></a></dt>
 <dd><p>Character.  Color of bars.  Takes hex number, beginning with "#".
-Default: "#784885", "#008381", "#C74E49".</p></dd>
+Default: "#784885", "#008381", "#C74E49", "#2D708E".</p></dd>
 
 
 <dt id="arg-label-size">label_size<a class="anchor" aria-label="anchor" href="#arg-label-size"></a></dt>
@@ -141,6 +143,10 @@ Default: "#784885", "#008381", "#C74E49".</p></dd>
 
 <dt id="arg-text-position">text_position<a class="anchor" aria-label="anchor" href="#arg-text-position"></a></dt>
 <dd><p>Numeric.  Amount that text above error bars should be offset (to avoid overlap).  Default: 0.7</p></dd>
+
+
+<dt id="arg-horizontal">horizontal<a class="anchor" aria-label="anchor" href="#arg-horizontal"></a></dt>
+<dd><p>Logical. If TRUE, display the grouped bars horizontally. Default: FALSE.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -176,6 +182,8 @@ average values of some variables across multiple countries.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">lapop_ccm</span><span class="op">(</span><span class="va">df</span>, sort <span class="op">=</span> <span class="st">"var"</span>, source_info <span class="op">=</span> <span class="st">", AmericasBarometer"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="lapop_ccm-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">lapop_ccm</span><span class="op">(</span><span class="va">df</span>, sort <span class="op">=</span> <span class="st">"var"</span>, source_info <span class="op">=</span> <span class="st">", AmericasBarometer"</span>, horizontal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="lapop_ccm-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
