@@ -1,5 +1,9 @@
 # Changelog
 
+## lapop 2.1.6
+
+- update lpr_ccm() an lapop_cmm() to plot 4-variables
+
 ## lapop 2.1.5
 
 CRAN release: 2026-04-29
