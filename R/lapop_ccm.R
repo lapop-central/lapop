@@ -180,7 +180,7 @@ lapop_ccm <- function(
 
     ci_text <- paste0(
       "<span style='color:#FFFFFF00'>-------</span>",
-      "<span style='color:#585860; font-size:18pt'> ı—ı</span>",
+      "<span style='color:#585860; font-size:18pt'>&#305;&mdash;&#305;</span>",
       "<span style='color:#585860; font-size:13pt'> ",
       "95% confidence interval </span>"
     )
