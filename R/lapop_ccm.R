@@ -77,168 +77,405 @@ NULL
 #'
 #'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
 
-lapop_ccm <- function(data,
-                      pais = data$pais, outcome_var = data$prop,
-                      lower_bound = data$lb, upper_bound = data$ub,
-                      label_var = data$proplabel, var = data$var,
-                      ymin = 0,
-                      ymax = 100,
-                      lang = "en",
-                      main_title = "",
-                      source_info = "",
-                      subtitle = "",
-                      sort = "",
-                      y_label = "",
-                      x_label = "",
-                      highlight = "",
-                      color_scheme = c("#784885", "#008381", "#C74E49", "#2D708E"),
-                      label_size = 4,
-                      text_position = 0.7,
-                      horizontal = FALSE) {
+lapop_ccm <- function(
+    data,
+    pais = data$pais,
+    outcome_var = data$prop,
+    lower_bound = data$lb,
+    upper_bound = data$ub,
+    label_var = data$proplabel,
+    var = data$var,
+    ymin = 0,
+    ymax = 100,
+    lang = "en",
+    main_title = "",
+    source_info = "",
+    subtitle = "",
+    sort = "",
+    y_label = "",
+    x_label = "",
+    highlight = "",
+    color_scheme = c("#784885", "#008381", "#C74E49", "#2D708E"),
+    label_size = 4,
+    text_position = 0.7,
+    horizontal = FALSE
+) {
 
+  # Preserve the order of the incoming variable
+  if (is.factor(var)) {
+    var_order <- levels(droplevels(var))
+  } else {
+    var_order <- unique(as.character(var))
+  }
+
+  # Add plotting variables to the data
   data$pais <- pais
   data$prop <- outcome_var
   data$lb <- lower_bound
   data$ub <- upper_bound
   data$proplabel <- label_var
-  data$var <- var
+
+  # Convert to character before any replacement
+  # This prevents factor values from becoming integer codes
+  data$var <- as.character(var)
+
+  # Retain only levels actually present in the data
+  var_order <- var_order[var_order %in% unique(data$var)]
 
   if (length(unique(data$var)) > 4) {
     stop("`lapop_ccm()` supports a maximum of 4 variables.")
   }
 
   if (length(color_scheme) < length(unique(data$var))) {
-    stop("`color_scheme` must have at least as many colors as the number of variables being plotted.")
+    stop(
+      "`color_scheme` must have at least as many colors as ",
+      "the number of variables being plotted."
+    )
   }
 
-  fill_colors = paste0(color_scheme, "52")
+  # Use only the colors required
+  color_scheme <- color_scheme[
+    seq_len(length(unique(data$var)))
+  ]
 
-  # Define highlight logic
+  fill_colors <- paste0(color_scheme, "52")
+
+  # Highlight selected country/category
   if (highlight != "") {
-    data$hl_var <- ifelse(data$pais == highlight, "hl", "other")
+    data$hl_var <- ifelse(
+      data$pais == highlight,
+      "hl",
+      "other"
+    )
   } else {
     data$hl_var <- "other"
   }
 
-  # Compute numeric alpha values (no warning!)
-  data$alpha_value <- ifelse(data$hl_var == "hl", 0.6, 0.32)
+  data$alpha_value <- ifelse(
+    data$hl_var == "hl",
+    0.6,
+    0.32
+  )
 
-  # Add language-specific var label customization
+  # Confidence-interval explanation added to final legend entry
   if (lang == "es") {
-    data$var <- ifelse(data$var == unique(data$var)[length(unique(data$var))],
-                       paste0(data$var,
-                              "<span style='color:#FFFFFF00'>-------</span>",
-                              "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
-                              "<span style='color:#585860; font-size:13pt'> 95% intervalo de confianza </span>"),
-                       data$var)
-    data$var <- factor(data$var, levels = unique(data$var))
+
+    ci_text <- paste0(
+      "<span style='color:#FFFFFF00'>-------</span>",
+      "<span style='color:#585860; font-size:18pt'> ı—ı</span>",
+      "<span style='color:#585860; font-size:13pt'> ",
+      "95% intervalo de confianza </span>"
+    )
+
   } else if (lang == "fr") {
-    data$var <- ifelse(data$var == unique(data$var)[length(unique(data$var))],
-                       paste0(data$var,
-                              "<span style='color:#FFFFFF00'>-------</span>",
-                              "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
-                              "<span style='color:#585860; font-size:13pt'>Intervalle de confiance de 95% </span>"),
-                       data$var)
-    data$var <- factor(data$var, levels = unique(data$var))
+
+    ci_text <- paste0(
+      "<span style='color:#FFFFFF00'>-------</span>",
+      "<span style='color:#585860; font-size:18pt'> ı—ı</span>",
+      "<span style='color:#585860; font-size:13pt'> ",
+      "Intervalle de confiance de 95% </span>"
+    )
+
   } else {
-    data$var <- ifelse(data$var == unique(data$var)[length(unique(data$var))],
-                       paste0(data$var,
-                              "<span style='color:#FFFFFF00'>-------</span>",
-                              "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
-                              "<span style='color:#585860; font-size:13pt'> 95% confidence interval </span>"),
-                       data$var)
-    data$var <- factor(data$var, levels = unique(data$var))
+
+    ci_text <- paste0(
+      "<span style='color:#FFFFFF00'>-------</span>",
+      "<span style='color:#585860; font-size:18pt'> ı—ı</span>",
+      "<span style='color:#585860; font-size:13pt'> ",
+      "95% confidence interval </span>"
+    )
   }
 
-  # Sorting logic
+  # Identify the final legend category according to factor order
+  last_var <- tail(var_order, 1)
+
+  # Construct legend labels without ifelse()
+  legend_levels <- var_order
+
+  legend_levels[legend_levels == last_var] <- paste0(
+    last_var,
+    ci_text
+  )
+
+  # Replace only the final category in the data
+  data$var[data$var == last_var] <- paste0(
+    last_var,
+    ci_text
+  )
+
+  # Rebuild the factor while preserving the requested order
+  data$var <- factor(
+    data$var,
+    levels = legend_levels
+  )
+
+  # Sorting
   if (sort == "var1") {
+
     data <- data %>%
-      group_by(var) %>%
-      mutate(rank = rank(-prop)) %>%
-      arrange(var, rank)
+      dplyr::group_by(var) %>%
+      dplyr::mutate(rank = rank(-prop)) %>%
+      dplyr::arrange(var, rank) %>%
+      dplyr::ungroup()
+
   } else if (sort == "var2") {
+
     data <- data %>%
-      group_by(var) %>%
-      mutate(rank = rank(-prop)) %>%
-      arrange(match(var, unique(var)[2]), rank)
+      dplyr::group_by(var) %>%
+      dplyr::mutate(rank = rank(-prop)) %>%
+      dplyr::arrange(
+        match(var, unique(var)[2]),
+        rank
+      ) %>%
+      dplyr::ungroup()
+
   } else if (sort == "var3") {
+
     data <- data %>%
-      group_by(var) %>%
-      mutate(rank = rank(-prop)) %>%
-      arrange(match(var, unique(var)[3]), rank)
+      dplyr::group_by(var) %>%
+      dplyr::mutate(rank = rank(-prop)) %>%
+      dplyr::arrange(
+        match(var, unique(var)[3]),
+        rank
+      ) %>%
+      dplyr::ungroup()
+
   } else if (sort == "var4") {
+
     data <- data %>%
-      group_by(var) %>%
-      mutate(rank = rank(-prop)) %>%
-      arrange(match(var, unique(var)[4]), rank)
+      dplyr::group_by(var) %>%
+      dplyr::mutate(rank = rank(-prop)) %>%
+      dplyr::arrange(
+        match(var, unique(var)[4]),
+        rank
+      ) %>%
+      dplyr::ungroup()
+
   } else if (sort == "alpha") {
+
     data <- data[order(data$pais), ]
   }
 
-  data$label_position <- ifelse(data$prop < 0, data$lb - text_position, data$ub + text_position)
-  data$label_vjust <- ifelse(data$prop < 0, 1.4, -0.5)
-  data$label_hjust <- ifelse(data$prop < 0, 1, 0)
+  # Label positions
+  data$label_position <- ifelse(
+    data$prop < 0,
+    data$lb - text_position,
+    data$ub + text_position
+  )
 
-  # Apply font
-  update_geom_defaults("text", list(family = "inter")) # roboto
+  data$label_vjust <- ifelse(
+    data$prop < 0,
+    1.4,
+    -0.5
+  )
+
+  data$label_hjust <- ifelse(
+    data$prop < 0,
+    1,
+    0
+  )
+
+  ggplot2::update_geom_defaults(
+    "text",
+    list(family = "inter")
+  )
 
   axis_labels <- if (horizontal) {
-    list(x = y_label, y = x_label)
+    list(
+      x = y_label,
+      y = x_label
+    )
   } else {
-    list(x = x_label, y = y_label)
+    list(
+      x = x_label,
+      y = y_label
+    )
   }
 
-  p <- ggplot(data = data,
-              aes(x = factor(pais, levels = unique(pais)),
-                  y = prop,
-                  fill = var,
-                  color = var)) +
-    geom_bar(aes(alpha = alpha_value), position = "dodge", stat = "identity", width = 0.7) +
-    geom_text(
-      aes(label = proplabel, y = label_position, group = var),
-      position = position_dodge(width = 0.7),
-      vjust = if (horizontal) 0.5 else data$label_vjust,
-      hjust = if (horizontal) data$label_hjust else 0.5,
+  p <- ggplot2::ggplot(
+    data = data,
+    ggplot2::aes(
+      x = factor(pais, levels = unique(pais)),
+      y = prop,
+      fill = var,
+      color = var
+    )
+  ) +
+    ggplot2::geom_bar(
+      ggplot2::aes(alpha = alpha_value),
+      position = "dodge",
+      stat = "identity",
+      width = 0.7
+    ) +
+    ggplot2::geom_text(
+      ggplot2::aes(
+        label = proplabel,
+        y = label_position,
+        group = var
+      ),
+      position = ggplot2::position_dodge(width = 0.7),
+      vjust = if (horizontal) {
+        0.5
+      } else {
+        data$label_vjust
+      },
+      hjust = if (horizontal) {
+        data$label_hjust
+      } else {
+        0.5
+      },
       size = label_size,
       fontface = "bold",
       show.legend = FALSE
     ) +
-    geom_errorbar(aes(ymin = lower_bound, ymax = upper_bound),
-                  width = 0.15,
-                  position = position_dodge(width = 0.7), linetype = "solid", show.legend = FALSE) +
-    scale_fill_manual(values = fill_colors) +
-    scale_color_manual(values = color_scheme) +
-    scale_y_continuous(
-      limits = c(ymin, ymax),
-      expand = if (horizontal) expansion(mult = c(0.002, 0.08)) else expansion(mult = c(0.002, 0.03))
+    ggplot2::geom_errorbar(
+      ggplot2::aes(
+        ymin = lb,
+        ymax = ub,
+        group = var
+      ),
+      width = 0.15,
+      position = ggplot2::position_dodge(width = 0.7),
+      linetype = "solid",
+      show.legend = FALSE
     ) +
-    labs(title = main_title,
-         y = axis_labels$y,
-         x = axis_labels$x,
-         caption = paste0(ifelse(lang == "es", "Fuente: LAPOP Lab", "Source: LAPOP Lab"),
-                          source_info)) +
-    { if (subtitle != "") labs(subtitle = subtitle) } +
-    { if (!horizontal && x_label != "") theme(axis.title.x = element_text(margin = margin(b = 10, t = 10))) } +
-    { if (horizontal && y_label != "") theme(axis.title.x = element_text(margin = margin(b = 10, t = 10))) } +
-    theme(text = element_text(size = 14, family = "inter"), # roboto
-          plot.title = element_text(size = 18, family = "inter", face = "bold"), # nunito
-          plot.caption = element_text(size = 10.5, vjust = 2, hjust = 0, family = "inter", color = "#585860"), # nunito
-          panel.background = element_blank(),
-          panel.border = element_blank(),
-          axis.line.x = element_line(linewidth = 0.6, linetype = "solid", colour = "#dddddf"),
-          axis.text = element_text(size = 14, color = "#585860", face = "bold"),
-          axis.text.y = if (horizontal) element_text(size = 14, color = "#585860", face = "bold") else element_blank(),
-          axis.text.x = if (horizontal) element_blank() else element_text(size = 14, color = "#585860", face = "bold"),
-          axis.ticks = element_blank(),
-          legend.position = "top",
-          legend.title = element_blank(),
-          legend.justification = 'left',
-          legend.margin = margin(t = 0, b = 0, l = 0),
-          plot.margin = if (horizontal) margin(t = 10, r = 50, b = 10, l = 10) else margin(t = 10, r = 10, b = 10, l = 10),
-          legend.text = ggtext::element_markdown(family = "inter-light")) + guides(alpha = "none")
+    ggplot2::scale_fill_manual(
+      values = fill_colors,
+      drop = FALSE
+    ) +
+    ggplot2::scale_color_manual(
+      values = color_scheme,
+      drop = FALSE
+    ) +
+    ggplot2::scale_y_continuous(
+      limits = c(ymin, ymax),
+      expand = if (horizontal) {
+        ggplot2::expansion(mult = c(0.002, 0.08))
+      } else {
+        ggplot2::expansion(mult = c(0.002, 0.03))
+      }
+    ) +
+    ggplot2::labs(
+      title = main_title,
+      y = axis_labels$y,
+      x = axis_labels$x,
+      caption = paste0(
+        ifelse(
+          lang == "es",
+          "Fuente: LAPOP Lab",
+          "Source: LAPOP Lab"
+        ),
+        source_info
+      )
+    ) +
+    {
+      if (subtitle != "") {
+        ggplot2::labs(subtitle = subtitle)
+      }
+    } +
+    {
+      if (!horizontal && x_label != "") {
+        ggplot2::theme(
+          axis.title.x = ggplot2::element_text(
+            margin = ggplot2::margin(
+              b = 10,
+              t = 10
+            )
+          )
+        )
+      }
+    } +
+    {
+      if (horizontal && y_label != "") {
+        ggplot2::theme(
+          axis.title.x = ggplot2::element_text(
+            margin = ggplot2::margin(
+              b = 10,
+              t = 10
+            )
+          )
+        )
+      }
+    } +
+    ggplot2::theme(
+      text = ggplot2::element_text(
+        size = 14,
+        family = "inter"
+      ),
+      plot.title = ggplot2::element_text(
+        size = 18,
+        family = "inter",
+        face = "bold"
+      ),
+      plot.caption = ggplot2::element_text(
+        size = 10.5,
+        vjust = 2,
+        hjust = 0,
+        family = "inter",
+        color = "#585860"
+      ),
+      panel.background = ggplot2::element_blank(),
+      panel.border = ggplot2::element_blank(),
+      axis.line.x = ggplot2::element_line(
+        linewidth = 0.6,
+        linetype = "solid",
+        colour = "#dddddf"
+      ),
+      axis.text = ggplot2::element_text(
+        size = 14,
+        color = "#585860",
+        face = "bold"
+      ),
+      axis.text.y = if (horizontal) {
+        ggplot2::element_text(
+          size = 14,
+          color = "#585860",
+          face = "bold"
+        )
+      } else {
+        ggplot2::element_blank()
+      },
+      axis.text.x = if (horizontal) {
+        ggplot2::element_blank()
+      } else {
+        ggplot2::element_text(
+          size = 14,
+          color = "#585860",
+          face = "bold"
+        )
+      },
+      axis.ticks = ggplot2::element_blank(),
+      legend.position = "top",
+      legend.title = ggplot2::element_blank(),
+      legend.justification = "left",
+      legend.margin = ggplot2::margin(
+        t = 0,
+        b = 0,
+        l = 0
+      ),
+      plot.margin = if (horizontal) {
+        ggplot2::margin(
+          t = 10,
+          r = 50,
+          b = 10,
+          l = 10
+        )
+      } else {
+        ggplot2::margin(
+          t = 10,
+          r = 10,
+          b = 10,
+          l = 10
+        )
+      },
+      legend.text = ggtext::element_markdown(
+        family = "inter-light"
+      )
+    ) +
+    ggplot2::guides(alpha = "none")
 
   if (horizontal) {
-    p <- p + coord_flip(clip = "off")
+    p <- p + ggplot2::coord_flip(clip = "off")
   }
 
   p
