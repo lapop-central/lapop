@@ -40,6 +40,7 @@ NULL
 #' @param max_countries Numeric. Threshold for automatic x-axis label rotation. When the number of unique
 #' country labels exceeds this value, labels will be rotated for better readability. Default: 20.
 #' @param label_angle Numeric. Angle (in degrees) to rotate x-axis labels when max_countries is exceeded. Default: 0.
+#' @param horizontal Logical. If TRUE, display bars horizontally. Default: FALSE.
 #'
 #' @return Returns an object of class \code{ggplot}, a ggplot figure showing
 #' average values of some variables across multiple countries.
@@ -62,6 +63,14 @@ NULL
 #'          highlight = "PE",
 #'          decimals = 1,
 #'          ymax = 50)
+#' lapop_cc(df,
+#'          main_title = "Normalization of Intimate Partner Violence in LAC Countries",
+#'          subtitle = "% who say domestic violence is private matter",
+#'          source_info = "LAPOP Lab, AmericasBarometer 2021",
+#'          highlight = "PE",
+#'          decimals = 1,
+#'          ymax = 50,
+#'          horizontal = TRUE)
 #'}
 #'@export
 #'@import ggplot2
@@ -85,7 +94,8 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                      decimals = 0,
                      label_size = 5,  # Default size
                      max_countries = 30,
-                     label_angle = 0) {  # Removed label_adjust
+                     label_angle = 0,
+                     horizontal = FALSE) {  # Removed label_adjust
 
   if (!is.numeric(decimals) || length(decimals) != 1 || is.na(decimals) ||
       decimals %% 1 != 0 || decimals < 0 || decimals > 3) {
@@ -121,6 +131,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
 
   data$label_y <- ifelse(data$prop < 0, data$lb, data$ub)
   data$label_vjust <- ifelse(data$prop < 0, 1.4, -0.5)
+  data$label_hjust <- ifelse(data$prop < 0, 1, 0)
 
   ci_text = ifelse(lang == "es",
                    paste0(" <span style='color:", color_scheme, "; font-size:18pt'> \u0131\u2014\u0131</span> ",
@@ -135,9 +146,11 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
   update_geom_defaults("text", list(family = "inter")) # roboto
 
   # Create base plot
-  cc <- ggplot(data=data, aes(x=factor(vallabel, levels = vallabel), y=prop, fill = hl_var)) +
+   cc <- ggplot(data=data, aes(x=factor(vallabel, levels = vallabel), y=prop, fill = hl_var)) +
     geom_bar(stat="identity", color = color_scheme, width = 0.6) +
-    geom_text(aes(label=label_var, y = label_y, vjust = label_vjust),
+    geom_text(aes(label=label_var, y = label_y),
+              vjust = if (horizontal) 0.5 else data$label_vjust,
+              hjust = if (horizontal) data$label_hjust else 0.5,
               size=current_label_size, fontface = "bold", color = color_scheme) +
     geom_errorbar(aes(ymin=lower_bound, ymax=upper_bound), width = 0.15, color = color_scheme, linetype = "solid") +
     scale_fill_manual(breaks = "other",
@@ -147,7 +160,10 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                                       "<span style='color:#FFFFFF00'>-----------</span>",
                                       ci_text),
                       na.value = paste0(color_scheme, "90")) +
-    scale_y_continuous(limits = c(ymin, ymax), expand = expansion(mult = 0.002)) +
+    scale_y_continuous(
+      limits = c(ymin, ymax),
+      expand = if (horizontal) expansion(mult = c(0.002, 0.08)) else expansion(mult = 0.002)
+    ) +
     labs(title=main_title,
          y = "",
          x = "",
@@ -161,21 +177,26 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
           panel.border = element_blank(),
           axis.line.x = element_line(linewidth = 0.6, linetype = "solid", colour = "#dddddf"),
           axis.text = element_text(size = ifelse(rotate_labels, 10, 14), color = "#585860", face = "bold"),
-          axis.text.y = element_blank(),
+          axis.text.y = element_text(size = ifelse(rotate_labels, 10, 14), color = "#585860", face = "bold"),
           axis.ticks = element_blank(),
           legend.position = "top",
           legend.title = element_blank(),
           legend.justification='left',
           legend.margin = margin(t=0, b=0, l=0, r=0),
-          legend.text = element_markdown(family = "inter-light")) # nunito-light
+          legend.text = element_markdown(family = "inter-light"),
+          plot.margin = if (horizontal) margin(t = 10, r = 40, b = 10, l = 10) else margin(t = 10, r = 10, b = 5.5, l = 5.5)) # nunito-light
 
   # Apply label rotation if needed
-  if(rotate_labels) {
-    cc <- cc + theme(axis.text.x = element_text(angle = label_angle,
-                                                hjust = 0.5, vjust = 1))
+  if(rotate_labels && !horizontal) {
+   cc <- cc + theme(axis.text.x = element_text(angle = label_angle,
+                                              hjust = 0.5, vjust = 1))
 
     # Adjust plot margins to accommodate rotated labels
-    cc <-  cc + theme(plot.margin = margin(t = 10, r = 10, b = max(10, current_label_size*5), l = 10))
+     cc <-  cc + theme(plot.margin = margin(t = 10, r = 10, b = max(10, current_label_size*5), l = 10))
+  }
+
+  if (horizontal) {
+    cc <- cc + coord_flip(clip = "off")
   }
 
   return(cc)
