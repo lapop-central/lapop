@@ -26,7 +26,7 @@ NULL
 #' which is added to the end of "Source: " in the bottom-left corner of the graph.
 #' Default: None (only "Source: " will be printed).
 #' @param subtitle Character.  Describes the values/data shown in the graph, e.g., "Regression coefficients".
-#' Default: None.
+#' Default: automatic text based on `pred_prob`.
 #' @param lang Character.  Changes default subtitle text and source info to either Spanish or English.
 #' Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
 #' or "es" (Spanish).  Default: "en".
@@ -63,7 +63,7 @@ NULL
 #'@import ggtext
 #'@import showtext
 #'
-#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
+#'@author Luke Plutowski, \email{luke.plutowski@@vanderbilt.edu}
 #'
 
 lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
@@ -80,6 +80,15 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
                        subtitle_h_just = 0){
   varlabel_var = factor(varlabel_var, levels = rev(unique(varlabel_var)))
   sig = ifelse(pval_var < 0.05, FALSE, TRUE)
+  subtitle_text = ifelse(
+    subtitle != "",
+    subtitle,
+    ifelse(
+      lang == "es",
+      ifelse(pred_prob == TRUE, "Probabilidades pronosticadas", "Coeficientes de regresi\u00f3n"),
+      ifelse(pred_prob == TRUE, "Predicted probabilities", "Regression coefficients")
+    )
+  )
   ci_text = ifelse(lang == "es",
                    paste0(" <span style='color:", color_scheme, "; font-size:18pt'> \u0131\u2014\u0131</span> ",
                           "<span style='color:#585860; font-size:13pt'>95% intervalo de confianza </span>"),
@@ -92,17 +101,16 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
       yintercept = 0,
       color = "#b8b8bf",
       linetype = "dashed",
-      linewidth = 0.75
+      linewidth = 0.6
     ) +
     geom_errorbar(aes(x=varlabel_var, ymin = lb, ymax = ub), width = 0.3, lty = 1, color = color_scheme) +
     geom_point(aes(x = varlabel_var, y = coef_var, fill = sig), color = "black", size = 5.5, shape = 21) +
     geom_text(aes(label = label_var, vjust = -1.25), size = 5, color = color_scheme, fontface = "bold") +
     scale_fill_manual(values = color_scheme,
                       labels = paste0(" <span style='color:#585860; font-size:13pt'> ",
-                                      ifelse(lang == "es", ifelse(pred_prob == TRUE, "Probabilidades pronosticadas", "Coeficientes de regresi\u00f3n"),
-                                             ifelse(pred_prob == TRUE, "Predicted probabilities", "Regression coefficients")),
+                                      subtitle_text,
                                       "<span style='color:#FFFFFF00'>-----------</span>",
-                                      ci_text),
+                      ci_text),
                       limits = "FALSE",
                       na.value = "white") +
     coord_flip(clip = "off") +
@@ -134,6 +142,6 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
           legend.text = element_markdown(family = "inter-light"), # nunito-light
           legend.key=element_blank(),
           legend.margin=margin(0, 0, 0, -30-subtitle_h_just))
-}
+  }
 
 

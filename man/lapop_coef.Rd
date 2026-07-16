@@ -42,7 +42,7 @@ or "es" (Spanish).  Default: "en".}
 \item{main_title}{Character.  Title of graph.  Default: None.}
 
 \item{subtitle}{Character.  Describes the values/data shown in the graph, e.g., "Regression coefficients".
-Default: None.}
+Default: automatic text based on `pred_prob`.}
 
 \item{source_info}{Character.  Information on dataset used (country, years, version, etc.),
 which is added to the end of "Source: " in the bottom-left corner of the graph.
@@ -87,5 +87,5 @@ lapop_coef(df,
 }
 }
 \author{
-Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
+Luke Plutowski, \email{luke.plutowski@vanderbilt.edu}
 }
