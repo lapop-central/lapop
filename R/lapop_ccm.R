@@ -187,7 +187,7 @@ lapop_ccm <- function(
   }
 
   # Identify the final legend category according to factor order
-  last_var <- tail(var_order, 1)
+  last_var <- utils::tail(var_order, 1)
 
   # Construct legend labels without ifelse()
   legend_levels <- var_order
