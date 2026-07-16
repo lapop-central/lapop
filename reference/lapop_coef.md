@@ -60,7 +60,8 @@ lapop_coef(
 - subtitle:
 
   Character. Describes the values/data shown in the graph, e.g.,
-  "Regression coefficients". Default: None.
+  "Regression coefficients". Default: automatic text based on
+  \`pred_prob\`.
 
 - source_info:
 
@@ -95,8 +96,7 @@ coefficients or predicted probabilities from a multivariate regression.
 
 ## Author
 
-Luke Plutowski, <luke.plutowski@vanderbilt.edu> & Robert Vidigal,
-<robert.vidigal@vanderbilt.edu>
+Luke Plutowski, <luke.plutowski@vanderbilt.edu>
 
 ## Examples
 
