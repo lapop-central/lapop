@@ -164,7 +164,7 @@ lapop_ccm <- function(
       "<span style='color:#FFFFFF00'>-------</span>",
       "<span style='color:#585860; font-size:18pt'>&#305;&mdash;&#305;</span>",
       "<span style='color:#585860; font-size:13pt'> ",
-      "95% intervalo de confianza </span>"
+      " 95% intervalo de confianza </span>"
     )
 
   } else if (lang == "fr") {
@@ -173,7 +173,7 @@ lapop_ccm <- function(
       "<span style='color:#FFFFFF00'>-------</span>",
       "<span style='color:#585860; font-size:18pt'>&#305;&mdash;&#305;</span>",
       "<span style='color:#585860; font-size:13pt'> ",
-      "Intervalle de confiance de 95% </span>"
+      " Intervalle de confiance de 95% </span>"
     )
 
   } else {
@@ -182,7 +182,7 @@ lapop_ccm <- function(
       "<span style='color:#FFFFFF00'>-------</span>",
       "<span style='color:#585860; font-size:18pt'>&#305;&mdash;&#305;</span>",
       "<span style='color:#585860; font-size:13pt'> ",
-      "95% confidence interval </span>"
+      " 95% confidence interval </span>"
     )
   }
 
