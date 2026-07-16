@@ -25,7 +25,8 @@ lapop_cc(
   decimals = 0,
   label_size = 5,
   max_countries = 30,
-  label_angle = 0
+  label_angle = 0,
+  horizontal = FALSE
 )
 ```
 
@@ -111,6 +112,10 @@ lapop_cc(
   Numeric. Angle (in degrees) to rotate x-axis labels when max_countries
   is exceeded. Default: 0.
 
+- horizontal:
+
+  Logical. If TRUE, display bars horizontally. Default: FALSE.
+
 ## Value
 
 Returns an object of class `ggplot`, a ggplot figure showing average
@@ -142,6 +147,15 @@ lapop_cc(df,
          highlight = "PE",
          decimals = 1,
          ymax = 50)
+
+lapop_cc(df,
+         main_title = "Normalization of Intimate Partner Violence in LAC Countries",
+         subtitle = "% who say domestic violence is private matter",
+         source_info = "LAPOP Lab, AmericasBarometer 2021",
+         highlight = "PE",
+         decimals = 1,
+         ymax = 50,
+         horizontal = TRUE)
 
 # }
 ```
