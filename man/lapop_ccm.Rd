@@ -25,7 +25,8 @@ lapop_ccm(
   color_scheme = c("#784885", "#008381", "#C74E49", "#2D708E"),
   label_size = 4,
   text_position = 0.7,
-  horizontal = FALSE
+  horizontal = FALSE,
+  display_y = FALSE
 )
 }
 \arguments{
@@ -75,6 +76,8 @@ Default: "#784885", "#008381", "#C74E49", "#2D708E".}
 \item{text_position}{Numeric.  Amount that text above error bars should be offset (to avoid overlap).  Default: 0.7}
 
 \item{horizontal}{Logical. If TRUE, display the grouped bars horizontally. Default: FALSE.}
+
+\item{display_y}{Logical. If TRUE, display numeric axis values. Default: FALSE.}
 }
 \value{
 Returns an object of class \code{ggplot}, a ggplot figure showing

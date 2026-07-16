@@ -41,6 +41,7 @@ NULL
 #' country labels exceeds this value, labels will be rotated for better readability. Default: 20.
 #' @param label_angle Numeric. Angle (in degrees) to rotate x-axis labels when max_countries is exceeded. Default: 0.
 #' @param horizontal Logical. If TRUE, display bars horizontally. Default: FALSE.
+#' @param display_y Logical. If TRUE, display numeric axis values. Default: FALSE.
 #'
 #' @return Returns an object of class \code{ggplot}, a ggplot figure showing
 #' average values of some variables across multiple countries.
@@ -95,7 +96,8 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                      label_size = 5,  # Default size
                      max_countries = 30,
                      label_angle = 0,
-                     horizontal = FALSE) {  # Removed label_adjust
+                     horizontal = FALSE,
+                     display_y = FALSE) {  # Removed label_adjust
 
   if (!is.numeric(decimals) || length(decimals) != 1 || is.na(decimals) ||
       decimals %% 1 != 0 || decimals < 0 || decimals > 3) {
@@ -177,7 +179,11 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
           panel.border = element_blank(),
           axis.line.x = element_line(linewidth = 0.6, linetype = "solid", colour = "#dddddf"),
           axis.text = element_text(size = ifelse(rotate_labels, 10, 14), color = "#585860", face = "bold"),
-          axis.text.y = element_text(size = ifelse(rotate_labels, 10, 14), color = "#585860", face = "bold"),
+          axis.text.y = if (display_y) {
+            element_text(size = ifelse(rotate_labels, 10, 14), color = "#585860", face = "bold")
+          } else {
+            element_blank()
+          },
           axis.ticks = element_blank(),
           legend.position = "top",
           legend.title = element_blank(),

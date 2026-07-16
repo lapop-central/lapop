@@ -42,6 +42,7 @@ NULL
 #' @param label_size Numeric.  Size of text for data labels (percentages above bars).  Default: 4.
 #' @param text_position Numeric.  Amount that text above error bars should be offset (to avoid overlap).  Default: 0.7
 #' @param horizontal Logical. If TRUE, display the grouped bars horizontally. Default: FALSE.
+#' @param display_y Logical. If TRUE, display numeric axis values. Default: FALSE.
 #'
 #' @return Returns an object of class \code{ggplot}, a ggplot figure showing
 #' average values of some variables across multiple countries.
@@ -94,24 +95,26 @@ lapop_ccm <- function(data,
                       color_scheme = c("#784885", "#008381", "#C74E49", "#2D708E"),
                       label_size = 4,
                       text_position = 0.7,
-                      horizontal = FALSE) {
+                      horizontal = FALSE,
+                      display_y = FALSE) {
 
   data$pais <- pais
   data$prop <- outcome_var
   data$lb <- lower_bound
   data$ub <- upper_bound
   data$proplabel <- label_var
-  data$var <- var
+  data$var_group <- as.character(var)
+  data$var_label <- data$var_group
 
-  if (length(unique(data$var)) > 4) {
+  if (length(unique(data$var_group)) > 4) {
     stop("`lapop_ccm()` supports a maximum of 4 variables.")
   }
 
-  if (length(color_scheme) < length(unique(data$var))) {
+  if (length(color_scheme) < length(unique(data$var_group))) {
     stop("`color_scheme` must have at least as many colors as the number of variables being plotted.")
   }
 
-  fill_colors = paste0(color_scheme, "52")
+  var_levels <- unique(data$var_group)
 
   # Define highlight logic
   if (highlight != "") {
@@ -123,54 +126,56 @@ lapop_ccm <- function(data,
   # Compute numeric alpha values (no warning!)
   data$alpha_value <- ifelse(data$hl_var == "hl", 0.6, 0.32)
 
-  # Add language-specific var label customization
+  # Add language-specific legend label customization
   if (lang == "es") {
-    data$var <- ifelse(data$var == unique(data$var)[length(unique(data$var))],
-                       paste0(data$var,
-                              "<span style='color:#FFFFFF00'>-------</span>",
-                              "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
-                              "<span style='color:#585860; font-size:13pt'>95% intervalo de confianza </span>"),
-                       data$var)
-    data$var <- factor(data$var, levels = unique(data$var))
+    data$var_label <- ifelse(data$var_group == var_levels[length(var_levels)],
+                             paste0(data$var_group,
+                                    "<span style='color:#FFFFFF00'>-------</span>",
+                                    "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
+                                    "<span style='color:#585860; font-size:13pt'>95% intervalo de confianza </span>"),
+                             data$var_group)
   } else if (lang == "fr") {
-    data$var <- ifelse(data$var == unique(data$var)[length(unique(data$var))],
-                       paste0(data$var,
-                              "<span style='color:#FFFFFF00'>-------</span>",
-                              "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
-                              "<span style='color:#585860; font-size:13pt'>Intervalle de confiance de 95% </span>"),
-                       data$var)
-    data$var <- factor(data$var, levels = unique(data$var))
+    data$var_label <- ifelse(data$var_group == var_levels[length(var_levels)],
+                             paste0(data$var_group,
+                                    "<span style='color:#FFFFFF00'>-------</span>",
+                                    "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
+                                    "<span style='color:#585860; font-size:13pt'>Intervalle de confiance de 95% </span>"),
+                             data$var_group)
   } else {
-    data$var <- ifelse(data$var == unique(data$var)[length(unique(data$var))],
-                       paste0(data$var,
-                              "<span style='color:#FFFFFF00'>-------</span>",
-                              "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
-                              "<span style='color:#585860; font-size:13pt'>95% confidence interval </span>"),
-                       data$var)
-    data$var <- factor(data$var, levels = unique(data$var))
+    data$var_label <- ifelse(data$var_group == var_levels[length(var_levels)],
+                             paste0(data$var_group,
+                                    "<span style='color:#FFFFFF00'>-------</span>",
+                                    "<span style='color:#585860; font-size:18pt'> \u0131\u2014\u0131</span>",
+                                    "<span style='color:#585860; font-size:13pt'>95% confidence interval </span>"),
+                             data$var_group)
   }
+
+  var_label_levels <- data$var_label[match(var_levels, data$var_group)]
+  data$var_label <- factor(data$var_label, levels = var_label_levels)
+  fill_colors = setNames(paste0(color_scheme[seq_along(var_levels)], "52"), var_label_levels)
+  line_colors = setNames(color_scheme[seq_along(var_levels)], var_label_levels)
 
   # Sorting logic
   if (sort == "var1") {
     data <- data %>%
-      group_by(var) %>%
+      group_by(var_group) %>%
       mutate(rank = rank(-prop)) %>%
-      arrange(var, rank)
+      arrange(var_group, rank)
   } else if (sort == "var2") {
     data <- data %>%
-      group_by(var) %>%
+      group_by(var_group) %>%
       mutate(rank = rank(-prop)) %>%
-      arrange(match(var, unique(var)[2]), rank)
+      arrange(match(var_group, var_levels[2]), rank)
   } else if (sort == "var3") {
     data <- data %>%
-      group_by(var) %>%
+      group_by(var_group) %>%
       mutate(rank = rank(-prop)) %>%
-      arrange(match(var, unique(var)[3]), rank)
+      arrange(match(var_group, var_levels[3]), rank)
   } else if (sort == "var4") {
     data <- data %>%
-      group_by(var) %>%
+      group_by(var_group) %>%
       mutate(rank = rank(-prop)) %>%
-      arrange(match(var, unique(var)[4]), rank)
+      arrange(match(var_group, var_levels[4]), rank)
   } else if (sort == "alpha") {
     data <- data[order(data$pais), ]
   }
@@ -191,11 +196,11 @@ lapop_ccm <- function(data,
   p <- ggplot(data = data,
               aes(x = factor(pais, levels = unique(pais)),
                   y = prop,
-                  fill = var,
-                  color = var)) +
+                  fill = var_label,
+                  color = var_label)) +
     geom_bar(aes(alpha = alpha_value), position = "dodge", stat = "identity", width = 0.7) +
     geom_text(
-      aes(label = proplabel, y = label_position, group = var),
+      aes(label = proplabel, y = label_position, group = var_group),
       position = position_dodge(width = 0.7),
       vjust = if (horizontal) 0.5 else data$label_vjust,
       hjust = if (horizontal) data$label_hjust else 0.5,
@@ -207,7 +212,7 @@ lapop_ccm <- function(data,
                   width = 0.15,
                   position = position_dodge(width = 0.7), linetype = "solid", show.legend = FALSE) +
     scale_fill_manual(values = fill_colors) +
-    scale_color_manual(values = color_scheme) +
+    scale_color_manual(values = line_colors) +
     scale_y_continuous(
       limits = c(ymin, ymax),
       expand = if (horizontal) expansion(mult = c(0.002, 0.08)) else expansion(mult = c(0.002, 0.03))
@@ -227,7 +232,11 @@ lapop_ccm <- function(data,
           panel.border = element_blank(),
           axis.line.x = element_line(linewidth = 0.6, linetype = "solid", colour = "#dddddf"),
           axis.text = element_text(size = 14, color = "#585860", face = "bold"),
-          axis.text.y = element_text(size = 14, color = "#585860", face = "bold"),
+          axis.text.y = if (display_y) {
+            element_text(size = 14, color = "#585860", face = "bold")
+          } else {
+            element_blank()
+          },
           axis.text.x = element_text(size = 14, color = "#585860", face = "bold"),
           axis.ticks = element_blank(),
           legend.position = "top",

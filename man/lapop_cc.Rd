@@ -24,7 +24,8 @@ lapop_cc(
   label_size = 5,
   max_countries = 30,
   label_angle = 0,
-  horizontal = FALSE
+  horizontal = FALSE,
+  display_y = FALSE
 )
 }
 \arguments{
@@ -72,6 +73,8 @@ country labels exceeds this value, labels will be rotated for better readability
 \item{label_angle}{Numeric. Angle (in degrees) to rotate x-axis labels when max_countries is exceeded. Default: 0.}
 
 \item{horizontal}{Logical. If TRUE, display bars horizontally. Default: FALSE.}
+
+\item{display_y}{Logical. If TRUE, display numeric axis values. Default: FALSE.}
 }
 \value{
 Returns an object of class \code{ggplot}, a ggplot figure showing
