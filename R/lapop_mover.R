@@ -155,15 +155,28 @@ lapop_mover <- function(data,
 
   # Modify the facet labeller function to use colors
   grid_labeller <- function(x) {
-    # Wrap the labels at a specified width
-    wrapped_labels <- str_wrap(x, width = 12)
+    # Respect user-supplied line breaks before applying automatic wrapping
+    wrapped_labels <- ifelse(
+      grepl("<br>|\\n", x),
+      gsub("\\n", "<br>", x),
+      str_wrap(x, width = 12)
+    )
 
     # Apply color from the color_map based on the variable level
     color <- color_map[x]
 
-    # Return the wrapped label with color applied
-    wrapped_labels <- paste0("<span style='color:", color, "'>", wrapped_labels, "</span>")
-    return(wrapped_labels)
+    # Apply color line-by-line so wrapped facet labels keep the same color
+    wrapped_lines <- strsplit(wrapped_labels, "<br>|\\n")
+    colored_labels <- vapply(seq_along(wrapped_lines), function(i) {
+      paste0(
+        "<span style='color:", color[i], "'>",
+        wrapped_lines[[i]],
+        "</span>",
+        collapse = "<br>"
+      )
+    }, character(1))
+
+    return(colored_labels)
   }
 
   ggplot(data, aes(x = order, y = prop, color = factor(varlabel), label = proplabel)) +
