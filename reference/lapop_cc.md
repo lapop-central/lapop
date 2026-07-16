@@ -26,7 +26,8 @@ lapop_cc(
   label_size = 5,
   max_countries = 30,
   label_angle = 0,
-  horizontal = FALSE
+  horizontal = FALSE,
+  display_y = FALSE
 )
 ```
 
@@ -115,6 +116,10 @@ lapop_cc(
 - horizontal:
 
   Logical. If TRUE, display bars horizontally. Default: FALSE.
+
+- display_y:
+
+  Logical. If TRUE, display numeric axis values. Default: FALSE.
 
 ## Value
 

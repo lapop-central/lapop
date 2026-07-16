@@ -27,7 +27,8 @@ lapop_ccm(
   color_scheme = c("#784885", "#008381", "#C74E49", "#2D708E"),
   label_size = 4,
   text_position = 0.7,
-  horizontal = FALSE
+  horizontal = FALSE,
+  display_y = FALSE
 )
 ```
 
@@ -117,6 +118,10 @@ lapop_ccm(
 
   Logical. If TRUE, display the grouped bars horizontally. Default:
   FALSE.
+
+- display_y:
+
+  Logical. If TRUE, display numeric axis values. Default: FALSE.
 
 ## Value
 
