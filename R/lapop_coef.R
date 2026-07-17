@@ -27,6 +27,11 @@ NULL
 #' Default: None (only "Source: " will be printed).
 #' @param subtitle Character.  Describes the values/data shown in the graph, e.g., "Regression coefficients".
 #' Default: automatic text based on `pred_prob`.
+#' @param sort Character. The metric by which the coefficients are sorted. Options:
+#' `"coef"` (coefficient values) or `"alpha"` (alphabetical by variable label).
+#' Default: `"coef"`.
+#' @param order Character. Whether data should be sorted from low to high or high to low
+#' on the selected sort metric. Options: `"hi-lo"` and `"lo-hi"`. Default: `"hi-lo"`.
 #' @param lang Character.  Changes default subtitle text and source info to either Spanish or English.
 #' Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
 #' or "es" (Spanish).  Default: "en".
@@ -75,6 +80,8 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
                        main_title = "",
                        subtitle = "",
                        source_info = "",
+                       sort = "coef",
+                       order = "hi-lo",
                        ymin = NULL,
                        ymax = NULL,
                        pred_prob = FALSE,
@@ -82,8 +89,38 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
                        dot_size = 5.5,
                        coef_label_size = 5,
                        subtitle_h_just = 0){
-  varlabel_var = factor(varlabel_var, levels = rev(unique(varlabel_var)))
+
+  plot_data <- data.frame(
+    coef_var = coef_var,
+    label_var = label_var,
+    varlabel_var = varlabel_var,
+    lb = lb,
+    ub = ub,
+    pval_var = pval_var,
+    stringsAsFactors = FALSE
+  )
+
+  if(sort == "coef"){
+    plot_data <- plot_data[order(-plot_data$coef_var), ]
+  } else if(sort == "alpha"){
+    plot_data <- plot_data[order(plot_data$varlabel_var), ]
+  }
+
+  if(order == "lo-hi"){
+    plot_data <- plot_data[nrow(plot_data):1, ]
+  }
+
+  plot_data$varlabel_var = factor(plot_data$varlabel_var, levels = rev(unique(plot_data$varlabel_var)))
+  coef_var = plot_data$coef_var
+  label_var = plot_data$label_var
+  varlabel_var = plot_data$varlabel_var
+  lb = plot_data$lb
+  ub = plot_data$ub
+  pval_var = plot_data$pval_var
+
   sig = ifelse(pval_var < 0.05, FALSE, TRUE)
+  label_x = ub
+  label_hjust = -0.15
   subtitle_text = ifelse(
     subtitle != "",
     subtitle,
@@ -100,7 +137,7 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
                           "<span style='color:#585860; font-size:13pt'>95% confidence </span>",
                           "<span style='color:#585860'>interval</span>"))
   update_geom_defaults("text", list(family = "inter"))# roboto
-  ggplot(data, aes(x = varlabel_var, y = coef_var)) +
+  ggplot(plot_data, aes(x = varlabel_var, y = coef_var)) +
     geom_hline(
       yintercept = 0,
       color = "#b8b8bf",
@@ -109,7 +146,8 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
     ) +
     geom_errorbar(aes(x=varlabel_var, ymin = lb, ymax = ub), width = 0.3, lty = 1, color = color_scheme) +
     geom_point(aes(x = varlabel_var, y = coef_var, fill = sig), color = "black", size = dot_size, shape = 21) +
-    geom_text(aes(label = label_var, vjust = -1.25), size = coef_label_size, color = color_scheme, fontface = "bold") +
+    geom_text(aes(y = label_x, label = label_var, hjust = label_hjust),
+              size = coef_label_size, color = color_scheme, fontface = "bold") +
     scale_fill_manual(values = color_scheme,
                       labels = paste0(" <span style='color:#585860; font-size:13pt'> ",
                                       subtitle_text,
