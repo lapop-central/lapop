@@ -22,6 +22,8 @@ lapop_coef(
   ymax = NULL,
   pred_prob = FALSE,
   color_scheme = "#784885",
+  dot_size = 5.5,
+  coef_label_size = 5,
   subtitle_h_just = 0
 )
 ```
@@ -83,6 +85,14 @@ lapop_coef(
 
   Character. Color of bars. Takes hex number, beginning with "#".
   Default: "#784885" (purple).
+
+- dot_size:
+
+  Numeric. Size of the dots. Default: 5.5.
+
+- coef_label_size:
+
+  Numeric. Size of the coefficient labels. Default: 5.
 
 - subtitle_h_just:
 
