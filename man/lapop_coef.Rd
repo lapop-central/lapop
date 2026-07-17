@@ -20,6 +20,8 @@ lapop_coef(
   ymax = NULL,
   pred_prob = FALSE,
   color_scheme = "#784885",
+  dot_size = 5.5,
+  coef_label_size = 5,
   subtitle_h_just = 0
 )
 }
@@ -55,6 +57,10 @@ Will only change text in the legend, not the data.  Default: FALSE.}
 
 \item{color_scheme}{Character.  Color of bars.  Takes hex number, beginning with "#".
 Default: "#784885" (purple).}
+
+\item{dot_size}{Numeric. Size of the dots. Default: 5.5.}
+
+\item{coef_label_size}{Numeric. Size of the coefficient labels. Default: 5.}
 
 \item{subtitle_h_just}{Numeric.  Move the subtitle/legend text left (negative numbers) or right (positive numbers).
 Ranges from -100 to 100.  Default: 0.}

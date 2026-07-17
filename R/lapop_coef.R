@@ -34,6 +34,8 @@ NULL
 #' Default: "#784885" (purple).
 #' @param pred_prob Logical.  Is the graph showing predicted probabilities (instead of regression coefficients)?
 #' Will only change text in the legend, not the data.  Default: FALSE.
+#' @param dot_size Numeric. Size of the dots. Default: 5.5.
+#' @param coef_label_size Numeric. Size of the coefficient labels. Default: 5.
 #' @param subtitle_h_just Numeric.  Move the subtitle/legend text left (negative numbers) or right (positive numbers).
 #' Ranges from -100 to 100.  Default: 0.
 #' @return Returns an object of class \code{ggplot}, a ggplot figure showing
@@ -77,6 +79,8 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
                        ymax = NULL,
                        pred_prob = FALSE,
                        color_scheme = "#784885",
+                       dot_size = 5.5,
+                       coef_label_size = 5,
                        subtitle_h_just = 0){
   varlabel_var = factor(varlabel_var, levels = rev(unique(varlabel_var)))
   sig = ifelse(pval_var < 0.05, FALSE, TRUE)
@@ -104,8 +108,8 @@ lapop_coef <- function(data, coef_var = data$coef, label_var = data$proplabel,
       linewidth = 0.6
     ) +
     geom_errorbar(aes(x=varlabel_var, ymin = lb, ymax = ub), width = 0.3, lty = 1, color = color_scheme) +
-    geom_point(aes(x = varlabel_var, y = coef_var, fill = sig), color = "black", size = 5.5, shape = 21) +
-    geom_text(aes(label = label_var, vjust = -1.25), size = 5, color = color_scheme, fontface = "bold") +
+    geom_point(aes(x = varlabel_var, y = coef_var, fill = sig), color = "black", size = dot_size, shape = 21) +
+    geom_text(aes(label = label_var, vjust = -1.25), size = coef_label_size, color = color_scheme, fontface = "bold") +
     scale_fill_manual(values = color_scheme,
                       labels = paste0(" <span style='color:#585860; font-size:13pt'> ",
                                       subtitle_text,
