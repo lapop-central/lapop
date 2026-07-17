@@ -55,6 +55,8 @@
 <span>  main_title <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  subtitle <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  source_info <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  sort <span class="op">=</span> <span class="st">"coef"</span>,</span>
+<span>  order <span class="op">=</span> <span class="st">"hi-lo"</span>,</span>
 <span>  ymin <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ymax <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  pred_prob <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -103,6 +105,17 @@ Default: automatic text based on `pred_prob`.</p></dd>
 <dd><p>Character.  Information on dataset used (country, years, version, etc.),
 which is added to the end of "Source: " in the bottom-left corner of the graph.
 Default: None (only "Source: " will be printed).</p></dd>
+
+
+<dt id="arg-sort">sort<a class="anchor" aria-label="anchor" href="#arg-sort"></a></dt>
+<dd><p>Character. The metric by which the coefficients are sorted. Options:
+`"coef"` (coefficient values) or `"alpha"` (alphabetical by variable label).
+Default: `"coef"`.</p></dd>
+
+
+<dt id="arg-order">order<a class="anchor" aria-label="anchor" href="#arg-order"></a></dt>
+<dd><p>Character. Whether data should be sorted from low to high or high to low
+on the selected sort metric. Options: `"hi-lo"` and `"lo-hi"`. Default: `"hi-lo"`.</p></dd>
 
 
 <dt id="arg-ymin-ymax">ymin, ymax<a class="anchor" aria-label="anchor" href="#arg-ymin-ymax"></a></dt>

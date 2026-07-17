@@ -18,6 +18,8 @@ lapop_coef(
   main_title = "",
   subtitle = "",
   source_info = "",
+  sort = "coef",
+  order = "hi-lo",
   ymin = NULL,
   ymax = NULL,
   pred_prob = FALSE,
@@ -70,6 +72,18 @@ lapop_coef(
   Character. Information on dataset used (country, years, version,
   etc.), which is added to the end of "Source: " in the bottom-left
   corner of the graph. Default: None (only "Source: " will be printed).
+
+- sort:
+
+  Character. The metric by which the coefficients are sorted. Options:
+  \`"coef"\` (coefficient values) or \`"alpha"\` (alphabetical by
+  variable label). Default: \`"coef"\`.
+
+- order:
+
+  Character. Whether data should be sorted from low to high or high to
+  low on the selected sort metric. Options: \`"hi-lo"\` and \`"lo-hi"\`.
+  Default: \`"hi-lo"\`.
 
 - ymin, ymax:
 
