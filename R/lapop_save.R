@@ -66,6 +66,6 @@ lapop_save <- function(figure, filename,
       device = "png"
     )
   }
-
+  message(paste0("\u2714 Figure Saved: ", filename))
   invisible(filename)
 }
