@@ -36,6 +36,8 @@ NULL
 #' Default: #784885.
 #' @param decimals Numeric. Number of decimals to display in default value labels.
 #' Must be an integer from 0 to 3. Default: 0.
+#' @param display_perc Logical. If TRUE, use `proplabel`-style labels (for example, with `%`).
+#' If FALSE, use numeric `prop` values without the percent symbol. Default: TRUE.
 #' @param label_size Numeric.  Size of text for data labels (percentages above bars).  Default: 5.
 #' @param max_countries Numeric. Threshold for automatic x-axis label rotation. When the number of unique
 #' country labels exceeds this value, labels will be rotated for better readability. Default: 20.
@@ -93,6 +95,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                      sort = "",
                      color_scheme = "#784885",
                      decimals = 0,
+                     display_perc = TRUE,
                      label_size = 5,  # Default size
                      max_countries = 30,
                      label_angle = 0,
@@ -105,7 +108,11 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
   }
 
   if (missing(label_var)) {
+    if (display_perc) {
+      label_var <- data$proplabel
+    } else {
     label_var <- sprintf(paste0("%.", decimals, "f"), outcome_var)
+    }
   }
 
   # Check if we need to rotate labels based on number of unique countries
