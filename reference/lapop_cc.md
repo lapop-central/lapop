@@ -23,6 +23,7 @@ lapop_cc(
   sort = "",
   color_scheme = "#784885",
   decimals = 0,
+  display_perc = TRUE,
   label_size = 5,
   max_countries = 30,
   label_angle = 0,
@@ -96,6 +97,12 @@ lapop_cc(
 
   Numeric. Number of decimals to display in default value labels. Must
   be an integer from 0 to 3. Default: 0.
+
+- display_perc:
+
+  Logical. If TRUE, use \`proplabel\`-style labels (for example, with \`
+  If FALSE, use numeric \`prop\` values without the percent symbol.
+  Default: TRUE.
 
 - label_size:
 
