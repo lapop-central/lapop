@@ -12,9 +12,9 @@ To install the package in your console, run:
 
 ```r
 pak::pak("lapop-central/lapop")
-
+````
 # OR
-
+```r
 devtools::install_github("lapop-central/lapop", 
                          force = TRUE, 
                          build_vignettes = TRUE)
