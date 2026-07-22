@@ -16,7 +16,7 @@ To install the package in your console, run:
 pak::pak("lapop-central/lapop")
 ```
 
-# OR
+### OR
 
 ``` r
 
