@@ -9,20 +9,22 @@ of ‘AmericasBarometer’ data following LAPOP Lab’s editorial guidelines.
 
 ## 🛠️ Installation
 
-To install the package in your console, run:
+To install the package from CRAN in your console, run:
+
+``` r
+
+install.packages(lapop)
+```
+
+For the most recent version, please use:
 
 ``` r
 
 pak::pak("lapop-central/lapop")
-```
 
 ### OR
 
-``` r
-
-devtools::install_github("lapop-central/lapop", 
-                         force = TRUE, 
-                         build_vignettes = TRUE)
+devtools::install_github("lapop-central/lapop", force = TRUE)
 ```
 
 ------------------------------------------------------------------------
