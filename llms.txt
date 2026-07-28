@@ -235,6 +235,8 @@ we spent all our money on coffee, empanadas, and data cleaning.
   : LAPOP Multi-Line Time Series Graph Pre-Processing
 - [`lpr_mover()`](https://lapop-central.github.io/lapop/reference/lpr_mover.md)
   : LAPOP "Multiple-Over" Breakdown Graphs
+- [`lpr_na_attributes()`](https://lapop-central.github.io/lapop/reference/lpr_na_attributes.md)
+  : Convert LAPOP missing-value codes to haven tagged NAs
 - [`lpr_resc()`](https://lapop-central.github.io/lapop/reference/lpr_resc.md)
   : LAPOP Rescale
 - [`lpr_set_attr()`](https://lapop-central.github.io/lapop/reference/lpr_set_attr.md)

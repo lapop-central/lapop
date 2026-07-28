@@ -1,5 +1,9 @@
 # Changelog
 
+## lapop 2.1.7
+
+- include lpr_na_attributes() for non-reponses .a .b .c
+
 ## lapop 2.1.6
 
 - update lpr_ccm() an lapop_cmm() to plot 4-variables
@@ -8,7 +12,7 @@
 
 CRAN release: 2026-04-29
 
-- add lpr_ci() for data playground design-based confidence intervals
+- include lpr_ci() for data playground design-based confidence intervals
 
 ## lapop 2.1.4
 
