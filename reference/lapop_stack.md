@@ -11,7 +11,7 @@ lapop_stack(
   prop_labels = data$proplabel,
   var_labels = data$varlabel,
   value_labels = data$vallabel,
-  xvar = NULL,
+  xvar = FALSE,
   lang = "en",
   main_title = "",
   subtitle = "",
@@ -47,8 +47,8 @@ lapop_stack(
 
 - xvar:
 
-  Character. Column name to group the plots by. This should match a
-  column name in the dataset. Default: NULL (no grouping).
+  Logical. If \`TRUE\`, group the plots using the \`xvar_label\` column
+  in the dataset. If \`FALSE\`, do not group. Default: \`FALSE\`.
 
 - lang:
 
