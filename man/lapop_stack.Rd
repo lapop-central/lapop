@@ -10,7 +10,7 @@ lapop_stack(
   prop_labels = data$proplabel,
   var_labels = data$varlabel,
   value_labels = data$vallabel,
-  xvar = NULL,
+  xvar = FALSE,
   lang = "en",
   main_title = "",
   subtitle = "",
@@ -36,8 +36,8 @@ Each component of the data to be plotted can be manually specified in case
 the default columns in the data frame should not be used (if, for example, the values for a given
 variable were altered and stored in a new column).}
 
-\item{xvar}{Character. Column name to group the plots by. This should match a column name in the dataset.
-Default: NULL (no grouping).}
+\item{xvar}{Logical. If `TRUE`, group the plots using the `xvar_label` column in the dataset.
+If `FALSE`, do not group. Default: `FALSE`.}
 
 \item{lang}{Character.  Changes default subtitle text and source info to either Spanish or English.
 Will not translate input text, such as main title or variable labels.  Takes either "en" (English)
