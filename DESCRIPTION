@@ -1,7 +1,7 @@
 Package: lapop
 Type: Package
 Title: Processing, Visualizing, and Labeling Americas Barometer Data
-Version: 2.1.6
+Version: 2.1.7
 Authors@R: c(person(given = "Robert", family = "Vidigal", 
              role = c("cre","aut"), 
              email = "robert.vidigal@vanderbilt.edu", 
@@ -66,6 +66,7 @@ Collate:
     'lpr_hist.R'
     'lpr_mline.R'
     'lpr_mover.R'
+    'lpr_na_attributes.R'
     'lpr_resc.R'
     'lpr_set_attr.R'
     'lpr_set_ros.R'
