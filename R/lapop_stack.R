@@ -76,8 +76,8 @@ NULL
 #' @param rev_variables Logical.  Should the order of the variables be reversed?  Default: FALSE.
 #' @param rev_values Logical.  Should the order of the values for each variable be reversed?  Default: FALSE.
 #' @param hide_small_values Logical.  Should labels for categories with less than 5 percent be hidden?  Default: TRUE.
-#' @param order_bars Logical.  Should categories be placed in descending order for each bar?  Default: FALSE.
-#' showing the distributions of multiple categorical variables.
+#' @param order_bars Logical.  Should categories be reordered automatically
+#' based on their values?  Default: FALSE.
 #' @param legendnrow Numeric.  How many rows for legend labels. Default: 1.
 #' @return Returns an object of class \code{ggplot}, a ggplot stacked bar graph
 #'
@@ -125,19 +125,17 @@ lapop_stack <- function(data,
                         subtitle_h_just = 0,
                         fixed_aspect_ratio = TRUE,
                         legendnrow = 1,
-                        color_scheme = c("#2D708E", "#008381", "#C74E49", "#784885", "#a43d6a","#202020")){
+                        color_scheme = c("#2D708E", "#008381", "#C74E49", "#784885", "#a43d6a", "#202020")) {
 
-  # Ensure proper data types
-  if(!inherits(var_labels, "character") & !inherits(var_labels, "factor")){
+  if (!inherits(var_labels, "character") & !inherits(var_labels, "factor")) {
     var_labels = as.character(var_labels)
     data$varlabels = as.character(data$varlabel)
   }
-  if(!inherits(value_labels, "character") & !inherits(value_labels, "factor")){
+  if (!inherits(value_labels, "character") & !inherits(value_labels, "factor")) {
     value_labels = as.character(value_labels)
     data$vallabel = as.character(data$vallabel)
   }
 
-  # Create a new data frame for plotting
   plot_data <- data.frame(
     var_labels = var_labels,
     value_labels = value_labels,
@@ -145,7 +143,6 @@ lapop_stack <- function(data,
     prop_labels = prop_labels
   )
 
-  # Add grouping variable if requested
   if (isTRUE(xvar)) {
     if ("xvar_label" %in% colnames(data)) {
       plot_data$group_var <- data[["xvar_label"]]
@@ -157,150 +154,197 @@ lapop_stack <- function(data,
     xvar <- FALSE
   }
 
-  # Set up colors
-  mycolors = rev(color_scheme[seq_along(unique(value_labels))])
-
-  # Handle value label ordering
-  if(rev_values == TRUE){
-    plot_data$value_labels = factor(plot_data$value_labels, levels = unique(plot_data$value_labels))
-  } else{
-    plot_data$value_labels = factor(plot_data$value_labels, levels = rev(unique(plot_data$value_labels)))
+  if (inherits(value_labels, "factor")) {
+    value_levels <- levels(value_labels)
+  } else {
+    value_levels <- unique(value_labels)
   }
 
-  # Determine x-axis positions
+  if (rev_values == TRUE) {
+    value_levels <- rev(value_levels)
+  }
+
+  plot_data$value_labels <- factor(plot_data$value_labels, levels = value_levels)
+
+  mycolors <- color_scheme[seq_along(value_levels)]
+  names(mycolors) <- value_levels
+
   if (isTRUE(xvar)) {
-    # When grouped, create a combined label of var_label and group_var
     plot_data$combined_label <- plot_data$group_var
 
-    # Handle variable ordering
     if (rev_variables) {
       positions <- rev(unique(plot_data$combined_label))
     } else {
       positions <- unique(plot_data$combined_label)
     }
 
-    # For x-axis label display
     plot_data$x_display <- plot_data$combined_label
   } else {
-    # When not grouped, use var_labels directly
     if (rev_variables) {
       positions <- rev(unique(plot_data$var_labels))
     } else {
       positions <- unique(plot_data$var_labels)
     }
 
-    # For x-axis label display
     plot_data$x_display <- plot_data$var_labels
   }
 
-  update_geom_defaults("text", list(family = "inter")) # roboto
+  update_geom_defaults("text", list(family = "inter"))
 
-  # Handle ordering of bars if requested
-  if(order_bars == TRUE){
+  if (order_bars == TRUE) {
     if (isTRUE(xvar)) {
-      # With grouping, order within each group
       plot_data$x_display <- factor(plot_data$x_display)
 
-      # Create an ordering function that works with grouped data
-      plot <- ggplot(plot_data, aes(y = outcome_var, x = x_display,
-                                    fill = reorder(value_labels, outcome_var), label = prop_labels))
+      plot <- ggplot(
+        plot_data,
+        aes(
+          y = outcome_var,
+          x = x_display,
+          fill = reorder(value_labels, outcome_var),
+          label = prop_labels
+        )
+      )
     } else {
-      # Without grouping, order as before
       plot_data$var_labels <- factor(plot_data$var_labels, levels = unique(plot_data$var_labels))
       plot_data$x_display <- plot_data$var_labels
 
-      plot <- ggplot(plot_data, aes(y = outcome_var, x = x_display,
-                                    fill = reorder(value_labels, outcome_var), label = prop_labels))
+      plot <- ggplot(
+        plot_data,
+        aes(
+          y = outcome_var,
+          x = x_display,
+          fill = reorder(value_labels, outcome_var),
+          label = prop_labels
+        )
+      )
     }
 
-    # Generate the ordered plot
     plot +
-      geom_bar(position = "stack", stat = "identity", width = 0.6) +
-      geom_text(aes(label = ifelse(outcome_var >= 5, prop_labels, NA)),
-                position = position_stack(vjust = 0.5), color = "#FFFFFF",
-                fontface = "bold", size = 5, na.rm=T) +
-      ggrepel::geom_text_repel(aes(label = ifelse(outcome_var < 5 & hide_small_values == FALSE, prop_labels, NA)),
-                               position = position_stack(vjust = 0.5),
-                               color = "#FFFFFF", segment.color = 'transparent',
-                               fontface = "bold", size = 4, family = "inter", # roboto
-                               direction = "y",
-                               force_pull = 0.2, force = 5, na.rm=T) +
+      geom_bar(position = position_stack(reverse = TRUE), stat = "identity", width = 0.6) +
+      geom_text(
+        aes(label = ifelse(outcome_var >= 5, prop_labels, NA)),
+        position = position_stack(vjust = 0.5, reverse = TRUE),
+        color = "#FFFFFF",
+        fontface = "bold",
+        size = 5,
+        na.rm = TRUE
+      ) +
+      ggrepel::geom_text_repel(
+        aes(label = ifelse(outcome_var < 5 & hide_small_values == FALSE, prop_labels, NA)),
+        position = position_stack(vjust = 0.5, reverse = TRUE),
+        color = "#FFFFFF",
+        segment.color = "transparent",
+        fontface = "bold",
+        size = 4,
+        family = "inter",
+        direction = "y",
+        force_pull = 0.2,
+        force = 5,
+        na.rm = TRUE
+      ) +
       coord_flip() +
-      scale_fill_manual(values = mycolors, guide = guide_legend(reverse = TRUE, nrow = legendnrow), na.translate = FALSE) +
+      scale_fill_manual(values = mycolors, guide = guide_legend(reverse = FALSE, nrow = legendnrow), na.translate = FALSE) +
       scale_x_discrete(limits = positions, expand = c(0, 0)) +
       scale_y_continuous(expand = c(0.02, 0)) +
-      labs(title = main_title,
-           y = "",
-           x = " ",
-           caption = paste0(ifelse(lang == "es" & source_info == "LAPOP", "Fuente: LAPOP Lab",
-                                   ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
-                                          source_info))),
-           subtitle = subtitle) +
-      theme(text = element_text(size = 14, family = "inter"), # roboto
-            plot.title = element_text(size = 17, family = "inter", face = "bold"), # nunito
-            plot.caption = element_text(size = 10.5, hjust = 0.02, vjust = 2, family = "inter", color="#585860"), # nunito
-            plot.subtitle = element_text(size = 14, family = "inter-light", color="#585860"), # nunito-light
-            axis.title.y = element_blank(),
-            axis.text.x = element_blank(),
-            axis.text.y = element_text(margin=margin(r=0)),
-            axis.ticks = element_blank(),
-            axis.text = element_text(size = 14, family = "inter", color = "#585860", margin=margin(r=5)), # roboto
-            panel.background = element_rect(fill = "white"),
-            panel.grid = element_blank(),
-            legend.position = "top",
-            plot.title.position = "plot",
-            plot.caption.position = "plot",
-            legend.text = element_text(family = "inter", color = "#585860"), # roboto
-            legend.title = element_blank(),
-            legend.justification='left',
-            legend.key.size = unit(1, "line"),
-            legend.margin = margin(t=5,b=5, 0, subtitle_h_just)) +
-      {if(fixed_aspect_ratio)theme(aspect.ratio = 0.35)}
+      labs(
+        title = main_title,
+        y = "",
+        x = " ",
+        caption = paste0(
+          ifelse(
+            lang == "es" & source_info == "LAPOP",
+            "Fuente: LAPOP Lab",
+            ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab", source_info)
+          )
+        ),
+        subtitle = subtitle
+      ) +
+      theme(
+        text = element_text(size = 14, family = "inter"),
+        plot.title = element_text(size = 17, family = "inter", face = "bold"),
+        plot.caption = element_text(size = 10.5, hjust = 0.02, vjust = 2, family = "inter", color = "#585860"),
+        plot.subtitle = element_text(size = 14, family = "inter-light", color = "#585860"),
+        axis.title.y = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(margin = margin(r = 0)),
+        axis.ticks = element_blank(),
+        axis.text = element_text(size = 14, family = "inter", color = "#585860", margin = margin(r = 5)),
+        panel.background = element_rect(fill = "white"),
+        panel.grid = element_blank(),
+        legend.position = "top",
+        plot.title.position = "plot",
+        plot.caption.position = "plot",
+        legend.text = element_text(family = "inter", color = "#585860"),
+        legend.title = element_blank(),
+        legend.justification = "left",
+        legend.key.size = unit(1, "line"),
+        legend.margin = margin(t = 5, b = 5, 0, subtitle_h_just)
+      ) +
+      {if (fixed_aspect_ratio) theme(aspect.ratio = 0.35)}
   } else {
-    # Create the standard plot without ordering bars
     ggplot(plot_data, aes(fill = value_labels, y = outcome_var, x = x_display, label = prop_labels)) +
-      geom_bar(position = "stack", stat = "identity", width = 0.6) +
-      geom_text(aes(label = ifelse(outcome_var >= 5, prop_labels, NA)),
-                position = position_stack(vjust = 0.5), color = "#FFFFFF",
-                fontface = "bold", size = 5, na.rm=T) +
-      ggrepel::geom_text_repel(aes(label = ifelse(outcome_var < 5 & hide_small_values == FALSE, prop_labels, NA)),
-                               position = position_stack(vjust = 0.5),
-                               color = "#FFFFFF", segment.color = 'transparent',
-                               fontface = "bold", size = 4, family = "inter", # nunito
-                               direction = "y",
-                               force_pull = 0.2, force = 5, na.rm=T) +
+      geom_bar(position = position_stack(reverse = TRUE), stat = "identity", width = 0.6) +
+      geom_text(
+        aes(label = ifelse(outcome_var >= 5, prop_labels, NA)),
+        position = position_stack(vjust = 0.5, reverse = TRUE),
+        color = "#FFFFFF",
+        fontface = "bold",
+        size = 5,
+        na.rm = TRUE
+      ) +
+      ggrepel::geom_text_repel(
+        aes(label = ifelse(outcome_var < 5 & hide_small_values == FALSE, prop_labels, NA)),
+        position = position_stack(vjust = 0.5, reverse = TRUE),
+        color = "#FFFFFF",
+        segment.color = "transparent",
+        fontface = "bold",
+        size = 4,
+        family = "inter",
+        direction = "y",
+        force_pull = 0.2,
+        force = 5,
+        na.rm = TRUE
+      ) +
       coord_flip() +
-      scale_fill_manual(values = mycolors, guide=guide_legend(reverse = TRUE, nrow = legendnrow)) +
+      scale_fill_manual(values = mycolors, guide = guide_legend(reverse = FALSE, nrow = legendnrow)) +
       scale_x_discrete(limits = positions, expand = c(0, 0)) +
       scale_y_continuous(expand = c(0.02, 0)) +
-      labs(title = main_title,
-           y = "",
-           x = " ",
-           caption = paste0(ifelse(lang == "es" & source_info == "LAPOP", "Fuente: LAPOP Lab",
-                                   ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab",
-                                          source_info))),
-           subtitle = subtitle) +
-      theme(text = element_text(size = 14, family = "inter"), # roboto
-            plot.title = element_text(size = 17, family = "inter", face = "bold"), # nunito
-            plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "inter-light", color="#585860"), # roboto
-            plot.subtitle = element_text(size = 14, family = "inter-light", color="#585860"), # nunito
-            axis.title.y = element_blank(),
-            axis.text.x = element_blank(),
-            axis.text.y = element_text(margin=margin(r=0)),
-            axis.ticks = element_blank(),
-            axis.text = element_text(size = 14, family = "inter", color = "#585860", margin=margin(r=5)), # roboto
-            panel.background = element_rect(fill = "white"),
-            panel.grid = element_blank(),
-            legend.position = "top",
-            plot.title.position = "plot",
-            plot.caption.position = "plot",
-            legend.text = element_text(family = "inter", color = "#585860"), # roboto
-            legend.title = element_blank(),
-            legend.justification='left',
-            legend.key.size = unit(1, "line"),
-            legend.margin = margin(t=5,b=5, 0, subtitle_h_just)) +
+      labs(
+        title = main_title,
+        y = "",
+        x = " ",
+        caption = paste0(
+          ifelse(
+            lang == "es" & source_info == "LAPOP",
+            "Fuente: LAPOP Lab",
+            ifelse(lang == "en" & source_info == "LAPOP", "Source: LAPOP Lab", source_info)
+          )
+        ),
+        subtitle = subtitle
+      ) +
+      theme(
+        text = element_text(size = 14, family = "inter"),
+        plot.title = element_text(size = 17, family = "inter", face = "bold"),
+        plot.caption = element_text(size = 10.5, hjust = 0, vjust = 2, family = "inter-light", color = "#585860"),
+        plot.subtitle = element_text(size = 14, family = "inter-light", color = "#585860"),
+        axis.title.y = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(margin = margin(r = 0)),
+        axis.ticks = element_blank(),
+        axis.text = element_text(size = 14, family = "inter", color = "#585860", margin = margin(r = 5)),
+        panel.background = element_rect(fill = "white"),
+        panel.grid = element_blank(),
+        legend.position = "top",
+        plot.title.position = "plot",
+        plot.caption.position = "plot",
+        legend.text = element_text(family = "inter", color = "#585860"),
+        legend.title = element_blank(),
+        legend.justification = "left",
+        legend.key.size = unit(1, "line"),
+        legend.margin = margin(t = 5, b = 5, 0, subtitle_h_just)
+      ) +
       {
         if (fixed_aspect_ratio) theme(aspect.ratio = 0.35)
-        }
+      }
   }
 }

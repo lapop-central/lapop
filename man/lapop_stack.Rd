@@ -58,8 +58,8 @@ Default: LAPOP ("Source: LAPOP Lab" will be printed).}
 
 \item{hide_small_values}{Logical.  Should labels for categories with less than 5 percent be hidden?  Default: TRUE.}
 
-\item{order_bars}{Logical.  Should categories be placed in descending order for each bar?  Default: FALSE.
-showing the distributions of multiple categorical variables.}
+\item{order_bars}{Logical.  Should categories be reordered automatically
+based on their values?  Default: FALSE.}
 
 \item{subtitle_h_just}{Numeric.  Move the subtitle/legend text left (negative numbers) or right (positive numbers).
 Ranges from -100 to 100.  Default: 0.}
