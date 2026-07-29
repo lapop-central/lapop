@@ -90,9 +90,8 @@ lapop_stack(
 
 - order_bars:
 
-  Logical. Should categories be placed in descending order for each bar?
-  Default: FALSE. showing the distributions of multiple categorical
-  variables.
+  Logical. Should categories be reordered automatically based on their
+  values? Default: FALSE.
 
 - subtitle_h_just:
 
