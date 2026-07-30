@@ -90,7 +90,7 @@ Other methods such as `haven::read_dta()` or `rio::import()` may fail to import 
 
 <p>5. Store the output in an R object.</p>
 
-   - File names: .csv and graphics files should have the same name. Their names should be in the following standard format: CountryYear/ts_DVcode(s)_IVcode(s)_graphtype.extension.
+   - File names: .csv and graphics files should have the same name. Their names should be in the following standard format: CountryYear_DVcode(s)_IVcode(s)_graphtype.extension
    - Examples:
       
       - mex21_countfair1_hist.csv
