@@ -122,7 +122,7 @@ Guide](https://lapop-central.github.io/lapop/articles/lapop-visualization.html)
 
     - File names: .csv and graphics files should have the same name.
       Their names should be in the following standard format:
-      CountryYear/ts_DVcode(s)\_IVcode(s)\_graphtype.extension.
+      CountryYear_DVcode(s)\_IVcode(s)\_graphtype.extension
 
     - Examples:
 
