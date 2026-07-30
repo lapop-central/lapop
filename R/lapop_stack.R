@@ -19,6 +19,7 @@ lapop_sb <- function(data, outcome_var = data$prop, prop_labels = data$proplabel
                         rev_values = FALSE,
                         rev_variables = FALSE,
                         hide_small_values = TRUE,
+                        display_perc = TRUE,
                         order_bars = FALSE,
                         subtitle_h_just = 0,
                         color_scheme = c("#2D708E", "#1F9689", "#00ADA9", "#21A356", "#568424", "#ACB014")){
@@ -32,6 +33,7 @@ lapop_sb <- function(data, outcome_var = data$prop, prop_labels = data$proplabel
               rev_values = rev_values,
               rev_variables = rev_variables,
               hide_small_values = hide_small_values,
+              display_perc = display_perc,
               order_bars = order_bars,
               subtitle_h_just = subtitle_h_just,
               color_scheme = color_scheme)
@@ -73,9 +75,15 @@ NULL
 #' @param fixed_aspect_ratio Logical.  Should the aspect ratio be set to a specific value (0.35)?
 #' This prevents bars from stretching vertically to fit the plot area.  Set to false when you have
 #' a large number of bars (> 10).  Default: TRUE.
+#' @param size_aspect_ratio Numeric. Optional custom bar thickness to use when
+#' `fixed_aspect_ratio = FALSE`. Default: `NULL`.
 #' @param rev_variables Logical.  Should the order of the variables be reversed?  Default: FALSE.
 #' @param rev_values Logical.  Should the order of the values for each variable be reversed?  Default: FALSE.
-#' @param hide_small_values Logical.  Should labels for categories with less than 5 percent be hidden?  Default: TRUE.
+#' @param hide_small_values Logical.  Should labels for categories with 3 percent or less be hidden?  Default: TRUE.
+#' @param display_perc Logical. If `TRUE`, use `proplabel`-style labels (for example, with `%`).
+#' If `FALSE`, use numeric `prop` values without the percent symbol. Default: TRUE.
+#' @param vallab_size Numeric. Size of the percentage labels inside the bars.
+#' Default: 5.
 #' @param order_bars Logical.  Should categories be reordered automatically
 #' based on their values?  Default: FALSE.
 #' @param legendnrow Numeric.  How many rows for legend labels. Default: 1.
@@ -121,9 +129,12 @@ lapop_stack <- function(data,
                         rev_values = FALSE,
                         rev_variables = FALSE,
                         hide_small_values = TRUE,
+                        display_perc = TRUE,
                         order_bars = FALSE,
                         subtitle_h_just = 0,
                         fixed_aspect_ratio = TRUE,
+                        size_aspect_ratio = NULL,
+                        vallab_size = 5,
                         legendnrow = 1,
                         color_scheme = c("#2D708E", "#008381", "#C74E49", "#784885", "#a43d6a", "#202020")) {
 
@@ -142,6 +153,12 @@ lapop_stack <- function(data,
     outcome_var = outcome_var,
     prop_labels = prop_labels
   )
+
+  plot_data$label_text <- if (isTRUE(display_perc)) {
+    as.character(plot_data$prop_labels)
+  } else {
+    as.character(plot_data$outcome_var)
+  }
 
   if (isTRUE(xvar)) {
     if ("xvar_label" %in% colnames(data)) {
@@ -168,6 +185,7 @@ lapop_stack <- function(data,
 
   mycolors <- color_scheme[seq_along(value_levels)]
   names(mycolors) <- value_levels
+  bar_width <- if (isTRUE(fixed_aspect_ratio) || is.null(size_aspect_ratio)) 0.6 else size_aspect_ratio
 
   if (isTRUE(xvar)) {
     plot_data$combined_label <- plot_data$group_var
@@ -189,6 +207,13 @@ lapop_stack <- function(data,
     plot_data$x_display <- plot_data$var_labels
   }
 
+  group_totals <- ave(plot_data$outcome_var, plot_data$x_display, FUN = sum)
+  plot_data$plot_value <- ifelse(
+    group_totals > 0,
+    plot_data$outcome_var / group_totals * 100,
+    plot_data$outcome_var
+  )
+
   update_geom_defaults("text", list(family = "inter"))
 
   if (order_bars == TRUE) {
@@ -198,10 +223,10 @@ lapop_stack <- function(data,
       plot <- ggplot(
         plot_data,
         aes(
-          y = outcome_var,
+          y = plot_value,
           x = x_display,
           fill = reorder(value_labels, outcome_var),
-          label = prop_labels
+          label = label_text
         )
       )
     } else {
@@ -211,26 +236,26 @@ lapop_stack <- function(data,
       plot <- ggplot(
         plot_data,
         aes(
-          y = outcome_var,
+          y = plot_value,
           x = x_display,
           fill = reorder(value_labels, outcome_var),
-          label = prop_labels
+          label = label_text
         )
       )
     }
 
     plot +
-      geom_bar(position = position_stack(reverse = TRUE), stat = "identity", width = 0.6) +
+      geom_bar(position = position_stack(reverse = TRUE), stat = "identity", width = bar_width) +
       geom_text(
-        aes(label = ifelse(outcome_var >= 5, prop_labels, NA)),
+        aes(label = ifelse(outcome_var > 3, label_text, NA)),
         position = position_stack(vjust = 0.5, reverse = TRUE),
         color = "#FFFFFF",
         fontface = "bold",
-        size = 5,
+        size = vallab_size,
         na.rm = TRUE
       ) +
       ggrepel::geom_text_repel(
-        aes(label = ifelse(outcome_var < 5 & hide_small_values == FALSE, prop_labels, NA)),
+        aes(label = ifelse(outcome_var <= 3 & hide_small_values == FALSE, label_text, NA)),
         position = position_stack(vjust = 0.5, reverse = TRUE),
         color = "#FFFFFF",
         segment.color = "transparent",
@@ -266,9 +291,16 @@ lapop_stack <- function(data,
         plot.subtitle = element_text(size = 14, family = "inter-light", color = "#585860"),
         axis.title.y = element_blank(),
         axis.text.x = element_blank(),
-        axis.text.y = element_text(margin = margin(r = 0)),
+        axis.text.y = element_text(
+          size = 14,
+          family = "inter",
+          color = "#585860",
+          hjust = 1,
+          vjust = 0.5,
+          margin = margin(r = 5)
+        ),
         axis.ticks = element_blank(),
-        axis.text = element_text(size = 14, family = "inter", color = "#585860", margin = margin(r = 5)),
+        axis.text = element_text(size = 14, family = "inter", color = "#585860"),
         panel.background = element_rect(fill = "white"),
         panel.grid = element_blank(),
         legend.position = "top",
@@ -280,20 +312,24 @@ lapop_stack <- function(data,
         legend.key.size = unit(1, "line"),
         legend.margin = margin(t = 5, b = 5, 0, subtitle_h_just)
       ) +
-      {if (fixed_aspect_ratio) theme(aspect.ratio = 0.35)}
+      {
+        if (fixed_aspect_ratio) {
+          theme(aspect.ratio = 0.35)
+        }
+      }
   } else {
-    ggplot(plot_data, aes(fill = value_labels, y = outcome_var, x = x_display, label = prop_labels)) +
-      geom_bar(position = position_stack(reverse = TRUE), stat = "identity", width = 0.6) +
+    ggplot(plot_data, aes(fill = value_labels, y = plot_value, x = x_display, label = label_text)) +
+      geom_bar(position = position_stack(reverse = TRUE), stat = "identity", width = bar_width) +
       geom_text(
-        aes(label = ifelse(outcome_var >= 5, prop_labels, NA)),
+        aes(label = ifelse(outcome_var > 3, label_text, NA)),
         position = position_stack(vjust = 0.5, reverse = TRUE),
         color = "#FFFFFF",
         fontface = "bold",
-        size = 5,
+        size = vallab_size,
         na.rm = TRUE
       ) +
       ggrepel::geom_text_repel(
-        aes(label = ifelse(outcome_var < 5 & hide_small_values == FALSE, prop_labels, NA)),
+        aes(label = ifelse(outcome_var <= 3 & hide_small_values == FALSE, label_text, NA)),
         position = position_stack(vjust = 0.5, reverse = TRUE),
         color = "#FFFFFF",
         segment.color = "transparent",
@@ -329,9 +365,16 @@ lapop_stack <- function(data,
         plot.subtitle = element_text(size = 14, family = "inter-light", color = "#585860"),
         axis.title.y = element_blank(),
         axis.text.x = element_blank(),
-        axis.text.y = element_text(margin = margin(r = 0)),
+        axis.text.y = element_text(
+          size = 14,
+          family = "inter",
+          color = "#585860",
+          hjust = 1,
+          vjust = 0.5,
+          margin = margin(r = 5)
+        ),
         axis.ticks = element_blank(),
-        axis.text = element_text(size = 14, family = "inter", color = "#585860", margin = margin(r = 5)),
+        axis.text = element_text(size = 14, family = "inter", color = "#585860"),
         panel.background = element_rect(fill = "white"),
         panel.grid = element_blank(),
         legend.position = "top",
@@ -344,7 +387,9 @@ lapop_stack <- function(data,
         legend.margin = margin(t = 5, b = 5, 0, subtitle_h_just)
       ) +
       {
-        if (fixed_aspect_ratio) theme(aspect.ratio = 0.35)
-      }
+        if (fixed_aspect_ratio) {
+          theme(aspect.ratio = 0.35)
+        }
+        }
   }
 }
