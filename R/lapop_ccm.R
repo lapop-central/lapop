@@ -193,15 +193,18 @@ lapop_ccm <- function(data,
     list(x = x_label, y = y_label)
   }
 
+  dodge_pos <- position_dodge(width = 0.7)
+
   p <- ggplot(data = data,
               aes(x = factor(pais, levels = unique(pais)),
                   y = prop,
                   fill = var_label,
-                  color = var_label)) +
-    geom_bar(aes(alpha = alpha_value), position = "dodge", stat = "identity", width = 0.7) +
+                  color = var_label,
+                  group = var_label)) +
+    geom_bar(aes(alpha = alpha_value), position = dodge_pos, stat = "identity", width = 0.7) +
     geom_text(
-      aes(label = proplabel, y = label_position, group = var_group),
-      position = position_dodge(width = 0.7),
+      aes(label = proplabel, y = label_position),
+      position = dodge_pos,
       vjust = if (horizontal) 0.5 else data$label_vjust,
       hjust = if (horizontal) data$label_hjust else 0.5,
       size = label_size,
@@ -210,7 +213,7 @@ lapop_ccm <- function(data,
     ) +
     geom_errorbar(aes(ymin = lower_bound, ymax = upper_bound),
                   width = 0.15,
-                  position = position_dodge(width = 0.7), linetype = "solid", show.legend = FALSE) +
+                  position = dodge_pos, linetype = "solid", show.legend = FALSE) +
     scale_fill_manual(values = fill_colors) +
     scale_color_manual(values = line_colors) +
     scale_y_continuous(
