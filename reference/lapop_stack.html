@@ -57,9 +57,12 @@
 <span>  rev_values <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  rev_variables <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  hide_small_values <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  display_perc <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  order_bars <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  subtitle_h_just <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  fixed_aspect_ratio <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  size_aspect_ratio <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  vallab_size <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  legendnrow <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  color_scheme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#2D708E"</span>, <span class="st">"#008381"</span>, <span class="st">"#C74E49"</span>, <span class="st">"#784885"</span>, <span class="st">"#a43d6a"</span>, <span class="st">"#202020"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -118,7 +121,12 @@ Default: LAPOP ("Source: LAPOP Lab" will be printed).</p></dd>
 
 
 <dt id="arg-hide-small-values">hide_small_values<a class="anchor" aria-label="anchor" href="#arg-hide-small-values"></a></dt>
-<dd><p>Logical.  Should labels for categories with less than 5 percent be hidden?  Default: TRUE.</p></dd>
+<dd><p>Logical.  Should labels for categories with 3 percent or less be hidden?  Default: TRUE.</p></dd>
+
+
+<dt id="arg-display-perc">display_perc<a class="anchor" aria-label="anchor" href="#arg-display-perc"></a></dt>
+<dd><p>Logical. If `TRUE`, use `proplabel`-style labels (for example, with `<!-- %`). -->
+If `FALSE`, use numeric `prop` values without the percent symbol. Default: TRUE.</p></dd>
 
 
 <dt id="arg-order-bars">order_bars<a class="anchor" aria-label="anchor" href="#arg-order-bars"></a></dt>
@@ -135,6 +143,16 @@ Ranges from -100 to 100.  Default: 0.</p></dd>
 <dd><p>Logical.  Should the aspect ratio be set to a specific value (0.35)?
 This prevents bars from stretching vertically to fit the plot area.  Set to false when you have
 a large number of bars (&gt; 10).  Default: TRUE.</p></dd>
+
+
+<dt id="arg-size-aspect-ratio">size_aspect_ratio<a class="anchor" aria-label="anchor" href="#arg-size-aspect-ratio"></a></dt>
+<dd><p>Numeric. Optional custom bar thickness to use when
+`fixed_aspect_ratio = FALSE`. Default: `NULL`.</p></dd>
+
+
+<dt id="arg-vallab-size">vallab_size<a class="anchor" aria-label="anchor" href="#arg-vallab-size"></a></dt>
+<dd><p>Numeric. Size of the percentage labels inside the bars.
+Default: 5.</p></dd>
 
 
 <dt id="arg-legendnrow">legendnrow<a class="anchor" aria-label="anchor" href="#arg-legendnrow"></a></dt>

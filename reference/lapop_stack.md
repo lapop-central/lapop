@@ -19,9 +19,12 @@ lapop_stack(
   rev_values = FALSE,
   rev_variables = FALSE,
   hide_small_values = TRUE,
+  display_perc = TRUE,
   order_bars = FALSE,
   subtitle_h_just = 0,
   fixed_aspect_ratio = TRUE,
+  size_aspect_ratio = NULL,
+  vallab_size = 5,
   legendnrow = 1,
   color_scheme = c("#2D708E", "#008381", "#C74E49", "#784885", "#a43d6a", "#202020")
 )
@@ -85,8 +88,14 @@ lapop_stack(
 
 - hide_small_values:
 
-  Logical. Should labels for categories with less than 5 percent be
+  Logical. Should labels for categories with 3 percent or less be
   hidden? Default: TRUE.
+
+- display_perc:
+
+  Logical. If \`TRUE\`, use \`proplabel\`-style labels (for example,
+  with \` If \`FALSE\`, use numeric \`prop\` values without the percent
+  symbol. Default: TRUE.
 
 - order_bars:
 
@@ -104,6 +113,15 @@ lapop_stack(
   This prevents bars from stretching vertically to fit the plot area.
   Set to false when you have a large number of bars (\> 10). Default:
   TRUE.
+
+- size_aspect_ratio:
+
+  Numeric. Optional custom bar thickness to use when
+  \`fixed_aspect_ratio = FALSE\`. Default: \`NULL\`.
+
+- vallab_size:
+
+  Numeric. Size of the percentage labels inside the bars. Default: 5.
 
 - legendnrow:
 
