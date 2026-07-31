@@ -38,6 +38,8 @@ NULL
 #' Must be an integer from 0 to 3. Default: 0.
 #' @param display_perc Logical. If TRUE, use `proplabel`-style labels (for example, with `%`).
 #' If FALSE, use numeric `prop` values without the percent symbol. Default: TRUE.
+#' @param set_x Numeric. Baseline from which bars should start. Must be a single
+#' value between -100 and 100. Default: 0.
 #' @param label_size Numeric.  Size of text for data labels (percentages above bars).  Default: 5.
 #' @param max_countries Numeric. Threshold for automatic x-axis label rotation. When the number of unique
 #' country labels exceeds this value, labels will be rotated for better readability. Default: 20.
@@ -96,6 +98,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                      color_scheme = "#784885",
                      decimals = 0,
                      display_perc = TRUE,
+                     set_x = 0,
                      label_size = 5,  # Default size
                      max_countries = 30,
                      label_angle = 0,
@@ -105,6 +108,9 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
   if (!is.numeric(decimals) || length(decimals) != 1 || is.na(decimals) ||
       decimals %% 1 != 0 || decimals < 0 || decimals > 3) {
     stop("`decimals` must be a single integer between 0 and 3.")
+  }
+  if (!is.numeric(set_x) || length(set_x) != 1 || is.na(set_x) || set_x < -100 || set_x > 100) {
+    stop("`set_x` must be a single numeric value between -100 and 100.")
   }
 
   if (missing(label_var)) {
@@ -138,9 +144,12 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
     data = data[order(data$vallabel),]
   }
 
-  data$label_y <- ifelse(data$prop < 0, data$lb, data$ub)
-  data$label_vjust <- ifelse(data$prop < 0, 1.4, -0.5)
-  data$label_hjust <- ifelse(data$prop < 0, 1, 0)
+  data$x_index <- seq_len(nrow(data))
+  data$bar_ymin <- pmin(set_x, data$prop)
+  data$bar_ymax <- pmax(set_x, data$prop)
+  data$label_y <- ifelse(data$prop < set_x, data$lb, data$ub)
+  data$label_vjust <- ifelse(data$prop < set_x, 1.4, -0.5)
+  data$label_hjust <- ifelse(data$prop < set_x, 1, 0)
 
   ci_text = ifelse(lang == "es",
                    paste0(" <span style='color:", color_scheme, "; font-size:18pt'> \u0131\u2014\u0131</span> ",
@@ -155,8 +164,11 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
   update_geom_defaults("text", list(family = "inter")) # roboto
 
   # Create base plot
-   cc <- ggplot(data=data, aes(x=factor(vallabel, levels = vallabel), y=prop, fill = hl_var)) +
-    geom_bar(stat="identity", color = color_scheme, width = 0.6) +
+   cc <- ggplot(data=data, aes(x = x_index, y = prop, fill = hl_var)) +
+    geom_rect(aes(xmin = x_index - 0.3, xmax = x_index + 0.3, ymin = bar_ymin, ymax = bar_ymax),
+              color = color_scheme,
+              inherit.aes = FALSE) +
+    geom_hline(yintercept = set_x, linewidth = 0.6, linetype = "solid", colour = "#dddddf") +
     geom_text(aes(label=label_var, y = label_y),
               vjust = if (horizontal) 0.5 else data$label_vjust,
               hjust = if (horizontal) data$label_hjust else 0.5,
@@ -169,6 +181,11 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                                       "<span style='color:#FFFFFF00'>-----------</span>",
                                       ci_text),
                       na.value = paste0(color_scheme, "90")) +
+    scale_x_continuous(
+      breaks = data$x_index,
+      labels = data$vallabel,
+      expand = expansion(add = c(0.5, 0.5))
+    ) +
     scale_y_continuous(
       limits = c(ymin, ymax),
       expand = if (horizontal) expansion(mult = c(0.002, 0.08)) else expansion(mult = 0.002)
