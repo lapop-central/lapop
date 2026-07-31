@@ -177,7 +177,7 @@ institutions](lapop-visualization_files/figure-html/mline-1.png)
 
 fig2.3_data <- lpr_ccm(ym23w,
                        outcome_vars = c("b12", "b18"),
-                       rec1 = c(5, 7),
+                       rec = c(5, 7),
                        rec2 = c(5, 7))
 
 # Changing legend for readibility

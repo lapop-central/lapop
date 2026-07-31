@@ -12,7 +12,7 @@ lpr_ccm(
   outcome_vars,
   xvar = "pais_lab",
   by = NULL,
-  rec1 = c(1, 1),
+  rec = c(1, 1),
   rec2 = c(1, 1),
   rec3 = c(1, 1),
   rec4 = c(1, 1),
@@ -53,11 +53,11 @@ lpr_ccm(
   [`lapop_ccm()`](https://lapop-central.github.io/lapop/reference/lapop_ccm.md).
   Default: NULL.
 
-- rec1, rec2, rec3, rec4:
+- rec, rec2, rec3, rec4:
 
   Numeric. The minimum and maximum values of the outcome variable that
   should be included in the numerator of the percentage. For example, if
-  the variable is on a 1-7 scale and rec1 is c(5, 7), the function will
+  the variable is on a 1-7 scale and rec is c(5, 7), the function will
   show the percentage who chose an answer of 5, 6, 7 out of all valid
   answers. Can also supply one value only, to produce the percentage
   that chose that value out of all other values. Default: c(1, 1).
@@ -129,7 +129,7 @@ ym23lpr <- lpr_data(ym23_small)
 # Multiple outcomes over countries
 lpr_ccm(ym23lpr,
 outcome_vars = c("b12", "b18"),
-rec1 = c(1, 3),
+rec = c(1, 3),
 rec2 = c(5, 7))
 #> # A tibble: 6 × 6
 #> # Groups:   var [2]
@@ -147,7 +147,7 @@ rec2 = c(5, 7))
 lpr_ccm(ym23lpr,
 outcome_vars = c("b12", "b18"),
 xvar = "wave",
-rec1 = c(1, 3),
+rec = c(1, 3),
 rec2 = c(5, 7),
 ttest = TRUE)
 #> # A tibble: 4 × 7
@@ -158,26 +158,17 @@ ttest = TRUE)
 #> 2 2018/19  26.4  25.0  27.8 26%       b12   0.715
 #> 3 2023     38.2  36.5  39.9 38%       b18   0.872
 #> 4 2018/19  36.6  34.8  38.3 37%       b18   0.900
-# }
+
 # Single outcome broken down by a grouping variable
-# \donttest{
-lpr_ccm(
-  ym23lpr,
-  outcome_vars = "b12",
-  rec1 = c(1, 3),
-  by = "q1tc_r",
-  xvar = "pais_lab")
-#> # A tibble: 8 × 6
-#> # Groups:   var [3]
-#>   pais   prop     lb    ub proplabel var                                       
-#>   <fct> <dbl>  <dbl> <dbl> <chr>     <chr>                                     
-#> 1 AR     29.1  25.8   32.5 29%       Hombre/masculino                          
-#> 2 BR     23.0  19.6   26.4 23%       Hombre/masculino                          
-#> 3 MX     16.6  13.8   19.3 17%       Hombre/masculino                          
-#> 4 AR     36.0  32.0   39.9 36%       Mujer/femenino                            
-#> 5 AR     50   -19.6  120.  50%       No se identifica como hombre ni como mujer
-#> 6 BR     34.6  30.8   38.4 35%       Mujer/femenino                            
-#> 7 BR     33.3   2.90  63.8 33%       No se identifica como hombre ni como mujer
-#> 8 MX     26.4  23.0   29.8 26%       Mujer/femenino                            
+fs2_ccm <- lpr_ccm(
+  GMs,
+  outcome_vars = "fs2",
+  xvar = "pais_lab",
+  by = "mig21",
+  rec = c(1, 1)
+)
+#> Error in map(.x, .f, ...): ℹ In index: 1.
+#> Caused by error:
+#> ! object 'GMs' not found
 # }
 ```
