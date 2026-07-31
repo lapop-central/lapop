@@ -130,13 +130,11 @@ lpr_cc <- function(data,
       {
         if (mean) { # mean=TRUE calculation
           summarize(., prop = survey_mean(!!curr_outcome, na.rm = TRUE, vartype = "ci", level = ci_level)) %>%
-            mutate(proplabel = case_when(cfmt != "" ~ sprintf("%.1f", prop),
-                                         TRUE ~ sprintf("%.1f", prop)))
+            mutate(proplabel = if (cfmt != "") sprintf(cfmt, prop) else sprintf("%.1f", prop))
         } else { # percentages calculation
           summarize(., prop = survey_mean(between(!!curr_outcome, curr_rec[1], curr_rec[2]),
                                           na.rm = TRUE, vartype = "ci", level = ci_level) * 100) %>%
-            mutate(proplabel = case_when(cfmt != "" ~ sprintf("%.0f%%", round(prop)),
-                                         TRUE ~ sprintf("%.0f%%", round(prop))))
+            mutate(proplabel = if (cfmt != "") sprintf(cfmt, round(prop)) else sprintf("%.0f%%", round(prop)))
         }
       } %>%
       filter(prop != 0) %>%
@@ -160,30 +158,125 @@ lpr_cc <- function(data,
 
   # Perform t-tests if ttest = TRUE
   if (ttest) {
-    final_results <- final_results %>%
-      mutate(se = (ub - lb) / (2 * 1.96))   # Add standard error (se) column
+    t_test_results <- data.frame(
+      test = character(),
+      diff = numeric(),
+      ttest = numeric(),
+      pval = numeric(),
+      stringsAsFactors = FALSE
+    )
 
-    t_test_results <- data.frame(test = character(), diff = numeric(),
-                                 ttest = numeric(), pval = numeric(), stringsAsFactors = FALSE)
-    for (i in 1:(nrow(final_results) - 1)) {
-      for (j in (i + 1):nrow(final_results)) {
-        prop1 <- final_results$prop[i]
-        se1 <- final_results$se[i]
-        prop2 <- final_results$prop[j]
-        se2 <- final_results$se[j]
-        diff <- prop1 - prop2
-        t_stat <- diff / sqrt(se1^2 + se2^2)
-        df <- (se1^2 + se2^2)^2 / ((se1^2)^2 / (nrow(data) - 1) + (se2^2)^2 / (nrow(data) - 1))
-        p_value <- 2 * pt(-abs(t_stat), df)
-        t_test_results <- rbind(t_test_results,
-                                data.frame(test = paste(final_results$vallabel[i], "vs", final_results$vallabel[j]),
-                                           diff = diff,
-                                           ttest = t_stat,
-                                           pval = p_value))
+    if (!is.null(xvar)) {
+      curr_outcome <- outcome_vars[[1]]
+      curr_rec <- rec[[1]]
+
+      if (keep_nr) {
+        design_test <- data %>%
+          mutate(!!curr_outcome := case_when(
+            na_tag(!!curr_outcome) == "a" | na_tag(!!curr_outcome) == "b" ~ 99,
+            TRUE ~ as.numeric(!!curr_outcome)
+          ))
+      } else {
+        design_test <- data
+      }
+
+      design_test <- design_test %>%
+        mutate(
+          .ttest_value = if (mean) {
+            as.numeric(!!curr_outcome)
+          } else {
+            as.numeric(between(!!curr_outcome, curr_rec[1], curr_rec[2])) * 100
+          },
+          .ttest_group = as_factor(!!sym(xvar))
+        ) %>%
+        filter(!is.na(.ttest_group), !is.na(.ttest_value))
+
+      for (i in 1:(nrow(final_results) - 1)) {
+        for (j in (i + 1):nrow(final_results)) {
+          group_i <- as.character(final_results$vallabel[i])
+          group_j <- as.character(final_results$vallabel[j])
+
+          pair_design <- subset(design_test, .ttest_group %in% c(group_i, group_j))
+          pair_design$variables$.ttest_group <- stats::relevel(
+            factor(pair_design$variables$.ttest_group),
+            ref = group_j
+          )
+
+          pair_fit <- survey::svyglm(.ttest_value ~ .ttest_group, design = pair_design)
+          pair_coef <- stats::coef(pair_fit)[2]
+          pair_se <- sqrt(stats::vcov(pair_fit)[2, 2])
+          pair_df <- survey::degf(pair_design)
+          pair_t <- pair_coef / pair_se
+          pair_p <- 2 * stats::pt(-abs(pair_t), df = pair_df)
+
+          t_test_results <- rbind(
+            t_test_results,
+            data.frame(
+              test = paste(group_i, "vs", group_j),
+              diff = unname(pair_coef),
+              ttest = unname(pair_t),
+              pval = unname(pair_p)
+            )
+          )
+        }
+      }
+    } else {
+      if (keep_nr) {
+        design_test <- data %>%
+          mutate(across(all_of(outcome), ~ case_when(
+            na_tag(.) == "a" | na_tag(.) == "b" ~ 99,
+            TRUE ~ as.numeric(.)
+          )))
+      } else {
+        design_test <- data
+      }
+
+      test_var_names <- paste0(".ttest_value_", seq_along(outcome))
+      for (i in seq_along(outcome)) {
+        if (mean) {
+          design_test <- design_test %>%
+            mutate(!!test_var_names[i] := as.numeric(!!outcome_vars[[i]]))
+        } else {
+          curr_rec <- rec[[i]]
+          design_test <- design_test %>%
+            mutate(!!test_var_names[i] := as.numeric(between(!!outcome_vars[[i]], curr_rec[1], curr_rec[2])) * 100)
+        }
+      }
+
+      mean_formula <- stats::as.formula(paste0("~", paste(test_var_names, collapse = " + ")))
+      mean_estimates <- survey::svymean(mean_formula, design = design_test, na.rm = TRUE)
+      test_name_map <- setNames(test_var_names, outcome)
+      design_df <- survey::degf(design_test)
+
+      for (i in 1:(nrow(final_results) - 1)) {
+        for (j in (i + 1):nrow(final_results)) {
+          label_i <- as.character(final_results$vallabel[i])
+          label_j <- as.character(final_results$vallabel[j])
+          var_i <- test_name_map[[label_i]]
+          var_j <- test_name_map[[label_j]]
+
+          contrast_est <- survey::svycontrast(
+            mean_estimates,
+            stats::setNames(c(1, -1), c(var_i, var_j))
+          )
+          diff_est <- as.numeric(stats::coef(contrast_est))
+          diff_se <- sqrt(as.numeric(stats::vcov(contrast_est)))
+          diff_t <- diff_est / diff_se
+          diff_p <- 2 * stats::pt(-abs(diff_t), df = design_df)
+
+          t_test_results <- rbind(
+            t_test_results,
+            data.frame(
+              test = paste(label_i, "vs", label_j),
+              diff = diff_est,
+              ttest = diff_t,
+              pval = diff_p
+            )
+          )
+        }
       }
     }
 
-    # Attach t-test results as an attribute to final_results
     attr(final_results, "t_test_results") <- t_test_results
   }
 

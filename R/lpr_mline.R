@@ -169,6 +169,11 @@ result_list <- lapply(seq_along(if (use_cat) categories else outcome), function(
   } else {
     temp$varlabel <- var_labels[i]
   }
+  temp$.outcome_var <- if (use_cat) outcome else outcome[i]
+  temp$.rec_lo <- rec_list[[i]][1]
+  temp$.rec_hi <- rec_list[[i]][2]
+  temp$.category_value <- if (use_cat) categories[i] else NA
+  temp$.group_value <- NA_character_
   temp
 })
 
@@ -235,35 +240,89 @@ if (use_cat && exists("val_labels")) {
       }
     } %>%
     filter(prop != 0) %>%
-    rename(lb = prop_low, ub = prop_upp)
+    rename(lb = prop_low, ub = prop_upp) %>%
+    mutate(
+      .outcome_var = outcome,
+      .rec_lo = rec[1],
+      .rec_hi = rec[2],
+      .category_value = NA,
+      .group_value = as.character(varlabel)
+    )
 }
 
   # 5. T-tests if requested
   if (ttest && nrow(mline) > 1) {
-    mline <- mline %>%
-      mutate(se = (ub - lb) / (2 * 1.96))
+    design_test <- data
+    if (keep_nr) {
+      design_test <- design_test %>%
+        mutate(across(all_of(unique(stats::na.omit(mline$.outcome_var))), ~ case_when(
+          na_tag(.) == "a" | na_tag(.) == "b" ~ 99,
+          TRUE ~ as.numeric(.)
+        )))
+    }
 
-    t_test_results <- combn(1:nrow(mline), 2, function(pair) {
-      i <- pair[1]; j <- pair[2]
-      diff <- mline$prop[i] - mline$prop[j]
-      se_diff <- sqrt(mline$se[i]^2 + mline$se[j]^2)
-      t_stat <- diff/se_diff
-      df <- (mline$se[i]^2 + mline$se[j]^2)^2 /
-        ((mline$se[i]^4 + mline$se[j]^4)/(nrow(mline)-1))
-      p_value <- 2 * pt(-abs(t_stat), df)
+    wave_labels <- if (use_wave) {
+      as.character(haven::as_factor(design_test$variables$wave))
+    } else {
+      as.character(design_test$variables$year)
+    }
+    group_labels <- if (length(outcome) == 1 && !use_cat) {
+      as.character(haven::as_factor(design_test$variables[[xvar]]))
+    } else {
+      NULL
+    }
+
+    mline_test <- mline %>% filter(!is.na(prop))
+    for (i in seq_len(nrow(mline_test))) {
+      row_name <- paste0(".ttest_row_", i)
+      outcome_values <- as.numeric(design_test$variables[[mline_test$.outcome_var[i]]])
+      value_vector <- if (mean) {
+        outcome_values
+      } else if (!is.na(mline_test$.category_value[i])) {
+        as.numeric(outcome_values == mline_test$.category_value[i]) * 100
+      } else {
+        as.numeric(dplyr::between(outcome_values, mline_test$.rec_lo[i], mline_test$.rec_hi[i])) * 100
+      }
+
+      domain <- wave_labels == as.character(mline_test$wave[i])
+      if (!is.null(group_labels)) {
+        domain <- domain & group_labels == as.character(mline_test$.group_value[i])
+      }
+
+      design_test$variables[[row_name]] <- ifelse(domain, value_vector, NA_real_)
+    }
+
+    row_var_names <- paste0(".ttest_row_", seq_len(nrow(mline_test)))
+    row_formula <- stats::as.formula(paste0("~", paste(row_var_names, collapse = " + ")))
+    row_estimates <- survey::svymean(row_formula, design = design_test, na.rm = TRUE)
+    design_df <- survey::degf(design_test)
+
+    t_test_results <- combn(seq_len(nrow(mline_test)), 2, function(pair) {
+      i <- pair[1]
+      j <- pair[2]
+      contrast_est <- survey::svycontrast(
+        row_estimates,
+        stats::setNames(c(1, -1), c(row_var_names[i], row_var_names[j]))
+      )
+      diff_est <- as.numeric(stats::coef(contrast_est))
+      diff_se <- sqrt(as.numeric(stats::vcov(contrast_est)))
+      diff_t <- diff_est / diff_se
+      diff_p <- 2 * stats::pt(-abs(diff_t), df = design_df)
 
       data.frame(
-        test = paste(mline$varlabel[i], mline$wave[i], "vs",
-                     mline$varlabel[j], mline$wave[j]),
-        diff = round(diff, 3),
-        t_stat = round(t_stat, 3),
-        p_value = round(p_value, 3),
+        test = paste(mline_test$varlabel[i], mline_test$wave[i], "vs",
+                     mline_test$varlabel[j], mline_test$wave[j]),
+        diff = round(diff_est, 3),
+        t_stat = round(diff_t, 3),
+        p_value = round(diff_p, 3),
         stringsAsFactors = FALSE
       )
     }, simplify = FALSE) %>% bind_rows()
 
     attr(mline, "t_test_results") <- t_test_results
   }
+
+  mline <- mline %>% select(-any_of(c(".outcome_var", ".rec_lo", ".rec_hi", ".category_value", ".group_value")))
 
   # 6. Save if requested
   if (filesave != "") {

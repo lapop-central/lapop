@@ -133,13 +133,12 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
 
 
   if(all(highlight != "")){
-    data$hl_var = factor(ifelse(vallabel %in% highlight, 0, 1), labels = c("hl", "other"))
-    fill_values = c(hl = paste0(color_scheme, "47"), other = paste0(color_scheme, "20"))
+    data$hl_var = ifelse(vallabel %in% highlight, "hl", "other")
   }
   else{
-    data$hl_var = factor("other")
-    fill_values = c(other = paste0(color_scheme, "47"))
+    data$hl_var = "other"
   }
+  data$bar_fill <- ifelse(data$hl_var == "hl", paste0(color_scheme, "47"), paste0(color_scheme, "20"))
 
   if(sort == "hi-lo"){
     data = data[order(-data$prop),]
@@ -175,8 +174,9 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
   update_geom_defaults("text", list(family = "inter")) # roboto
 
   # Create base plot
-   cc <- ggplot(data=data, aes(x = x_index, y = prop_shifted, fill = hl_var)) +
-    geom_rect(aes(xmin = x_index - 0.3, xmax = x_index + 0.3, ymin = bar_ymin, ymax = bar_ymax, fill = hl_var),
+   cc <- ggplot(data=data, aes(x = x_index, y = prop_shifted)) +
+    geom_rect(aes(xmin = x_index - 0.3, xmax = x_index + 0.3, ymin = bar_ymin, ymax = bar_ymax),
+              fill = data$bar_fill,
               color = color_scheme,
               inherit.aes = FALSE) +
     geom_hline(yintercept = 0, linewidth = 0.6, linetype = "solid", colour = "#dddddf") +
@@ -185,13 +185,6 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
               hjust = if (horizontal) data$label_hjust else 0.5,
               size=current_label_size, fontface = "bold", color = color_scheme) +
     geom_errorbar(aes(ymin=lb_shifted, ymax=ub_shifted), width = 0.15, color = color_scheme, linetype = "solid") +
-    scale_fill_manual(breaks = "other",
-                      values = fill_values,
-                      labels = paste0(" <span style='color:#585860; font-size:13pt'> ",
-                                      subtitle,
-                                      "<span style='color:#FFFFFF00'>-----------</span>",
-                                      ci_text),
-                      na.value = paste0(color_scheme, "90")) +
     scale_x_continuous(
       breaks = data$x_index,
       labels = data$vallabel,
@@ -221,12 +214,34 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
             element_blank()
           },
           axis.ticks = element_blank(),
-          legend.position = "top",
-          legend.title = element_blank(),
-          legend.justification='left',
-          legend.margin = margin(t=0, b=0, l=0, r=0),
-          legend.text = element_markdown(family = "inter-light"),
           plot.margin = if (horizontal) margin(t = 10, r = 40, b = 10, l = 10) else margin(t = 10, r = 10, b = 5.5, l = 5.5)) # nunito-light
+
+  if (subtitle != "") {
+    cc <- cc +
+      annotate("text",
+               x = -Inf, y = Inf,
+               label = subtitle,
+               hjust = -0.02, vjust = 1.8,
+               family = "inter-light",
+               size = 4.5,
+               color = "#585860") +
+      annotate("richtext",
+               x = Inf, y = Inf,
+               label = ci_text,
+               hjust = 1.02, vjust = 1.6,
+               fill = NA, label.color = NA,
+               family = "inter-light",
+               size = 4.5)
+  } else {
+    cc <- cc +
+      annotate("richtext",
+               x = Inf, y = Inf,
+               label = ci_text,
+               hjust = 1.02, vjust = 1.6,
+               fill = NA, label.color = NA,
+               family = "inter-light",
+               size = 4.5)
+  }
 
   # Apply label rotation if needed
   if(rotate_labels && !horizontal) {

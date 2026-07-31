@@ -165,7 +165,14 @@ lpr_mover <- function(data,
         vallabel = as.character(vallabel)
       ) %>%
       rename(lb = prop_low, ub = prop_upp) %>%
-      select(outcome, varlabel, vallabel, prop, proplabel, lb, ub)
+      mutate(
+        .outcome_var = outcome_var,
+        .grouping_var = grouping_var,
+        .rec_lo = rec_range[1],
+        .rec_hi = rec_range[2]
+      ) %>%
+      select(outcome, varlabel, vallabel, prop, proplabel, lb, ub,
+             .outcome_var, .grouping_var, .rec_lo, .rec_hi)
   }
 
   single_outcome <- length(outcome) == 1
@@ -181,9 +188,6 @@ lpr_mover <- function(data,
 
   # Conduct pairwise t-tests if requested
   if (ttest) {
-    mover <- mover %>%
-      mutate(se = (ub - lb) / (2 * 1.96))
-
     t_test_results <- data.frame(
       outcome = character(),
       varlabel = character(),
@@ -193,35 +197,60 @@ lpr_mover <- function(data,
       pval = numeric(),
       stringsAsFactors = FALSE
     )
+    design_test <- data
+    mover_test <- mover %>% filter(!is.na(prop))
+    for (i in seq_len(nrow(mover_test))) {
+      row_name <- paste0(".ttest_row_", i)
+      outcome_values <- as.numeric(design_test$variables[[mover_test$.outcome_var[i]]])
+      value_vector <- if (mean) {
+        outcome_values
+      } else {
+        as.numeric(dplyr::between(outcome_values, mover_test$.rec_lo[i], mover_test$.rec_hi[i])) * 100
+      }
+      grouping_labels <- as.character(haven::as_factor(design_test$variables[[mover_test$.grouping_var[i]]]))
+      design_test$variables[[row_name]] <- ifelse(
+        grouping_labels == as.character(mover_test$vallabel[i]),
+        value_vector,
+        NA_real_
+      )
+    }
 
-    outcomes <- unique(mover$outcome)
+    row_var_names <- paste0(".ttest_row_", seq_len(nrow(mover_test)))
+    row_formula <- stats::as.formula(paste0("~", paste(row_var_names, collapse = " + ")))
+    row_estimates <- survey::svymean(row_formula, design = design_test, na.rm = TRUE)
+    design_df <- survey::degf(design_test)
+
+    outcomes <- unique(mover_test$outcome)
     for (oc in outcomes) {
-      mover_subset <- mover %>% filter(outcome == oc)
-
+      mover_subset <- mover_test %>% filter(outcome == oc)
       varlabels <- unique(mover_subset$varlabel)
       for (vl in varlabels) {
         group_subset <- mover_subset %>% filter(varlabel == vl)
+        subset_idx <- match(seq_len(nrow(group_subset)), seq_len(nrow(group_subset)))
+        row_idx <- which(mover_test$outcome == oc & mover_test$varlabel == vl)
 
         for (i in 1:(nrow(group_subset) - 1)) {
           for (j in (i + 1):nrow(group_subset)) {
-            prop1 <- group_subset$prop[i]
-            se1 <- group_subset$se[i]
-            prop2 <- group_subset$prop[j]
-            se2 <- group_subset$se[j]
+            contrast_est <- survey::svycontrast(
+              row_estimates,
+              stats::setNames(c(1, -1), c(row_var_names[row_idx[i]], row_var_names[row_idx[j]]))
+            )
+            diff_est <- as.numeric(stats::coef(contrast_est))
+            diff_se <- sqrt(as.numeric(stats::vcov(contrast_est)))
+            diff_t <- diff_est / diff_se
+            diff_p <- 2 * stats::pt(-abs(diff_t), df = design_df)
 
-            diff <- prop1 - prop2
-            t_stat <- diff / sqrt(se1^2 + se2^2)
-            df <- (se1^2 + se2^2)^2 / ((se1^2)^2 / (nrow(data) - 1) + (se2^2)^2 / (nrow(data) - 1))
-
-            p_value <- 2 * pt(-abs(t_stat), df)
-
-            t_test_results <- rbind(t_test_results,
-                                    data.frame(outcome = oc,
-                                               varlabel = vl,
-                                               test = paste(group_subset$vallabel[i], "vs", group_subset$vallabel[j]),
-                                               diff = round(diff, 3),
-                                               ttest = round(t_stat, 3),
-                                               pval = round(p_value, 3)))
+            t_test_results <- rbind(
+              t_test_results,
+              data.frame(
+                outcome = oc,
+                varlabel = vl,
+                test = paste(group_subset$vallabel[i], "vs", group_subset$vallabel[j]),
+                diff = round(diff_est, 3),
+                ttest = round(diff_t, 3),
+                pval = round(diff_p, 3)
+              )
+            )
           }
         }
       }
@@ -229,6 +258,8 @@ lpr_mover <- function(data,
 
     attr(mover, "t_test_results") <- t_test_results
   }
+
+  mover <- mover %>% select(-any_of(c(".outcome_var", ".grouping_var", ".rec_lo", ".rec_hi")))
 
   return(mover)
 }

@@ -161,10 +161,6 @@ lpr_ts <- function(data,
 
 
   if (ttest) {
-
-    ts_df <- ts_df %>%
-      mutate(se = (ub - lb) / (2 * 1.96))
-
     t_test_results <- data.frame(
       test = character(),
       diff = numeric(),
@@ -172,27 +168,52 @@ lpr_ts <- function(data,
       p_value = numeric(),
       stringsAsFactors = FALSE
     )
+    design_test <- data
+    wave_labels <- if (use_wave) {
+      as.character(haven::as_factor(design_test$variables$wave))
+    } else {
+      as.character(design_test$variables$year)
+    }
+    outcome_values <- as.numeric(design_test$variables[[outcome]])
+    value_vector <- if (mean) {
+      outcome_values
+    } else {
+      as.numeric(dplyr::between(outcome_values, rec[1], rec[2])) * 100
+    }
 
-    for (i in 1:(nrow(ts_df) - 1)) {
-      for (j in (i + 1):nrow(ts_df)) {
-        prop1 <- ts_df$prop[i]
-        se1 <- ts_df$se[i]
-        prop2 <- ts_df$prop[j]
-        se2 <- ts_df$se[j]
+    ts_non_missing <- ts_df %>% filter(!is.na(prop))
+    for (i in seq_len(nrow(ts_non_missing))) {
+      row_name <- paste0(".ttest_row_", i)
+      design_test$variables[[row_name]] <- ifelse(
+        wave_labels == as.character(ts_non_missing$wave[i]),
+        value_vector,
+        NA_real_
+      )
+    }
 
-        diff <- prop1 - prop2
-        t_stat <- diff / sqrt(se1^2 + se2^2)
-        df <- (se1^2 + se2^2)^2 /
-          ((se1^2)^2 / (nrow(ts_df) - 1) + (se2^2)^2 / (nrow(ts_df) - 1))
-        p_value <- 2 * pt(-abs(t_stat), df)
+    row_var_names <- paste0(".ttest_row_", seq_len(nrow(ts_non_missing)))
+    row_formula <- stats::as.formula(paste0("~", paste(row_var_names, collapse = " + ")))
+    row_estimates <- survey::svymean(row_formula, design = design_test, na.rm = TRUE)
+    design_df <- survey::degf(design_test)
+
+    for (i in 1:(nrow(ts_non_missing) - 1)) {
+      for (j in (i + 1):nrow(ts_non_missing)) {
+        contrast_est <- survey::svycontrast(
+          row_estimates,
+          stats::setNames(c(1, -1), c(row_var_names[i], row_var_names[j]))
+        )
+        diff_est <- as.numeric(stats::coef(contrast_est))
+        diff_se <- sqrt(as.numeric(stats::vcov(contrast_est)))
+        diff_t <- diff_est / diff_se
+        diff_p <- 2 * stats::pt(-abs(diff_t), df = design_df)
 
         t_test_results <- rbind(
           t_test_results,
           data.frame(
-            test = paste0("Wave ", ts_df$wave[i], " vs Wave ", ts_df$wave[j]),
-            diff = round(diff, 3),
-            t_stat = round(t_stat, 3),
-            p_value = round(p_value, 3)
+            test = paste0("Wave ", ts_non_missing$wave[i], " vs Wave ", ts_non_missing$wave[j]),
+            diff = round(diff_est, 3),
+            t_stat = round(diff_t, 3),
+            p_value = round(diff_p, 3)
           )
         )
       }
