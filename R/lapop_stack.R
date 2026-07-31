@@ -111,6 +111,7 @@ NULL
 #'@import ggplot2
 #'@import ggtext
 #'@import showtext
+#'@importFrom stats ave
 #'@importFrom stats reorder
 
 #'
