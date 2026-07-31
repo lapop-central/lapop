@@ -24,6 +24,7 @@ lapop_cc(
   color_scheme = "#784885",
   decimals = 0,
   display_perc = TRUE,
+  set_x = 0,
   label_size = 5,
   max_countries = 30,
   label_angle = 0,
@@ -103,6 +104,11 @@ lapop_cc(
   Logical. If TRUE, use \`proplabel\`-style labels (for example, with \`
   If FALSE, use numeric \`prop\` values without the percent symbol.
   Default: TRUE.
+
+- set_x:
+
+  Numeric. Baseline from which bars should start. Must be a single value
+  between -100 and 100. Default: 0.
 
 - label_size:
 

@@ -127,7 +127,6 @@ ym23_small <- subset(ym23, pais %in% c(1, 15, 17))
 ym23lpr <- lpr_data(ym23_small)
 
 # Multiple outcomes over countries
-# \donttest{
 lpr_ccm(ym23lpr,
 outcome_vars = c("b12", "b18"),
 rec = c(1, 3),
@@ -142,7 +141,6 @@ rec2 = c(5, 7))
 #> 4 BR     51.0  48.7  53.3 51%       b18  
 #> 5 AR     34.4  32.2  36.6 34%       b18  
 #> 6 MX     26.7  24.8  28.5 27%       b18  
-# }
 
 # Multiple outcomes over years
 # \donttest{
