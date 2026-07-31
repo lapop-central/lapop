@@ -19,29 +19,28 @@ lpr_na_attributes(
 \item{na_values}{Numeric vector of sentinel values to convert.}
 
 \item{na_tags}{Character vector of single-letter missing-value tags. Must be
-the same length as \code{na_values}.}
+the same length as `na_values`.}
 
 \item{vars}{Optional character vector of variable names to process. Defaults
 to all variables.}
 
-\item{preserve_labels}{Logical. If \code{TRUE}, labels attached to converted
+\item{preserve_labels}{Logical. If `TRUE`, labels attached to converted
 sentinel values are reassigned to the corresponding tagged NAs.}
 
-\item{print}{Logical. If \code{TRUE}, prints a compact missing-value summary
-for each processed variable. Defaults to \code{FALSE}.}
+\item{print}{Logical. If `TRUE`, prints a compact missing-value summary for
+each processed variable. Defaults to `FALSE`.}
 }
 \value{
-\code{data} with selected numeric variables converted from sentinel
-missing-value codes to haven tagged NAs.
+`data` with selected numeric variables converted from sentinel
+  missing-value codes to haven tagged NAs.
 }
 \description{
 Converts numeric sentinel codes used in LAPOP/Stata workflows to
-\code{\link[haven:tagged_na]{haven::tagged_na()}} values. By default,
-\code{888888}, \code{988888}, and \code{999999} are converted to \code{NA(a)},
-\code{NA(b)}, and \code{NA(c)}, respectively.
+[haven::tagged_na()] values. By default, `888888`, `988888`, and `999999`
+are converted to `NA(a)`, `NA(b)`, and `NA(c)`, respectively.
 }
 \details{
-Unlike ordinary \code{NA} values or variable-level attributes, tagged NAs retain
+Unlike ordinary `NA` values or variable-level attributes, tagged NAs retain
 the missing-value reason for each observation and can be written to Stata as
 extended missing values by haven.
 }
@@ -53,4 +52,5 @@ x <- haven::labelled(
 dat <- data.frame(x = x)
 out <- lpr_na_attributes(dat)
 haven::is_tagged_na(out$x)
+
 }

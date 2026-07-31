@@ -57,10 +57,12 @@
 #' ym23lpr <- lpr_data(ym23_small)
 #'
 #' # Multiple outcomes over countries
+#' \donttest{
 #' lpr_ccm(ym23lpr,
 #' outcome_vars = c("b12", "b18"),
 #' rec = c(1, 3),
 #' rec2 = c(5, 7))
+#'}
 #'
 #' # Multiple outcomes over years
 #' \donttest{
@@ -70,14 +72,15 @@
 #' rec = c(1, 3),
 #' rec2 = c(5, 7),
 #' ttest = TRUE)
-#'
+#'}
 #' # Single outcome broken down by a grouping variable
-#' fs2_ccm <- lpr_ccm(
-#'   GMs,
-#'   outcome_vars = "fs2",
+#' \donttest{
+#' lpr_ccm(
+#'   ym23lpr,
+#'   outcome_vars = "ing4",
 #'   xvar = "pais_lab",
-#'   by = "mig21",
-#'   rec = c(1, 1)
+#'   by = "pn4",
+#'   rec = c(1, 3)
 #' )
 #' }
 #'
