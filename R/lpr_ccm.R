@@ -57,31 +57,28 @@
 #' ym23lpr <- lpr_data(ym23_small)
 #'
 #' # Multiple outcomes over countries
-#' \donttest{
 #' lpr_ccm(ym23lpr,
 #' outcome_vars = c("b12", "b18"),
 #' rec = c(1, 3),
 #' rec2 = c(5, 7))
-#'}
 #'
 #' # Multiple outcomes over years
-#' \donttest{
+#'
 #' lpr_ccm(ym23lpr,
 #' outcome_vars = c("b12", "b18"),
 #' xvar = "wave",
 #' rec = c(1, 3),
 #' rec2 = c(5, 7),
 #' ttest = TRUE)
-#'}
+#'
 #' # Single outcome broken down by a grouping variable
-#' \donttest{
 #' lpr_ccm(
 #'   ym23lpr,
 #'   outcome_vars = "ing4",
 #'   xvar = "pais_lab",
 #'   by = "pn4",
-#'   rec = c(1, 3)
-#' )
+#'   rec = c(1, 3))
+#'
 #' }
 #'
 #'@export
