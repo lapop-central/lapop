@@ -14,5 +14,5 @@ utils::globalVariables(
     "proplabel1", "proplabel2", "pvalue", "strata", "ub", "upm",
     "vallabel", "varlabel", "varterm", "weight1500", "xvar_label",
     "year", "category", "var_group", "var_label", "plot_value",
-    "label_text", "by_group")
+    "label_text", "by_group", "label_position", "label_y")
 )
