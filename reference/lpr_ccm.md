@@ -150,14 +150,14 @@ xvar = "wave",
 rec = c(1, 3),
 rec2 = c(5, 7),
 ttest = TRUE)
-#> # A tibble: 4 × 7
+#> # A tibble: 4 × 6
 #> # Groups:   var [2]
-#>   pais     prop    lb    ub proplabel var      se
-#>   <fct>   <dbl> <dbl> <dbl> <chr>     <chr> <dbl>
-#> 1 2023     27.8  26.3  29.3 28%       b12   0.771
-#> 2 2018/19  26.4  25.0  27.8 26%       b12   0.715
-#> 3 2023     38.2  36.5  39.9 38%       b18   0.872
-#> 4 2018/19  36.6  34.8  38.3 37%       b18   0.900
+#>   pais     prop    lb    ub proplabel var  
+#>   <fct>   <dbl> <dbl> <dbl> <chr>     <chr>
+#> 1 2023     27.8  26.3  29.3 28%       b12  
+#> 2 2018/19  26.4  25.0  27.8 26%       b12  
+#> 3 2023     38.2  36.5  39.9 38%       b18  
+#> 4 2018/19  36.6  34.8  38.3 37%       b18  
 # }
 # Single outcome broken down by a grouping variable
 # \donttest{

@@ -101,8 +101,8 @@ outcome = "ing4",
 use_wave = TRUE,
 mean = TRUE,
 ttest = TRUE)
-#>       wave     prop       lb       ub proplabel         se
-#> 8  2018/19 4.753684 4.731888 4.775480       4.8 0.01112058
-#> 9     2021       NA       NA       NA      <NA>         NA
-#> 10    2023 4.756581 4.734816 4.778347       4.8 0.01110472
+#>       wave     prop       lb       ub proplabel
+#> 8  2018/19 4.753684 4.731888 4.775480       4.8
+#> 9     2021       NA       NA       NA      <NA>
+#> 10    2023 4.756581 4.734816 4.778347       4.8
 ```

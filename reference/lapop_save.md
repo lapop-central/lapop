@@ -62,5 +62,5 @@ myfigure <- lapop_hist(df,
 
 f <- file.path(tempdir(), "fig1.svg")
 lapop_save(myfigure, f, format = "svg", width_px = 800)
-#> ✔ Figure Saved: /tmp/Rtmpf2eZmI/fig1.svg
+#> ✔ Figure Saved: /tmp/RtmpkDA0NY/fig1.svg
 ```
