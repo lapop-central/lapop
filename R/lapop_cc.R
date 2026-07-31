@@ -225,22 +225,26 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                family = "inter-light",
                size = 4.5,
                color = "#585860") +
-      annotate("richtext",
-               x = Inf, y = Inf,
-               label = ci_text,
-               hjust = 1.02, vjust = 1.6,
-               fill = NA, label.color = NA,
-               family = "inter-light",
-               size = 4.5)
+      ggtext::geom_richtext(
+        data = data.frame(x = Inf, y = Inf, label = ci_text),
+        aes(x = x, y = y, label = label),
+        inherit.aes = FALSE,
+        hjust = 1.02, vjust = 1.6,
+        fill = NA, label.color = NA,
+        family = "inter-light",
+        size = 4.5
+      )
   } else {
     cc <- cc +
-      annotate("richtext",
-               x = Inf, y = Inf,
-               label = ci_text,
-               hjust = 1.02, vjust = 1.6,
-               fill = NA, label.color = NA,
-               family = "inter-light",
-               size = 4.5)
+      ggtext::geom_richtext(
+        data = data.frame(x = Inf, y = Inf, label = ci_text),
+        aes(x = x, y = y, label = label),
+        inherit.aes = FALSE,
+        hjust = 1.02, vjust = 1.6,
+        fill = NA, label.color = NA,
+        family = "inter-light",
+        size = 4.5
+      )
   }
 
   # Apply label rotation if needed
