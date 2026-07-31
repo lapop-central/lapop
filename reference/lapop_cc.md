@@ -25,6 +25,7 @@ lapop_cc(
   decimals = 0,
   display_perc = TRUE,
   set_x = 0,
+  text_nudge = 0,
   label_size = 5,
   max_countries = 30,
   label_angle = 0,
@@ -108,7 +109,14 @@ lapop_cc(
 - set_x:
 
   Numeric. Baseline from which bars should start. Must be a single value
-  between -100 and 100. Default: 0.
+  between -100 and 100. Default: 0. When different from 0, bars are
+  plotted relative to this baseline and numeric axis labels are
+  displayed automatically.
+
+- text_nudge:
+
+  Numeric. Move text of data further from or closer to the confidence
+  interval. Default: 0.
 
 - label_size:
 

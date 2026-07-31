@@ -62,6 +62,7 @@
 <span>  decimals <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  display_perc <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  set_x <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  text_nudge <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  label_size <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  max_countries <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  label_angle <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -139,7 +140,14 @@ If FALSE, use numeric `prop` values without the percent symbol. Default: TRUE.</
 
 <dt id="arg-set-x">set_x<a class="anchor" aria-label="anchor" href="#arg-set-x"></a></dt>
 <dd><p>Numeric. Baseline from which bars should start. Must be a single
-value between -100 and 100. Default: 0.</p></dd>
+value between -100 and 100. Default: 0. When different from 0, bars are
+plotted relative to this baseline and numeric axis labels are displayed
+automatically.</p></dd>
+
+
+<dt id="arg-text-nudge">text_nudge<a class="anchor" aria-label="anchor" href="#arg-text-nudge"></a></dt>
+<dd><p>Numeric. Move text of data further from or closer to the
+confidence interval. Default: 0.</p></dd>
 
 
 <dt id="arg-label-size">label_size<a class="anchor" aria-label="anchor" href="#arg-label-size"></a></dt>
