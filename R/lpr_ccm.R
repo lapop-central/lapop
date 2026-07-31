@@ -15,6 +15,10 @@
 #' across country (or other x variable). Max of 4 (four) variables.
 #' @param xvar Character string. Outcome variables are broken down by this variable. You can set
 #' xvar to "wave" or "year" for cross-time comparisons. Default: pais_lab.
+#' @param by Character string. Optional grouping variable used only when
+#' `outcome_vars` has length 1. The single outcome will be broken down by the
+#' levels of `by`, and those levels will be stored in the `var` column for use
+#' in \code{lapop_ccm()}. Default: NULL.
 #' @param rec1,rec2,rec3,rec4 Numeric. The minimum and maximum values of the outcome variable that
 #' should be included in the numerator of the percentage.  For example, if the variable
 #' is on a 1-7 scale and rec1 is c(5, 7), the function will show the percentage who chose
@@ -66,6 +70,15 @@
 #' rec1 = c(1, 3),
 #' rec2 = c(5, 7),
 #' ttest = TRUE)
+#'
+#' # Single outcome broken down by a grouping variable
+#' fs2_ccm <- lpr_ccm(
+#'   GMs,
+#'   outcome_vars = "fs2",
+#'   xvar = "pais_lab",
+#'   by = "mig21",
+#'   rec1 = c(1, 1)
+#' )
 #' }
 #'
 #'@export
@@ -78,6 +91,7 @@
 lpr_ccm <- function(data,
                     outcome_vars,
                     xvar = "pais_lab",
+                    by = NULL,
                     rec1 = c(1, 1),
                     rec2 = c(1, 1),
                     rec3 = c(1, 1),
@@ -108,6 +122,10 @@ lpr_ccm <- function(data,
     stop("`outcome_vars` supports a maximum of 4 variables.")
   }
 
+  if (!is.null(by) && length(outcome_vars) != 1) {
+    stop("`by` can only be used when `outcome_vars` has length 1.")
+  }
+
   # Map rec arguments to outcome variables
   rec_list <- list(rec1, rec2, rec3, rec4)
   rec_map <- purrr::map2(outcome_vars, rec_list[1:length(outcome_vars)], ~ list(var = .x, rec = .y))
@@ -128,7 +146,17 @@ lpr_ccm <- function(data,
 
     temp <- data %>%
       drop_na(!!sym(xvar)) %>%
-      group_by(pais = as_factor(!!sym(xvar))) %>%
+      {
+        if (!is.null(by)) {
+          drop_na(., !!sym(by)) %>%
+            group_by(
+              pais = as_factor(!!sym(xvar)),
+              by_group = as_factor(!!sym(by))
+            )
+        } else {
+          group_by(., pais = as_factor(!!sym(xvar)))
+        }
+      } %>%
       {
         if (mean) {
           summarize(.,
@@ -157,10 +185,21 @@ lpr_ccm <- function(data,
       filter(prop != 0) %>%
       rename(lb = prop_low, ub = prop_upp) %>%
       ungroup() %>%
-      mutate(var = outcome)
+      mutate(var = if (!is.null(by)) as.character(by_group) else outcome) %>%
+      {
+        if (!is.null(by)) {
+          select(., -by_group)
+        } else {
+          .
+        }
+      }
 
     temp
   })
+
+  if (!is.null(by) && length(unique(ccm$var)) > 4) {
+    stop("`by` supports a maximum of 4 levels for use with `lapop_ccm()`.")
+  }
   # Sorting logic
   ccm = ccm %>%
     {

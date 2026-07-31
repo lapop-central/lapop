@@ -8,6 +8,7 @@ lpr_ccm(
   data,
   outcome_vars,
   xvar = "pais_lab",
+  by = NULL,
   rec1 = c(1, 1),
   rec2 = c(1, 1),
   rec3 = c(1, 1),
@@ -30,6 +31,11 @@ across country (or other x variable). Max of 4 (four) variables.}
 
 \item{xvar}{Character string. Outcome variables are broken down by this variable. You can set
 xvar to "wave" or "year" for cross-time comparisons. Default: pais_lab.}
+
+\item{by}{Character string. Optional grouping variable used only when
+`outcome_vars` has length 1. The single outcome will be broken down by the
+levels of `by`, and those levels will be stored in the `var` column for use
+in \code{lapop_ccm()}. Default: NULL.}
 
 \item{rec1, rec2, rec3, rec4}{Numeric. The minimum and maximum values of the outcome variable that
 should be included in the numerator of the percentage.  For example, if the variable
@@ -97,7 +103,15 @@ rec1 = c(1, 3),
 rec2 = c(5, 7),
 ttest = TRUE)
 }
-
+# Single outcome broken down by a grouping variable
+\donttest{
+lpr_ccm(
+  ym23lpr,
+  outcome_vars = "b12",
+  rec1 = c(1, 3),
+  by = "q1tc_r",
+  xvar = "pais_lab")
+}
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
