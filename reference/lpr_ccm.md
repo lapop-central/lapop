@@ -127,6 +127,7 @@ ym23_small <- subset(ym23, pais %in% c(1, 15, 17))
 ym23lpr <- lpr_data(ym23_small)
 
 # Multiple outcomes over countries
+# \donttest{
 lpr_ccm(ym23lpr,
 outcome_vars = c("b12", "b18"),
 rec = c(1, 3),
@@ -141,6 +142,7 @@ rec2 = c(5, 7))
 #> 4 BR     51.0  48.7  53.3 51%       b18  
 #> 5 AR     34.4  32.2  36.6 34%       b18  
 #> 6 MX     26.7  24.8  28.5 27%       b18  
+# }
 
 # Multiple outcomes over years
 # \donttest{
@@ -158,17 +160,31 @@ ttest = TRUE)
 #> 2 2018/19  26.4  25.0  27.8 26%       b12   0.715
 #> 3 2023     38.2  36.5  39.9 38%       b18   0.872
 #> 4 2018/19  36.6  34.8  38.3 37%       b18   0.900
-
+# }
 # Single outcome broken down by a grouping variable
-fs2_ccm <- lpr_ccm(
-  GMs,
-  outcome_vars = "fs2",
+# \donttest{
+lpr_ccm(
+  ym23lpr,
+  outcome_vars = "ing4",
   xvar = "pais_lab",
-  by = "mig21",
-  rec = c(1, 1)
+  by = "pn4",
+  rec = c(1, 3)
 )
-#> Error in map(.x, .f, ...): ℹ In index: 1.
-#> Caused by error:
-#> ! object 'GMs' not found
+#> # A tibble: 12 × 6
+#> # Groups:   var [4]
+#>    pais   prop    lb    ub proplabel var                
+#>    <fct> <dbl> <dbl> <dbl> <chr>     <chr>              
+#>  1 BR    22.3  16.6  28.0  22%       Muy satisfecho(a)  
+#>  2 AR    14.0   8.38 19.5  14%       Muy satisfecho(a)  
+#>  3 MX    13.2   7.86 18.5  13%       Muy satisfecho(a)  
+#>  4 BR    14.4  12.2  16.7  14%       Satisfecho(a)      
+#>  5 BR    22.4  19.8  25.0  22%       Insatisfecho(a)    
+#>  6 BR    27.9  22.9  32.9  28%       Muy insatisfecho(a)
+#>  7 MX    13.1  11.3  14.9  13%       Satisfecho(a)      
+#>  8 MX    20.9  18.5  23.3  21%       Insatisfecho(a)    
+#>  9 AR    27.7  24.1  31.3  28%       Muy insatisfecho(a)
+#> 10 MX    25.0  20.0  30.0  25%       Muy insatisfecho(a)
+#> 11 AR     6.93  5.28  8.58 7%        Satisfecho(a)      
+#> 12 AR    17.3  15.1  19.5  17%       Insatisfecho(a)    
 # }
 ```
