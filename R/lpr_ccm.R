@@ -19,9 +19,9 @@
 #' `outcome_vars` has length 1. The single outcome will be broken down by the
 #' levels of `by`, and those levels will be stored in the `var` column for use
 #' in \code{lapop_ccm()}. Default: NULL.
-#' @param rec1,rec2,rec3,rec4 Numeric. The minimum and maximum values of the outcome variable that
+#' @param rec,rec2,rec3,rec4 Numeric. The minimum and maximum values of the outcome variable that
 #' should be included in the numerator of the percentage.  For example, if the variable
-#' is on a 1-7 scale and rec1 is c(5, 7), the function will show the percentage who chose
+#' is on a 1-7 scale and rec is c(5, 7), the function will show the percentage who chose
 #' an answer of 5, 6, 7 out of all valid answers.  Can also supply one value only,
 #' to produce the percentage that chose that value out of all other values.
 #' Default: c(1, 1).
@@ -59,7 +59,7 @@
 #' # Multiple outcomes over countries
 #' lpr_ccm(ym23lpr,
 #' outcome_vars = c("b12", "b18"),
-#' rec1 = c(1, 3),
+#' rec = c(1, 3),
 #' rec2 = c(5, 7))
 #'
 #' # Multiple outcomes over years
@@ -67,7 +67,7 @@
 #' lpr_ccm(ym23lpr,
 #' outcome_vars = c("b12", "b18"),
 #' xvar = "wave",
-#' rec1 = c(1, 3),
+#' rec = c(1, 3),
 #' rec2 = c(5, 7),
 #' ttest = TRUE)
 #'
@@ -77,7 +77,7 @@
 #'   outcome_vars = "fs2",
 #'   xvar = "pais_lab",
 #'   by = "mig21",
-#'   rec1 = c(1, 1)
+#'   rec = c(1, 1)
 #' )
 #' }
 #'
@@ -92,7 +92,7 @@ lpr_ccm <- function(data,
                     outcome_vars,
                     xvar = "pais_lab",
                     by = NULL,
-                    rec1 = c(1, 1),
+                    rec = c(1, 1),
                     rec2 = c(1, 1),
                     rec3 = c(1, 1),
                     rec4 = c(1, 1),
@@ -105,9 +105,6 @@ lpr_ccm <- function(data,
                     ttest = FALSE,
                     keep_nr = FALSE) {
 
-  if (length(rec1) == 1) {
-    rec1 = c(rec1, rec1)
-  }
   if (length(rec2) == 1) {
     rec2 = c(rec2, rec2)
   }
@@ -126,8 +123,12 @@ lpr_ccm <- function(data,
     stop("`by` can only be used when `outcome_vars` has length 1.")
   }
 
+  if (length(rec) == 1) {
+    rec <- c(rec, rec)
+  }
+
   # Map rec arguments to outcome variables
-  rec_list <- list(rec1, rec2, rec3, rec4)
+  rec_list <- list(rec, rec2, rec3, rec4)
   rec_map <- purrr::map2(outcome_vars, rec_list[1:length(outcome_vars)], ~ list(var = .x, rec = .y))
 
   # Handle NA recoding if keep_nr is TRUE

@@ -9,7 +9,7 @@ lpr_ccm(
   outcome_vars,
   xvar = "pais_lab",
   by = NULL,
-  rec1 = c(1, 1),
+  rec = c(1, 1),
   rec2 = c(1, 1),
   rec3 = c(1, 1),
   rec4 = c(1, 1),
@@ -37,9 +37,9 @@ xvar to "wave" or "year" for cross-time comparisons. Default: pais_lab.}
 levels of `by`, and those levels will be stored in the `var` column for use
 in \code{lapop_ccm()}. Default: NULL.}
 
-\item{rec1, rec2, rec3, rec4}{Numeric. The minimum and maximum values of the outcome variable that
+\item{rec, rec2, rec3, rec4}{Numeric. The minimum and maximum values of the outcome variable that
 should be included in the numerator of the percentage.  For example, if the variable
-is on a 1-7 scale and rec1 is c(5, 7), the function will show the percentage who chose
+is on a 1-7 scale and rec is c(5, 7), the function will show the percentage who chose
 an answer of 5, 6, 7 out of all valid answers.  Can also supply one value only,
 to produce the percentage that chose that value out of all other values.
 Default: c(1, 1).}
@@ -91,7 +91,7 @@ ym23lpr <- lpr_data(ym23_small)
 # Multiple outcomes over countries
 lpr_ccm(ym23lpr,
 outcome_vars = c("b12", "b18"),
-rec1 = c(1, 3),
+rec = c(1, 3),
 rec2 = c(5, 7))
 
 # Multiple outcomes over years
@@ -99,19 +99,20 @@ rec2 = c(5, 7))
 lpr_ccm(ym23lpr,
 outcome_vars = c("b12", "b18"),
 xvar = "wave",
-rec1 = c(1, 3),
+rec = c(1, 3),
 rec2 = c(5, 7),
 ttest = TRUE)
-}
+
 # Single outcome broken down by a grouping variable
-\donttest{
-lpr_ccm(
-  ym23lpr,
-  outcome_vars = "b12",
-  rec1 = c(1, 3),
-  by = "q1tc_r",
-  xvar = "pais_lab")
+fs2_ccm <- lpr_ccm(
+  GMs,
+  outcome_vars = "fs2",
+  xvar = "pais_lab",
+  by = "mig21",
+  rec = c(1, 1)
+)
 }
+
 }
 \author{
 Luke Plutowski, \email{luke.plutowski@vanderbilt.edu} & Robert Vidigal, \email{robert.vidigal@vanderbilt.edu}
