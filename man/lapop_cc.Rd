@@ -23,6 +23,7 @@ lapop_cc(
   decimals = 0,
   display_perc = TRUE,
   set_x = 0,
+  text_nudge = 0,
   label_size = 5,
   max_countries = 30,
   label_angle = 0,
@@ -71,7 +72,12 @@ Must be an integer from 0 to 3. Default: 0.}
 If FALSE, use numeric `prop` values without the percent symbol. Default: TRUE.}
 
 \item{set_x}{Numeric. Baseline from which bars should start. Must be a single
-value between -100 and 100. Default: 0.}
+value between -100 and 100. Default: 0. When different from 0, bars are
+plotted relative to this baseline and numeric axis labels are displayed
+automatically.}
+
+\item{text_nudge}{Numeric. Move text of data further from or closer to the
+confidence interval. Default: 0.}
 
 \item{label_size}{Numeric.  Size of text for data labels (percentages above bars).  Default: 5.}
 

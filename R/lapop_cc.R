@@ -42,6 +42,8 @@ NULL
 #' value between -100 and 100. Default: 0. When different from 0, bars are
 #' plotted relative to this baseline and numeric axis labels are displayed
 #' automatically.
+#' @param text_nudge Numeric. Move text of data further from or closer to the
+#' confidence interval. Default: 0.
 #' @param label_size Numeric.  Size of text for data labels (percentages above bars).  Default: 5.
 #' @param max_countries Numeric. Threshold for automatic x-axis label rotation. When the number of unique
 #' country labels exceeds this value, labels will be rotated for better readability. Default: 20.
@@ -101,6 +103,7 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
                      decimals = 0,
                      display_perc = TRUE,
                      set_x = 0,
+                     text_nudge = 0,
                      label_size = 5,  # Default size
                      max_countries = 30,
                      label_angle = 0,
@@ -131,11 +134,11 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
 
   if(all(highlight != "")){
     data$hl_var = factor(ifelse(vallabel %in% highlight, 0, 1), labels = c("hl", "other"))
-    fill_values = c(paste0(color_scheme, "47"), paste0(color_scheme, "20"))
+    fill_values = c(hl = paste0(color_scheme, "47"), other = paste0(color_scheme, "20"))
   }
   else{
     data$hl_var = factor("other")
-    fill_values = paste0(color_scheme, "47")
+    fill_values = c(other = paste0(color_scheme, "47"))
   }
 
   if(sort == "hi-lo"){
@@ -152,7 +155,9 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
   data$ub_shifted <- upper_bound - set_x
   data$bar_ymin <- pmin(0, data$prop_shifted)
   data$bar_ymax <- pmax(0, data$prop_shifted)
-  data$label_y <- ifelse(data$prop_shifted < 0, data$lb_shifted, data$ub_shifted)
+  data$label_y <- ifelse(data$prop_shifted < 0,
+                         data$lb_shifted - text_nudge,
+                         data$ub_shifted + text_nudge)
   data$label_vjust <- ifelse(data$prop_shifted < 0, 1.4, -0.5)
   data$label_hjust <- ifelse(data$prop_shifted < 0, 1, 0)
   show_value_axis <- isTRUE(display_y) || set_x != 0
