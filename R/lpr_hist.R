@@ -63,21 +63,45 @@ lpr_hist <- function(data,
   }
 
   # Create the data frame
-  hist_df = data %>%
-    drop_na(outcome) %>%
-    group_by(across(outcome)) %>%  #
-    summarise(n = n()) %>%
-    rename(cat = 1) %>%
+  hist_design <- data %>%
+    filter(!is.na(.data[[outcome]]))
+
+  hist_formula <- stats::as.formula(paste0("~factor(`", outcome, "`)"))
+  hist_est <- survey::svymean(hist_formula, design = hist_design, na.rm = TRUE)
+
+  value_labels <- attr(data$variables[[outcome]], "labels")
+  if (!is.null(value_labels)) {
+    label_lookup <- data.frame(
+      raw_value = as.character(unname(value_labels)),
+      cat = names(value_labels),
+      stringsAsFactors = FALSE
+    )
+  } else {
+    label_lookup <- NULL
+  }
+
+  hist_df <- data.frame(
+    raw_value = sub("^factor\\(`?.+`?\\)", "", names(stats::coef(hist_est))),
+    prop = as.numeric(stats::coef(hist_est)) * 100,
+    stringsAsFactors = FALSE
+  )
+
+  if (!is.null(label_lookup)) {
+    hist_df <- hist_df %>%
+      left_join(label_lookup, by = "raw_value")
+  } else {
+    hist_df$cat <- hist_df$raw_value
+  }
+
+  hist_df <- hist_df %>%
     mutate(
-      prop = prop.table(n) * 100,
       proplabel = if (cfmt != "") {
         sprintf(cfmt, round(prop))
       } else {
-        sprintf("%.0f%%", round(prop))
-      },
-      cat = (haven::as_factor(cat))
+        ifelse(prop < 1, "<1%", sprintf("%.0f%%", round(prop)))
+      }
     ) %>%
-    select(-n)
+    select(cat, prop, proplabel)
 
   # Apply sorting
   if (sort == "y") {
