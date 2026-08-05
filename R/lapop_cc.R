@@ -191,7 +191,6 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
       expand = expansion(add = c(0.5, 0.5))
     ) +
     scale_y_continuous(
-      limits = c(ymin - set_x, ymax - set_x),
       labels = function(x) x + set_x,
       expand = if (horizontal) expansion(mult = c(0.002, 0.08)) else expansion(mult = 0.002)
     ) +
@@ -257,7 +256,9 @@ lapop_cc <- function(data, outcome_var = data$prop, lower_bound = data$lb, valla
   }
 
   if (horizontal) {
-    cc <- cc + coord_flip(clip = "off")
+    cc <- cc + coord_flip(ylim = c(ymin - set_x, ymax - set_x), clip = "off")
+  } else {
+    cc <- cc + coord_cartesian(ylim = c(ymin - set_x, ymax - set_x))
   }
 
   return(cc)

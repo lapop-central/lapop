@@ -15,5 +15,8 @@ utils::globalVariables(
     "vallabel", "varlabel", "varterm", "weight1500", "xvar_label",
     "year", "category", "var_group", "var_label", "plot_value",
     "label_text", "by_group", "x_index", "bar_ymin", "bar_ymax",
-    "prop_shifted", "lb_shifted", "ub_shifted")
+    "prop_shifted", "lb_shifted", "ub_shifted",
+    "label_y", "x", "y", "label", "label_position",
+    ".ttest_group", ".ttest_value", ".outcome_var", ".grouping_var",
+    ".rec_hi", ".rec_lo")
 )
