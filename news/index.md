@@ -2,6 +2,8 @@
 
 ## lapop 2.1.7
 
+CRAN release: 2026-08-04
+
 - include lpr_na_attributes() for non-reponses .a .b .c
 
 ## lapop 2.1.6
