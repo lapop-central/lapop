@@ -51,7 +51,9 @@ lapop_stack(
 - xvar:
 
   Logical. If \`TRUE\`, group the plots using the \`xvar_label\` column
-  in the dataset. If \`FALSE\`, do not group. Default: \`FALSE\`.
+  in the dataset. When that column exists, it is used in place of
+  \`varlabel\` for plotting. If \`FALSE\`, do not group. Default:
+  \`FALSE\`.
 
 - lang:
 
