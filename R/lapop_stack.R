@@ -56,7 +56,8 @@ NULL
 #' the default columns in the data frame should not be used (if, for example, the values for a given
 #' variable were altered and stored in a new column).
 #' @param xvar Logical. If `TRUE`, group the plots using the `xvar_label` column in the dataset.
-#' If `FALSE`, do not group. Default: `FALSE`.
+#' When that column exists, it is used in place of `varlabel` for plotting. If `FALSE`, do not group.
+#' Default: `FALSE`.
 #' @param main_title Character.  Title of graph.  Default: None.
 #' @param source_info Character.  Information on dataset used (country, years, version, etc.),
 #' which is added to the end of "Source: " in the bottom-left corner of the graph.
@@ -164,6 +165,7 @@ lapop_stack <- function(data,
   if (isTRUE(xvar)) {
     if ("xvar_label" %in% colnames(data)) {
       plot_data$group_var <- data[["xvar_label"]]
+      plot_data$var_labels <- data[["xvar_label"]]
     } else {
       warning("Column `xvar_label` not found in data. Define `xvar` in `lpr_stack()` to create `xvar_label`. Ignoring grouping.")
       xvar <- FALSE
