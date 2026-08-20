@@ -77,7 +77,13 @@ lpr_stack <- function(data,
 
     # Perform proportion calculations
     stack <- data %>%
-      drop_na(!!outcome_sym) %>%
+      {
+        if (!is.null(xvar)) {
+          drop_na(., !!outcome_sym, !!sym(xvar))
+        } else {
+          drop_na(., !!outcome_sym)
+        }
+      } %>%
       {
         if (!is.null(xvar)) {
           group_by(., xvar_label = as_factor(!!sym(xvar)), vallabel = as_factor(!!outcome_sym))
