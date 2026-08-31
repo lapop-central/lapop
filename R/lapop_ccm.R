@@ -43,6 +43,8 @@ NULL
 #' @param text_position Numeric.  Amount that text above error bars should be offset (to avoid overlap).  Default: 0.7
 #' @param horizontal Logical. If TRUE, display the grouped bars horizontally. Default: FALSE.
 #' @param display_y Logical. If TRUE, display numeric axis values. Default: FALSE.
+#' @param display_perc Logical. If TRUE, use `proplabel`-style labels (for example, with `%`).
+#' If FALSE, display the numeric values in `prop`. Default: TRUE.
 #'
 #' @return Returns an object of class \code{ggplot}, a ggplot figure showing
 #' average values of some variables across multiple countries.
@@ -96,13 +98,15 @@ lapop_ccm <- function(data,
                       label_size = 4,
                       text_position = 0.7,
                       horizontal = FALSE,
-                      display_y = FALSE) {
+                      display_y = FALSE,
+                      display_perc = TRUE) {
 
   data$pais <- pais
   data$prop <- outcome_var
   data$lb <- lower_bound
   data$ub <- upper_bound
   data$proplabel <- label_var
+  data$label_text <- if (isTRUE(display_perc)) data$proplabel else data$prop
   data$var_group <- as.character(var)
   data$var_label <- data$var_group
 
@@ -203,7 +207,7 @@ lapop_ccm <- function(data,
                   group = var_label)) +
     geom_bar(aes(alpha = alpha_value), position = dodge_pos, stat = "identity", width = 0.7) +
     geom_text(
-      aes(label = proplabel, y = label_position),
+      aes(label = label_text, y = label_position),
       position = dodge_pos,
       vjust = if (horizontal) 0.5 else data$label_vjust,
       hjust = if (horizontal) data$label_hjust else 0.5,

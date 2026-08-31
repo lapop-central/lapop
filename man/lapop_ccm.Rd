@@ -26,7 +26,8 @@ lapop_ccm(
   label_size = 4,
   text_position = 0.7,
   horizontal = FALSE,
-  display_y = FALSE
+  display_y = FALSE,
+  display_perc = TRUE
 )
 }
 \arguments{
@@ -78,6 +79,9 @@ Default: "#784885", "#008381", "#C74E49", "#2D708E".}
 \item{horizontal}{Logical. If TRUE, display the grouped bars horizontally. Default: FALSE.}
 
 \item{display_y}{Logical. If TRUE, display numeric axis values. Default: FALSE.}
+
+\item{display_perc}{Logical. If TRUE, use `proplabel`-style labels (for example, with `%`).
+If FALSE, display the numeric values in `prop`. Default: TRUE.}
 }
 \value{
 Returns an object of class \code{ggplot}, a ggplot figure showing
