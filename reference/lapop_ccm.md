@@ -28,7 +28,8 @@ lapop_ccm(
   label_size = 4,
   text_position = 0.7,
   horizontal = FALSE,
-  display_y = FALSE
+  display_y = FALSE,
+  display_perc = TRUE
 )
 ```
 
@@ -122,6 +123,11 @@ lapop_ccm(
 - display_y:
 
   Logical. If TRUE, display numeric axis values. Default: FALSE.
+
+- display_perc:
+
+  Logical. If TRUE, use \`proplabel\`-style labels (for example, with \`
+  If FALSE, display the numeric values in \`prop\`. Default: TRUE.
 
 ## Value
 
