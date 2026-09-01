@@ -16,7 +16,8 @@ lapop_hist(
   subtitle = "",
   source_info = "LAPOP",
   order = FALSE,
-  color_scheme = "#008381"
+  color_scheme = "#008381",
+  xlabel_size = 14
 )
 }
 \arguments{
@@ -48,6 +49,8 @@ which is added to the bottom-left corner of the graph. Default: LAPOP ("Source: 
 
 \item{color_scheme}{Character.  Color of bars.
 Takes hex numbers, beginning with "#". Default: "#008381".}
+
+\item{xlabel_size}{Numeric. Size of the category labels on the x-axis. Default: 14.}
 }
 \value{
 Returns an object of class \code{ggplot}, a ggplot bar graph.

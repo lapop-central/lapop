@@ -31,6 +31,7 @@ NULL
 #' @param color_scheme Character.  Color of bars.
 #' Takes hex numbers, beginning with "#". Default: "#008381".
 #' @param order Logical.  Should bars be ordered from most frequent response to least?  Default: FALSE.
+#' @param xlabel_size Numeric. Size of the category labels on the x-axis. Default: 14.
 #' @return Returns an object of class \code{ggplot}, a ggplot bar graph.
 #'
 #' @examples
@@ -64,7 +65,8 @@ lapop_hist <- function(data, outcome_var = data$prop, label_var = data$proplabel
                        subtitle = "",
                        source_info = "LAPOP",
                        order = FALSE,
-                       color_scheme = "#008381"){
+                       color_scheme = "#008381",
+                       xlabel_size = 14){
   if(order == TRUE){
     data = data[order(-data$prop), ]
     cat_var = cat_var[order(-outcome_var)]
@@ -82,7 +84,7 @@ lapop_hist <- function(data, outcome_var = data$prop, label_var = data$proplabel
       ifelse(
         has_manual_breaks,
         normalized_labels,
-        stringr::str_wrap(x, width = 24)
+        stringr::str_wrap(x, width = 16)
       )
     }) +
     scale_y_continuous(limits = c(ymin, ymax), expand = c(0, 0.3), labels = function(x) paste0(x, "%")) +
@@ -101,7 +103,8 @@ lapop_hist <- function(data, outcome_var = data$prop, label_var = data$proplabel
           axis.ticks = element_blank(),
           plot.title.position = "plot",
           plot.caption.position = "plot",
-          axis.text = element_text(size = 14, family = "inter-light", color = "#585860"), # roboto
+          axis.text.x = element_text(size = xlabel_size, family = "inter-light", color = "#585860"), # roboto
+          axis.text.y = element_text(size = 14, family = "inter-light", color = "#585860"), # roboto
           panel.grid = element_line(color = "#dddddf"),
           panel.background = element_rect(fill = "white"),
           panel.grid.major.x = element_blank())
