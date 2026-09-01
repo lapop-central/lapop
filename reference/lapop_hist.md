@@ -18,7 +18,8 @@ lapop_hist(
   subtitle = "",
   source_info = "LAPOP",
   order = FALSE,
-  color_scheme = "#008381"
+  color_scheme = "#008381",
+  xlabel_size = 14
 )
 ```
 
@@ -74,6 +75,10 @@ lapop_hist(
 
   Character. Color of bars. Takes hex numbers, beginning with "#".
   Default: "#008381".
+
+- xlabel_size:
+
+  Numeric. Size of the category labels on the x-axis. Default: 14.
 
 ## Value
 
