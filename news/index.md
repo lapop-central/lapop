@@ -1,5 +1,17 @@
 # Changelog
 
+## lapop 2.2
+
+- fix ttests not using survey design
+
+## lapop 2.1.9
+
+- update lapop_cc with new parameters (set_X)
+
+## lapop 2.1.8
+
+- update lapop_ccm with new parameters (display_perc)
+
 ## lapop 2.1.7
 
 CRAN release: 2026-08-04
