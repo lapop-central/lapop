@@ -9,7 +9,7 @@ Attention: we are only using a subset from the data used in the actual
 report.
 
 [Read the full report
-here](https://www.vanderbilt.edu/lapop/ab2023/AB2023-Pulse-of-Democracy-final-20240604.pdf)
+here](https://www.vanderbilt.edu/cgd/wp-content/uploads/sites/157/lapop/ab2023/AB2023-Pulse-of-Democracy-final-20240604.pdf)
 
 ## Load Packages
 
