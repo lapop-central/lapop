@@ -1,9 +1,8 @@
-# Extract Response Option (RO) values and texts for all variables into a tidy table.
+# Extract original response codes and labels
 
-Works with: (a) dataset-level dictionaries (e.g., attr(data,
-"label.table") is a list keyed by "\<VAR\>\_\<lang\>"), or (b)
-per-variable attributes (e.g., attr(data\[\[VAR\]\], "levels") or factor
-levels).
+Reads dataset dictionaries and haven labels before considering factor
+levels. Factor positions are never substituted for the original survey
+codes.
 
 ## Usage
 
@@ -15,7 +14,8 @@ lpr_extract_ros(
   restrict_to_present = TRUE,
   one_row_per_var = FALSE,
   pair_sep = " | ",
-  attr_name = "label.table"
+  attr_name = "label.table",
+  special_values = NULL
 )
 ```
 
@@ -23,72 +23,67 @@ lpr_extract_ros(
 
 - data:
 
-  A data.frame read with readstata13/haven/etc.
+  A data frame imported with readstata13 or haven.
 
 - lang_id:
 
-  Language code used in label table names ("en", "es", "pt"). If
-  \`NULL\` or \`""\`, auto-detect per variable (dataset-level only).
-  Ignored for per-variable \`levels\`.
+  Requested dictionary language, e.g. "en", "es", or "pt". \`NULL\` or
+  \`""\` uses the variable's \`val.labels\` link, then the dataset's
+  active language. A sole unambiguous dictionary is a final fallback.
+  For haven vectors without language metadata, their attached labels are
+  used.
 
 - include_special:
 
-  Logical; if FALSE, drop codes \>= 1000 when codes are numeric. Default
-  FALSE.
+  Include tagged missing codes and explicitly labelled nonresponses.
+  Valid codes are not excluded merely because they exceed 1000.
 
 - restrict_to_present:
 
-  Logical; if TRUE, keep only codes that appear in the data. Default
-  TRUE.
+  Keep only observed options. For questionnaire inventories use
+  \`FALSE\`, so unobserved response options are retained.
 
 - one_row_per_var:
 
-  Logical; if TRUE, return one row per variable_name with concatenated
-  ROs. Default FALSE.
+  Collapse into one row per variable with code-label pairs.
 
 - pair_sep:
 
-  String used to separate each "(value) answer_text" pair when
-  collapsing. Default " \| ".
+  Separator between collapsed pairs.
 
 - attr_name:
 
-  Name of the attribute that stores RO info. Default "label.table".
+  Preferred dictionary attribute. Even when \`"levels"\` is requested,
+  an available original code dictionary takes precedence.
+
+- special_values:
+
+  Additional response codes to exclude when \`include_special = FALSE\`.
 
 ## Value
 
-If \`one_row_per_var = FALSE\`: tibble with columns \`variable_name\`,
-\`value\`, \`answer_text\`. If \`one_row_per_var = TRUE\`: tibble with
-columns \`variable_name\`, \`answer_text\` (collapsed pairs).
-
-## Author
-
-Robert Vidigal, <robert.vidigal@vanderbilt.edu>
+A tibble with \`variable_name\`, \`value\`, and \`answer_text\`, or just
+\`variable_name\` and \`answer_text\` when collapsed. Numeric codes
+remain numeric (including haven tagged NAs). If a dictionary has
+character codes, \`value\` is character. Empty variables have genuine NA
+cells. Plain factors without a code dictionary return their labels with
+unknown (\`NA\`) codes and a warning.
 
 ## Examples
 
 ``` r
-toy <- data.frame(
-  ing4 = c(1L, 2L, 1L),
-  b12 = c(1L, 2L, NA_integer_)
-)
-attr(toy, "label.table") <- list(
-  ing4_pt = c("Apoia muito" = 1L, "Apoia" = 2L, "NS/NR" = 1000L),
-  b12_pt = c("Muito" = 1L, "Algo" = 2L, "NS/NR" = 1000L)
-)
-
-lpr_extract_ros(toy, lang_id = "pt")
-#> # A tibble: 4 × 3
-#>   variable_name value answer_text
-#>   <chr>         <int> <chr>      
-#> 1 b12               1 Muito      
-#> 2 b12               2 Algo       
-#> 3 ing4              1 Apoia muito
-#> 4 ing4              2 Apoia      
-lpr_extract_ros(toy, lang_id = "pt", one_row_per_var = TRUE)
-#> # A tibble: 2 × 2
-#>   variable_name answer_text                
-#>   <chr>         <chr>                      
-#> 1 b12           (1) Muito | (2) Algo       
-#> 2 ing4          (1) Apoia muito | (2) Apoia
+toy <- data.frame(x = c(0, 1))
+attr(toy, "label.table") <- list(x_en = c(No = 0, Yes = 1, Other = 152501))
+lpr_extract_ros(toy, restrict_to_present = FALSE)
+#> # A tibble: 3 × 3
+#>   variable_name  value answer_text
+#>   <chr>          <dbl> <chr>      
+#> 1 x                  0 No         
+#> 2 x                  1 Yes        
+#> 3 x             152501 Other      
+lpr_extract_ros(toy, restrict_to_present = FALSE, one_row_per_var = TRUE)
+#> # A tibble: 1 × 2
+#>   variable_name answer_text                      
+#>   <chr>         <chr>                            
+#> 1 x             (0) No | (1) Yes | (152501) Other
 ```

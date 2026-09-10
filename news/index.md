@@ -2,6 +2,8 @@
 
 ## lapop 2.2
 
+CRAN release: 2026-09-05
+
 - fix ttests not using survey design
 
 ## lapop 2.1.9

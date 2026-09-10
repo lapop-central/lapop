@@ -47,10 +47,9 @@
 - [`lpr_dumb()`](https://lapop-central.github.io/lapop/reference/lpr_dumb.md)
   : LAPOP Dumbbell Graphs
 - [`lpr_extract_notes()`](https://lapop-central.github.io/lapop/reference/lpr_extract_notes.md)
-  : Extract Notes from AmericasBarometer Attributes
+  : Extract Stata variable notes and characteristics
 - [`lpr_extract_ros()`](https://lapop-central.github.io/lapop/reference/lpr_extract_ros.md)
-  : Extract Response Option (RO) values and texts for all variables into
-  a tidy table.
+  : Extract original response codes and labels
 - [`lpr_hist()`](https://lapop-central.github.io/lapop/reference/lpr_hist.md)
   : LAPOP Bar/Histogram Graphs
 - [`lpr_mline()`](https://lapop-central.github.io/lapop/reference/lpr_mline.md)
