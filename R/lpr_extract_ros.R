@@ -77,10 +77,10 @@ lpr_extract_ros <- function(data, lang_id = "en", include_special = FALSE,
   }
   nonresponse <- function(label) {
     text <- trimws(gsub("\\[[^]]*\\]", "", label))
-    pattern <- paste0("^(no sabe|no responde|nao sabe|nao responde|não sabe|não responde|",
+    pattern <- paste0("^(no sabe|no responde|nao sabe|nao responde|n\u00e3o sabe|n\u00e3o responde|",
                        "declined? to answer|don't know|do not know|no answer|",
                        "prefer not to answer|no desea responder|no contesta|",
-                       "pa konnen|pa reponn|ne sait pas|pas de reponse|pas de réponse|",
+                       "pa konnen|pa reponn|ne sait pas|pas de reponse|pas de r\u00e9ponse|",
                        "refused|refusal|ns/nr|ns|nr|dk|dk/na)$")
     !is.na(text) & grepl(pattern, text, ignore.case = TRUE)
   }
