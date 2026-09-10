@@ -1,73 +1,34 @@
-###############################################################
-
-# LAPOP Extract Variables Labels from AmericasBarometer Notes #
-
-###############################################################
-
-#' Extract Notes from AmericasBarometer Attributes
+#' Extract Stata variable notes and characteristics
 #'
-#' Extracts notes stored in a dataset's attributes and organizes them into a tidy data frame.
-#' This function is particularly useful for processing Stata datasets imported into R that
-#' contain variable notes in their attributes.
-#'
-#' @param data A dataset (data frame) containing "expansion.fields" in its attributes.
-#'
-#' @return A data frame with three columns:
-#' \describe{
-#'   \item{variable_name}{Name of the variable the note belongs to}
-#'   \item{note_id}{Identifier for the note}
-#'   \item{note_value}{The actual note text}
-#' }
-#'
-#' @details
-#' This function processes the attributes of a dataset to extract notes that are typically
-#' stored in a specific format. It skips any notes associated with "_dta" (dataset-level notes)
-#' and only returns variable-specific notes. The function expects the notes to be organized
-#' as a list where each element contains exactly three components: variable name, note ID,
-#' and note value.
-#'
+#' Returns the original characteristic identifiers, without assuming that a
+#' particular note number is a question or that a variable label is a wording.
+#' @param data A data frame with an `expansion.fields` attribute, or that
+#'   attribute's list of three-element character vectors.
+#' @param note_ids Optional character vector of identifiers to retain.
+#' @param include_dataset Include characteristics belonging to `_dta`.
+#' @return A data frame with character columns `variable_name`, `note_id`, and
+#'   `note_value`. These columns are also present when no notes are available.
 #' @examples
-#'\donttest{
-#' require(lapop); data(bra23)
-#'
-#' # Extract the notes
-#' notesBRA23 <- lpr_extract_notes(bra23)
-#' tail(notesBRA23[notesBRA23$variable_name=="ing4",]) # for ing4 variable
-#'}
+#' toy <- data.frame(x = 1)
+#' attr(toy, "expansion.fields") <- list(c("x", "note1", "Question?"))
+#' lpr_extract_notes(toy)
 #' @export
-
-lpr_extract_notes <- function(data) { # Extract notes from expansion.fields
-  data = attr(data, "expansion.fields")
-
-  # DF for output
-  notes_df <- data.frame(variable_name = character(),
-                         noteid = character(),
-                         note_value = character(),
-                         stringsAsFactors = FALSE)
-
-  for (i in seq_along(data)) {
-
-    sublist <- data[[i]] # object is a nested list
-
-    if (length(sublist) == 3) {
-
-      variable_name <- sublist[[1]]
-
-      noteid <- sublist[[2]]
-
-      note_value <- sublist[[3]]
-
-       if (variable_name!="_dta") { # Add the row to notes_df
-        notes_df <- rbind(notes_df, data.frame(variable_name = variable_name,
-                                               note_id = noteid,
-                                               note_value = note_value,
-                                               stringsAsFactors = FALSE))
-      }
-    }
+lpr_extract_notes <- function(data, note_ids = NULL, include_dataset = FALSE) {
+  fields <- if (is.data.frame(data)) attr(data, "expansion.fields") else data
+  if (!is.null(fields) && !is.list(fields)) {
+    stop("Expected a data frame or a list of Stata characteristics.")
   }
-
-  notes_df<-subset(notes_df, variable_name!="_dta")
-
-  return(notes_df)
-
+  out <- data.frame(variable_name = character(), note_id = character(),
+                    note_value = character(), stringsAsFactors = FALSE)
+  valid <- vapply(fields, function(x) is.atomic(x) && length(x) == 3L &&
+                    !is.na(x[1L]) && !is.na(x[2L]), logical(1))
+  if (any(valid)) {
+    rows <- do.call(rbind, lapply(fields[valid], as.character))
+    out <- data.frame(variable_name = rows[, 1L], note_id = rows[, 2L],
+                      note_value = rows[, 3L], stringsAsFactors = FALSE)
+  }
+  if (!include_dataset) out <- out[out$variable_name != "_dta", , drop = FALSE]
+  if (!is.null(note_ids)) out <- out[out$note_id %in% note_ids, , drop = FALSE]
+  rownames(out) <- NULL
+  out
 }

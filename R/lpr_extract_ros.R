@@ -1,229 +1,219 @@
-#######################################
-
-#   LAPOP Extract Response Options    #
-
-#######################################
-
-#' Extract Response Option (RO) values and texts for all variables into a tidy table.
+#' Extract original response codes and labels
 #'
-#' Works with:
-#'  (a) dataset-level dictionaries (e.g., attr(data, "label.table") is a list keyed by "<VAR>_<lang>"), or
-#'  (b) per-variable attributes (e.g., attr(data[[VAR]], "levels") or factor levels).
-#'
-#' @param data A data.frame read with readstata13/haven/etc.
-#' @param lang_id Language code used in label table names ("en", "es", "pt").
-#'   If `NULL` or `""`, auto-detect per variable (dataset-level only). Ignored for per-variable `levels`.
-#' @param include_special Logical; if FALSE, drop codes >= 1000 when codes are numeric. Default FALSE.
-#' @param restrict_to_present Logical; if TRUE, keep only codes that appear in the data. Default TRUE.
-#' @param one_row_per_var Logical; if TRUE, return one row per variable_name with concatenated ROs. Default FALSE.
-#' @param pair_sep String used to separate each "(value) answer_text" pair when collapsing. Default " | ".
-#' @param attr_name Name of the attribute that stores RO info. Default "label.table".
-#'
-#' @return
-#' If `one_row_per_var = FALSE`: tibble with columns `variable_name`, `value`, `answer_text`.
-#' If `one_row_per_var = TRUE`: tibble with columns `variable_name`, `answer_text` (collapsed pairs).
-#'
+#' Reads dataset dictionaries and haven labels before considering factor levels.
+#' Factor positions are never substituted for the original survey codes.
+#' @param data A data frame imported with readstata13 or haven.
+#' @param lang_id Requested dictionary language, e.g. "en", "es", or "pt".
+#'   `NULL` or `""` uses the variable's `val.labels` link, then the dataset's
+#'   active language. A sole unambiguous dictionary is a final fallback.
+#'   For haven vectors without language metadata, their attached labels are used.
+#' @param include_special Include tagged missing codes and explicitly labelled
+#'   nonresponses. Valid codes are not excluded merely because they exceed 1000.
+#' @param restrict_to_present Keep only observed options. For questionnaire
+#'   inventories use `FALSE`, so unobserved response options are retained.
+#' @param one_row_per_var Collapse into one row per variable with code-label pairs.
+#' @param pair_sep Separator between collapsed pairs.
+#' @param attr_name Preferred dictionary attribute. Even when `"levels"` is
+#'   requested, an available original code dictionary takes precedence.
+#' @param special_values Additional response codes to exclude when
+#'   `include_special = FALSE`.
+#' @return A tibble with `variable_name`, `value`, and `answer_text`, or just
+#'   `variable_name` and `answer_text` when collapsed. Numeric codes remain numeric
+#'   (including haven tagged NAs). If a dictionary has character codes, `value`
+#'   is character. Empty variables have genuine NA cells. Plain factors without
+#'   a code dictionary return their labels with unknown (`NA`) codes and a warning.
 #' @examples
-#' toy <- data.frame(
-#'   ing4 = c(1L, 2L, 1L),
-#'   b12 = c(1L, 2L, NA_integer_)
-#' )
-#' attr(toy, "label.table") <- list(
-#'   ing4_pt = c("Apoia muito" = 1L, "Apoia" = 2L, "NS/NR" = 1000L),
-#'   b12_pt = c("Muito" = 1L, "Algo" = 2L, "NS/NR" = 1000L)
-#' )
-#'
-#' lpr_extract_ros(toy, lang_id = "pt")
-#' lpr_extract_ros(toy, lang_id = "pt", one_row_per_var = TRUE)
-#' 
-#'@author Robert Vidigal, \email{robert.vidigal@@vanderbilt.edu}
-#'
+#' toy <- data.frame(x = c(0, 1))
+#' attr(toy, "label.table") <- list(x_en = c(No = 0, Yes = 1, Other = 152501))
+#' lpr_extract_ros(toy, restrict_to_present = FALSE)
+#' lpr_extract_ros(toy, restrict_to_present = FALSE, one_row_per_var = TRUE)
 #' @export
-#' @import tibble
-lpr_extract_ros <- function(data,
-                            lang_id = "en",
-                            include_special = FALSE,
-                            restrict_to_present = TRUE,
-                            one_row_per_var = FALSE,
-                            pair_sep = " | ",
-                            attr_name = "label.table") {
+lpr_extract_ros <- function(data, lang_id = "en", include_special = FALSE,
+                            restrict_to_present = TRUE, one_row_per_var = FALSE,
+                            pair_sep = " | ", attr_name = "label.table",
+                            special_values = NULL) {
+  stopifnot(is.data.frame(data), length(attr_name) == 1L)
+  if (!is.null(lang_id) && (length(lang_id) != 1L || is.na(lang_id))) {
+    stop("lang_id must be NULL or one language code.")
+  }
+  explicit_language <- !is.null(lang_id) && nzchar(lang_id)
+  characteristics <- lpr_extract_notes(data, include_dataset = TRUE)
+  characteristic <- function(variable, id) {
+    z <- unique(characteristics$note_value[characteristics$variable_name == variable &
+                                           characteristics$note_id == id])
+    z <- z[!is.na(z) & nzchar(z)]
+    if (length(z) > 1L) stop("Conflicting characteristic ", id, " for ", variable)
+    if (length(z)) z else NA_character_
+  }
+  active_language <- characteristic("_dta", "_lang_c")
+  dictionary <- attr(data, attr_name)
+  if (!is.list(dictionary)) dictionary <- attr(data, "label.table")
+  if (!is.list(dictionary)) dictionary <- list()
+  links <- attr(data, "val.labels")
+  variables <- names(data)
+  from_stata <- !is.null(attr(data, "version")) && !is.null(attr(data, "label.table"))
 
-  # ---------- helpers ----------
-  is_nonempty_string <- function(x) !is.null(x) && nzchar(x)
-
-  resolve_label_name <- function(VAR, lang_id, lbl_names) {
-    # explicit lang
-    if (is_nonempty_string(lang_id)) {
-      nm <- paste0(VAR, "_", lang_id)
-      return(if (nm %in% lbl_names) nm else NA_character_)
+  # readstata13 represents Stata's . and .a-.z by reserved integer values.
+  restore_missing <- function(x) {
+    if (!is.numeric(x) || !from_stata) return(x)
+    k <- !is.na(x) & x >= 2147483621 & x <= 2147483647
+    if (any(k)) {
+      offset <- as.integer(x[k] - 2147483621)
+      restored <- rep(NA_real_, length(offset))
+      tagged <- offset > 0L
+      restored[tagged] <- haven::tagged_na(letters[offset[tagged]])
+      x[k] <- restored
     }
-    # exact match
-    if (VAR %in% lbl_names) return(VAR)
-    # candidates
-    candidates <- grep(paste0("^", VAR, "(_[A-Za-z0-9]+)?$"), lbl_names, value = TRUE)
-    if (length(candidates) == 1) return(candidates)
-    if (length(candidates) > 1) {
-      pref <- paste0(VAR, "_en")
-      if (pref %in% candidates) return(pref)
-      warning(sprintf(
-        "Multiple label tables found for '%s': %s. Using '%s'.",
-        VAR, paste(candidates, collapse = ", "), candidates[1]
-      ))
-      return(candidates[1])
+    x
+  }
+  value_text <- function(x) {
+    if (!is.numeric(x)) return(as.character(x))
+    result <- as.character(x)
+    result[is.na(x)] <- "."
+    tags <- haven::na_tag(as.double(x))
+    tagged <- !is.na(tags)
+    result[tagged] <- paste0(".", tags[tagged])
+    result
+  }
+  nonresponse <- function(label) {
+    text <- trimws(gsub("\\[[^]]*\\]", "", label))
+    pattern <- paste0("^(no sabe|no responde|nao sabe|nao responde|não sabe|não responde|",
+                       "declined? to answer|don't know|do not know|no answer|",
+                       "prefer not to answer|no desea responder|no contesta|",
+                       "pa konnen|pa reponn|ne sait pas|pas de reponse|pas de réponse|",
+                       "refused|refusal|ns/nr|ns|nr|dk|dk/na)$")
+    !is.na(text) & grepl(pattern, text, ignore.case = TRUE)
+  }
+  empty <- function(variable) tibble::tibble(variable_name = variable,
+                                            value = NA_real_, answer_text = NA_character_)
+  link_for <- function(i) {
+    if (length(links) == length(variables)) return(unname(links[i]))
+    if (!is.null(names(links)) && variables[i] %in% names(links)) return(links[[variables[i]]])
+    NA_character_
+  }
+  resolve <- function(variable, i) {
+    if (is.null(names(dictionary))) return(NA_character_)
+    if (explicit_language) {
+      candidates <- c(characteristic(variable, paste0("_lang_l_", lang_id)),
+                      paste0(variable, "_", lang_id))
+      if (!is.na(active_language) && lang_id == active_language) {
+        candidates <- c(candidates, link_for(i), variable)
+      }
+    } else {
+      candidates <- link_for(i)
+      if (!is.na(active_language)) {
+        candidates <- c(candidates, characteristic(variable, paste0("_lang_l_", active_language)),
+                        paste0(variable, "_", active_language))
+      }
+      candidates <- c(candidates, variable)
+    }
+    found <- candidates[!is.na(candidates) & candidates %in% names(dictionary)]
+    if (length(found)) return(found[1L])
+    if (!explicit_language) {
+      # Do not silently choose a language when more than one dictionary fits.
+      suffix <- substring(names(dictionary), nchar(variable) + 2L)
+      alternatives <- names(dictionary)[startsWith(names(dictionary), paste0(variable, "_")) &
+                                          grepl("^[A-Za-z]{2,3}$", suffix)]
+      if (length(alternatives) == 1L) return(alternatives)
+      if (length(alternatives) > 1L && is.na(active_language)) {
+        warning("Ambiguous label language for ", variable, "; supply lang_id.", call. = FALSE)
+      }
     }
     NA_character_
   }
-
-  build_df_from_named_codes <- function(VAR, x) {
-    # Expect names = labels, values = codes (numeric/integer)
-    tibble::tibble(
-      variable_name     = VAR,
-      value       = suppressWarnings(as.integer(unname(x))),
-      answer_text = as.character(names(x))
-    )
+  read_dictionary <- function(labels) {
+    if (is.null(names(labels))) return(NULL)
+    if (is.numeric(labels)) {
+      return(list(value = restore_missing(unname(labels)), label = names(labels)))
+    }
+    if (is.character(labels)) {
+      codes <- names(labels)
+      # Stata-style named label vectors: names are codes, values are texts.
+      numeric_codes <- suppressWarnings(as.numeric(codes))
+      tagged <- grepl("^\\.[a-z]$", codes)
+      numeric_codes[tagged] <- haven::tagged_na(substring(codes[tagged], 2L))
+      if (all(!is.na(numeric_codes) | codes == "." | tagged)) {
+        return(list(value = restore_missing(numeric_codes), label = unname(labels)))
+      }
+      # haven_labelled character vectors: names are texts, values are codes.
+      return(list(value = unname(labels), label = names(labels)))
+    }
+    NULL
   }
 
-  build_df_from_named_labels <- function(VAR, x) {
-    # names = codes (as character), values = labels
-    tibble::tibble(
-      variable_name     = VAR,
-      value       = suppressWarnings(as.integer(names(x))),
-      answer_text = as.character(unname(x))
-    )
-  }
-
-  build_df_from_levels <- function(VAR, levs) {
-    # Fallback when we only have plain levels (no numeric codes available)
-    tibble::tibble(
-      variable_name     = VAR,
-      value       = seq_along(levs),          # positional codes
-      answer_text = as.character(levs)
-    )
-  }
-
-  # ---------- main pathway selection ----------
-  dict_at_data <- attr(data, attr_name)
-  dict_is_list <- !is.null(dict_at_data) && is.list(dict_at_data)
-
-  vars <- names(data)
-
-  out <- lapply(vars, function(VAR) {
-    # Path A: dataset-level dictionary list
-    if (dict_is_list) {
-      label_table_name <- resolve_label_name(VAR, lang_id, names(dict_at_data))
-      if (!is.na(label_table_name)) {
-        lt <- dict_at_data[[label_table_name]]
-        if (is.null(lt)) return(tibble::tibble(variable_name = VAR,value = NA_integer_,answer_text = NA_character_ ))
-
-        # Try common shapes:
-        if (!is.null(names(lt)) && (is.numeric(lt) || is.integer(lt))) {
-          df <- build_df_from_named_codes(VAR, lt)
-        } else if (!is.null(names(lt)) && is.character(lt)) {
-          df <- build_df_from_named_labels(VAR, lt)
-        } else {
-          warning(sprintf("Unrecognized label table format for '%s'. Skipping.", label_table_name))
-          return(tibble::tibble(variable_name = VAR,value = NA_integer_,answer_text = NA_character_))
-        }
-
-      } else {
-        # No table for this VAR in dataset-level dict; try per-variable attribute below
-        df <- NULL
-      }
-
-      # If we got df from dataset-level path, continue post-processing
-      if (!is.null(df)) {
-        # Filter special codes if numeric
-        if (!include_special && is.numeric(df$value)) {
-          df <- dplyr::filter(df, .data$value < 1000)
-        }
-
-        if (restrict_to_present) {
-          vals <- unique(stats::na.omit(data[[VAR]]))
-          suppressWarnings(vals <- as.integer(vals))
-          df <- dplyr::filter(df, .data$value %in% vals)
-        }
-
-        return(df)
+  result <- lapply(seq_along(variables), function(i) {
+    variable <- variables[i]
+    x <- data[[i]]
+    table_name <- resolve(variable, i)
+    entry <- if (!is.na(table_name)) read_dictionary(dictionary[[table_name]]) else NULL
+    known_codes <- TRUE
+    if (is.null(entry)) {
+      # A requested translation must not fall back to a known different language.
+      wrong_language <- explicit_language && !is.na(active_language) && lang_id != active_language
+      if (wrong_language) return(empty(variable))
+      labels <- attr(x, attr_name)
+      if (is.null(labels) || is.null(names(labels))) labels <- attr(x, "labels")
+      entry <- read_dictionary(labels)
+      if (is.null(entry) && is.factor(x)) {
+        warning("Original codes unavailable for factor ", variable,
+                "; returning labels with unknown codes. Import its label dictionary.", call. = FALSE)
+        entry <- list(value = rep(NA_real_, nlevels(x)), label = levels(x))
+        known_codes <- FALSE
       }
     }
-
-    # Path B: per-variable attribute or factor levels
-    x <- data[[VAR]]
-    x_attr <- attr(x, attr_name)
-
-    if (!is.null(x_attr)) {
-      # Several possible shapes:
-      if (!is.null(names(x_attr)) && (is.numeric(x_attr) || is.integer(x_attr))) {
-        df <- build_df_from_named_codes(VAR, x_attr)
-      } else if (!is.null(names(x_attr)) && is.character(x_attr)) {
-        df <- build_df_from_named_labels(VAR, x_attr)
-      } else if (is.character(x_attr) && attr_name == "levels") {
-        df <- build_df_from_levels(VAR, x_attr)
-      } else {
-        # Last resort: if it's a plain character vector, treat as levels
-        if (is.character(x_attr)) {
-          df <- build_df_from_levels(VAR, x_attr)
-        } else {
-          warning(sprintf("Attribute '%s' for '%s' has unsupported format; skipping.", attr_name, VAR))
-          return(tibble::tibble(variable_name = VAR,value = NA_integer_,answer_text = NA_character_))
-        }
-      }
-    } else {
-      # If attr not present but variable is a factor and attr_name == "levels", use factor levels
-      if (attr_name == "levels" && is.factor(x)) {
-        df <- build_df_from_levels(VAR, levels(x))
-      } else {
-        return(tibble::tibble(   variable_name = VAR,   value = NA_integer_,   answer_text = NA_character_ ))
-      }
+    if (is.null(entry) || !length(entry$value)) return(empty(variable))
+    keep <- rep(TRUE, length(entry$value))
+    if (!include_special) {
+      keep <- !nonresponse(entry$label)
+      if (known_codes) keep <- keep & !is.na(entry$value)
+      if (length(special_values)) keep <- keep & !value_text(entry$value) %in% value_text(special_values)
     }
-
-    # Post-processing for per-variable path
-    # include_special: we only apply if values are numeric and comparable
-    if (!include_special && is.numeric(df$value)) {
-      df <- dplyr::filter(df, .data$value < 1000)
-    } else if (!include_special && !is.numeric(df$value)) {
-      # can't apply the >=1000 rule without numeric codes
-      # (silently skip; could message if you prefer)
-      df <- df
-    }
-
     if (restrict_to_present) {
-      vals <- unique(stats::na.omit(data[[VAR]]))
-      suppressWarnings(vals <- as.integer(vals))
-      if (all(is.na(vals))) {
-        # If we couldn't coerce present values to numeric (e.g., character factors),
-        # we skip this filter to avoid dropping everything.
-        df <- df
-      } else {
-        df <- dplyr::filter(df, .data$value %in% vals)
+      if (is.factor(x)) {
+        # Translate observed native factor labels through their original codes.
+        native_name <- link_for(i)
+        native <- if (!is.na(native_name) && native_name %in% names(dictionary)) {
+          read_dictionary(dictionary[[native_name]])
+        } else NULL
+        observed_labels <- as.character(x[!is.na(x)])
+        if (!is.null(native) && known_codes) {
+          observed_codes <- native$value[native$label %in% observed_labels]
+          keep <- keep & value_text(entry$value) %in% value_text(observed_codes)
+        } else {
+          keep <- keep & entry$label %in% observed_labels
+        }
+      } else if (known_codes) {
+        present <- restore_missing(x)
+        keep <- keep & value_text(entry$value) %in% value_text(present)
       }
     }
-
-    df
+    if (!any(keep)) return(empty(variable))
+    values <- entry$value[keep]
+    texts <- entry$label[keep]
+    order_by_code <- order(values, na.last = TRUE)
+    values <- values[order_by_code]
+    texts <- texts[order_by_code]
+    if (one_row_per_var) {
+      codes <- value_text(values)
+      pair <- if (known_codes) paste0("(", codes, ")", ifelse(is.na(texts) | texts == "", "", paste0(" ", texts))) else texts
+      return(tibble::tibble(variable_name = variable, answer_text = paste(pair, collapse = pair_sep)))
+    }
+    tibble::tibble(variable_name = variable, value = values, answer_text = texts)
   })
-
-  out <- dplyr::bind_rows(out)
-
-  if (nrow(out) == 0) {
-    warning("No ROS found; returning NA placeholders for all variables.")
-    out <- tibble(
-      variable_name = vars,
-      value = NA_integer_,
-      answer_text = NA_character_
-    )
+  if (!length(result)) {
+    out <- tibble::tibble(variable_name = character(), value = numeric(), answer_text = character())
+  } else {
+    if (one_row_per_var) result <- lapply(result, function(x) x[, c("variable_name", "answer_text")])
+    else if (any(vapply(result, function(x) is.character(x$value), logical(1)))) {
+      result <- lapply(result, function(x) {
+        placeholder <- is.na(x$value) & is.na(x$answer_text)
+        x$value <- value_text(x$value)
+        x$value[placeholder] <- NA_character_
+        x
+      })
+    }
+    out <- dplyr::bind_rows(result)
   }
-
-  out <- dplyr::arrange(out, .data$variable_name, suppressWarnings(as.numeric(.data$value)))
-
-  if (one_row_per_var) {
-    out <- out |>
-      dplyr::mutate(.pair = paste0("(", .data$value, ") ", .data$answer_text)) |>
-      dplyr::group_by(.data$variable_name) |>
-      dplyr::summarise(answer_text = paste(.data$.pair, collapse = pair_sep), .groups = "drop") |>
-      dplyr::arrange(.data$variable_name)
-  }
-
-  out
+  if (one_row_per_var) out <- out[, c("variable_name", "answer_text")]
+  out[order(out$variable_name), , drop = FALSE]
 }
-
-
