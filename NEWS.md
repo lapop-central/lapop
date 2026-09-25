@@ -1,3 +1,9 @@
+# lapop 2.2.2
+* add lapop_float
+
+# lapop 2.2.1
+* add lapop_splitbar
+
 # lapop 2.2
 * fix ttests not using survey design
 
