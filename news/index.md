@@ -1,5 +1,13 @@
 # Changelog
 
+## lapop 2.2.2
+
+- add lapop_float
+
+## lapop 2.2.1
+
+- add lapop_splitbar
+
 ## lapop 2.2
 
 CRAN release: 2026-09-05
