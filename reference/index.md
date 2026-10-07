@@ -16,6 +16,8 @@
   : LAPOP Regression Graphs
 - [`lapop_dumb()`](https://lapop-central.github.io/lapop/reference/lapop_dumb.md)
   : LAPOP Dummbell Graphs
+- [`lapop_float()`](https://lapop-central.github.io/lapop/reference/lapop_float.md)
+  : LAPOP Floating Bar Graph
 - [`lapop_fonts()`](https://lapop-central.github.io/lapop/reference/lapop_fonts.md)
   : LAPOP Fonts
 - [`lapop_fonts_design()`](https://lapop-central.github.io/lapop/reference/lapop_fonts_design.md)
@@ -30,6 +32,9 @@
   : LAPOP Multiple-Over/Breakdown Graphs
 - [`lapop_save()`](https://lapop-central.github.io/lapop/reference/lapop_save.md)
   : LAPOP Save
+- [`lapop_splitbar()`](https://lapop-central.github.io/lapop/reference/lapop_splitbar.md)
+  [`lapop_butterfly()`](https://lapop-central.github.io/lapop/reference/lapop_splitbar.md)
+  : LAPOP Split Bar Graph
 - [`lapop_stack()`](https://lapop-central.github.io/lapop/reference/lapop_stack.md)
   : LAPOP Stacked Bar Graphs
 - [`lapop_ts()`](https://lapop-central.github.io/lapop/reference/lapop_ts.md)
